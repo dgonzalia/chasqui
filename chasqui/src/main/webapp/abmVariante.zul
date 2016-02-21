@@ -1,0 +1,63 @@
+<?page title="CHASQUI-WEB" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./varianteWindow" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
+<zk>
+<window id="varianteWindow" border="normal" title="Alta de Variedad de Producto"
+apply="ar.edu.unq.chasqui.view.composer.ABMVarianteComposer" height="auto" width="70%" closable="true">
+
+
+<listbox>
+	<listhead>
+		<listheader/>
+		<listheader/>
+	</listhead>
+	<listitem>
+		<listcell label="@{c:l('zk.listheader.label.abmCategoria.nombre')}"/>
+		<listcell>
+			<textbox id="textboxNombre" placeholder="I.E: Mermelada - Frutilla"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell label="@{c:l('zk.listcell.label.abmProducto.precio')}"/>	
+		<listcell>
+			<intbox id="intboxPrecio" placeholder="I.E: 10" value="5"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell label="@{c:l('zk.listcell.label.abmProducto.stock')}"/>
+		<listcell>
+			<intbox id="intboxStock" placeholder="I.E: 4" value="12"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell label="@{c:l('zk.listcell.label.abmProducto.imagen') }"/>
+		<listcell>
+			<hbox>
+				<image style="height:50px; width:50px" src="@{varianteWindow$composer.imagen.getPath}"/>
+				<space spacing="10px"/>
+				<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>				
+			</hbox>
+		</listcell>
+	</listitem>
+</listbox>
+
+
+<div>
+	<div align="center">
+		<label value="Descripción" style="font-weight:bold; color:black"/>
+	</div>
+<ckeditor width="100%" height="100px" id="ckEditor" toolbar="Simple" customConfigurationsPath="/js/config.js"/>
+</div>
+<separator spacing="30px"/>
+<div align="center">
+	<hbox>
+		<toolbarbutton id="botonGuardar" label="${c:l('zk.button.label.guardar')}" style="font-weight:bold; color:black" image="/imagenes/save.png"/>
+		<toolbarbutton id="botonCancelar" label="${c:l('zk.button.label.cancelar')}" style="font-weight:bold; color:black" image="/imagenes/cancel.png"/>
+	</hbox>
+</div>
+
+
+</window>
+</zk>

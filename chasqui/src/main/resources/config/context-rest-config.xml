@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">       
+      
+      
+    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
+	<bean id='jacksonProvider' class='org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider' />
+	<bean id="cors-filter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+
+	<!-- =========================== -->
+	<!-- =========Servicios ========= -->
+	<!-- =========================== -->
+
+	<jaxrs:server id="feag" address="/">
+		<jaxrs:serviceBeans>
+<!-- 		 BEANS QUE VAN A MANEJAR LOS SERVICIOS -->
+ 			<ref bean="mockServiceRest"/> 
+		</jaxrs:serviceBeans>
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:providers>
+			<ref bean="jaxbProvider" />
+			<ref bean="jacksonProvider" />
+			<ref bean="cors-filter" />
+		</jaxrs:providers>
+		<jaxrs:features>
+			<cxf:logging />
+		</jaxrs:features>
+	</jaxrs:server>
+	
+	<bean id="mockServiceRest" class ="ar.edu.unq.chasqui.service.rest.impl.MockServiceImpl"/>
+</beans>

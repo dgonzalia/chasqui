@@ -1,0 +1,29 @@
+<?page title="CHASQUI-WEB" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./usuariosActualesWindow" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
+<zk>
+<window id="usuariosActualesWindow" title="${c:l('zk.window.usuariosActuales.title')}" width="100%" border="nomal"
+apply="ar.edu.unq.chasqui.view.composer.UsuariosActualesComposer">
+
+	<listbox id="listboxUsuarios" model="@{usuariosActualesWindow$composer.usuarios}"
+	selectedItem="@{usuariosActualesWindow$composer.usuarioSeleccionado}">
+		<listhead>
+			<listheader label="${c:l('zk.listheader.label.altaUsuario.username')}"/>
+			<listheader label="${c:l('zk.listheader.label.administracion.acciones')}"/>
+		</listhead>
+<!-- 		<listitem self="@{each=usuario}"> -->
+<!-- 			<listcell label="@{usuario.getUsername}"/> -->
+<!-- 			<listcell> -->
+<!-- 				<hbox> -->
+<!-- 					<image src="/imagenes/editar.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.editar')}"  -->
+<!-- 						forward="onClick=usuariosActualesWindow$composer.onEditarUsuario" /> -->
+<!-- 					<image src="/imagenes/detach.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.eliminar')}" -->
+<!-- 						forward="onClick=usuariosActualesWindow$composer.onEliminarUsuario" /> -->
+<!-- 				</hbox> -->
+<!-- 			</listcell> -->
+<!-- 		</listitem> -->
+	</listbox>
+</window>
+</zk>

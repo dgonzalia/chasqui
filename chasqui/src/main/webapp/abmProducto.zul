@@ -1,0 +1,119 @@
+<?page title="CHASQUI-WEB" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./productosWindow" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
+<zk>
+<window title="Alta/Edición de Productos" id="productosWindow" border="normal"
+apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closable="true" position="center,top">
+<vbox>
+	<listbox>
+		<listhead>
+			<listheader/>
+			<listheader/>
+		</listhead>
+		<listitem>
+			<listcell label="${c:l('zk.listheader.label.abmCategoria.nombre')}"/>
+			<listcell>
+				<textbox id="nombreProducto" placeholder="i.e: Aceite" />
+			</listcell>
+		</listitem>
+		<listitem>
+			<listcell label="${c:l('zk.listcell.label.abmProducto.categoria')} "/>
+			<listcell>
+				<hbox>
+					<combobox id="comboCategorias" model="@{productosWindow$composer.usuario.categorias}" selectedItem="@{productosWindow$composer.categoriaSeleccionada }"/>
+					<toolbarbutton id="botonAgregarCategoria" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}" image="/imagenes/plus.png"/>
+				</hbox>
+			</listcell>
+		</listitem>
+		<listitem>
+			<listcell label="${c:l('zk.listcell.label.abmProducto.fabricante') }"/>
+			<listcell>
+				<hbox>
+					<combobox id="comboFabricantes" model="@{productosWindow$composer.usuario.fabricantes}" selectedItem="@{productosWindow@composer.fabricanteSeleccionado }"/>
+					<toolbarbutton image="/imagenes/plus.png" id="botonAgregarFabricante" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
+				</hbox>
+			</listcell>
+		</listitem>
+	</listbox>
+<div>
+	<div align="center">
+		<label value="Variedades" style="font-weight:bold; color:black"/>
+	</div>
+</div>
+<listbox id="listboxVariante" mold="paging" pageSize="3" selectedItem="@{productosWindow$composer.varianteSeleccionada}"
+		model="@{productosWindow$composer.model.variantes}" rows="3"> 
+		<listhead>
+			<listheader label="nombre"/>
+			<listheader label="precio"/>
+			<listheader label="stock"/>
+			<listheader label="${c:l('zk.listheader.label.administracion.acciones')}"/>
+		</listhead>
+		<auxhead>
+			<auxheader colspan="4">
+				<toolbarbutton id="botonAgregarVariante" forward="onClick=productosWindow$composer.onAltaVariante" image="/imagenes/plus.png" 
+				label="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
+			</auxheader>
+		</auxhead>
+		<listitem self="@{each=variante}">
+			<listcell>
+				<label value="@{variante.getNombre}"/>
+			</listcell>
+			<listcell>
+				<hbox>
+					<image src="/imagenes/price.png" tooltiptext="${c:l('zk.listheader.label.administracion.producto.precio')}"/>		
+					<space spacing="5px"/>
+					<label value="@{variante.getPrecio}"/>
+				</hbox>			
+			</listcell>
+			<listcell label="@{variante.getStock }"/>
+			<listcell>
+				<image src="/imagenes/eye.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.visualizar')}"
+				forward="onClick=productosWindow$composer.onVerVariante"/>
+				<space spacing="10px"/>
+				<image src="/imagenes/trash.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.eliminar')}"
+				forward="onClick=productosWindow$composer.onEliminarVariante" visible="@{productosWindow$composer.modoEdicion}"/>
+			</listcell>
+		</listitem>
+	</listbox>
+	<listbox id="listboxCaracteristicas" mold="paging" pageSize="3" selectedItem="@{productosWindow$composer.caracteristicaSeleccionada}"
+		model="@{productosWindow$composer.model.caracteristicas}" rows="3">
+		<listhead>
+			<listheader label="${c:l('zk.listcell.label.abmProducto.caracteristica')}"/>
+			<listheader label="${c:l('zk.listheader.label.administracion.acciones')}"/>
+		</listhead>
+		<auxhead>
+			<auxheader colspan="2">
+				<toolbarbutton id="botonAgregarCaracteristica" image="/imagenes/plus.png" 
+				label="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
+			</auxheader>
+		</auxhead>
+		<listitem self="@{each=caracteristica}">
+			<listcell>
+				<label  maxlength="25" value="@{caracteristica.getNombre}"/>
+			</listcell>
+			<listcell>
+				<image src="/imagenes/trash.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.eliminar')}"
+				forward="onClick=productosWindow$composer.onEliminarCaracteristica" visible="@{productosWindow$composer.modoEdicion}"/>
+			</listcell>
+		</listitem>
+	</listbox>
+</vbox>
+<div align="center">
+	<hbox>
+		<toolbarbutton id="botonGuardar" label="${c:l('zk.button.label.guardar')}" style="font-weight:bold; color:black" image="/imagenes/save.png"/>
+		<space spacing="20px"/>
+		<toolbarbutton id="botonCancelar" label="${c:l('zk.button.label.cancelar')}" style="font-weight:bold; color:black" image="/imagenes/cancel.png"/>
+	</hbox>
+</div>
+
+
+<popup id="popUpCaracteristica">
+		<hbox>
+			<textbox id="agregarCaractTextbox" maxlength="20"/>
+			<button id="agregarCaractButton" label="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
+		</hbox>
+</popup>
+</window>
+</zk>
