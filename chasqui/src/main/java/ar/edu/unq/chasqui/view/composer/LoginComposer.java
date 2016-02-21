@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.Popup;
@@ -29,6 +30,7 @@ import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({ "serial", "deprecation" })
 public class LoginComposer  extends GenericForwardComposer<Component>{
@@ -47,12 +49,13 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	private Window loginWindow;
 
 	
-
+	private UsuarioService service;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
+		service = (UsuarioService) SpringUtil.getBean("usuarioService");
 		comp.addEventListener(Events.ON_NOTIFY, new EnvioEmailListener(this));
 		
 	}
@@ -114,6 +117,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		user.setFabricantes(fss);
 		img.setPath("/imagenes/"+user.getUsername()+"/perfil.jpg");
 		user.setPathImagen(img.getPath());
+		service.guardarUsuario(user);
 		Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
 		Executions.sendRedirect("administracion.zul");
 		// validar Usuario y re enviar a la pagina de adm 

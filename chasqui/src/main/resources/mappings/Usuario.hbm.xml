@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/02/2016 16:58:12 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.edu.unq.chasqui.model.Usuario" table="USER">
+        <id name="id" column="ID">
+            <generator class="identity" />
+        </id>
+        <property name="username" type="string" column="USERNAME"/>
+<!--         <property name="pathImagen" type="java.lang.String"> -->
+<!--             <column name="PATHIMAGEN" /> -->
+<!--         </property> -->
+<!--         <property name="kilometroSeleccionado" type="java.lang.Integer"> -->
+<!--             <column name="KILOMETROSELECCIONADO" /> -->
+<!--         </property> -->
+<!--         <property name="password" type="java.lang.String"> -->
+<!--             <column name="PASSWORD" /> -->
+<!--         </property> -->
+<!--         <property name="fechaProximaEntrega" type="java.util.Date"> -->
+<!--             <column name="FECHAPROXIMAENTREGA" /> -->
+<!--         </property> -->
+<!--         <property name="montoMinimoCompra" type="java.lang.Integer"> -->
+<!--             <column name="MONTOMINIMOCOMPRA" /> -->
+<!--         </property> -->
+<!--         <property name="email" type="java.lang.String"> -->
+<!--             <column name="EMAIL" /> -->
+<!--         </property> -->
+<!--         <list name="categorias" inverse="false" table="CATEGORIA" lazy="true"> -->
+<!--             <key> -->
+<!--                 <column name="USERNAME" /> -->
+<!--             </key> -->
+<!--             <list-index></list-index> -->
+<!--             <one-to-many class="ar.edu.unq.chasqui.model.Categoria" /> -->
+<!--         </list> -->
+<!--         <list name="fabricantes" inverse="false" table="FABRICANTE" lazy="true"> -->
+<!--             <key> -->
+<!--                 <column name="USERNAME" /> -->
+<!--             </key> -->
+<!--             <list-index></list-index> -->
+<!--             <one-to-many class="ar.edu.unq.chasqui.model.Fabricante" /> -->
+<!--         </list> -->
+<!--         <list name="productos" inverse="false" table="PRODUCTO" lazy="true"> -->
+<!--             <key> -->
+<!--                 <column name="USERNAME" /> -->
+<!--             </key> -->
+<!--             <list-index></list-index> -->
+<!--             <one-to-many class="ar.edu.unq.chasqui.model.Producto" /> -->
+<!--         </list> -->
+    </class>
+</hibernate-mapping>

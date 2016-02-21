@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Usuario {
 
-	
+	private Integer id;
 	private String username;
 	private String pathImagen;
 	private Integer kilometroSeleccionado;
@@ -103,6 +103,14 @@ public class Usuario {
 	
 	
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public boolean contieneProductor(String nombreProductor){
 		for(Fabricante f : fabricantes ){
 			if( f.getNombre().equalsIgnoreCase(nombreProductor)){
