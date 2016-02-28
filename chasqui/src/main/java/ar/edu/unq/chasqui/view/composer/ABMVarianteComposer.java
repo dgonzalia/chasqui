@@ -9,12 +9,14 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -136,9 +138,42 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	}
 	
 	public void onClick$botonGuardar(){
-		
+		ejecutarValidaciones();
+		model.setDescripcion(ckEditor.getValue());
+		model.setImagenes(imagenes);
+		model.setNombre(textboxNombre.getValue());
+		model.setStock(intboxStock.getValue());
+		model.setPrecio(intboxPrecio.getValue());
+		producto.getVariantes().add(model);
+		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);
+		this.self.detach();
 	}
 
+	
+	private void ejecutarValidaciones(){
+		Integer precio = intboxPrecio.getValue();
+		Integer stock = intboxStock.getValue();
+		String descripcion = ckEditor.getValue();
+		String nombre = textboxNombre.getValue();
+		
+		if(imagenes.isEmpty()){
+			throw new WrongValueException(listImagenes,"se debe agregar al menos una imagen");
+		}
+		if(precio == null || precio < 0){
+			throw new WrongValueException(intboxPrecio,"El precio debe ser mayor a 0");
+		}
+		if(stock == null || stock < 0){
+			throw new WrongValueException(intboxStock,"El Stock debe ser mayor a 0");
+		}
+		if(StringUtils.isEmpty(descripcion)){
+			throw new WrongValueException(ckEditor,"La descripción no debe ser vacia");
+		}
+		if(StringUtils.isEmpty(nombre)){
+			throw new WrongValueException(textboxNombre,"El nombre no debe ser vacio");
+		}
+		
+		
+	}
 
 	public List<Imagen> getImagenes() {
 		return imagenes;

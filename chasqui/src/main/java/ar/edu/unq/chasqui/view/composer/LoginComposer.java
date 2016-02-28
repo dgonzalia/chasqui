@@ -111,10 +111,10 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		v.setPrecio(10);
 		v.setNombre("Sarasa");
 		List<Imagen>imagenes = new ArrayList<Imagen>();
-//		Imagen img2 = new Imagen();
-//		img2.setNombre("perfil.jpg");
-//		img2.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
-//		imagenes.add(img2);
+		Imagen img2 = new Imagen();
+		img2.setNombre("perfil.jpg");
+		img2.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
+		imagenes.add(img2);
 		v.setImagenes(imagenes);
 		List<Variante>h = new ArrayList<Variante>();
 		h.add(v);

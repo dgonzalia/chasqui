@@ -1,6 +1,7 @@
 package ar.edu.unq.chasqui.view.composer;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,6 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Toolbarbutton botonCancelar;
 	private Button botonAgregarVariante;
 	private Textbox agregarCaractTextbox;
-//	private Button agregarCaractButton;
 	private Popup popUpCaracteristica;
 	private Producto model;
 	private List<Caracteristica> caracteristicas;
@@ -52,6 +52,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Caracteristica caracteristicaSeleccionada;
 	private Variante varianteSeleccionada;
 	private Fabricante fabricanteSeleccionado;
+	private List<Variante>varianteRollback;
 	private Usuario usuario;
 	private boolean modoEdicion;
 	
@@ -105,8 +106,6 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		botonGuardar.setDisabled(true);
 		listboxCaracteristicas.setDisabled(true);
 		botonAgregarVariante.setDisabled(true);
-//		intboxPrecio.setDisabled(true);
-//		ckEditor.setCustomConfigurationsPath("/js/ckEditorReadOnly.js");
 	}
 	
 	public void inicializarModoEdicion(){
@@ -117,6 +116,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		}
 		caracteristicas = model.getCaracteristicas();
 		nombreProducto.setValue(model.getNombre());
+		varianteRollback = new ArrayList<Variante>( model.getVariantes());
 	}
 
 	
@@ -132,8 +132,23 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		
 	}
 	
+	public void onEliminarVariante(){
+		model.getVariantes().remove(varianteSeleccionada);
+		this.binder.loadAll();
+	}
+	
 	public void onClick$botonCancelar(){
+		rollbackProducto();
 		this.self.detach();
+	}
+	
+	public void onClose$productosWindow(){
+		rollbackProducto();
+		this.self.detach();
+	}
+	
+	private void rollbackProducto(){
+		model.setVariantes(varianteRollback);
 	}
 	
 	
