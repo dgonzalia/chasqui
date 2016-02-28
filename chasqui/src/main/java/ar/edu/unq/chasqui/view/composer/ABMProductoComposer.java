@@ -41,6 +41,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Toolbarbutton botonAgregarFabricante;
 	private Toolbarbutton botonAgregarCategoria;
 	private Listbox listboxCaracteristicas;
+	private Listbox listboxVariante;
 	private Toolbarbutton botonGuardar;
 	private Toolbarbutton botonCancelar;
 	private Button botonAgregarVariante;
@@ -51,7 +52,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Categoria categoriaSeleccionada;
 	private Caracteristica caracteristicaSeleccionada;
 	private Variante varianteSeleccionada;
-	private Fabricante fabricanteSeleccionado;
+	private Fabricante productorSeleccionado;
 	private List<Variante>varianteRollback;
 	private Usuario usuario;
 	private boolean modoEdicion;
@@ -111,8 +112,8 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	public void inicializarModoEdicion(){
 		modoEdicion= true;
 		if(model.getCategoria() != null && model.getFabricante() != null){
-			comboCategorias.setValue(model.getCategoria().getNombre());
-			comboFabricantes.setValue(model.getFabricante().getNombre());			
+			categoriaSeleccionada = model.getCategoria();
+			productorSeleccionado = model.getFabricante();			
 		}
 		caracteristicas = model.getCaracteristicas();
 		nombreProducto.setValue(model.getNombre());
@@ -126,10 +127,30 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	}
 	
 	public void onClick$botonGuardar(){
+		validaciones();
 		// guardar en DB
 		//validar los datos
 		
 		
+	}
+	
+	private void validaciones(){
+		String nombre = nombreProducto.getValue();
+		if(StringUtils.isEmpty(nombre)){
+			throw new WrongValueException(nombreProducto,"El nombre no debe ser vacio!");
+		}
+		if(categoriaSeleccionada == null){
+			throw new WrongValueException(comboCategorias,"Se debe seleccionar una categoria");
+		}
+		if(productorSeleccionado == null){
+			throw new WrongValueException(comboFabricantes,"Se debe seleccionar un productor");
+		}
+		if(caracteristicas == null || caracteristicas.isEmpty()){
+			throw new WrongValueException(listboxCaracteristicas,"Se debe agregar al menos una Caracteristica");
+		}
+		if(model.getVariantes() == null || model.getVariantes().isEmpty()){
+			throw new WrongValueException(listboxVariante,"Debe agregar al menos una varidad del producto");
+		}
 	}
 	
 	public void onEliminarVariante(){
@@ -225,13 +246,22 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 
 	
 
-	public Fabricante getFabricanteSeleccionado() {
-		return fabricanteSeleccionado;
+
+
+
+
+	public Fabricante getProductorSeleccionado() {
+		return productorSeleccionado;
 	}
 
-	public void setFabricanteSeleccionado(Fabricante fabricanteSeleccionado) {
-		this.fabricanteSeleccionado = fabricanteSeleccionado;
+
+
+	public void setProductorSeleccionado(Fabricante productorSeleccionado) {
+		this.productorSeleccionado = productorSeleccionado;
 	}
+
+
+
 	public List<Caracteristica> getCaracteristicas() {
 		return caracteristicas;
 	}
