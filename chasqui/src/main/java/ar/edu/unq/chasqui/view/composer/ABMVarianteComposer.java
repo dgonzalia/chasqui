@@ -1,5 +1,12 @@
 package ar.edu.unq.chasqui.view.composer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.ServletContext;
 
 import org.zkforge.ckez.CKeditor;
@@ -8,12 +15,17 @@ import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Intbox;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
@@ -22,9 +34,11 @@ import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.services.impl.FileSaver;
+import ar.edu.unq.chasqui.view.genericEvents.Refresher;
+import ar.edu.unq.chasqui.view.renders.ImagenesRender;
 
 @SuppressWarnings({"serial","deprecation"})
-public class ABMVarianteComposer  extends GenericForwardComposer<Component>{
+public class ABMVarianteComposer  extends GenericForwardComposer<Component> implements Refresher{
 
 	
 	private AnnotateDataBinder binder;
@@ -33,13 +47,15 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component>{
 	private Usuario usuarioLogueado;
 	private Variante model;
 	private Producto producto;
-	private Imagen imagen;
+	private List<Imagen> imagenes;
 	
 	private Intbox intboxPrecio;
 	private Intbox intboxStock;
 	private Textbox textboxNombre;
 	private CKeditor ckEditor;
 	private Fileupload uploadImagen;
+	private Listbox listImagenes;
+	
 	
 	public void doAfterCompose(Component c) throws Exception{
 		super.doAfterCompose(c);
@@ -47,12 +63,15 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component>{
 		model = (Variante) Executions.getCurrent().getArg().get("variante");
 		fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 		producto = (Producto) Executions.getCurrent().getArg().get("producto");
-		imagen = new Imagen();
+		c.addEventListener(Events.ON_CLICK, new BorrarImagenEventListener(this));
+		c.addEventListener(Events.ON_USER, new DescargarImagenEventListener(this));
+		imagenes = new ArrayList<Imagen>();
 		if(model == null){
 			model = new Variante();
-			imagen.setPath(usuarioLogueado.getPathImagen());
+			listImagenes.setItemRenderer(new ImagenesRender(c,true));
 		}else{
 			inicializarModoLectura();
+			listImagenes.setItemRenderer(new ImagenesRender(c,false));
 		}
 		binder = new AnnotateDataBinder(c);
 		binder.loadAll();
@@ -60,7 +79,8 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component>{
 	
 	
 	public void inicializarModoLectura(){
-		imagen.setPath(model.getPathDeImagen());
+		listImagenes.setDisabled(true);
+		imagenes.addAll(model.getImagenes());
 		intboxPrecio.setValue(model.getPrecio());
 		intboxStock.setValue(model.getStock());
 		textboxNombre.setValue(model.getNombre());
@@ -82,10 +102,32 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component>{
 			Messagebox.show("El archivo no es una imagen","Error", Messagebox.OK, Messagebox.ERROR);
 			return;
 		}
+		if(imagenes.size() == 3){
+			Messagebox.show("Solo está permitido hasta 3 imagenes por variedad del producto.");
+		}
+		
 		ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 		String path = context.getRealPath("/imagenes/");
-		imagen = fileSaver.guardarImagen(path +"/",usuarioLogueado.getUsername(),image.getContent().getName(),image.getContent().getByteData());
+		Imagen imagen = fileSaver.guardarImagen(path ,usuarioLogueado.getUsername(),image.getContent().getName(),image.getContent().getByteData());
+		imagen.setNombre(image.getContent().getName());
+		imagenes.add(imagen);
 		binder.loadAll();
+	}
+
+	
+	
+	public void refresh() {
+		this.binder.loadAll();
+		
+	}
+	
+	public void eliminarImagen(Imagen img){
+		imagenes.remove(img);
+		refresh();
+	}
+	
+	public void descargarImagen(Imagen img) throws IOException{
+		Filedownload.save(img.getPath(), null);
 	}
 
 	
@@ -97,19 +139,41 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component>{
 		
 	}
 
-	
-	
-	public Imagen getImagen() {
-		return imagen;
+
+	public List<Imagen> getImagenes() {
+		return imagenes;
 	}
 
 
-	public void setImagen(Imagen imagen) {
-		this.imagen = imagen;
+	public void setImagenes(List<Imagen> imagenes) {
+		this.imagenes = imagenes;
 	}
 	
+}
+
+class BorrarImagenEventListener implements EventListener<Event>{
+
+	ABMVarianteComposer composer;
+	public BorrarImagenEventListener(ABMVarianteComposer composer){
+		this.composer = composer;
+	}
 	
+	public void onEvent(Event event) throws Exception {
+		Imagen img = (Imagen) event.getData();
+		composer.eliminarImagen(img);
+	}
 	
-	
-	
+}
+
+
+class DescargarImagenEventListener implements EventListener<Event>{
+	ABMVarianteComposer composer;
+	public DescargarImagenEventListener(ABMVarianteComposer composer){
+		this.composer = composer;
+	}
+	public void onEvent(Event event) throws Exception {
+		Imagen img = (Imagen) event.getData();
+		composer.descargarImagen(img);
+		
+	}
 }

@@ -30,6 +30,7 @@ import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
+import ar.edu.unq.chasqui.services.impl.FileSaver;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -57,6 +58,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
 		comp.addEventListener(Events.ON_NOTIFY, new EnvioEmailListener(this));
+		
 		
 	}
 	
@@ -108,14 +110,21 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		v.setStock(5);
 		v.setPrecio(10);
 		v.setNombre("Sarasa");
-		v.setPathDeImagen("/imagenes/"+user.getUsername()+"/perfil.jpg");
+		List<Imagen>imagenes = new ArrayList<Imagen>();
+//		Imagen img2 = new Imagen();
+//		img2.setNombre("perfil.jpg");
+//		img2.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
+//		imagenes.add(img2);
+		v.setImagenes(imagenes);
 		List<Variante>h = new ArrayList<Variante>();
 		h.add(v);
 		p.setVariantes(h);
 		user.setCategorias(categorias);
 		user.setProductos(productos);
 		user.setFabricantes(fss);
-		img.setPath("/imagenes/"+user.getUsername()+"/perfil.jpg");
+		
+		img.setNombre("perfil.jpg");
+		img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
 		user.setPathImagen(img.getPath());
 		service.guardarUsuario(user);
 		Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);

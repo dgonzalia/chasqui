@@ -1,9 +1,11 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.List;
+
 public class Variante {
 
 	private Integer id;
-	private String pathDeImagen;
+	private List<Imagen> imagenes;
 	private String descripcion;
 	private Integer stock;
 	private Integer precio;
@@ -17,12 +19,7 @@ public class Variante {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getPathDeImagen() {
-		return pathDeImagen;
-	}
-	public void setPathDeImagen(String pathDeImagen) {
-		this.pathDeImagen = pathDeImagen;
-	}
+	
 	public Integer getStock() {
 		return stock;
 	}
@@ -47,6 +44,13 @@ public class Variante {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	public List<Imagen> getImagenes() {
+		return imagenes;
+	}
+	public void setImagenes(List<Imagen> imagenes) {
+		this.imagenes = imagenes;
+	}
+	
 	
 	
 	

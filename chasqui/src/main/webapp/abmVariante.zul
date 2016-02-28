@@ -14,34 +14,45 @@ apply="ar.edu.unq.chasqui.view.composer.ABMVarianteComposer" height="auto" width
 		<listheader/>
 	</listhead>
 	<listitem>
-		<listcell label="@{c:l('zk.listheader.label.abmCategoria.nombre')}"/>
+		<listcell label="${c:l('zk.listheader.label.abmCategoria.nombre')}"/>
 		<listcell>
 			<textbox id="textboxNombre" placeholder="I.E: Mermelada - Frutilla"/>
 		</listcell>
 	</listitem>
 	<listitem>
-		<listcell label="@{c:l('zk.listcell.label.abmProducto.precio')}"/>	
+		<listcell label="${c:l('zk.listcell.label.abmProducto.precio')}"/>	
 		<listcell>
 			<intbox id="intboxPrecio" placeholder="I.E: 10" value="5"/>
 		</listcell>
 	</listitem>
 	<listitem>
-		<listcell label="@{c:l('zk.listcell.label.abmProducto.stock')}"/>
+		<listcell label="${c:l('zk.listcell.label.abmProducto.stock')}"/>
 		<listcell>
 			<intbox id="intboxStock" placeholder="I.E: 4" value="12"/>
 		</listcell>
 	</listitem>
-	<listitem>
-		<listcell label="@{c:l('zk.listcell.label.abmProducto.imagen') }"/>
+</listbox>
+<hbox>
+<listbox id="listImagenes" width="95%" model="@{varianteWindow$composer.imagenes}"  rows="3">
+	<listhead>
+		<listheader label="${c:l('zk.listcell.label.abmProducto.imagen') }"/>
+		<listheader label="${c:l('zk.listheader.label.administracion.acciones')}"/>
+	</listhead>
+	<listitem self="@{each=imagen}">
+		<listcell label="@{imagen.getNombre}"/>
 		<listcell>
 			<hbox>
-				<image style="height:50px; width:50px" src="@{varianteWindow$composer.imagen.getPath}"/>
+				<image src="/imagenes/trash.png"/>
 				<space spacing="10px"/>
-				<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>				
+				<image src="/imagenes/download.png" />
 			</hbox>
 		</listcell>
-	</listitem>
+	</listitem>	
 </listbox>
+<div	align="center">
+	<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen" />
+</div>
+</hbox>
 
 
 <div>
