@@ -31,7 +31,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 			<listcell label="${c:l('zk.listcell.label.abmProducto.fabricante') }"/>
 			<listcell>
 				<hbox>
-					<combobox id="comboFabricantes" model="@{productosWindow$composer.usuario.fabricantes}" selectedItem="@{productosWindow@composer.fabricanteSeleccionado }"/>
+					<combobox id="comboFabricantes" model="@{productosWindow$composer.usuario.fabricantes}" selectedItem="@{productosWindow$composer.productorSeleccionado }"/>
 					<toolbarbutton image="/imagenes/plus.png" id="botonAgregarFabricante" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
 				</hbox>
 			</listcell>

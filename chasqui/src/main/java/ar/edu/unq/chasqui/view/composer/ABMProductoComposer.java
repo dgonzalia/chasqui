@@ -1,6 +1,7 @@
 package ar.edu.unq.chasqui.view.composer;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +23,12 @@ import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Categoria;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
-import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
+import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.view.genericEvents.RefreshListener;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 
@@ -40,19 +43,20 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Toolbarbutton botonAgregarFabricante;
 	private Toolbarbutton botonAgregarCategoria;
 	private Listbox listboxCaracteristicas;
+	private Listbox listboxVariante;
 	private Toolbarbutton botonGuardar;
 	private Toolbarbutton botonCancelar;
 	private Button botonAgregarVariante;
 	private Textbox agregarCaractTextbox;
-//	private Button agregarCaractButton;
 	private Popup popUpCaracteristica;
 	private Producto model;
 	private List<Caracteristica> caracteristicas;
 	private Categoria categoriaSeleccionada;
 	private Caracteristica caracteristicaSeleccionada;
 	private Variante varianteSeleccionada;
-	private Fabricante fabricanteSeleccionado;
-	private Cliente usuario;
+	private Fabricante productorSeleccionado;
+	private List<Variante>varianteRollback;
+	private Vendedor usuario;
 	private boolean modoEdicion;
 	
 	
@@ -63,7 +67,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		super.doAfterCompose(comp);
 		model = (Producto) Executions.getCurrent().getArg().get("producto");
 		Integer accion = (Integer) Executions.getCurrent().getArg().get("accion");
-		usuario = (Cliente) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		comp.addEventListener(Events.ON_RENDER, new RefreshListener<ABMProductoComposer>(this));
 		inicializarVentana(accion);	
 		binder = new AnnotateDataBinder(comp);
@@ -105,18 +109,17 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		botonGuardar.setDisabled(true);
 		listboxCaracteristicas.setDisabled(true);
 		botonAgregarVariante.setDisabled(true);
-//		intboxPrecio.setDisabled(true);
-//		ckEditor.setCustomConfigurationsPath("/js/ckEditorReadOnly.js");
 	}
 	
 	public void inicializarModoEdicion(){
 		modoEdicion= true;
 		if(model.getCategoria() != null && model.getFabricante() != null){
-			comboCategorias.setValue(model.getCategoria().getNombre());
-			comboFabricantes.setValue(model.getFabricante().getNombre());			
+			categoriaSeleccionada = model.getCategoria();
+			productorSeleccionado = model.getFabricante();			
 		}
 		caracteristicas = model.getCaracteristicas();
 		nombreProducto.setValue(model.getNombre());
+		varianteRollback = new ArrayList<Variante>( model.getVariantes());
 	}
 
 	
@@ -126,14 +129,49 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	}
 	
 	public void onClick$botonGuardar(){
+		validaciones();
 		// guardar en DB
 		//validar los datos
 		
 		
 	}
 	
+	private void validaciones(){
+		String nombre = nombreProducto.getValue();
+		if(StringUtils.isEmpty(nombre)){
+			throw new WrongValueException(nombreProducto,"El nombre no debe ser vacio!");
+		}
+		if(categoriaSeleccionada == null){
+			throw new WrongValueException(comboCategorias,"Se debe seleccionar una categoria");
+		}
+		if(productorSeleccionado == null){
+			throw new WrongValueException(comboFabricantes,"Se debe seleccionar un productor");
+		}
+		if(caracteristicas == null || caracteristicas.isEmpty()){
+			throw new WrongValueException(listboxCaracteristicas,"Se debe agregar al menos una Caracteristica");
+		}
+		if(model.getVariantes() == null || model.getVariantes().isEmpty()){
+			throw new WrongValueException(listboxVariante,"Debe agregar al menos una varidad del producto");
+		}
+	}
+	
+	public void onEliminarVariante(){
+		model.getVariantes().remove(varianteSeleccionada);
+		this.binder.loadAll();
+	}
+	
 	public void onClick$botonCancelar(){
+		rollbackProducto();
 		this.self.detach();
+	}
+	
+	public void onClose$productosWindow(){
+		rollbackProducto();
+		this.self.detach();
+	}
+	
+	private void rollbackProducto(){
+		model.setVariantes(varianteRollback);
 	}
 	
 	
@@ -210,24 +248,33 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 
 	
 
-	public Fabricante getFabricanteSeleccionado() {
-		return fabricanteSeleccionado;
+
+
+
+
+	public Fabricante getProductorSeleccionado() {
+		return productorSeleccionado;
 	}
 
-	public void setFabricanteSeleccionado(Fabricante fabricanteSeleccionado) {
-		this.fabricanteSeleccionado = fabricanteSeleccionado;
+
+
+	public void setProductorSeleccionado(Fabricante productorSeleccionado) {
+		this.productorSeleccionado = productorSeleccionado;
 	}
+
+
+
 	public List<Caracteristica> getCaracteristicas() {
 		return caracteristicas;
 	}
 	public void setCaracteristicas(List<Caracteristica> caracteristicas) {
 		this.caracteristicas = caracteristicas;
 	}
-	public Cliente getUsuario() {
+	public Vendedor getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Cliente usuario) {
+	public void setUsuario(Vendedor usuario) {
 		this.usuario = usuario;
 	}
 
