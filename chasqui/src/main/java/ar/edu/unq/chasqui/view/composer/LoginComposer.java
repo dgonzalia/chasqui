@@ -2,10 +2,10 @@ package ar.edu.unq.chasqui.view.composer;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
+import org.joda.time.DateTime;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
@@ -28,9 +28,8 @@ import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
-import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
-import ar.edu.unq.chasqui.services.impl.FileSaver;
+import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -72,12 +71,12 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 			binder.loadAll();
 			return;
 		};
-		Usuario user = new Usuario();
+		Vendedor user = new Vendedor();
 		user.setUsername(usernameLoggin.getValue());
-		user.setKilometroSeleccionado(4);
-		user.setMontoMinimoCompra(40);
+		user.setDistanciaCompraColectiva(4);
+		user.setMontoMinimoPedido(40);
 		user.setPassword(password);
-		user.setFechaProximaEntrega(new Date());
+		user.setFechaCierrePedido(new DateTime());
 		user.setEmail("jfflores90@gmail");
 		Imagen img = new Imagen();
 		List<Categoria>categorias = new ArrayList<Categoria>();
@@ -120,12 +119,11 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		h.add(v);
 		p.setVariantes(h);
 		user.setCategorias(categorias);
-		user.setProductos(productos);
 		user.setFabricantes(fss);
 		
 		img.setNombre("perfil.jpg");
 		img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
-		user.setPathImagen(img.getPath());
+		user.setImagenPerfil(img);
 		service.guardarUsuario(user);
 		Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
 		Executions.sendRedirect("administracion.zul");

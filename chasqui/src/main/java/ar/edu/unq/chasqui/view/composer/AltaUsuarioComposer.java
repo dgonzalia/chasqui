@@ -16,7 +16,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Cliente;
 
 @SuppressWarnings({"serial","deprecation"})
 public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
@@ -102,7 +102,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		Clients.clearBusy();
 	}
 	
-	public void llenarCombosConUser(Usuario user){
+	public void llenarCombosConUser(Cliente user){
 		textboxUsername.setValue(user.getUsername());
 		textboxEmail.setValue(user.getEmail());
 	}
@@ -136,7 +136,7 @@ class GuardarUsuarioEventListener implements EventListener<Event>{
 			}else{
 				Map<String,Object> params = (Map<String,Object>) event.getData();
 				if(params.get("accion").equals("editar")){
-					composer.llenarCombosConUser((Usuario) params.get("usuario"));					
+					composer.llenarCombosConUser((Cliente) params.get("usuario"));					
 				}
 				if(params.get("accion").equals("eliminar")){
 					composer.limpiarCampos();

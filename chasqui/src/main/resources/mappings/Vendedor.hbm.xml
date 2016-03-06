@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 06/03/2016 17:10:57 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <joined-subclass name="ar.edu.unq.chasqui.model.Vendedor" extends="ar.edu.unq.chasqui.model.Usuario" table="VENDEDOR" lazy="false">
+        <key>
+            <column name="ID" />
+        </key>
+        <property name="id" type="java.lang.Integer">
+            <column name="ID" />
+        </property>
+        <property name="montoMinimoPedido" type="java.lang.Integer">
+            <column name="MONTO_MINIMO_PEDIDO" />
+        </property>
+        <property name="fechaCierrePedido" type="org.joda.time.DateTime">
+            <column name="FECHA_CIERRE_PEDIDO" />
+        </property>
+        <property name="msjCierrePedido" type="java.lang.String">
+            <column name="MSJ_CIERRE_PEDIDO" />
+        </property>
+        <property name="distanciaCompraColectiva" type="java.lang.Integer">
+            <column name="DISTANCIA_COMPRA_COLECTIVA" />
+        </property>
+        <many-to-one name="mapaZonas" class="ar.edu.unq.chasqui.model.Imagen" fetch="join">
+            <column name="MAPA_ZONAS" />
+        </many-to-one>
+        <list name="categorias" inverse="false" table="CATEGORIA" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ar.edu.unq.chasqui.model.Categoria" />
+        </list>
+        <list name="fabricantes" inverse="false" table="FABRICANTE" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ar.edu.unq.chasqui.model.Fabricante" />
+        </list>
+    </joined-subclass>
+</hibernate-mapping>

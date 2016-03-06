@@ -35,13 +35,14 @@ import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Imagen;
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.services.impl.FileSaver;
 
 @SuppressWarnings({"serial","deprecation"})
 public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	
-	private Usuario usuarioLogueado;
+	private Vendedor usuarioLogueado;
 	private Window configuracionWindow;
 	private AnnotateDataBinder binder;
 	private Toolbarbutton buttonGuardar;
@@ -59,24 +60,24 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	private Imagen imagen;
 	
 	public void doAfterCompose(Component comp) throws Exception{
-		usuarioLogueado =(Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuarioLogueado =(Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		if(usuarioLogueado != null){
 			super.doAfterCompose(comp);
 			imagen = new Imagen();
-			imagen.setPath(usuarioLogueado.getPathImagen());
+			imagen.setPath(usuarioLogueado.getImagenPerfil().getPath());
 			fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 			binder = new AnnotateDataBinder(comp);
-			kilometroSeleccionado = usuarioLogueado.getKilometroSeleccionado();
-			DateTime d = new DateTime(usuarioLogueado.getFechaProximaEntrega());
+			kilometroSeleccionado = usuarioLogueado.getDistanciaCompraColectiva();
+			DateTime d = new DateTime(usuarioLogueado.getFechaCierrePedido());
 			DateTime hoy = new DateTime();
 			if(hoy.isBefore(d)){
 				d.plusMonths(1);
-				usuarioLogueado.setFechaProximaEntrega(new Date(d.getMillis()));
+				usuarioLogueado.setFechaCierrePedido(new DateTime(d.getMillis()));
 				dateProximaEntrega.setValue(new Date(d.getMillis()));
 			}else{
-				dateProximaEntrega.setValue(usuarioLogueado.getFechaProximaEntrega());
+				dateProximaEntrega.setValue(new Date (usuarioLogueado.getFechaCierrePedido().getMillis()));
 			}
-			intboxMontoMinimo.setValue(usuarioLogueado.getMontoMinimoCompra());
+			intboxMontoMinimo.setValue(usuarioLogueado.getMontoMinimoPedido());
 			comp.addEventListener(Events.ON_NOTIFY, new SubirArchivoListener(this));
 			binder.loadAll();			
 		}
@@ -154,11 +155,11 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	}
 	
 
-	public Usuario getUsuarioLogueado() {
+	public Vendedor getUsuarioLogueado() {
 		return usuarioLogueado;
 	}
 
-	public void setUsuarioLogueado(Usuario usuarioLogueado) {
+	public void setUsuarioLogueado(Vendedor usuarioLogueado) {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 	public Window getConfiguracionWindow() {

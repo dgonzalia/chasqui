@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 06/03/2016 17:10:57 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="ar.edu.unq.chasqui.model.Categoria" table="CATEGORIA">
+    <class name="ar.edu.unq.chasqui.model.Zona" table="ZONA">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
             <generator class="assigned" />
@@ -11,12 +11,11 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
-        <list name="productos" inverse="false" table="PRODUCTO" lazy="true">
-            <key>
-                <column name="ID" />
-            </key>
-            <list-index></list-index>
-            <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
-        </list>
+        <property name="fechaEntrega" type="org.joda.time.DateTime">
+            <column name="FECHA_ENTREGA" />
+        </property>
+        <property name="descripcion" type="java.lang.String">
+            <column name="DESCRIPCION" />
+        </property>
     </class>
 </hibernate-mapping>

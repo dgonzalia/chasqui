@@ -31,7 +31,7 @@ import org.zkoss.zul.Textbox;
 
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.services.impl.FileSaver;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
@@ -44,7 +44,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	private AnnotateDataBinder binder;
 	
 	private FileSaver fileSaver;
-	private Usuario usuarioLogueado;
+	private Cliente usuarioLogueado;
 	private Variante model;
 	private Producto producto;
 	private List<Imagen> imagenes;
@@ -59,7 +59,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	
 	public void doAfterCompose(Component c) throws Exception{
 		super.doAfterCompose(c);
-		usuarioLogueado =(Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuarioLogueado =(Cliente) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		model = (Variante) Executions.getCurrent().getArg().get("variante");
 		fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 		producto = (Producto) Executions.getCurrent().getArg().get("producto");

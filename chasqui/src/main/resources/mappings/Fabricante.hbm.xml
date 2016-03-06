@@ -1,12 +1,32 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/02/2016 16:58:12 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 06/03/2016 17:10:57 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="ar.edu.unq.chasqui.model.Fabricante" table="FABRICANTE">
-        <id name="nombre" type="java.lang.String">
-            <column name="NOMBRE" />
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
             <generator class="assigned" />
         </id>
+        <property name="nombre" type="java.lang.String">
+            <column name="NOMBRE" />
+        </property>
+        <many-to-one name="direccion" class="ar.edu.unq.chasqui.model.Direccion" fetch="join">
+            <column name="DIRECCION" />
+        </many-to-one>
+        <list name="productos" inverse="false" table="PRODUCTO" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
+        </list>
+        <list name="caracteristicas" inverse="false" table="CARACTERISTICA" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="ar.edu.unq.chasqui.model.Caracteristica" />
+        </list>
     </class>
 </hibernate-mapping>

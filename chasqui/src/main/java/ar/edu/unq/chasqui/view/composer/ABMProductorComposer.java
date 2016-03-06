@@ -12,7 +12,8 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 
 import ar.edu.unq.chasqui.model.Fabricante;
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.model.Cliente;
 
 @SuppressWarnings({"serial","deprecation"})
 public class ABMProductorComposer extends GenericForwardComposer<Component> {
@@ -21,12 +22,12 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> {
 	private Textbox textboxNombreProductor;
 	private AnnotateDataBinder binder;
 	private Toolbarbutton buttonGuardar;
-	private Usuario usuario;
+	private Vendedor usuario;
 	private Fabricante model;
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
-		usuario = (Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		model = (Fabricante) Executions.getCurrent().getArg().get("productor");
 		if(model != null){
 			inicializarModoLectura();

@@ -24,7 +24,7 @@ import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.view.genericEvents.RefreshListener;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
@@ -52,7 +52,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Caracteristica caracteristicaSeleccionada;
 	private Variante varianteSeleccionada;
 	private Fabricante fabricanteSeleccionado;
-	private Usuario usuario;
+	private Cliente usuario;
 	private boolean modoEdicion;
 	
 	
@@ -63,7 +63,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		super.doAfterCompose(comp);
 		model = (Producto) Executions.getCurrent().getArg().get("producto");
 		Integer accion = (Integer) Executions.getCurrent().getArg().get("accion");
-		usuario = (Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuario = (Cliente) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		comp.addEventListener(Events.ON_RENDER, new RefreshListener<ABMProductoComposer>(this));
 		inicializarVentana(accion);	
 		binder = new AnnotateDataBinder(comp);
@@ -223,11 +223,11 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	public void setCaracteristicas(List<Caracteristica> caracteristicas) {
 		this.caracteristicas = caracteristicas;
 	}
-	public Usuario getUsuario() {
+	public Cliente getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(Cliente usuario) {
 		this.usuario = usuario;
 	}
 

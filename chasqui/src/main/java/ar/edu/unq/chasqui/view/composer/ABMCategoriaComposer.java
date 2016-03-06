@@ -11,7 +11,8 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 
 import ar.edu.unq.chasqui.model.Categoria;
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Vendedor;
 
 @SuppressWarnings({"serial","deprecation"})
 public class ABMCategoriaComposer extends GenericForwardComposer<Component> {
@@ -20,14 +21,14 @@ public class ABMCategoriaComposer extends GenericForwardComposer<Component> {
 	private Toolbarbutton buttonGuardar;
 	private Textbox textboxNombreCategoria;
 	private AnnotateDataBinder binder;
-	private Usuario usuario;
+	private Vendedor usuario;
 	
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		model = (Categoria) Executions.getCurrent().getArg().get("categoria");
-		usuario = (Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		if(model != null){
 			iniciarModoEdicion();
 		}

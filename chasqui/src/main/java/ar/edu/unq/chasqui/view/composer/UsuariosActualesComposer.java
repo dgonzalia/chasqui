@@ -16,7 +16,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.view.renders.UsuarioRenderer;
 
 @SuppressWarnings({"serial","deprecation"})
@@ -24,10 +24,10 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 	
 	private AnnotateDataBinder binder;
 	private Listbox listboxUsuarios;
-	private List<Usuario>usuarios;
+	private List<Cliente>usuarios;
 	private Window altaUsuarioWindow;
 	private Window administracionWindow;
-	private Usuario usuarioSeleccionado;
+	private Cliente usuarioSeleccionado;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
@@ -36,12 +36,12 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		administracionWindow = (Window) findAdministracionWindow(comp);
 		listboxUsuarios.setItemRenderer(new UsuarioRenderer((Window) this.self));
 		conectarVentanas(administracionWindow);
-		Usuario user = new Usuario();
+		Cliente user = new Cliente();
 		user.setUsername("EvilShun");
 		user.setEmail("jfflores90@gmail.com");
 		Events.sendEvent(Events.ON_USER,altaUsuarioWindow,this.self);
 		comp.addEventListener(Events.ON_NOTIFY, new AccionEventListener(this));
-		usuarios = new ArrayList<Usuario>();
+		usuarios = new ArrayList<Cliente>();
 		usuarios.add(user);
 		binder.loadAll();
 	}
@@ -65,14 +65,14 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		return null;
 	}
 	
-	public void editar(Usuario u){
+	public void editar(Cliente u){
 		Map<String,Object>params = new HashMap<String,Object>();
 		params.put("accion", "editar");
 		params.put("usuario", u);
 		Events.sendEvent(Events.ON_USER,altaUsuarioWindow,params);
 	}
 	
-	public void eliminar(final Usuario u){
+	public void eliminar(final Cliente u){
 		
 		Messagebox.show(Labels.getLabel("zk.message.eliminar.usuario",new String[]{u.getUsername()}),
 				Labels.getLabel("zk.tittle.eliminar.usuario"), Messagebox.YES | Messagebox.NO,Messagebox.QUESTION, new EventListener<Event>() {
@@ -99,17 +99,17 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 	
 	
 
-	public List<Usuario> getUsuarios() {
+	public List<Cliente> getUsuarios() {
 		return usuarios;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
+	public void setUsuarios(List<Cliente> usuarios) {
 		this.usuarios = usuarios;
 	}
-	public Usuario getUsuarioSeleccionado() {
+	public Cliente getUsuarioSeleccionado() {
 		return usuarioSeleccionado;
 	}
-	public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
+	public void setUsuarioSeleccionado(Cliente usuarioSeleccionado) {
 		this.usuarioSeleccionado = usuarioSeleccionado;
 	}
 
@@ -126,10 +126,10 @@ class AccionEventListener implements EventListener<Event>{
 			@SuppressWarnings("unchecked")
 			Map<String,Object>param = (Map<String,Object>)event.getData();
 			if(param.get("accion").equals("editar")){
-				composer.editar((Usuario)param.get("usuario"));
+				composer.editar((Cliente)param.get("usuario"));
 			}
 			if(param.get("accion").equals("eliminar")){
-				composer.eliminar((Usuario) param.get("usuario"));
+				composer.eliminar((Cliente) param.get("usuario"));
 			}
 		}
 		

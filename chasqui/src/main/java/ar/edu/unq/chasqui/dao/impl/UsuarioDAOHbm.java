@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Usuario;
 
 public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {

@@ -21,8 +21,9 @@ import org.zkoss.zul.Window;
 import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Usuario;
-import ar.edu.unq.chasqui.model.UsuarioROOT;
+import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 import ar.edu.unq.chasqui.view.renders.CategoriaRenderer;
 import ar.edu.unq.chasqui.view.renders.ProductoRenderer;
@@ -49,13 +50,13 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Include configuracionInclude;
 	private Include altaUsuarioInclude;
 	private Include usuariosActualesInclude;
-	private Usuario usuarioLogueado;
+	private Vendedor usuarioLogueado;
 	private Div divCategoria;
 	private Div divProducto;
 	private Div divProductores;
 	
 	public void doAfterCompose(Component comp) throws Exception{
-		usuarioLogueado = (Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		if(usuarioLogueado == null){
 			Executions.sendRedirect("/");
 			return;
@@ -63,7 +64,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
-		if(usuarioLogueado instanceof UsuarioROOT){
+		if(usuarioLogueado instanceof Usuario){
 			inicializacionUsuarioROOT();
 		}else{
 			inicializacionUsuarioAdministrador();		
@@ -181,13 +182,11 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	}
 	
 	private void validarCategoriaValidaParaEliminar(Categoria c){
-		for(Producto p : usuarioLogueado.getProductos()){
-			if(p.getCategoria().equals(c)){
+		if(c.getProductos().size() > 0){
 				Messagebox.show("La categoria: '" + c.getNombre() + "' aún tiene productos asociados a ella. desasocie los mismos para eliminar la categoria"
 						, "Error!", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
-		}
 		// eliminar Categoria
 	}
 	
@@ -202,7 +201,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	
 	public void onEliminarProducto(Producto p){
 		// mostrar cartel
-		usuarioLogueado.getProductos().remove(p);
+		p.getCategoria().eliminarProducto(p);
 		alert("El producto: '" + p.getNombre() + "' fue eliminado con exito!");
 	}
 	
@@ -238,18 +237,18 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	
 	public void eliminarProductor(Fabricante f){
 		// mostrar cartel
-		usuarioLogueado.getFabricantes().remove(f);
+		usuarioLogueado.eliminarProductor(f);
 		alert("El productor: '" + f.getNombre() + "' fue eliminado con exito!");
 		this.binder.loadAll();
 	}
 	
 	
 
-	public Usuario getUsuarioLogueado() {
+	public Vendedor getUsuarioLogueado() {
 		return usuarioLogueado;
 	}
 
-	public void setUsuarioLogueado(Usuario usuarioLogueado) {
+	public void setUsuarioLogueado(Vendedor usuarioLogueado) {
 		this.usuarioLogueado = usuarioLogueado;
 	}
 
@@ -337,7 +336,7 @@ class RefreshEventListener implements EventListener<Event>{
 			}
 			if(event.getData() instanceof Producto){
 				Producto p= (Producto) event.getData();
-				composer.getUsuarioLogueado().getProductos().add(p);
+				p.getCategoria().agregarProducto(p);
 			}
 		}
 		composer.refresh();
