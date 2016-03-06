@@ -64,7 +64,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 		if(usuarioLogueado != null){
 			super.doAfterCompose(comp);
 			imagen = new Imagen();
-			imagen.setPath(usuarioLogueado.getImagenPerfil().getPath());
+			imagen.setPath(usuarioLogueado.getImagenPerfil());
 			fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 			binder = new AnnotateDataBinder(comp);
 			kilometroSeleccionado = usuarioLogueado.getDistanciaCompraColectiva();

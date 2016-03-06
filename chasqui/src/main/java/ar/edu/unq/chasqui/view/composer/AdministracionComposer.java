@@ -1,6 +1,8 @@
 package ar.edu.unq.chasqui.view.composer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
@@ -21,8 +23,6 @@ import org.zkoss.zul.Window;
 import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
-import ar.edu.unq.chasqui.model.Cliente;
-import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 import ar.edu.unq.chasqui.view.renders.CategoriaRenderer;
@@ -55,6 +55,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Div divProducto;
 	private Div divProductores;
 	
+	private List<Producto>productos;
+	
 	public void doAfterCompose(Component comp) throws Exception{
 		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		if(usuarioLogueado == null){
@@ -64,7 +66,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
-		if(usuarioLogueado instanceof Usuario){
+		if(usuarioLogueado.isRoot()){
 			inicializacionUsuarioROOT();
 		}else{
 			inicializacionUsuarioAdministrador();		
@@ -82,7 +84,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		radioProductores.setDisabled(true);
 		listboxCategorias.setVisible(false);
 		radioConfiguracion.setDisabled(true);
-		administracionWindow.setVisible(false);
+		administracionWindow.setVisible(true);
 		onClick$radioAltaUsuario();
 	}
 	
@@ -92,6 +94,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		listboxProductores.setItemRenderer(new ProductorRenderer(this.self));
 		administracionWindow.setVisible(true);
 		radioCategorias.setChecked(true);
+		productos = new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
 		onClick$radioCategorias();			
 	}
 	
@@ -202,6 +205,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	public void onEliminarProducto(Producto p){
 		// mostrar cartel
 		p.getCategoria().eliminarProducto(p);
+		productos.remove(p);
 		alert("El producto: '" + p.getNombre() + "' fue eliminado con exito!");
 	}
 	
@@ -266,6 +270,17 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		this.productoSeleccionado = productoSeleccionado;
 	}
 
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+
+	
+	
+	
 }
 
 
@@ -337,6 +352,7 @@ class RefreshEventListener implements EventListener<Event>{
 			if(event.getData() instanceof Producto){
 				Producto p= (Producto) event.getData();
 				p.getCategoria().agregarProducto(p);
+				composer.getProductos().add(p);
 			}
 		}
 		composer.refresh();

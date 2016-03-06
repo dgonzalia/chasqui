@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 06/03/2016 17:10:57 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
+<!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping default-cascade="save-update">
     <class name="ar.edu.unq.chasqui.model.Pedido" table="PEDIDO">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="native" />
         </id>
         <property name="estado" type="java.lang.String">
             <column name="ESTADO" />
         </property>
         <many-to-one name="usuarioCreador" class="ar.edu.unq.chasqui.model.Cliente" fetch="join">
-            <column name="USUARIO_CREADOR" />
+            <column name="USUARIOCREADOR" />
         </many-to-one>
         <property name="fechaCreacion" type="org.joda.time.DateTime">
-            <column name="FECHA_CREACION" />
+            <column name="FECHACREACION" />
         </property>
         <many-to-one name="direccionEntrega" class="ar.edu.unq.chasqui.model.Direccion" fetch="join">
-            <column name="DIRECCION_ENTREGA" />
+            <column name="DIRECCIONENTREGA" />
         </many-to-one>
         <property name="montoMinimo" type="java.lang.Integer">
-            <column name="MONTO_MINIMO" />
+            <column name="MONTOMINIMO" />
         </property>
         <property name="montoActual" type="java.lang.Integer">
-            <column name="MONTO_ACTUAL" />
+            <column name="MONTOACTUAL" />
         </property>
-        <list name="productos" inverse="false" table="PRODUCTO" lazy="true">
-            <key>
-                <column name="ID" />
-            </key>
-            <list-index></list-index>
-            <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
-        </list>
+<!--         <list name="productos" inverse="false" table="PRODUCTO" lazy="true" > -->
+<!--             <key> -->
+<!--                 <column name="ID" /> -->
+<!--             </key> -->
+<!--             <list-index></list-index> -->
+<!--             <one-to-many class="ar.edu.unq.chasqui.model.Producto"/> -->
+<!--         </list> -->
     </class>
 </hibernate-mapping>

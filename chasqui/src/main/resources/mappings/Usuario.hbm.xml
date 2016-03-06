@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 06/03/2016 17:10:57 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
+<!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping default-cascade="save-update">
     <class name="ar.edu.unq.chasqui.model.Usuario" table="USUARIO">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="native" />
         </id>
         <property name="username" type="java.lang.String">
             <column name="USERNAME" />
@@ -14,9 +14,7 @@
         <property name="password" type="java.lang.String">
             <column name="PASSWORD" />
         </property>
-        <many-to-one name="imagenPerfil" class="ar.edu.unq.chasqui.model.Imagen" fetch="join">
-            <column name="IMAGEN_PERFIL" />
-        </many-to-one>
+        <property name="imagenPerfil" column="IMAGEN_DE_PERFIL" type="java.lang.String"/>
         <property name="email" type="java.lang.String">
             <column name="EMAIL" />
         </property>

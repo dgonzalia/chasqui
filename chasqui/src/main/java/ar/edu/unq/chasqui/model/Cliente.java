@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Cliente extends Usuario{
 
-	private Integer id;
+	
 	private String nombre;
 	private String apellido;
 	private String telefonoFijo;
@@ -17,20 +17,16 @@ public class Cliente extends Usuario{
  
 	//GETs & SETs
 	
-	public Integer getId() {
-		return id;
-	}
-	
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
 	public String getNombre() {
 		return nombre;
 	}
 	
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+	public boolean isRoot(){
+		return false;
 	}
 	
 	public String getApellido() {

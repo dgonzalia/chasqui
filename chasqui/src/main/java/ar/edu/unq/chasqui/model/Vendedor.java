@@ -1,12 +1,13 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
 
 public class Vendedor extends Usuario{
 
-	private Integer id;
+	
 	private Integer montoMinimoPedido;
 	private DateTime fechaCierrePedido;
 	private String msjCierrePedido;
@@ -17,14 +18,6 @@ public class Vendedor extends Usuario{
 	
 	
 	//GETs & SETs
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public Integer getMontoMinimoPedido() {
 		return montoMinimoPedido;
@@ -106,11 +99,24 @@ public class Vendedor extends Usuario{
 		categorias.add(categoria);
 	}
 	
+	public List<Producto> obtenerProductos(){
+		List<Producto>p = new ArrayList<Producto>();
+		for(Categoria c :categorias){
+			p.addAll(c.getProductos());
+		}
+		return p;
+	}
+	
+	
 	public void notificarCierrePedido () {
 		//TODO
 	}
 	
 	public void notificarFechaEntrega() {
 		//TODO
+	}
+
+	public boolean isRoot() {
+		return false;
 	}
 }

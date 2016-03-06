@@ -120,13 +120,13 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		p.setVariantes(h);
 		user.setCategorias(categorias);
 		user.setFabricantes(fss);
-		
+		c.setProductos(productos);
 		img.setNombre("perfil.jpg");
 		img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
-		user.setImagenPerfil(img);
+		user.setImagenPerfil(img.getPath());
 		service.guardarUsuario(user);
 		Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
-		Executions.sendRedirect("administracion.zul");
+		Executions.sendRedirect("/administracion.zul");
 		// validar Usuario y re enviar a la pagina de adm 
 		// mandando por session al usuario 
 		

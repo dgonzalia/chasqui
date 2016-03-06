@@ -25,7 +25,7 @@ visible="false" width="100%" height="100%">
 			<row zclass="none">
 				<hbox>
 					<space spacing="5px"/>
-					<image src="@{administracionWindow$composer.usuarioLogueado.getPathImagen}" height="100px" width="100px"/>
+					<image src="@{administracionWindow$composer.usuarioLogueado.getImagenPerfil}" height="100px" width="100px"/>
 				</hbox>
 				<div>
 					<label value="${c:l('zk.label.administrador')}" style="font-size:30px;font-weight:bold; color:white"/>
@@ -102,7 +102,7 @@ visible="false" width="100%" height="100%">
 		<div id="divCategoria" visible="false">
 			<vbox>
 				<listbox id="listboxCategorias" model="@{administracionWindow$composer.usuarioLogueado.categorias}"
-				selectedItem="${administracionWindow$composer.categoriaSeleccionada}" mold="paging" pageSize="10" rows="5">
+				selectedItem="${administracionWindow$composer.categoriaSeleccionada}" mold="paging" pageSize="10" rows="10">
 					<listhead>
 						<listheader label="${c:l('zk.listheader.label.administracion.nombre')}" sort="auto"/>
 						<listheader label="${c:l('zk.listheader.label.administracion.acciones')}" sort="auto"/>
@@ -112,8 +112,8 @@ visible="false" width="100%" height="100%">
 		</div>
 		<div visible="false" id="divProducto">
 			<vbox>
-				<listbox id="listboxProductos" model="@{administracionWindow$composer.usuarioLogueado.productos}" mold="paging" pageSize="10"
-				selectedItem="${administracionWindow$composer.productoSeleccionado}" rows="5">
+				<listbox id="listboxProductos" model="@{administracionWindow$composer.productos}" mold="paging" pageSize="10"
+				selectedItem="${administracionWindow$composer.productoSeleccionado}" rows="10">
 					<listhead>
 						<listheader label="${c:l('zk.listheader.label.administracion.producto')}" sort="auto"/>
 						<listheader label="${c:l('zk.listheader.label.administracion.producto.fabricante')}" sort="auto"/>
@@ -125,7 +125,7 @@ visible="false" width="100%" height="100%">
 		</div>
 		<div id="divProductores" visible="false">
 			<listbox id="listboxProductores" model="@{administracionWindow$composer.usuarioLogueado.fabricantes}" mold="paging" pageSize="10" 
-			rows="5">
+			rows="10">
 				<listhead>
 					<listheader label="${c:l('zk.listheader.label.administracion.productor')}" sort="auto"/>
 					<listheader label="${c:l('zk.listheader.label.administracion.acciones')}" sort="auto"/>

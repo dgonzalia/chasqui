@@ -5,11 +5,15 @@ public class Usuario {
 	private Integer id;
 	private String username;
 	private String password;
-	private Imagen imagenPerfil;
+	private String imagenPerfil;
 	private String email;
 	
 	
 	//GETs & SETs
+	
+	public boolean isRoot(){
+		return true;
+	}
 	
 	public String getUsername() {
 		return username;
@@ -43,11 +47,11 @@ public class Usuario {
 		this.id = id;
 	}
 
-	public Imagen getImagenPerfil() {
+	public String getImagenPerfil() {
 		return imagenPerfil;
 	}
 
-	public void setImagenPerfil(Imagen imagenPerfil) {
+	public void setImagenPerfil(String imagenPerfil) {
 		this.imagenPerfil = imagenPerfil;
 	}
 	

@@ -13,7 +13,7 @@ public class Pedido {
 	private Direccion direccionEntrega;
 	private Integer montoMinimo;
 	private Integer montoActual;
-	private List<Producto> productos;
+	private List<UsuarioParticipante> usuariosParticipantes;
 	
 	//GETs & SETs
 	
@@ -73,17 +73,23 @@ public class Pedido {
 		this.montoActual = montoActual;
 	}
 	
-	public List<Producto> getProductos() {
-		return productos;
+	public List<UsuarioParticipante> getUsuariosParticipantes() {
+		return usuariosParticipantes;
 	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
+	
+	public void setUsuariosParticipantes(List<UsuarioParticipante> usuariosParticipantes) {
+		this.usuariosParticipantes = usuariosParticipantes;
 	}
+	
 
 	
 	//METHODS 
-	
+
+	public void agregarProducto(){
+		//TODO
+	}
+
+
 	public void editarPedido () {
 		//TODO
 	}

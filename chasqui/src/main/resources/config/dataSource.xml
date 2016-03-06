@@ -16,7 +16,7 @@
 		<property name="url" value="jdbc:mysql://localhost:3306/CHASQUI" />
 		<property name="username" value="root" />
 <!-- 		<property name="password" value=""></property> -->
-		<property name="password" value="root" />
+		<property name="password" value="toor" />
 	</bean>
 
 
@@ -38,8 +38,20 @@
 		</property>
 		<property name="mappingLocations">
 			<list>
- 				<value>classpath*:mappings/*.hbm.xml</value>
-		<!-- 		<value>classpath*:mappings/Usuario.hbm.xml</value>  -->
+ 				<value>classpath*:mappings/Historial.hbm.xml</value>
+				<value>classpath*:mappings/Notificacion.hbm.xml</value>
+				<value>classpath*:mappings/Vendedor.hbm.xml</value>
+				<value>classpath*:mappings/Pedido.hbm.xml</value>
+				<value>classpath*:mappings/Cliente.hbm.xml</value>
+				<value>classpath*:mappings/Usuario.hbm.xml</value>
+				<value>classpath*:mappings/Imagen.hbm.xml</value>
+				<value>classpath*:mappings/Categoria.hbm.xml</value>
+				<value>classpath*:mappings/Variante.hbm.xml</value>
+				<value>classpath*:mappings/Zona.hbm.xml</value>
+				<value>classpath*:mappings/Direccion.hbm.xml</value>
+				<value>classpath*:mappings/Fabricante.hbm.xml</value>
+				<value>classpath*:mappings/Producto.hbm.xml</value>
+				<value>classpath*:mappings/Caracteristica.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
