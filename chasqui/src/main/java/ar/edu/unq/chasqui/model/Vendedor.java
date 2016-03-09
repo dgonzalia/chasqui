@@ -19,6 +19,16 @@ public class Vendedor extends Usuario{
 	
 	//GETs & SETs
 
+	public Vendedor(String username, String email, String pwd) {
+		this.setUsername(username);
+		this.setEmail(email);
+		this.setPassword(pwd);
+	}
+
+	public Vendedor() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getMontoMinimoPedido() {
 		return montoMinimoPedido;
 	}

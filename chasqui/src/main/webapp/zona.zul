@@ -1,0 +1,56 @@
+<?page title="CHASQUI-WEB" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./zonaWindow" ?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
+<zk>
+<window id="zonaWindow" title="new page title" border="normal" closable="true">
+
+
+
+
+<listbox width="100%">
+	<listhead>
+		<listheader/>
+		<listheader/>
+	</listhead>
+	<listitem>
+		<listcell label="Zona:"/>
+		<listcell>
+			<textbox id="nombreZona"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell>
+			<image style="height:50px; width:50px" src="@{zonaWindow$composer.imagen.getPath}"/>					
+		</listcell>
+		<listcell>
+			<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>
+		</listcell>
+	</listitem>
+</listbox>
+<div aling="center">
+	<hbox>
+		<butoon label="Guardar"/>
+		<space spacing="3px"/>
+		<button label="limpiar Campos"/>
+	</hbox>
+</div>
+<listbox>
+	<listhead>
+		<listheader label="Nombre"/>
+		<listheader label="Acciones"/>
+	</listhead>
+	<listitem>
+		<listcell label="zona 1"/>
+		<listcell>
+			<hbox>
+				<image src="/imagenes/editar.png"/>
+				<space spacing="5px"/>
+				<image src="/imagenes/detach.png"/>
+			</hbox>
+		</listcell>
+	</listitem>
+</listbox>
+</window>
+</zk>

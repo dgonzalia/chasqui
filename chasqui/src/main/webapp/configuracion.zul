@@ -71,6 +71,12 @@ apply="ar.edu.unq.chasqui.view.composer.ConfiguracionComposer" height="100%" wid
 				</listcell>
 			</listitem>
 			<listitem>
+				<listcell label="${c:l('zk.label.configuracion.zonas')}"/>
+				<listcell>
+					<button label="${c:l('zk.label.configuracion.button.zonas')}" id="zonaButton"/>
+				</listcell>
+			</listitem>
+			<listitem>
 				<listcell>
 						<image style="height:50px; width:50px" src="@{configuracionWindow$composer.imagen.getPath}"/>					
 				</listcell>

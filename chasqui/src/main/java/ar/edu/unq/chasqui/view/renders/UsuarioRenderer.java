@@ -12,16 +12,16 @@ import org.zkoss.zul.ListitemRenderer;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
-import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Vendedor;
 
-public class UsuarioRenderer implements ListitemRenderer<Cliente>{
+public class UsuarioRenderer implements ListitemRenderer<Vendedor>{
 
 	Window usuariosActualesWindow;
 	public UsuarioRenderer(Window c){
 		usuariosActualesWindow = c;
 	}
 	
-	public void render(Listitem item, Cliente u, int arg2) throws Exception {
+	public void render(Listitem item, Vendedor u, int arg2) throws Exception {
 		
 		Listcell c1 = new Listcell(u.getUsername());
 		Listcell c2 = new Listcell();

@@ -1,7 +1,9 @@
 package ar.edu.unq.chasqui.view.composer;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.cxf.common.util.StringUtils;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
@@ -17,6 +19,7 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Vendedor;
 
 @SuppressWarnings({"serial","deprecation"})
 public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
@@ -43,7 +46,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	
 	public void onClick$buttonGuardar(){
 		validacionesParaGuardar();
-		bloquearPantalla("Guardando Nuevo Usuario...");
+		this.bloquearPantalla("Guardando Nuevo Usuario...");
 		Events.echoEvent(Events.ON_NOTIFY,self,null);
 	}
 	
@@ -54,9 +57,10 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			throw new WrongValueException(textboxUsername,"El usuario no deber ser vacio!");
 		}
 		
-		if(email != null && !email.matches(Constantes.EMAIL_REGEX_PATTERN)){
+		if(email != null && !EmailValidator.getInstance().isValid(email)){
 			throw new WrongValueException(textboxEmail,"Por favor ingrese un email valido.");
 		}
+		
 		validarPassword();
 	}
 
@@ -76,8 +80,17 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	
 
 	public void guardar(){
-		try{
+		try{ 
 			// guardar
+			String username = textboxUsername.getValue();
+			String email = textboxEmail.getValue();
+			String pwd = textboxContraseña.getValue();
+			// encriptar
+			Vendedor v = new Vendedor(username,email,pwd);
+			Map<String,Object>params = new HashMap<String,Object>();
+			params.put("usuario", v);
+			params.put("accion", "crear");
+			Events.sendEvent(Events.ON_NOTIFY, usuariosActualesWindow, params);
 		}catch(Exception e){
 			alert(e.getMessage());
 		}finally{

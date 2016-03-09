@@ -23,6 +23,7 @@ import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
@@ -36,7 +37,6 @@ import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.services.impl.FileSaver;
 
 @SuppressWarnings({"serial","deprecation"})
@@ -49,6 +49,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	private Fileupload uploadImagen;
 	private Combobox comboCantidadDeKilometros;
 	private Checkbox checkUtilizarMismaFecha;
+	private Button zonaButton;
 	private Datebox dateProximaEntrega;
 	private Textbox textboxClaveActual;
 	private Textbox textboxNuevaClaveRepita;
@@ -147,6 +148,11 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 		
 	}
 	
+	
+	public void onClick$zonaButton(){
+		Window w = (Window) Executions.createComponents("/zona.zul", this.self, null);
+		w.doModal();
+	}
 	
 	public void onClick$buttonGuardar(){
 		validarPassword();

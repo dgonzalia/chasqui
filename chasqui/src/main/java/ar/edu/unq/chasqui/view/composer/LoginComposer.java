@@ -4,6 +4,7 @@ package ar.edu.unq.chasqui.view.composer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.cxf.common.util.StringUtils;
 import org.joda.time.DateTime;
 import org.zkoss.zk.ui.Component;
@@ -153,7 +154,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	public void onEnviarEmail() {
 		try{
 			String email = emailTextbox.getValue();
-			if(StringUtils.isEmpty(email) || !email.matches(Constantes.EMAIL_REGEX_PATTERN)){
+			if(StringUtils.isEmpty(email) || EmailValidator.getInstance().isValid(email)){
 				throw new WrongValueException(emailTextbox,"Por favor ingrese un email valido.");
 			}
 		}finally{
