@@ -4,9 +4,8 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
 <zk>
-<window id="zonaWindow" title="new page title" border="normal" closable="true">
-
-
+<window id="zonaWindow" border="normal" title="Alta de Zonas" position="center,top"
+apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="50%" closable="true">
 
 
 <listbox width="100%">
@@ -22,29 +21,34 @@
 	</listitem>
 	<listitem>
 		<listcell>
-			<image style="height:50px; width:50px" src="@{zonaWindow$composer.imagen.getPath}"/>					
+			<image style="height:50px; width:50px" id="imagen" />					
 		</listcell>
 		<listcell>
 			<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>
 		</listcell>
 	</listitem>
 </listbox>
-<div aling="center">
+<separator spacing="15px"/>
+<div align="center">
 	<hbox>
-		<butoon label="Guardar"/>
+		<button label="Guardar"/>
 		<space spacing="3px"/>
 		<button label="limpiar Campos"/>
 	</hbox>
 </div>
-<listbox>
+<separator spacing="15px"/>
+<listbox checkmark="true" >
 	<listhead>
-		<listheader label="Nombre"/>
+		<listheader label="Nombre" />
 		<listheader label="Acciones"/>
 	</listhead>
 	<listitem>
-		<listcell label="zona 1"/>
 		<listcell>
-			<hbox>
+			<space spacing="3px"/>
+			<label value="zona 1" style="font-weight:bold;"/>
+		</listcell>
+		<listcell>
+			<hbox align="center">
 				<image src="/imagenes/editar.png"/>
 				<space spacing="5px"/>
 				<image src="/imagenes/detach.png"/>
