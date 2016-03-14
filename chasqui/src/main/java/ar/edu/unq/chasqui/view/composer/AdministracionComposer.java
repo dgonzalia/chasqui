@@ -39,10 +39,12 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Radio radioConfiguracion;
 	private Radio radioAltaUsuario;
 	private Radio radioProductores;
+	private Radio radioPedidos;
 	private Categoria categoriaSeleccionada;
 	private Toolbarbutton agregarButton;
 	private Toolbarbutton agregarProductoButton;
 	private Toolbarbutton agregarProductorButton;
+	private Toolbarbutton logout;
 	private Producto productoSeleccionado;
 	private Listbox listboxProductos;
 	private Listbox listboxProductores;
@@ -50,10 +52,12 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Include configuracionInclude;
 	private Include altaUsuarioInclude;
 	private Include usuariosActualesInclude;
+	private Include pedidosInclude;
 	private Vendedor usuarioLogueado;
 	private Div divCategoria;
 	private Div divProducto;
 	private Div divProductores;
+	private Div divPedidos;
 	
 	private List<Producto>productos;
 	
@@ -81,6 +85,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		radioAltaUsuario.setChecked(true);
 		radioCategorias.setDisabled(true);
 		radioProductos.setDisabled(true);
+		radioPedidos.setDisabled(true);
 		radioProductores.setDisabled(true);
 		listboxCategorias.setVisible(false);
 		radioConfiguracion.setDisabled(true);
@@ -94,6 +99,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		listboxProductores.setItemRenderer(new ProductorRenderer(this.self));
 		administracionWindow.setVisible(true);
 		radioCategorias.setChecked(true);
+//		radioAltaUsuario.setVisible(false);
 		productos = new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
 		onClick$radioCategorias();			
 	}
@@ -106,6 +112,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		divProductores.setVisible(false);
 		altaUsuarioInclude.setVisible(false);
 		usuariosActualesInclude.setVisible(false);
+		divPedidos.setVisible(false);
+		pedidosInclude.setVisible(false);
 		agregarButton.setVisible(true);
 		divCategoria.setVisible(true);
 		binder.loadAll();
@@ -119,6 +127,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		altaUsuarioInclude.setVisible(false);
 		usuariosActualesInclude.setVisible(false);
 		divProductores.setVisible(false);
+		pedidosInclude.setVisible(false);
+		divPedidos.setVisible(false);
 		agregarProductoButton.setVisible(true);
 		divProducto.setVisible(true);
 		binder.loadAll();
@@ -134,6 +144,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		altaUsuarioInclude.setVisible(false);
 		usuariosActualesInclude.setVisible(false);
 		divProductores.setVisible(false);
+		pedidosInclude.setVisible(false);
+		divPedidos.setVisible(false);
 		configuracionInclude.setVisible(true);
 		binder.loadAll();
 	}
@@ -146,6 +158,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		agregarProductorButton.setVisible(false);
 		configuracionInclude.setVisible(false);
 		divProductores.setVisible(false);
+		divPedidos.setVisible(false);
+		pedidosInclude.setVisible(false);
 		altaUsuarioInclude.setVisible(true);
 		usuariosActualesInclude.setVisible(true);
 		binder.loadAll();
@@ -159,13 +173,35 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		configuracionInclude.setVisible(false);
 		altaUsuarioInclude.setVisible(false);
 		usuariosActualesInclude.setVisible(false);
+		pedidosInclude.setVisible(false);
+		divPedidos.setVisible(false);
 		divProductores.setVisible(true);
 		agregarProductorButton.setVisible(true);
 		binder.loadAll();
 	}
 	
+	public void onClick$radioPedidos(){
+		divProducto.setVisible(false);
+		divCategoria.setVisible(false);
+		agregarButton.setVisible(false);
+		agregarProductoButton.setVisible(false);
+		configuracionInclude.setVisible(false);
+		altaUsuarioInclude.setVisible(false);
+		usuariosActualesInclude.setVisible(false);
+		divProductores.setVisible(false);
+		agregarProductorButton.setVisible(false);
+		pedidosInclude.setVisible(true);
+		divPedidos.setVisible(true);
+		binder.loadAll();
+	}
+	
 	public void refresh(){
 		binder.loadAll();
+	}
+	
+	public void onClick$logout(){
+		Executions.getCurrent().getSession().invalidate();
+		Executions.sendRedirect("/");
 	}
 	
 	public void onEditarCategoria(Categoria c){

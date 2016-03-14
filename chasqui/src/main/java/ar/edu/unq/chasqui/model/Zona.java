@@ -5,12 +5,21 @@ import org.joda.time.DateTime;
 public class Zona {
 
 	private Integer id;
+	private Integer idUsuario;
 	private String nombre;
 	private DateTime fechaEntrega;
 	private String descripcion;
 	
 	//GETs & SETs
 	
+	public Zona(String zona, DateTime fecha, String msg) {
+		this.nombre = zona;
+		this.fechaEntrega = fecha;
+		this.descripcion = msg;
+	}
+	
+	public Zona(){}
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,6 +51,17 @@ public class Zona {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+	
+	
+	
 
 	
 }

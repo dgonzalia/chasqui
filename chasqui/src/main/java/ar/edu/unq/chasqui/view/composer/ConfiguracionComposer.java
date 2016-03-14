@@ -102,7 +102,6 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 			String path = context.getRealPath("/imagenes/");
 			imagen = fileSaver.guardarImagen(path +"/",usuarioLogueado.getUsername(),image.getContent().getName(),image.getContent().getByteData());
-//			usuarioLogueado.setPathImagen(imagen.getPath());		
 		}catch(Exception e){
 			Messagebox.show("Ha ocurrido un error al subir la imagen","Error", Messagebox.OK, Messagebox.ERROR);
 			e.printStackTrace();

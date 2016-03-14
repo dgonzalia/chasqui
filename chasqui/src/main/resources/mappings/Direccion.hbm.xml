@@ -26,8 +26,5 @@
         <property name="longitud" type="java.lang.Double">
             <column name="LONGITUD" />
         </property>
-        <many-to-one name="zona" class="ar.edu.unq.chasqui.model.Zona" fetch="join">
-            <column name="ZONA" />
-        </many-to-one>
     </class>
 </hibernate-mapping>

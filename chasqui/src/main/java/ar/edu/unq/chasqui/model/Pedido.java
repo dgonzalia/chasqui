@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -7,16 +8,28 @@ import org.joda.time.DateTime;
 public class Pedido {
 	
 	private Integer id;
+	private Integer idVendedor;
 	private String estado;
 	private Cliente usuarioCreador;
 	private DateTime fechaCreacion;
 	private Direccion direccionEntrega;
-	private Integer montoMinimo;
-	private Integer montoActual;
+	private Double montoMinimo;
+	private Double montoActual;
 	private List<UsuarioParticipante> usuariosParticipantes;
 	
 	//GETs & SETs
 	
+	public Pedido(int i, String string, Date date, Double j, Double k, String estadoPedidoAbierto) {
+		id=i;
+		Cliente c = new Cliente();
+		c.setEmail(string);
+		usuarioCreador = c;
+		fechaCreacion = new DateTime(date.getTime());
+		montoMinimo = j;
+		montoActual = k;
+		estado = estadoPedidoAbierto;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -57,22 +70,24 @@ public class Pedido {
 		this.direccionEntrega = direccionEntrega;
 	}
 	
-	public Integer getMontoMinimo() {
+	
+	
+	public Double getMontoMinimo() {
 		return montoMinimo;
 	}
-	
-	public void setMontoMinimo(Integer montoMinimo) {
+
+	public void setMontoMinimo(Double montoMinimo) {
 		this.montoMinimo = montoMinimo;
 	}
-	
-	public Integer getMontoActual() {
+
+	public Double getMontoActual() {
 		return montoActual;
 	}
-	
-	public void setMontoActual(Integer montoActual) {
+
+	public void setMontoActual(Double montoActual) {
 		this.montoActual = montoActual;
 	}
-	
+
 	public List<UsuarioParticipante> getUsuariosParticipantes() {
 		return usuariosParticipantes;
 	}
@@ -82,10 +97,20 @@ public class Pedido {
 	}
 	
 
+	public Integer getIdVendedor() {
+		return idVendedor;
+	}
+	
+	public void setIdVendedor(Integer idVendedor) {
+		this.idVendedor = idVendedor;
+	}
+	
+	
 	
 	//METHODS 
 
-	public void agregarProducto(){
+
+	public void agregarProducto(Producto p){
 		//TODO
 	}
 

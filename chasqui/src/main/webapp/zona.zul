@@ -5,56 +5,87 @@
 <?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
 <zk>
 <window id="zonaWindow" border="normal" title="Alta de Zonas" position="center,top"
-apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="50%" closable="true">
+apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="60%"  closable="true">
 
 
-<listbox width="100%">
-	<listhead>
-		<listheader/>
-		<listheader/>
-	</listhead>
-	<listitem>
-		<listcell label="Zona:"/>
-		<listcell>
-			<textbox id="nombreZona"/>
-		</listcell>
-	</listitem>
-	<listitem>
-		<listcell>
-			<image style="height:50px; width:50px" id="imagen" />					
-		</listcell>
-		<listcell>
-			<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>
-		</listcell>
-	</listitem>
-</listbox>
-<separator spacing="15px"/>
+<tabbox>
+	<tabs>
+		<tab label="Zonas"/>
+		<tab label="Mapa"/>
+	</tabs>
+	<tabpanels>
+		<tabpanel>		
+			<listbox width="100%">
+				<listhead>
+					<listheader/>
+					<listheader/>
+				</listhead>
+				<listitem>
+					<listcell label="Zona:"/>
+					<listcell>
+						<textbox id="nombreZona"/>
+					</listcell>
+				</listitem>
+				<listitem>
+					<listcell label="Fecha de Entrega: "/>
+					<listcell>
+						<datebox id="fechaEntrega"  placeholder="dd/MM/yyyy"/>
+					</listcell>
+				</listitem>
+				<listitem>
+					<listcell label="Mensaje Automático de Entrega:"/>
+					<listcell >
+						<textbox rows="3" id="txtDescripcion" maxlength="250" width="100%"/>
+					</listcell>
+				</listitem>
+			</listbox>
+			<separator spacing="15px"/>
+			<div align="center">
+				<hbox>
+					<button label="Agregar" id="btnGuardar"/>
+					<space spacing="3px"/>
+					<button label="limpiar Campos" id="btnLimpiar"/>
+				</hbox>
+			</div>
+			<separator spacing="15px"/>
+			<listbox checkmark="true" selectedItem="@{zonaWindow$composer.zonaSeleccionada}" model="@{zonaWindow$composer.zonas}" mold="paging"
+			rows="3" pageSize="3"> 
+				<listhead>
+					<listheader label="Nombre" />
+					<listheader label="Acciones"/>
+				</listhead>
+				<listitem self="@{each=zona}">
+					<listcell label="@{zona.getNombre}" style="font-weight:bold;"/>
+					<listcell>
+						<hbox align="center">
+							<image src="/imagenes/detach.png" forward="onClick=zonaWindow$composer.onEliminarZona"/>
+						</hbox>
+					</listcell>
+				</listitem>
+			</listbox>
+		</tabpanel>
+		<tabpanel>
+			<div>
+				<hbox>
+					<fileupload label="Subir Imagen" id="uploadImagen"/>
+				</hbox>
+				<vlayout style="border:1px solid black;overflow:auto;" height="300px">
+					<div>
+						<hlayout style="border:1px solid black;overflow:auto;" width="100%">
+							<div>
+								<image id="imgMapa"/>
+							</div>
+						</hlayout>
+					</div>
+				</vlayout>
+			</div>		
+		</tabpanel>
+	</tabpanels>
+</tabbox>
 <div align="center">
-	<hbox>
-		<button label="Guardar"/>
-		<space spacing="3px"/>
-		<button label="limpiar Campos"/>
-	</hbox>
+	<button label="Guardar" id="guardar" image="/imagenes/save.png"/>
+	<space spacing="10px"/>
+	<button label="Cancelar" id="cancelar" image="/imagenes/cancel.png"/>
 </div>
-<separator spacing="15px"/>
-<listbox checkmark="true" >
-	<listhead>
-		<listheader label="Nombre" />
-		<listheader label="Acciones"/>
-	</listhead>
-	<listitem>
-		<listcell>
-			<space spacing="3px"/>
-			<label value="zona 1" style="font-weight:bold;"/>
-		</listcell>
-		<listcell>
-			<hbox align="center">
-				<image src="/imagenes/editar.png"/>
-				<space spacing="5px"/>
-				<image src="/imagenes/detach.png"/>
-			</hbox>
-		</listcell>
-	</listitem>
-</listbox>
 </window>
 </zk>

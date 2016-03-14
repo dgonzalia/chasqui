@@ -11,6 +11,7 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
+        <property name="idUsuario" type="java.lang.Integer" column="ID_USUARIO"/>
         <property name="fechaEntrega" type="org.joda.time.DateTime">
             <column name="FECHAENTREGA" />
         </property>

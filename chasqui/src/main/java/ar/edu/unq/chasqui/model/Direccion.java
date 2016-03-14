@@ -9,7 +9,6 @@ public class Direccion {
 	private String codigoPostal;
 	private Double latitud;
 	private Double longitud;
-	private Zona zona;
 	
 	
 	//GETs & SETs
@@ -70,13 +69,6 @@ public class Direccion {
 		this.longitud = longitud;
 	}
 	
-	public Zona getZona() {
-		return zona;
-	}
-	
-	public void setZona(Zona zona) {
-		this.zona = zona;
-	}
 
 	
 }
