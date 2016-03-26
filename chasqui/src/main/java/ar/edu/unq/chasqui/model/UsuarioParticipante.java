@@ -9,12 +9,11 @@ public class UsuarioParticipante {
 	private String userName;
 	private List<ProductoPedido>productosEnPedido;
 	
-	
 	public UsuarioParticipante(String username){
 		this.userName = username;
 		this.productosEnPedido = new ArrayList<ProductoPedido>();
 	}
-
+	
 	public List<ProductoPedido> getProductosEnPedido() {
 		return productosEnPedido;
 	}
@@ -38,11 +37,5 @@ public class UsuarioParticipante {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 }

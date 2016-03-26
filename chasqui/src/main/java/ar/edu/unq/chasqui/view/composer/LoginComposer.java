@@ -184,11 +184,6 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		emailPopUp.close();
 	}
 	
-	
-	
-	
-	
-	
 	public Textbox getEmailTextbox() {
 		return emailTextbox;
 	}
@@ -272,10 +267,8 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		this.emailPopUp = emailPopUp;
 	}
 	
-	
-	
-	
 }
+
 class EnvioEmailListener implements EventListener<Event>{
 	
 	LoginComposer composer;

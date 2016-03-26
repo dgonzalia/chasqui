@@ -45,4 +45,5 @@ public class ProductoPedido {
 	public void setNombreVariante(String nombreVariante) {
 		this.nombreVariante = nombreVariante;
 	}
+	
 }
