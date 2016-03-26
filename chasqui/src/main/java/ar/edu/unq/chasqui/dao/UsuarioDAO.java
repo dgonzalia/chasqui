@@ -7,4 +7,5 @@ public interface UsuarioDAO {
 	
 	public Usuario obtenerUsuarioPorID(Integer id);
 	public void guardarUsuario(Usuario u);
+	public Usuario obtenerUsuarioPorNombre (String username);
 }

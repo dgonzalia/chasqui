@@ -20,4 +20,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 
+	public Usuario login(String username, String passwordHashed) throws Exception {
+		Usuario usuario = usuarioDAO.obtenerUsuarioPorNombre(username);
+		if (usuario != null){
+			return usuario;
+		}
+		else throw new Exception("Usuario o Password incorrectos!");
+	}
+
 }

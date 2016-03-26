@@ -10,12 +10,10 @@ public class UsuarioParticipante {
 	private List<ProductoPedido>productosEnPedido;
 	
 	
-	
 	public UsuarioParticipante(String username){
 		this.userName = username;
 		this.productosEnPedido = new ArrayList<ProductoPedido>();
 	}
-	
 
 	public List<ProductoPedido> getProductosEnPedido() {
 		return productosEnPedido;

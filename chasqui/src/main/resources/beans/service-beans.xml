@@ -22,6 +22,7 @@
 	   
 	   <!-- Servicios -->
 	   <bean id="fileSaver" name="fileSaver" class="ar.edu.unq.chasqui.services.impl.FileSaver"/>
+	   <bean id="desEncrypter" name="desEncrypter" class="ar.edu.unq.chasqui.services.impl.DesEncrypter"/>
 	   <bean id="usuarioService" name="usuarioService" class="ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl"/>
 	   <!--  DAOS -->
 	   <bean name="usuarioDAO" id="usuarioDAO" class="ar.edu.unq.chasqui.dao.impl.UsuarioDAOHbm">

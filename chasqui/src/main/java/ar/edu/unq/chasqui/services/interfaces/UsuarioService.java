@@ -7,4 +7,5 @@ public interface UsuarioService {
 	
 	public Usuario obtenerUsuarioPorID(final Integer id);
 	public void guardarUsuario(Usuario u);
+	public Usuario login (final String username, final String password) throws Exception;
 }

@@ -16,9 +16,6 @@ public class PedidoGrupal extends Pedido{
 	
 	//GETs & SETs
 	
-
-
-	
 	public String getDescripcion() {
 		return descripcion;
 	}

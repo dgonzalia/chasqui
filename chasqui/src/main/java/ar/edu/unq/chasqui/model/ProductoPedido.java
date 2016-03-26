@@ -8,10 +8,19 @@ public class ProductoPedido {
 	private String nombreVariante;
 	private Integer cantidad;
 	
+	//GETs & SETs
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	
 	public Double getPrecio() {
 		return precio;
 	}
+
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
@@ -19,9 +28,11 @@ public class ProductoPedido {
 	public Integer getCantidad() {
 		return cantidad;
 	}
+	
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
+
 	public String getNombreProducto() {
 		return nombreProducto;
 	}
@@ -34,14 +45,4 @@ public class ProductoPedido {
 	public void setNombreVariante(String nombreVariante) {
 		this.nombreVariante = nombreVariante;
 	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	
-	
-	
 }

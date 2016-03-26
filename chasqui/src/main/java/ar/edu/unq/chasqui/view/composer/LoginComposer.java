@@ -50,7 +50,6 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	private Textbox emailTextbox;
 	private Button cerrarPopUpButton;
 	private Window loginWindow;
-
 	
 	private UsuarioService service;
 
@@ -60,8 +59,6 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
 		comp.addEventListener(Events.ON_NOTIFY, new EnvioEmailListener(this));
-		
-		
 	}
 	
 	
@@ -74,6 +71,21 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 			binder.loadAll();
 			return;
 		};
+//		try {
+//			Usuario user = service.login(usernameLoggin.getValue(), password);
+//			String passwordDesencriptado = desEncrypter.mkdecrypt(user.getPassword());
+//			if (passwordDesencriptado.equals(password)){
+//				System.out.println("OK");
+//			}
+//			Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
+//			Executions.sendRedirect("/administracion.zul");
+//			// validar Usuario y re enviar a la pagina de adm 
+//			// mandando por session al usuario 
+//		} catch (WrongValueException e) {
+//			alert(e.getMessage());;
+//		} catch (Exception e) {
+//			alert(e.getMessage());
+//		}
 		Vendedor user = new Vendedor();
 		user.setUsername(usernameLoggin.getValue());
 		user.setDistanciaCompraColectiva(4);

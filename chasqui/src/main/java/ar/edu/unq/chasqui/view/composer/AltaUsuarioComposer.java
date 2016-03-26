@@ -14,12 +14,15 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.impl.DesEncrypter;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({"serial","deprecation"})
 public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
@@ -32,12 +35,17 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	private Textbox textboxUsername;
 	private Window usuariosActualesWindow;
 	private AnnotateDataBinder binder;
+	private DesEncrypter desEncrypter;
+	
+	private UsuarioService service;
 	
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
+		service = (UsuarioService) SpringUtil.getBean("usuarioService");
+		desEncrypter = (DesEncrypter) SpringUtil.getBean("desEncrypter");
 		comp.addEventListener(Events.ON_NOTIFY, new GuardarUsuarioEventListener(this));
 		comp.addEventListener(Events.ON_USER, new GuardarUsuarioEventListener(this));
 		binder.loadAll();
@@ -78,15 +86,17 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		}
 	}
 	
-
 	public void guardar(){
-		try{ 
-			// guardar
+		try{      	
+			//Guardar
 			String username = textboxUsername.getValue();
 			String email = textboxEmail.getValue();
 			String pwd = textboxContraseña.getValue();
-			// encriptar
-			Vendedor v = new Vendedor(username,email,pwd);
+		  
+			//Encriptar
+			Vendedor v = new Vendedor(username,email,desEncrypter.mkEncrypt(pwd));
+			service.guardarUsuario(v);
+			
 			Map<String,Object>params = new HashMap<String,Object>();
 			params.put("usuario", v);
 			params.put("accion", "crear");
@@ -147,6 +157,7 @@ class GuardarUsuarioEventListener implements EventListener<Event>{
 				Window usuariosActualesWindow = (Window) (event.getData());
 				composer.setUsuariosActualesWindow(usuariosActualesWindow);				
 			}else{
+				@SuppressWarnings("unchecked")
 				Map<String,Object> params = (Map<String,Object>) event.getData();
 				if(params.get("accion").equals("editar")){
 					composer.llenarCombosConUser((Vendedor) params.get("usuario"));					
