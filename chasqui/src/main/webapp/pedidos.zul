@@ -1,10 +1,10 @@
 <?page title="CHASQUI-WEB" contentType="text/html;charset=UTF-8"?>
 <?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
-<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./pedidoWindow" ?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" arg0="./pedidosWindow" ?>
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
 <zk>
-<window id="pedidoWindow"  border="normal" apply="ar.edu.unq.chasqui.view.composer.PedidosComposer" sizable="true"
+<window id="pedidosWindow"  border="normal" apply="ar.edu.unq.chasqui.view.composer.PedidosComposer" sizable="true"
 style="overflow:auto">
 
 <div align="center">
@@ -19,7 +19,7 @@ style="overflow:auto">
 	</hbox>
 </div>
 <separator spacing="15px"/>
-	<listbox  id="listboxPedidos" model="@{pedidoWindow$composer.pedidos}" mold="paging" rows="10" pageSize="10" >
+	<listbox  id="listboxPedidos" model="@{pedidosWindow$composer.pedidos}" mold="paging" rows="10" pageSize="10" >
 		<listhead>
 			<listheader label="ID del Pedido" hflex="2"/>
 			<listheader label="Usuario Creador" hflex="2"/>
@@ -33,7 +33,7 @@ style="overflow:auto">
 	</listbox>
 <separator spacing="10px"/>
 <div align="center">
-	<button label="Confirmar Entrega"/>
+	<button label="Confirmar Entrega" id="confirmarEntregabtn"/>
 </div>
 <separator spacing="10px"/>
 </window>

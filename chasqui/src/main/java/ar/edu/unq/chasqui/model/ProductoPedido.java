@@ -2,16 +2,17 @@ package ar.edu.unq.chasqui.model;
 
 public class ProductoPedido {
 
-	
-	private String precio;
-	private String nombreProducto_nombreVariante;
+	private Integer id;
+	private Double precio;
+	private String nombreProducto;
+	private String nombreVariante;
 	private Integer cantidad;
 	
 	
-	public String getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(String precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 
@@ -21,14 +22,25 @@ public class ProductoPedido {
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
-	public String getNombreProducto_nombreVariante() {
-		return nombreProducto_nombreVariante;
+	public String getNombreProducto() {
+		return nombreProducto;
 	}
-	public void setNombreProducto_nombreVariante(String nombreProducto_nombreVariante) {
-		this.nombreProducto_nombreVariante = nombreProducto_nombreVariante;
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
 	}
-	
-	
+	public String getNombreVariante() {
+		return nombreVariante;
+	}
+	public void setNombreVariante(String nombreVariante) {
+		this.nombreVariante = nombreVariante;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	
 	
 	

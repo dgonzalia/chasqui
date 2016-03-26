@@ -34,6 +34,7 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		Listcell c3 = new Listcell(format.format(d));
 		Listcell c4 = new Listcell(String.valueOf(p.getMontoMinimo()));
 		Listcell c5 = new Listcell(String.valueOf(p.getMontoActual()));
+		Checkbox c = new Checkbox("Entregado");
 		if(p.getMontoMinimo() < p.getMontoActual()){
 			c5.setStyle("color:green;");
 		}else{
@@ -49,6 +50,7 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		}
 		if(estado.equals(Constantes.ESTADO_PEDIDO_ENTREGADO)){
 			c6.setStyle("color:green");
+			c.setChecked(true);
 		}
 		
 		String direccion= p.getDireccionEntrega().getCalle() +" "+ p.getDireccionEntrega().getAltura();
@@ -63,13 +65,11 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		b.addForward(Events.ON_CLICK, pedidoWindow, Events.ON_USER, params);
 		
 		HashMap<String,Object> params2 = new HashMap<String,Object>();
-		Checkbox c = new Checkbox("Entregado");
 		params2.put("pedido", p);
-		c.addForward(Events.ON_CHECK,pedidoWindow, Events.ON_CHECK,params2);
 		Space s = new Space();
 		s.setSpacing("10px");
 		
-		if(!p.getEstado().equals(Constantes.ESTADO_PEDIDO_CONFIRMADO)){
+		if(!p.getAlterable()){
 			c.setDisabled(true);
 		}
 		

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 26/03/2016 18:32:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="ar.edu.unq.chasqui.model.ProductoPedido" table="PRODUCTOPEDIDO">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="precio" type="java.lang.Double">
+            <column name="PRECIO" />
+        </property>
+        <property name="nombreProducto" type="java.lang.String">
+            <column name="NOMBREPRODUCTO" />
+        </property>
+        <property name="nombreVariante" type="java.lang.String">
+            <column name="NOMBREVARIANTE" />
+        </property>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="CANTIDAD" />
+        </property>
+    </class>
+</hibernate-mapping>

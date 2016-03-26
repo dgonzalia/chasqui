@@ -2,17 +2,25 @@ package ar.edu.unq.chasqui.view.composer;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Pedido;
+import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.view.renders.PedidoRenderer;
 
 @SuppressWarnings({"serial","deprecation","unused"})
@@ -21,6 +29,7 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	private Datebox desde;
 	private Datebox hasta;
 	private Listbox listboxPedidos;
+	private Button confirmarEntregabtn;
 	private AnnotateDataBinder binder;
 	
 	private List<Pedido>pedidos;
@@ -28,6 +37,7 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	
 	public void doAfterCompose(Component c) throws Exception{
 		super.doAfterCompose(c);
+		c.addEventListener(Events.ON_USER, new EntregaEventListener(this));
 		binder = new AnnotateDataBinder(c);
 		pedidos  = new ArrayList<Pedido>();
 		pedidos = crearPedidos();
@@ -56,13 +66,22 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 		Double d1= new Double(40);
 		Double d2 = new Double(39.20);
 		Double d3 = new Double(50);
-		Pedido p = new Pedido(1,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ABIERTO);
-		Pedido p2= new Pedido(2,"jfflores90@gmail.com",new Date(),d1,d3,Constantes.ESTADO_PEDIDO_CANCELADO);
-		Pedido p3 = new Pedido(3,"jfflores90@gmail.com",new Date(),d1,d3,Constantes.ESTADO_PEDIDO_CONFIRMADO);
-		Pedido p4 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO);
-		Pedido p5 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO);
-		Pedido p6 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO);
-		Pedido p7 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO);
+		Pedido p = new Pedido(1,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ABIERTO,false);
+		Pedido p2= new Pedido(2,"jfflores90@gmail.com",new Date(),d1,d3,Constantes.ESTADO_PEDIDO_CANCELADO,false);
+		Pedido p3 = new Pedido(3,"jfflores90@gmail.com",new Date(),d1,d3,Constantes.ESTADO_PEDIDO_CONFIRMADO,true);
+		Pedido p4 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO,false);
+		Pedido p9 = new Pedido(12,"jfflores90@gmail.com",new Date(),d1,d3,Constantes.ESTADO_PEDIDO_CONFIRMADO,true);
+		Pedido p5 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO,false);
+		Pedido p6 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO,false);
+		Pedido p7 = new Pedido(4,"jfflores90@gmail.com",new Date(),d1,d2,Constantes.ESTADO_PEDIDO_ENTREGADO,false);
+		
+		p.agregarUsuarioParticipante("Jorge");
+		ProductoPedido h = new ProductoPedido();
+		h.setCantidad(1);
+		h.setNombreProducto("Aceite");
+		h.setNombreVariante("1 LT");
+		h.setPrecio(30.0);
+		p.agregarProducto(h, "Jorge");
 		
 		p.setDireccionEntrega(d);
 		p2.setDireccionEntrega(d);
@@ -86,7 +105,44 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	}
 	
 	
+	public void onVerPedido(Pedido p){
+		HashMap<String,Object>params = new HashMap<String,Object>();
+		params.put("pedido", p);
+		Window w = (Window) Executions.createComponents("/pedido.zul", this.self, params);
+		w.doModal();
+		
+	}
+	
+	
+	
+	public void onClick$confirmarEntregabtn(){
+		for(Pedido p : this.pedidos){
+			p.confirmarte();
+		}
+		
+		// guardarPedido
+		this.binder.loadAll();
+	}
+	
 	
 	
 	
 }
+
+class EntregaEventListener implements EventListener<Event>{
+
+	PedidosComposer composer;
+	
+	public EntregaEventListener(PedidosComposer c){
+		this.composer = c;
+	}
+	
+	public void onEvent(Event event) throws Exception {
+		Map<String,Object> params = (Map<String,Object>) event.getData();
+		Pedido p = (Pedido) params.get("pedido");
+		composer.onVerPedido(p);
+		
+	}
+	
+}
+
