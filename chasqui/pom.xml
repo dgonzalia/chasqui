@@ -249,6 +249,12 @@
     	<artifactId>cxf-rt-rs-extension-providers</artifactId>
     	<version>3.0.1</version>
 	</dependency>
+	<dependency>
+	<groupId>commons-codec</groupId>
+	<artifactId>commons-codec</artifactId>
+	<version>1.10</version>
+</dependency>
+	
   </dependencies>
   <build>
 		<finalName>chasqui</finalName>
