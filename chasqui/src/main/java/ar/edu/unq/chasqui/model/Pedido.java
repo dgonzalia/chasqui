@@ -155,12 +155,10 @@ public class Pedido {
 	}
 	
 	
-	public HashMap<String,ProductoPedido>ordernarByUsuario(){
-		HashMap<String,ProductoPedido>resultado = new HashMap<String,ProductoPedido>();
+	public HashMap<String,List<ProductoPedido>>ordernarByUsuario(){
+		HashMap<String,List<ProductoPedido>>resultado = new HashMap<String,List<ProductoPedido>>();
 		for(UsuarioParticipante u : this.usuariosParticipantes){
-			for(ProductoPedido p : u.getProductosEnPedido()){
-				resultado.put(u.getUserName(), p);				
-			}
+			resultado.put(u.getUserName(), u.getProductosEnPedido());
 		}
 		return resultado;
 	}

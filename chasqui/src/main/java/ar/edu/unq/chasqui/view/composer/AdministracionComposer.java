@@ -352,6 +352,8 @@ class ProductoEventListener implements EventListener<Event>{
 		Map<String,Object>params = (Map<String,Object>) event.getData();
 		Producto p = (Producto) params.get("producto");
 		Fabricante f = (Fabricante) params.get("productor");
+		
+		
 		if(params.get("accion").equals("editar") && p != null){
 			this.composer.onEditarProducto(p);
 		}

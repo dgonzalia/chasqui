@@ -29,8 +29,10 @@ import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
+import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -63,7 +65,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	}
 	
 	
-	public void onClick$logginButton(){
+	public void onClick$logginButton() throws Exception{
 		String password = passwordLoggin.getValue();
 		if (!password.matches("^[a-zA-Z0-9]*$") || password.length() < 8){
 			labelError.setVisible(true);
@@ -76,7 +78,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		user.setUsername(usernameLoggin.getValue());
 		user.setDistanciaCompraColectiva(4);
 		user.setMontoMinimoPedido(40);
-		user.setPassword(password);
+		user.setPassword(Encrypter.encrypt(password));
 		user.setFechaCierrePedido(new DateTime());
 		user.setEmail("jfflores90@gmail");
 		Imagen img = new Imagen();
@@ -126,6 +128,9 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
 		user.setImagenPerfil(img.getPath());
 		service.guardarUsuario(user);
+		Usuario u =service.obtenerUsuarioPorID(user.getId());
+		String de = Encrypter.decrypt(u.getPassword());
+		System.out.println(de);
 		Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
 		Executions.sendRedirect("/administracion.zul");
 		// validar Usuario y re enviar a la pagina de adm 

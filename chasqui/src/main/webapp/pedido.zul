@@ -17,11 +17,11 @@ apply="ar.edu.unq.chasqui.view.composer.ProductosEnPedidoComposer" width="50%">
 		<listheader label="Precio" hflex="1" align="center"/>
 	</listhead>
 	<listitem self="@{each=pedido}" >
-		<listcell label="@{pedido.key}"/>
-		<listcell label="@{pedido.value.getNombreProducto}"/>
-		<listcell label="@{pedido.value.getNombreVariante}"/>
-		<listcell label="@{pedido.value.getCantidad}"/>
-		<listcell label="@{pedido.value.getPrecio}"/>
+		<listcell label="@{pedido.getUsuario}"/>
+		<listcell label="@{pedido.getNombreProducto}"/>
+		<listcell label="@{pedido.getNombreVariante}"/>
+		<listcell label="@{pedido.getCantidad}"/>
+		<listcell label="@{pedido.getPrecio}"/>
 	</listitem>
 	<listfoot>
 		<listfooter label="Total:" align="left" hflex="1"/>
