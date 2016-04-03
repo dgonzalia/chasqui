@@ -12,6 +12,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Listbox;
@@ -24,6 +25,7 @@ import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 import ar.edu.unq.chasqui.view.renders.CategoriaRenderer;
 import ar.edu.unq.chasqui.view.renders.ProductoRenderer;
@@ -58,6 +60,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Div divProducto;
 	private Div divProductores;
 	private Div divPedidos;
+	private UsuarioService usuarioService;
 	
 	private List<Producto>productos;
 	
@@ -67,7 +70,6 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 			Executions.sendRedirect("/");
 			return;
 		}
-		
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		if(usuarioLogueado.isRoot()){
@@ -75,6 +77,9 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		}else{
 			inicializacionUsuarioAdministrador();		
 		}
+		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
+		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
+
 		comp.addEventListener(Events.ON_USER, new CategoriaEventListener(this));
 		comp.addEventListener(Events.ON_NOTIFY, new ProductoEventListener(this));
 		comp.addEventListener(Events.ON_RENDER, new RefreshEventListener(this));
@@ -100,7 +105,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		administracionWindow.setVisible(true);
 		radioCategorias.setChecked(true);
 //		radioAltaUsuario.setVisible(false);
-		productos = new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
+		productos = new ArrayList<Producto>();
 		onClick$radioCategorias();			
 	}
 	
@@ -196,6 +201,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	}
 	
 	public void refresh(){
+		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
+		productos= new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
 		binder.loadAll();
 	}
 	
@@ -221,12 +228,14 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	}
 	
 	private void validarCategoriaValidaParaEliminar(Categoria c){
-		if(c.getProductos().size() > 0){
+		if (c.getProductos() != null && c.getProductos().size() > 0){
 				Messagebox.show("La categoria: '" + c.getNombre() + "' aún tiene productos asociados a ella. desasocie los mismos para eliminar la categoria"
 						, "Error!", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
-		// eliminar Categoria
+		usuarioLogueado.eliminarCategoria(c);
+		usuarioService.guardarUsuario(usuarioLogueado);
+		Events.sendEvent(Events.ON_RENDER,this.self,null);
 	}
 	
 	
@@ -350,9 +359,12 @@ class ProductoEventListener implements EventListener<Event>{
 	
 	public void onEvent(Event event) throws Exception {
 		Map<String,Object>params = (Map<String,Object>) event.getData();
+		if(params == null){
+			composer.refresh();
+			return;
+		}
 		Producto p = (Producto) params.get("producto");
 		Fabricante f = (Fabricante) params.get("productor");
-		
 		
 		if(params.get("accion").equals("editar") && p != null){
 			this.composer.onEditarProducto(p);

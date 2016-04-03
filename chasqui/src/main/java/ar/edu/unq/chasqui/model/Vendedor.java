@@ -26,7 +26,8 @@ public class Vendedor extends Usuario{
 	}
 
 	public Vendedor() {
-		// TODO Auto-generated constructor stub
+		categorias = new ArrayList<Categoria>();
+		fabricantes = new ArrayList<Fabricante>();
 	}
 
 	public Integer getMontoMinimoPedido() {
@@ -105,8 +106,12 @@ public class Vendedor extends Usuario{
 	}
 	
 	
-	public void agregarCategoria (Categoria categoria){
-		categorias.add(categoria);
+	public void agregarCategoria (Categoria c){
+		categorias.add(c);
+	}
+	
+	public void eliminarCategoria (Categoria c){
+		categorias.remove(c);
 	}
 	
 	public List<Producto> obtenerProductos(){

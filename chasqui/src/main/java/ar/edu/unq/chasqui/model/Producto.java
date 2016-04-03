@@ -8,7 +8,6 @@ public class Producto {
 	private Integer id;
 	private String nombre;
 	private Categoria categoria;
-	private String descripcion;
 	private List<Caracteristica> caracteristicas;
 	private Fabricante fabricante;
 	private List<Variante> variantes;
@@ -37,14 +36,6 @@ public class Producto {
 	
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
-	}
-	
-	public String getDescripcion() {
-		return descripcion;
-	}
-	
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 	
 	public List<Caracteristica> getCaracteristicas() {

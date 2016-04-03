@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Vendedor;
 
 public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 
@@ -28,6 +29,19 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		return u;		
 	}
 
+	public Vendedor obtenerVendedorPorID(final Integer id) {
+		Vendedor v = this.getHibernateTemplate().execute(new HibernateCallback<Vendedor>() {
+
+			public Vendedor doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Vendedor.class);
+				criteria.add(Restrictions.eq("id", id));
+				return (Vendedor) criteria.uniqueResult();
+			}
+			
+		});
+		return v;		
+	}
+	
 	public void guardarUsuario(Usuario u) {
 		this.getHibernateTemplate().saveOrUpdate(u);
 		this.getHibernateTemplate().flush();		

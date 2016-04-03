@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Categoria {
@@ -7,6 +8,10 @@ public class Categoria {
 	private Integer id;
 	private String nombre;
 	private List<Producto> productos;
+	
+	public Categoria () {
+		productos = new ArrayList<Producto>();
+	}
 	
 	//GETs & SETs
 	

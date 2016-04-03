@@ -22,16 +22,16 @@
         <many-to-one name="mapaZonas" class="ar.edu.unq.chasqui.model.Imagen" fetch="join">
             <column name="MAPAZONAS" />
         </many-to-one>
-        <list name="categorias" inverse="false" table="CATEGORIA" lazy="true">
+        <list name="categorias" inverse="false" table="CATEGORIA" lazy="false">
             <key>
-                <column name="MONTOMINIMOPEDIDO" />
+                <column name="ID_VENDEDOR" />
             </key>
             <list-index></list-index>
             <one-to-many class="ar.edu.unq.chasqui.model.Categoria" />
         </list>
-        <list name="fabricantes" inverse="false" table="FABRICANTE" lazy="true">
+        <list name="fabricantes" inverse="false" table="FABRICANTE" lazy="false">
             <key>
-                <column name="MONTOMINIMOPEDIDO" />
+                <column name="ID_VENDEDOR" />
             </key>
             <list-index></list-index>
             <one-to-many class="ar.edu.unq.chasqui.model.Fabricante" />

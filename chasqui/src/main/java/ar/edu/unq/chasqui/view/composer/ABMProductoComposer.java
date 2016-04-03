@@ -13,6 +13,7 @@ import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Listbox;
@@ -23,12 +24,12 @@ import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Categoria;
-import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.view.genericEvents.RefreshListener;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 
@@ -58,6 +59,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private List<Variante>varianteRollback;
 	private Vendedor usuario;
 	private boolean modoEdicion;
+	private UsuarioService usuarioService;
 	
 	
 	
@@ -68,6 +70,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		model = (Producto) Executions.getCurrent().getArg().get("producto");
 		Integer accion = (Integer) Executions.getCurrent().getArg().get("accion");
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		comp.addEventListener(Events.ON_RENDER, new RefreshListener<ABMProductoComposer>(this));
 		inicializarVentana(accion);	
 		binder = new AnnotateDataBinder(comp);
@@ -130,10 +133,13 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	
 	public void onClick$botonGuardar(){
 		validaciones();
-		// guardar en DB
-		//validar los datos
-		
-		
+		model.setNombre(nombreProducto.getValue());
+		categoriaSeleccionada.agregarProducto(model);	
+		model.setCategoria(categoriaSeleccionada);
+		model.setFabricante(productorSeleccionado);
+		usuarioService.guardarUsuario(usuario);
+		Events.sendEvent(Events.ON_NOTIFY, this.self.getParent(), null);
+		this.self.detach();
 	}
 	
 	private void validaciones(){
