@@ -26,11 +26,13 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> {
 	private Toolbarbutton buttonGuardar;
 	private Vendedor usuario;
 	private Fabricante model;
+	private UsuarioService usuarioService;
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		model = (Fabricante) Executions.getCurrent().getArg().get("productor");
+		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		if(model != null){
 			inicializarModoLectura();
 		}
@@ -49,7 +51,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> {
 		validar(productor);
 		model  = new Fabricante(productor);
 		usuario.agregarProductor(model);
-		
+		usuarioService.guardarUsuario(usuario);
 		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);
 		this.self.detach();
 	}
