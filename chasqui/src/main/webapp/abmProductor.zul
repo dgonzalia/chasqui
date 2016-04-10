@@ -12,6 +12,35 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 		<label value="${c:l('zk.listheader.label.abmCategoria.nombre')}"/>
 		<textbox maxlength="20" id="textboxNombreProductor"/>
 	</hbox>
+	<hbox>
+		<label value="Direccion:"/>
+		<textbox id="lblDireccion"/>
+	</hbox>
+	<vbox>
+		<hbox>
+			<label value="Caracteristica:"/>
+			<textbox id="txtbCarcteristica"/>
+		</hbox>
+		<hbox>
+			<label value="imagen:"/>
+			<image id="imgIcon"/>
+		</hbox>
+		<hbox>
+			<div align="center">
+				<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>
+			</div>			
+		</hbox>
+	</vbox>	
+	<hbox>
+		<div>
+			<button id="agregar" label="Agregar Caracteristica"/>
+		</div>
+	</hbox>
+	
+	
+	<listbox id="ltbCaracteristicas">
+		
+	</listbox>
 	<separator spacing="20px"/>
 	<div align="center">
 		<toolbarbutton label="${c:l('zk.button.label.guardar')}" style="font-weight:bold; color:black" id="buttonGuardar" image="/imagenes/save.png"/>

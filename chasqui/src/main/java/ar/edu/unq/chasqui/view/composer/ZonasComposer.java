@@ -62,9 +62,6 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 		fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 		c.addEventListener(Events.ON_NOTIFY,new SubirImagenListener(this));
 		zonas = new ArrayList<Zona>();
-		Zona z = new Zona();
-		z.setNombre("ZONA 1");
-		zonas .add(z);
 		binder = new AnnotateDataBinder(c);
 		binder.loadAll();
 	}
@@ -97,6 +94,8 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 		z.setIdUsuario(usuario.getId());
 		z.setFechaEntrega(fecha);
 		z.setDescripcion(msg);
+		
+		
 		zonas.add(z);
 		limpiarCampos();
 		this.binder.loadAll();

@@ -8,14 +8,11 @@ import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
-import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
-import ar.edu.unq.chasqui.model.Cliente;
 
 @SuppressWarnings({"serial","deprecation"})
 public class ABMProductorComposer extends GenericForwardComposer<Component> {

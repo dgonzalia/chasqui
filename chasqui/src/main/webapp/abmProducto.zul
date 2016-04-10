@@ -15,7 +15,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 		<listitem>
 			<listcell label="${c:l('zk.listheader.label.abmCategoria.nombre')}"/>
 			<listcell>
-				<textbox id="nombreProducto" placeholder="i.e: Aceite" />
+				<textbox id="nombreProducto" placeholder="i.e: Mermelada" />
 			</listcell>
 		</listitem>
 		<listitem>

@@ -19,9 +19,8 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.services.impl.DesEncrypter;
+import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({"serial","deprecation"})
@@ -35,7 +34,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	private Textbox textboxUsername;
 	private Window usuariosActualesWindow;
 	private AnnotateDataBinder binder;
-	private DesEncrypter desEncrypter;
+	private Vendedor model;
 	
 	private UsuarioService service;
 	
@@ -45,7 +44,6 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
-		desEncrypter = (DesEncrypter) SpringUtil.getBean("desEncrypter");
 		comp.addEventListener(Events.ON_NOTIFY, new GuardarUsuarioEventListener(this));
 		comp.addEventListener(Events.ON_USER, new GuardarUsuarioEventListener(this));
 		binder.loadAll();
@@ -75,7 +73,16 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	
 	private void validarPassword(){
 		String nuevaClave = textboxContraseña.getValue();
-		String nuevaClaveRepita = textboxContraseñaRepita.getText();		
+		String nuevaClaveRepita = textboxContraseñaRepita.getText();	
+		
+		if(StringUtils.isEmpty(nuevaClave)){
+			throw new WrongValueException(textboxContraseña,"La contraseña no debe ser vacia!");
+		}
+			
+		if(StringUtils.isEmpty(nuevaClaveRepita)){
+			throw new WrongValueException(textboxContraseñaRepita,"La contraseña no debe ser vacia!");
+		}
+		
 		if(!StringUtils.isEmpty(nuevaClaveRepita) && !nuevaClave.equals(nuevaClaveRepita)){
 			WrongValueException e1 = new WrongValueException(textboxContraseña,"Las contraseñas no coinciden!");
 			WrongValueException e2 = new WrongValueException(textboxContraseñaRepita,"Las contraseñas no coinciden!");
@@ -86,6 +93,16 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		}
 	}
 	
+	private Vendedor actualizarVendedor(String username,String email,String pwd) throws Exception{
+		if(model != null){
+			model.setUsername(username);
+			model.setEmail(email);
+			model.setPassword(Encrypter.encrypt(pwd));
+			return model;
+		}
+		return new Vendedor(username,email,Encrypter.encrypt(pwd));
+	}
+	
 	public void guardar(){
 		try{      	
 			//Guardar
@@ -93,8 +110,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			String email = textboxEmail.getValue();
 			String pwd = textboxContraseña.getValue();
 		  
-			//Encriptar
-			Vendedor v = new Vendedor(username,email,desEncrypter.mkEncrypt(pwd));
+			Vendedor v = actualizarVendedor(username,email,pwd);
 			service.guardarUsuario(v);
 			
 			Map<String,Object>params = new HashMap<String,Object>();
@@ -128,6 +144,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	public void llenarCombosConUser(Vendedor user){
 		textboxUsername.setValue(user.getUsername());
 		textboxEmail.setValue(user.getEmail());
+		model = user;
 	}
 
 

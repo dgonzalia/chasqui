@@ -16,7 +16,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.view.renders.UsuarioRenderer;
 
@@ -37,13 +36,9 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		administracionWindow = (Window) findAdministracionWindow(comp);
 		listboxUsuarios.setItemRenderer(new UsuarioRenderer((Window) this.self));
 		conectarVentanas(administracionWindow);
-		Vendedor user = new Vendedor();
-		user.setUsername("EvilShun");
-		user.setEmail("jfflores90@gmail.com");
 		Events.sendEvent(Events.ON_USER,altaUsuarioWindow,this.self);
 		comp.addEventListener(Events.ON_NOTIFY, new AccionEventListener(this));
 		usuarios = new ArrayList<Vendedor>();
-		usuarios.add(user);
 		binder.loadAll();
 	}
 	
@@ -66,8 +61,24 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		return null;
 	}
 	
+	private Vendedor buscarVendededor(Vendedor v){
+		for(Vendedor u : usuarios){
+			if(u != null && u.getUsername().equals(v.getUsername())){
+				return u;
+			}
+		}
+		return null;
+	}
+	
 	public void agregar(Vendedor v){
-		usuarios.add(v);
+		Vendedor u = buscarVendededor(v);
+		if(u == null){
+			usuarios.add(v);			
+		}else{
+			usuarios.remove(u);
+			usuarios.add(v);
+		}
+		
 		this.binder.loadAll();
 	}
 	
