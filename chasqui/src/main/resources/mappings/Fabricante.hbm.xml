@@ -16,17 +16,17 @@
         </many-to-one>
         <list name="productos" inverse="false" table="PRODUCTO" lazy="true">
             <key>
-                <column name="ID" />
+                <column name="ID_PRODUCTO" />
             </key>
             <list-index></list-index>
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
         </list>
-        <list name="caracteristicas" inverse="false" table="CARACTERISTICA" lazy="true">
+        <list name="caracteristicas" inverse="false" table="CARACTERISTICAPRODUCTOR" lazy="true">
             <key>
-                <column name="ID" />
+                <column name="ID_PRODUCTOR" />
             </key>
-            <list-index></list-index>
-            <one-to-many class="ar.edu.unq.chasqui.model.Caracteristica" />
+            <list-index column="ORDEN"/>
+            <one-to-many class="ar.edu.unq.chasqui.model.CaracteristicaProductor" />
         </list>
     </class>
 </hibernate-mapping>

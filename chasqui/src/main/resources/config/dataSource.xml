@@ -60,6 +60,7 @@
 				<value>classpath*:mappings/Direccion.hbm.xml</value>
 				<value>classpath*:mappings/Fabricante.hbm.xml</value>
 				<value>classpath*:mappings/Producto.hbm.xml</value>
+				<value>classpath*:mappings/CaracteristicaProductor.hbm.xml</value>
 				<value>classpath*:mappings/Caracteristica.hbm.xml</value>
 			</list>
 		</property>

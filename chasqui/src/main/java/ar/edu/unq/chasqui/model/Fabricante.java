@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Fabricante {
@@ -8,14 +9,19 @@ public class Fabricante {
 	private String nombre;
 	private Direccion direccion;
 	private List<Producto> productos;
-	private List<Caracteristica> caracteristicas;
+	private List<CaracteristicaProductor> caracteristicas;
  	
 	//CONSTRUCTORs
 
-	public Fabricante(){}
+	public Fabricante(){
+		productos = new ArrayList<Producto>();
+		caracteristicas = new ArrayList<CaracteristicaProductor>();
+	}
 
 	public Fabricante(String nombre){
 		this.nombre = nombre;
+		productos = new ArrayList<Producto>();
+		caracteristicas = new ArrayList<CaracteristicaProductor>();
 	}
 	
 	//GETs & SETs
@@ -53,11 +59,11 @@ public class Fabricante {
 		this.productos = productos;
 	}
 	
-	public List<Caracteristica> getCaracteristicas() {
+	public List<CaracteristicaProductor> getCaracteristicas() {
 		return caracteristicas;
 	}
 
-	public void setCaracteristicas(List<Caracteristica> caracteristicas) {
+	public void setCaracteristicas(List<CaracteristicaProductor> caracteristicas) {
 		this.caracteristicas = caracteristicas;
 	}
 	
@@ -67,6 +73,11 @@ public class Fabricante {
 	@Override
 	public String toString(){
 		return this.getNombre();
+	}
+
+	public void agregarProducto(Producto model) {
+		this.productos.add(model);
+		
 	}
 
 }

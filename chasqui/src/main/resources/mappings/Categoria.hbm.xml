@@ -15,7 +15,7 @@
             <key>
                 <column name="ID_CATEGORIA" />
             </key>
-            <list-index></list-index>
+            <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
         </list>
     </class>

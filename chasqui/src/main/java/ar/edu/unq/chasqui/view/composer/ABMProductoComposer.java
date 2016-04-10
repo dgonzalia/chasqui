@@ -137,6 +137,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		categoriaSeleccionada.agregarProducto(model);	
 		model.setCategoria(categoriaSeleccionada);
 		model.setFabricante(productorSeleccionado);
+		productorSeleccionado.agregarProducto(model);
 		usuarioService.guardarUsuario(usuario);
 		Events.sendEvent(Events.ON_NOTIFY, this.self.getParent(), null);
 		this.self.detach();

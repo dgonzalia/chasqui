@@ -67,7 +67,6 @@ public class Producto {
 	public static Producto crearProductoEmpty(){
 		Producto p = new Producto();
 		p.setCaracteristicas(new ArrayList<Caracteristica>());
-		p.setFabricante(new Fabricante());
 		p.setVariantes(new ArrayList<Variante>());
 		return p;
 	}
