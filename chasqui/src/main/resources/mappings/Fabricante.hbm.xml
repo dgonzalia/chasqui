@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping default-cascade="save-update">
-    <class name="ar.edu.unq.chasqui.model.Fabricante" table="FABRICANTE">
+    <class name="ar.edu.unq.chasqui.model.Fabricante" table="PRODUCTOR">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
             <generator class="native" />
@@ -11,22 +11,15 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
-        <many-to-one name="direccion" class="ar.edu.unq.chasqui.model.Direccion" fetch="join">
-            <column name="DIRECCION" />
-        </many-to-one>
-        <list name="productos" inverse="false" table="PRODUCTO" lazy="true">
-            <key>
-                <column name="ID_PRODUCTO" />
-            </key>
-            <list-index></list-index>
-            <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
-        </list>
-        <list name="caracteristicas" inverse="false" table="CARACTERISTICAPRODUCTOR" lazy="true">
+        <property name="calle" type="java.lang.String" column="CALLE"/>
+        <property name="altura" type="java.lang.Integer" column="ALTURA"/>
+        <list name="productos" inverse="false" table="PRODUCTO" lazy="false">
             <key>
                 <column name="ID_PRODUCTOR" />
             </key>
-            <list-index column="ORDEN"/>
-            <one-to-many class="ar.edu.unq.chasqui.model.CaracteristicaProductor" />
+            <list-index column="orden"/>
+            <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
         </list>
+        <many-to-one name="caracteristica" class="ar.edu.unq.chasqui.model.CaracteristicaProductor" column="ID_CARACTERISTICA" lazy="false" fetch="join"/>
     </class>
 </hibernate-mapping>

@@ -8,11 +8,11 @@
             <column name="ID" />
             <generator class="native" />
         </id>
-        <list name="imagenes" inverse="false" table="IMAGEN" lazy="true">
+        <list name="imagenes" inverse="false" table="IMAGEN" lazy="false">
             <key>
-                <column name="ID" />
+                <column name="ID_VARIANTE" />
             </key>
-            <list-index></list-index>
+            <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Imagen" />
         </list>
         <property name="descripcion" type="java.lang.String">

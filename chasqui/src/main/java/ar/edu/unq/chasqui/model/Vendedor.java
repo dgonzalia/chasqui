@@ -87,7 +87,7 @@ public class Vendedor extends Usuario{
 	}
 
 	//METHODS
-	
+
 	public boolean contieneProductor(String nombreProductor){
 		for(Fabricante f : fabricantes ){
 			if( f.getNombre().equalsIgnoreCase(nombreProductor)){

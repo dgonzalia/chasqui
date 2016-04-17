@@ -64,7 +64,7 @@ apply="ar.edu.unq.chasqui.view.composer.ConfiguracionComposer" height="100%" wid
 				<listcell label="${c:l('zk.label.configuracion.compra.colectiva')}"/>
 				<listcell>
 					<hbox>
-						<combobox id="comboCantidadDeKilometros" selectedItem="@{configuracionWindow$composer.kilometroSeleccionado}" 
+						<combobox readonly="true" id="comboCantidadDeKilometros" selectedItem="@{configuracionWindow$composer.kilometroSeleccionado}" 
 						model="@{configuracionWindow$composer.kilometros}"/>
 						<label value="${c:l('zk.label.configuracion.kilometros')}" style="font-weight:bold; color:black"/>
 					</hbox>

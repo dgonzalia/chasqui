@@ -42,10 +42,6 @@ public class Producto {
 		return caracteristicas;
 	}
 	
-	public void setCaracteristicas(List<Caracteristica> caracteristicas) {
-		this.caracteristicas = caracteristicas;
-	}
-	
 	public Fabricante getFabricante() {
 		return fabricante;
 	}
@@ -62,12 +58,19 @@ public class Producto {
 		this.variantes = variantes;
 	}
 	
+	
+	public void setCaracteristicas(List<Caracteristica> caracteristica) {
+		this.caracteristicas = caracteristica;
+	}
+	
+	
 	//METHODS
 	
+
 	public static Producto crearProductoEmpty(){
 		Producto p = new Producto();
-		p.setCaracteristicas(new ArrayList<Caracteristica>());
 		p.setVariantes(new ArrayList<Variante>());
+		p.setCaracteristicas(new ArrayList<Caracteristica>());
 		return p;
 	}
 	

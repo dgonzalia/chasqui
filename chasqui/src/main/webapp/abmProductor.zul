@@ -5,48 +5,48 @@
 <?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
 <zk>
 <window title="Alta/Edición de Productores" id="productorWindow"
-apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" width="20%" height="20%" closable="true">
+apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" width="40%"  closable="true">
 
+<listbox>
+	<listhead>
+		<listheader/>
+		<listheader/>
+	</listhead>
+	<listitem>
+		<listcell>
+			<label value="${c:l('zk.listheader.label.abmCategoria.nombre')}"/>
+		</listcell>
+		<listcell>
+			<textbox maxlength="20" id="textboxNombreProductor"/>	
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell>
+			<label value="Direccion:"/>
+		</listcell>
+		<listcell>
+			<textbox id="txtDireccion"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell label="Altura:"/>
+		<listcell>
+			<intbox id="altura" maxlength="4"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell label="Caracteristica:"/>
+		<listcell>
+			<combobox readonly="true" id="comboCaracteristica" model="@{productorWindow$composer.caracteristicas}"
+			selectedItem="@{productorWindow$composer.caracteristicaSeleccionada}"/>
+		</listcell>
+	</listitem>
+</listbox>
+<separator spacing="15px"/>
 <div align="center">
-	<hbox>
-		<label value="${c:l('zk.listheader.label.abmCategoria.nombre')}"/>
-		<textbox maxlength="20" id="textboxNombreProductor"/>
-	</hbox>
-	<hbox>
-		<label value="Direccion:"/>
-		<textbox id="lblDireccion"/>
-	</hbox>
-	<vbox>
-		<hbox>
-			<label value="Caracteristica:"/>
-			<textbox id="txtbCarcteristica"/>
-		</hbox>
-		<hbox>
-			<label value="imagen:"/>
-			<image id="imgIcon"/>
-		</hbox>
-		<hbox>
-			<div align="center">
-				<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>
-			</div>			
-		</hbox>
-	</vbox>	
-	<hbox>
-		<div>
-			<button id="agregar" label="Agregar Caracteristica"/>
-		</div>
-	</hbox>
-	
-	
-	<listbox id="ltbCaracteristicas">
-		
-	</listbox>
-	<separator spacing="20px"/>
-	<div align="center">
-		<toolbarbutton label="${c:l('zk.button.label.guardar')}" style="font-weight:bold; color:black" id="buttonGuardar" image="/imagenes/save.png"/>
-		<space spacing="10px"/>
-		<toolbarbutton id="botonCancelar" label="${c:l('zk.button.label.cancelar')}" style="font-weight:bold; color:black" image="/imagenes/cancel.png"/>
-	</div>
+	<toolbarbutton label="${c:l('zk.button.label.guardar')}" style="font-weight:bold; color:black" id="buttonGuardar" image="/imagenes/save.png"/>
+	<space spacing="10px"/>
+	<toolbarbutton id="botonCancelar" label="${c:l('zk.button.label.cancelar')}" style="font-weight:bold; color:black" image="/imagenes/cancel.png"/>
 </div>
 </window>
 </zk>

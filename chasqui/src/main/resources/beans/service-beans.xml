@@ -21,7 +21,9 @@
 	   
 	   <bean id="usuarioService" name="usuarioService" class="ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl"/>
 	   
-	   <bean id="zonaService" name="zonaService" class="ar.edu.unq.chasqui.service.impl.ZonaServiceImpl"/>
+	   <bean id="zonaService" name="zonaService" class="ar.edu.unq.chasqui.services.impl.ZonaServiceImpl"/>
+	   
+	   <bean id="caracteristicaService" name="caracteristicaService" class="ar.edu.unq.chasqui.services.impl.CaracteristicaServiceImpl"/>
 	   
 	   <!--  DAOS -->
 	   <bean name="usuarioDAO" id="usuarioDAO" class="ar.edu.unq.chasqui.dao.impl.UsuarioDAOHbm">
@@ -29,6 +31,10 @@
 	   </bean>
 	   
 	   <bean id="zonaDAO" name="zonaDAO" class="ar.edu.unq.chasqui.dao.impl.ZonaDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
+	   
+	   <bean id="caracteristicaDAO" name="caracteristicaDAO" class="ar.edu.unq.chasqui.dao.impl.CaracteristicaDAOHbm">
 	   		<property name="sessionFactory" ref="sessionFactory"/>
 	   </bean>
 	   

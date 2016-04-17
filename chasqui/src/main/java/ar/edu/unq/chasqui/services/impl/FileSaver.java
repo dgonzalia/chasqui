@@ -1,7 +1,16 @@
 package ar.edu.unq.chasqui.services.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.Method;
 
 import ar.edu.unq.chasqui.model.Imagen;
 
@@ -28,5 +37,18 @@ public class FileSaver {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
+	
+	
+	
+	public byte[] iconizar(InputStream contenido,String extension) throws IOException{
+		BufferedImage content = ImageIO.read(contenido);
+		BufferedImage scaledImg = Scalr.resize(content, Method.QUALITY, 
+                16, 16, Scalr.OP_ANTIALIAS);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write( scaledImg, extension, baos );
+		baos.flush();
+		return baos.toByteArray();
+	}
+	
 	
 }

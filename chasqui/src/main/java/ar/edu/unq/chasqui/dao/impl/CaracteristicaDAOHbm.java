@@ -1,8 +1,56 @@
 package ar.edu.unq.chasqui.dao.impl;
 
-import ar.edu.unq.chasqui.dao.CaracteristicaDAO;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CaracteristicaDAOHbm implements CaracteristicaDAO{
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import ar.edu.unq.chasqui.dao.CaracteristicaDAO;
+import ar.edu.unq.chasqui.model.Caracteristica;
+import ar.edu.unq.chasqui.model.CaracteristicaProductor;
+
+public class CaracteristicaDAOHbm extends HibernateDaoSupport implements CaracteristicaDAO{
+
+	public void guardaCaracteristicasProducto(List<Caracteristica> list) {
+		for(Caracteristica c : list){
+			this.getHibernateTemplate().saveOrUpdate(c);
+		}
+		this.getHibernateTemplate().flush();
+	}
+
+	public void guardarCaracteristicaProductor(List<CaracteristicaProductor> list) {
+		for(CaracteristicaProductor c : list){
+			this.getHibernateTemplate().saveOrUpdate(c);
+		}
+		this.getHibernateTemplate().flush();
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Caracteristica> buscarCaracteristicasProductoBy(Integer idVendedor) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(Caracteristica.class);
+		criteria.add(Restrictions.eq("idVendedor", idVendedor));
+		
+		List<Caracteristica> resultado = this.getHibernateTemplate().findByCriteria(criteria);
+		if(resultado == null){
+			resultado = new ArrayList<Caracteristica>();
+		}
+		return resultado;
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<CaracteristicaProductor> buscarCaracteristicasProductorBy(Integer idVendedor) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(CaracteristicaProductor.class);
+		criteria.add(Restrictions.eq("idVendedor", idVendedor));
+		List<CaracteristicaProductor> resultado = this.getHibernateTemplate().findByCriteria(criteria);
+		if(resultado == null){
+			resultado = new ArrayList<CaracteristicaProductor>();
+		}
+		return resultado;
+	}
 	   
 	
 }

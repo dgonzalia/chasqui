@@ -26,9 +26,9 @@ import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
-import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.interfaces.CaracteristicaService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.view.genericEvents.RefreshListener;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
@@ -40,6 +40,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Textbox nombreProducto;
 	private Combobox comboCategorias;
 	private Combobox comboFabricantes;
+	private Combobox comboCaracteristicas;
 	private Toolbarbutton botonAgregarCaracteristica;
 	private Toolbarbutton botonAgregarFabricante;
 	private Toolbarbutton botonAgregarCategoria;
@@ -57,9 +58,14 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	private Variante varianteSeleccionada;
 	private Fabricante productorSeleccionado;
 	private List<Variante>varianteRollback;
+	private List<Caracteristica>caracteristicasProducto;
+	private Caracteristica caracteristicaProductoSeleccionada;
 	private Vendedor usuario;
 	private boolean modoEdicion;
+	
+	
 	private UsuarioService usuarioService;
+	private CaracteristicaService caracteristicaService;
 	
 	
 	
@@ -71,6 +77,8 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		Integer accion = (Integer) Executions.getCurrent().getArg().get("accion");
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
+		caracteristicaService = (CaracteristicaService) SpringUtil.getBean("caracteristicaService");
+		caracteristicasProducto = caracteristicaService.buscarCaracteristicasProductoBy(usuario.getId());
 		comp.addEventListener(Events.ON_RENDER, new RefreshListener<ABMProductoComposer>(this));
 		inicializarVentana(accion);	
 		binder = new AnnotateDataBinder(comp);
@@ -107,6 +115,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		comboCategorias.setDisabled(true);
 		comboFabricantes.setDisabled(true);
 		botonAgregarCaracteristica.setDisabled(true);
+		comboCaracteristicas.setDisabled(true);
 		botonAgregarFabricante.setDisabled(true);
 		botonAgregarCategoria.setDisabled(true);
 		botonGuardar.setDisabled(true);
@@ -134,6 +143,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	public void onClick$botonGuardar(){
 		validaciones();
 		model.setNombre(nombreProducto.getValue());
+		model.setCaracteristicas(caracteristicas);
 		categoriaSeleccionada.agregarProducto(model);	
 		model.setCategoria(categoriaSeleccionada);
 		model.setFabricante(productorSeleccionado);
@@ -204,21 +214,20 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	}
 	
 	public void onClick$botonAgregarCaracteristica(){
-		popUpCaracteristica.open(botonAgregarCaracteristica);
+		
+		if(caracteristicaProductoSeleccionada == null){
+			throw new WrongValueException(comboCaracteristicas,"Debe seleccionar una caracteristica.");
+		}
+		if(caracteristicas.contains(caracteristicaProductoSeleccionada)){
+			throw new WrongValueException("El producto ya posee la caracteristica que desea agregar");			
+		}
+		caracteristicas.add(caracteristicaProductoSeleccionada);
+		comboCaracteristicas.setValue(null);
+		caracteristicaSeleccionada = null;
+		refresh();
+		
 	}
 	
-	public void onClick$agregarCaractButton(){
-		String caract = agregarCaractTextbox.getValue();
-		if(StringUtils.isEmpty(caract)){
-			throw new WrongValueException(agregarCaractTextbox,"La caracteristica no debe ser vacia!");
-		}
-		Caracteristica c = new Caracteristica(caract);
-		if(caracteristicas.contains(c)){
-			throw new WrongValueException("El producto ya posee la caracteristica que desea agregar");
-		}
-		model.getCaracteristicas().add(c);
-		refresh();
-	}
 	
 	public void onEliminarCaracteristica(){
 		if(!listboxCaracteristicas.isDisabled()){			
@@ -256,6 +265,30 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	
 
 
+
+
+
+	public List<Caracteristica> getCaracteristicasProducto() {
+		return caracteristicasProducto;
+	}
+
+
+
+	public void setCaracteristicasProducto(List<Caracteristica> caracteristicasProducto) {
+		this.caracteristicasProducto = caracteristicasProducto;
+	}
+
+
+
+	public Caracteristica getCaracteristicaProductoSeleccionada() {
+		return caracteristicaProductoSeleccionada;
+	}
+
+
+
+	public void setCaracteristicaProductoSeleccionada(Caracteristica caracteristicaProductoSeleccionada) {
+		this.caracteristicaProductoSeleccionada = caracteristicaProductoSeleccionada;
+	}
 
 
 

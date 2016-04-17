@@ -85,6 +85,11 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 				</listitem>
 				<listitem>
 					<listcell>
+						<radio label="Caracteristicas" style="font-size:15px" id="radioCaracteristicas"	radiogroup="v1"/>
+					</listcell>
+				</listitem>
+				<listitem>
+					<listcell>
 						<radio label="${c:l('zk.radio.label.administracion.configuracion')}" style="font-size:15px;" id="radioConfiguracion"
 						radiogroup="v1"/>
 					</listcell>
@@ -127,6 +132,9 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 					</listhead>
 				</listbox>
 			</vbox>
+		</div>
+		<div visible="false" id="divCaracteristicas">
+			<include visible="false" id="caracInclude"/>
 		</div>
 		<div id="divPedidos" visible="false">
 			<include id="pedidosInclude" visible="false" src="/pedidos.zul"/>

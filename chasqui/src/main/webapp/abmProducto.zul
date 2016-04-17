@@ -22,7 +22,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 			<listcell label="${c:l('zk.listcell.label.abmProducto.categoria')} "/>
 			<listcell>
 				<hbox>
-					<combobox id="comboCategorias" model="@{productosWindow$composer.usuario.categorias}" selectedItem="@{productosWindow$composer.categoriaSeleccionada }"/>
+					<combobox  readonly="true" id="comboCategorias" model="@{productosWindow$composer.usuario.categorias}" selectedItem="@{productosWindow$composer.categoriaSeleccionada }"/>
 					<toolbarbutton id="botonAgregarCategoria" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}" image="/imagenes/plus.png"/>
 				</hbox>
 			</listcell>
@@ -31,7 +31,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 			<listcell label="${c:l('zk.listcell.label.abmProducto.fabricante') }"/>
 			<listcell>
 				<hbox>
-					<combobox id="comboFabricantes" model="@{productosWindow$composer.usuario.fabricantes}" selectedItem="@{productosWindow$composer.productorSeleccionado }"/>
+					<combobox readonly="true" id="comboFabricantes" model="@{productosWindow$composer.usuario.fabricantes}" selectedItem="@{productosWindow$composer.productorSeleccionado }"/>
 					<toolbarbutton image="/imagenes/plus.png" id="botonAgregarFabricante" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
 				</hbox>
 			</listcell>
@@ -77,7 +77,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 			</listcell>
 		</listitem>
 	</listbox>
-	<listbox id="listboxCaracteristicas" mold="paging" pageSize="3" selectedItem="@{productosWindow$composer.caracteristicaSeleccionada}"
+	  <listbox id="listboxCaracteristicas" mold="paging" pageSize="3" selectedItem="@{productosWindow$composer.caracteristicaSeleccionada}"
 		model="@{productosWindow$composer.model.caracteristicas}" rows="3">
 		<listhead>
 			<listheader label="${c:l('zk.listcell.label.abmProducto.caracteristica')}"/>
@@ -85,6 +85,8 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 		</listhead>
 		<auxhead>
 			<auxheader colspan="2">
+				<combobox id="comboCaracteristicas" readonly="true" model="@{productosWindow$composer.caracteristicasProducto}"
+				selectedItem="@{productosWindow$composer.caracteristicaProductoSeleccionada}"/>
 				<toolbarbutton id="botonAgregarCaracteristica" image="/imagenes/plus.png" 
 				label="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
 			</auxheader>

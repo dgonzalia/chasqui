@@ -3,8 +3,9 @@ package ar.edu.unq.chasqui.model;
 public class Caracteristica {
 	
 	private Integer id;
+	private Integer idVendedor;
 	private String nombre;
-
+	private String pathImagen;
 	//CONSTRUCTORs
 	
 	public Caracteristica(){}
@@ -14,9 +15,17 @@ public class Caracteristica {
 	}
 	
 	//GETs & SETs
-	
+		
 	public Integer getId() {
 		return id;
+	}
+
+	public Integer getIdVendedor() {
+		return idVendedor;
+	}
+
+	public void setIdVendedor(Integer idVendedor) {
+		this.idVendedor = idVendedor;
 	}
 
 	public void setId(Integer id) {
@@ -31,8 +40,18 @@ public class Caracteristica {
 		this.nombre = nombre;
 	}
 	
-	//METHODS
+	public String getPathImagen() {
+		return pathImagen;
+	}
 	
+	public void setPathImagen(String pathImagen) {
+		this.pathImagen = pathImagen;
+	}
+	
+	
+	
+	//METHODS
+
 	@Override
 	public boolean equals(Object obj){
 		if( obj == null){
@@ -45,6 +64,10 @@ public class Caracteristica {
 			return true;
 		}
 		return false;
+	}
+	
+	public String toString(){
+		return nombre;
 	}
 	
 

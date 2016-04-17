@@ -14,15 +14,16 @@
         <many-to-one name="categoria" class="ar.edu.unq.chasqui.model.Categoria" fetch="join">
             <column name="ID_CATEGORIA" />
         </many-to-one>
-        <list name="caracteristicas" inverse="false" table="CARACTERISTICA" lazy="false">
+        
+        <list name="caracteristicas" inverse="false" table="PRODUCTO_CARACTERISTICA" lazy="false">
             <key>
                 <column name="ID_PRODUCTO" />
             </key>
-            <list-index></list-index>
-            <one-to-many class="ar.edu.unq.chasqui.model.Caracteristica" />
+            <list-index column="ORDEN_CARACTERISTICA"/>
+            <many-to-many entity-name="ar.edu.unq.chasqui.model.Caracteristica" column="ID_PRODUCTO_CARACTERISTICA"/>
         </list>
         <many-to-one name="fabricante" class="ar.edu.unq.chasqui.model.Fabricante" fetch="join">
-            <column name="ID_FABRICANTE" />
+            <column name="ID_PRODUCTOR" />
         </many-to-one>
         <list name="variantes" inverse="false" table="VARIANTE" lazy="false">
             <key>

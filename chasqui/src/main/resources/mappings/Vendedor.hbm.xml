@@ -8,19 +8,19 @@
             <column name="ID" />
         </key>
         <property name="montoMinimoPedido" type="java.lang.Integer">
-            <column name="MONTOMINIMOPEDIDO" />
+            <column name="MONTO_MINIMO_PEDIDO" />
         </property>
         <property name="fechaCierrePedido" type="org.joda.time.contrib.hibernate.PersistentDateTime">
-            <column name="FECHACIERREPEDIDO" />
+            <column name="FECHA_CIERRE_PEDIDO" />
         </property>
         <property name="msjCierrePedido" type="java.lang.String">
-            <column name="MSJCIERREPEDIDO" />
+            <column name="MSJ_CIERRE_PEDIDO" />
         </property>
         <property name="distanciaCompraColectiva" type="java.lang.Integer">
-            <column name="DISTANCIACOMPRACOLECTIVA" />
+            <column name="DISTANCIA_COMPRA_COLECTIVA" />
         </property>
         <many-to-one name="mapaZonas" class="ar.edu.unq.chasqui.model.Imagen" fetch="join">
-            <column name="MAPAZONAS" />
+            <column name="MAPA_ZONAS" />
         </many-to-one>
         <list name="categorias" inverse="false" table="CATEGORIA" lazy="false">
             <key>
@@ -33,7 +33,7 @@
             <key>
                 <column name="ID_VENDEDOR" />
             </key>
-            <list-index></list-index>
+            <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Fabricante" />
         </list>
     </joined-subclass>

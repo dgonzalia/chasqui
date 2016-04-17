@@ -7,21 +7,20 @@ public class Fabricante {
 
 	private Integer id;
 	private String nombre;
-	private Direccion direccion;
+	private String calle;
+	private Integer altura;
 	private List<Producto> productos;
-	private List<CaracteristicaProductor> caracteristicas;
+	private CaracteristicaProductor caracteristica;
  	
 	//CONSTRUCTORs
 
 	public Fabricante(){
 		productos = new ArrayList<Producto>();
-		caracteristicas = new ArrayList<CaracteristicaProductor>();
 	}
 
 	public Fabricante(String nombre){
 		this.nombre = nombre;
 		productos = new ArrayList<Producto>();
-		caracteristicas = new ArrayList<CaracteristicaProductor>();
 	}
 	
 	//GETs & SETs
@@ -43,14 +42,22 @@ public class Fabricante {
 		this.nombre = nombre;
 	}
 	
-	public Direccion getDireccion() {
-		return direccion;
+	public String getCalle() {
+		return calle;
 	}
 
-	public void setDireccion(Direccion direccion) {
-		this.direccion = direccion;
+	public void setCalle(String calle) {
+		this.calle = calle;
 	}
-	
+
+	public Integer  getAltura() {
+		return altura;
+	}
+
+	public void setAltura(Integer altura) {
+		this.altura = altura;
+	}
+
 	public List<Producto> getProductos() {
 		return productos;
 	}
@@ -58,18 +65,20 @@ public class Fabricante {
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
+	public CaracteristicaProductor getCaracteristica() {
+		return caracteristica;
+	}
 	
-	public List<CaracteristicaProductor> getCaracteristicas() {
-		return caracteristicas;
+	public void setCaracteristica(CaracteristicaProductor caracteristica) {
+		this.caracteristica = caracteristica;
 	}
-
-	public void setCaracteristicas(List<CaracteristicaProductor> caracteristicas) {
-		this.caracteristicas = caracteristicas;
-	}
+	
+	
 	
 	
 	//METHODS
 	
+
 	@Override
 	public String toString(){
 		return this.getNombre();
