@@ -1,12 +1,8 @@
 package ar.edu.unq.chasqui.view.composer;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.cxf.common.util.StringUtils;
-import org.joda.time.DateTime;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
@@ -24,15 +20,8 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
-import ar.edu.unq.chasqui.model.Caracteristica;
-import ar.edu.unq.chasqui.model.Categoria;
-import ar.edu.unq.chasqui.model.Fabricante;
-import ar.edu.unq.chasqui.model.Imagen;
-import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
-import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -55,6 +44,10 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
+		Vendedor u = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		if(u != null){
+			Executions.sendRedirect("/administracion.zul");
+		}
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
@@ -64,6 +57,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	
 	public void onClick$logginButton() throws Exception{
 		String password = passwordLoggin.getValue();
+		String usuario = usernameLoggin.getValue();
 		if (!password.matches("^[a-zA-Z0-9]*$") || password.length() < 8){
 			labelError.setVisible(true);
 			passwordLoggin.setValue("");
@@ -71,80 +65,16 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 			binder.loadAll();
 			return;
 		};
-//		try {
-//			Usuario user = service.login(usernameLoggin.getValue(), password);
-//			String passwordDesencriptado = desEncrypter.mkdecrypt(user.getPassword());
-//			if (passwordDesencriptado.equals(password)){
-//				System.out.println("OK");
-//			}
-//			Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
-//			Executions.sendRedirect("/administracion.zul");
-//			// validar Usuario y re enviar a la pagina de adm 
-//			// mandando por session al usuario 
-//		} catch (WrongValueException e) {
-//			alert(e.getMessage());;
-//		} catch (Exception e) {
-//			alert(e.getMessage());
-//		}
-		Vendedor user = new Vendedor();
-		user.setUsername(usernameLoggin.getValue());
-		user.setDistanciaCompraColectiva(4);
-		user.setMontoMinimoPedido(40);
-		user.setPassword(Encrypter.encrypt(password));
-		user.setFechaCierrePedido(new DateTime());
-		user.setEmail("jfflores90@gmail");
-		Imagen img = new Imagen();
-//		List<Categoria>categorias = new ArrayList<Categoria>();
-//		Categoria c = new Categoria();
-//		c.setNombre("Envasados");
-//		categorias.add(c);
-//		categorias.add(c);
-//		categorias.add(c);
-//		categorias.add(c);
-//		List<Producto>productos = new ArrayList<Producto>();
-//		Producto p = new Producto();
-//		p.setCategoria(c);
-//		p.setNombre("Aceite");
-//		p.setDescripcion("Esto es un aceite");
-//		Fabricante f = new Fabricante();
-//		f.setNombre("Fabricante");
-//		List<Fabricante>fss = new ArrayList<Fabricante>();
-//		fss.add(f);
-//		p.setFabricante(f);
-//		List<Caracteristica>cas = new ArrayList<Caracteristica>();
-//		Caracteristica ca = new Caracteristica();
-//		ca.setNombre("caracteristica");
-//		cas.add(ca);
-//		p.setCaracteristicas(cas);
-//		productos.add(p);
-//		productos.add(p);
-//		productos.add(p);
-//		productos.add(p);
-//		Variante v = new Variante();
-//		v.setStock(5);
-//		v.setPrecio(10);
-//		v.setNombre("Sarasa");
-//		List<Imagen>imagenes = new ArrayList<Imagen>();
-//		Imagen img2 = new Imagen();
-//		img2.setNombre("perfil.jpg");
-//		img2.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
-//		imagenes.add(img2);
-//		v.setImagenes(imagenes);
-//		List<Variante>h = new ArrayList<Variante>();
-//		h.add(v);
-//		p.setVariantes(h);
-//		user.setCategorias(categorias);
-//		user.setFabricantes(fss);
-//		c.setProductos(productos);
-		img.setNombre("perfil.jpg");
-		img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
-		user.setImagenPerfil(img.getPath());
-		service.guardarUsuario(user);
-		Usuario u =service.obtenerUsuarioPorID(user.getId());
-		String de = Encrypter.decrypt(u.getPassword());
-		System.out.println(de);
-		Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
-		Executions.sendRedirect("/administracion.zul");
+		Usuario user = null;
+		try{
+			user =service.login(usuario,password);
+			Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
+			Executions.sendRedirect("/administracion.zul");
+		}catch(Exception e){
+			labelError.setVisible(true);
+			passwordLoggin.setValue("");
+			usernameLoggin.setValue("");
+		}
 		// validar Usuario y re enviar a la pagina de adm 
 		// mandando por session al usuario 
 		

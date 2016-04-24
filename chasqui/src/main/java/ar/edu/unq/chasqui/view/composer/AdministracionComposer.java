@@ -68,6 +68,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private List<Producto>productos;
 	
 	public void doAfterCompose(Component comp) throws Exception{
+		
 		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		if(usuarioLogueado == null){
 			Executions.sendRedirect("/");
@@ -75,7 +76,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		}
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
-		if(usuarioLogueado.isRoot()){
+		if(usuarioLogueado.getIsRoot()){
 			inicializacionUsuarioROOT();
 		}else{
 			inicializacionUsuarioAdministrador();		
@@ -95,6 +96,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		radioProductos.setDisabled(true);
 		radioPedidos.setDisabled(true);
 		radioProductores.setDisabled(true);
+		radioCaracteristicas.setDisabled(true);
 		listboxCategorias.setVisible(false);
 		radioConfiguracion.setDisabled(true);
 		administracionWindow.setVisible(true);
@@ -107,7 +109,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		listboxProductores.setItemRenderer(new ProductorRenderer(this.self));
 		administracionWindow.setVisible(true);
 		radioCategorias.setChecked(true);
-//		radioAltaUsuario.setVisible(false);
+		radioAltaUsuario.setVisible(false);
 		productos = new ArrayList<Producto>();
 		onClick$radioCategorias();			
 	}

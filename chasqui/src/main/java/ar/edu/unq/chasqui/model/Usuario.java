@@ -7,13 +7,11 @@ public class Usuario {
 	private String password;
 	private String imagenPerfil;
 	private String email;
+	private boolean isRoot;
 	
 	
 	//GETs & SETs
 	
-	public boolean isRoot(){
-		return true;
-	}
 	
 	public String getUsername() {
 		return username;
@@ -54,6 +52,16 @@ public class Usuario {
 	public void setImagenPerfil(String imagenPerfil) {
 		this.imagenPerfil = imagenPerfil;
 	}
+
+	public boolean getIsRoot() {
+		return isRoot;
+	}
+
+	public void setIsRoot(boolean isRoot) {
+		this.isRoot = isRoot;
+	}
+	
+	
 	
 	
 }

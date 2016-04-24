@@ -21,6 +21,7 @@ import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
+import ar.edu.unq.chasqui.services.impl.MailService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({"serial","deprecation"})
@@ -37,6 +38,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	private Vendedor model;
 	
 	private UsuarioService service;
+	private MailService mailService;
 	
 	
 	@Override
@@ -44,6 +46,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
+		mailService = (MailService) SpringUtil.getBean("mailService");
 		comp.addEventListener(Events.ON_NOTIFY, new GuardarUsuarioEventListener(this));
 		comp.addEventListener(Events.ON_USER, new GuardarUsuarioEventListener(this));
 		binder.loadAll();
@@ -98,6 +101,9 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			model.setUsername(username);
 			model.setEmail(email);
 			model.setPassword(Encrypter.encrypt(pwd));
+			if(model.getImagenPerfil() == null){
+				model.setImagenPerfil("/imagenes/usuarios/ROOT/perfil.jpg");				
+			}
 			return model;
 		}
 		return new Vendedor(username,email,Encrypter.encrypt(pwd));
@@ -109,8 +115,10 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			String username = textboxUsername.getValue();
 			String email = textboxEmail.getValue();
 			String pwd = textboxContraseña.getValue();
-		  
 			Vendedor v = actualizarVendedor(username,email,pwd);
+			if(v.getId() == null){
+				mailService.enviarEmailBienvenidaVendedor(email, username, pwd);
+			}
 			service.guardarUsuario(v);
 			
 			Map<String,Object>params = new HashMap<String,Object>();
@@ -118,6 +126,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			params.put("accion", "crear");
 			Events.sendEvent(Events.ON_NOTIFY, usuariosActualesWindow, params);
 		}catch(Exception e){
+			e.printStackTrace();
 			alert(e.getMessage());
 		}finally{
 			desbloquearPantalla();

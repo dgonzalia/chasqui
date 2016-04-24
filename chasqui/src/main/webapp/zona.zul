@@ -42,7 +42,7 @@ apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="60%"  closable="tr
 			<separator spacing="15px"/>
 			<div align="center">
 				<hbox>
-					<button label="Agregar" id="btnGuardar"/>
+					<button label="Agregar" id="btnAgregar"/>
 					<space spacing="3px"/>
 					<button label="limpiar Campos" id="btnLimpiar"/>
 				</hbox>

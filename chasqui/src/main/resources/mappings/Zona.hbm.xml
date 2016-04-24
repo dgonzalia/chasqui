@@ -12,8 +12,8 @@
             <column name="NOMBRE" />
         </property>
         <property name="idUsuario" type="java.lang.Integer" column="ID_USUARIO"/>
-        <property name="fechaEntrega" type="org.joda.time.DateTime">
-            <column name="FECHAENTREGA" />
+        <property name="fechaEntrega" type="org.joda.time.contrib.hibernate.PersistentDateTime">
+            <column name="FECHA_ENTREGA" />
         </property>
         <property name="descripcion" type="java.lang.String">
             <column name="DESCRIPCION" />

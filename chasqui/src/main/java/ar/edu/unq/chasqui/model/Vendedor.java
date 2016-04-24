@@ -12,7 +12,7 @@ public class Vendedor extends Usuario{
 	private DateTime fechaCierrePedido;
 	private String msjCierrePedido;
 	private Integer distanciaCompraColectiva;
-	private Imagen mapaZonas;
+	private String mapaZonas;
 	private List<Categoria> categorias;
 	private List<Fabricante> fabricantes;
 	
@@ -23,6 +23,7 @@ public class Vendedor extends Usuario{
 		this.setUsername(username);
 		this.setEmail(email);
 		this.setPassword(pwd);
+		this.setIsRoot(false);
 	}
 
 	public Vendedor() {
@@ -62,11 +63,11 @@ public class Vendedor extends Usuario{
 		this.distanciaCompraColectiva = distanciaCompraColectiva;
 	}
 
-	public Imagen getMapaZonas() {
+	public String getMapaZonas() {
 		return mapaZonas;
 	}
 
-	public void setMapaZonas(Imagen mapaZonas) {
+	public void setMapaZonas(String mapaZonas) {
 		this.mapaZonas = mapaZonas;
 	}
 
@@ -131,7 +132,5 @@ public class Vendedor extends Usuario{
 		//TODO
 	}
 
-	public boolean isRoot() {
-		return false;
-	}
+
 }

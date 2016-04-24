@@ -29,9 +29,11 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
 import ar.edu.unq.chasqui.model.Imagen;
-import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.model.Zona;
 import ar.edu.unq.chasqui.services.impl.FileSaver;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
+import ar.edu.unq.chasqui.services.interfaces.ZonaService;
 
 @SuppressWarnings({"deprecation","unused"})
 public class ZonasComposer extends GenericForwardComposer<Component> {
@@ -50,24 +52,45 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 	
 	private Zona zonaSeleccionada;
 	private List<Zona> zonas;
-	private Usuario usuario;
+	private Vendedor usuario;
 	private FileSaver fileSaver;
+	private ZonaService zonaService;
+	private UsuarioService usuarioService;
 	
 	
 	
 	
 	public void doAfterCompose(Component c) throws Exception{
 		super.doAfterCompose(c);
-		usuario = (Usuario) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
+		zonaService = (ZonaService) SpringUtil.getBean("zonaService");
+		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		c.addEventListener(Events.ON_NOTIFY,new SubirImagenListener(this));
-		zonas = new ArrayList<Zona>();
+		zonas = zonaService.buscarZonasBy(usuario.getId());
+		if(usuario.getMapaZonas() != null){
+			imgMapa.setSrc(usuario.getMapaZonas());			
+		}
 		binder = new AnnotateDataBinder(c);
 		binder.loadAll();
 	}
 
 	public void onEliminarZona(){
-		zonas.remove(zonaSeleccionada);
+		Messagebox.show("Está seguro que desea eliminar la zona seleccionada?","Pregunta",Messagebox.YES,Messagebox.QUESTION,
+				new EventListener<Event>(){
+
+			public void onEvent(Event event) throws Exception {
+				switch (((Integer) event.getData()).intValue()){
+				case Messagebox.YES:
+					zonas.remove(zonaSeleccionada);
+					zonaService.borrar(zonaSeleccionada);
+					zonaSeleccionada = null;
+					binder.loadAll();
+				}
+			}
+
+			
+			});
 		this.binder.loadAll();
 	}
 	
@@ -83,12 +106,12 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 		nombreZona.setValue(null);
 	}
 
-	public void onClick$btnGuardar(){
+	public void onClick$btnAgregar(){
 		String zona = nombreZona.getValue();
 		Date d = fechaEntrega.getValue();
 		String msg = txtDescripcion.getValue();
 		validarZona(zona,d,msg);
-		DateTime fecha = new DateTime(d.getTime());
+		DateTime fecha = new DateTime();
 		Zona z = new Zona(zona,fecha,msg);
 		z.setNombre(zona);
 		z.setIdUsuario(usuario.getId());
@@ -99,7 +122,6 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 		zonas.add(z);
 		limpiarCampos();
 		this.binder.loadAll();
-		//GUARDAR EN DB
 		
 	}
 	
@@ -116,7 +138,8 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 			String path = context.getRealPath("/imagenes/");
 			Imagen imagen = fileSaver.guardarImagen(path +"/",usuario.getUsername(),image.getContent().getName(),image.getContent().getByteData());
-			imgMapa.setSrc(imagen.getPath());		
+			imgMapa.setSrc(imagen.getPath());
+			usuario.setMapaZonas(imagen.getPath());
 		}catch(Exception e){
 			Messagebox.show("Ha ocurrido un error al subir la imagen","Error", Messagebox.OK, Messagebox.ERROR);
 			e.printStackTrace();
@@ -165,7 +188,12 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 	
 	
 	public void onClick$guardar(){
-		alert("guardar");
+		for(Zona z :zonas){
+			zonaService.guardar(z);
+		}
+		usuarioService.guardarUsuario(usuario);
+		alert("Se ha guardado correctamente");
+		this.self.detach();
 	}
 	
 	public void onClick$cancelar(){

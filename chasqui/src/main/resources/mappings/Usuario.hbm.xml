@@ -18,5 +18,6 @@
         <property name="email" type="java.lang.String">
             <column name="EMAIL" />
         </property>
+        <property name="isRoot" column="ROOT" type="boolean"/>
     </class>
 </hibernate-mapping>

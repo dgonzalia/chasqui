@@ -25,10 +25,6 @@ public class Cliente extends Usuario{
 		this.nombre = nombre;
 	}
 	
-	public boolean isRoot(){
-		return false;
-	}
-	
 	public String getApellido() {
 		return apellido;
 	}

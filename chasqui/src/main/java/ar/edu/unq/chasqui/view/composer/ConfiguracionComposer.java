@@ -37,7 +37,9 @@ import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.services.impl.FileSaver;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({"serial","deprecation"})
 public class ConfiguracionComposer extends GenericForwardComposer<Component>{
@@ -58,6 +60,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	private List<Integer>kilometros = Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
 	private Integer kilometroSeleccionado;
 	private FileSaver fileSaver;
+	private UsuarioService usuarioService;
 	private Imagen imagen;
 	
 	public void doAfterCompose(Component comp) throws Exception{
@@ -67,6 +70,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 			imagen = new Imagen();
 			imagen.setPath(usuarioLogueado.getImagenPerfil());
 			fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
+			usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 			binder = new AnnotateDataBinder(comp);
 			kilometroSeleccionado = usuarioLogueado.getDistanciaCompraColectiva();
 			DateTime d = new DateTime(usuarioLogueado.getFechaCierrePedido());
@@ -75,7 +79,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 				d.plusMonths(1);
 				usuarioLogueado.setFechaCierrePedido(new DateTime(d.getMillis()));
 				dateProximaEntrega.setValue(new Date(d.getMillis()));
-			}else{
+			}else if(usuarioLogueado.getFechaCierrePedido() != null){
 				dateProximaEntrega.setValue(new Date (usuarioLogueado.getFechaCierrePedido().getMillis()));
 			}
 			intboxMontoMinimo.setValue(usuarioLogueado.getMontoMinimoPedido());
@@ -112,11 +116,12 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	}
 	
 	
-	public void validarPassword(){
+	public void validarPassword() throws Exception{
 		String claveActual = textboxClaveActual.getValue();
 		String nuevaClave = textboxNuevaClave.getValue();
 		String nuevaClaveRepita = textboxNuevaClaveRepita.getText();
-		if(StringUtils.isEmpty(claveActual) && (!StringUtils.isEmpty(nuevaClave) || !StringUtils.isEmpty(nuevaClaveRepita))){
+		boolean clavesNuevasNoEmpty = (!StringUtils.isEmpty(nuevaClave) || !StringUtils.isEmpty(nuevaClaveRepita));
+		if(StringUtils.isEmpty(claveActual) && clavesNuevasNoEmpty){
 			throw new WrongValueException(textboxClaveActual,"Por favor introduzca su contraseña actual, si desea actualizarla");
 		}
 		
@@ -125,13 +130,19 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 			WrongValueException e2 = new WrongValueException(textboxNuevaClaveRepita,"Las contraseñas no coinciden!");
 			throw new WrongValuesException(new WrongValueException[] {e1,e2});
 		}
-		if( !StringUtils.isEmpty(claveActual) && !claveActual.equals(usuarioLogueado.getPassword())){
+		if( !StringUtils.isEmpty(claveActual) && !claveActual.equals(Encrypter.decrypt(usuarioLogueado.getPassword()))){
 			throw new WrongValueException(textboxClaveActual,"La contraseña actual es incorrecta!");			
 		}
 		
 		if(!StringUtils.isEmpty(nuevaClave) && (!nuevaClave.matches("^[a-zA-Z0-9]*$")|| nuevaClave.length() < 8)){
 		  throw new WrongValueException(textboxNuevaClave,"La nueva contraseña no cumple con los requisitos!");
 		}
+		
+		if(clavesNuevasNoEmpty){
+			usuarioLogueado.setPassword(Encrypter.encrypt(nuevaClave));
+		}
+		
+		
 	}
 	
 	public void validacionesDeCompra(){
@@ -153,10 +164,20 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 		w.doModal();
 	}
 	
-	public void onClick$buttonGuardar(){
+	public void onClick$buttonGuardar() throws Exception{
 		validarPassword();
 		validacionesDeCompra();
-		// guardar y cambiar la img
+		Date d = dateProximaEntrega.getValue();
+		usuarioLogueado.setDistanciaCompraColectiva(kilometroSeleccionado);
+		usuarioLogueado.setFechaCierrePedido(new DateTime(d.getTime()));
+		usuarioLogueado.setMontoMinimoPedido(intboxMontoMinimo.getValue());
+		usuarioLogueado.setImagenPerfil(imagen.getPath());
+		usuarioService.guardarUsuario(usuarioLogueado);
+		textboxClaveActual.setValue(null);
+		textboxNuevaClave.setValue(null);
+		textboxNuevaClaveRepita.setValue(null);
+		Messagebox.show("Las configuracion se han guardado correctamente","Información",Messagebox.OK,Messagebox.INFORMATION);
+		this.binder.loadAll();
 	}
 	
 

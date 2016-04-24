@@ -1,5 +1,7 @@
 package ar.edu.unq.chasqui.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.ZonaDAO;
@@ -23,6 +25,9 @@ public class ZonaServiceImpl implements ZonaService{
 
 	
 	
+	public List<Zona> buscarZonasBy(Integer idUsuario) {
+		return zonaDAO.buscarZonasBy(idUsuario);
+	}
 	
 	
 	
@@ -35,6 +40,7 @@ public class ZonaServiceImpl implements ZonaService{
 	public void setZonaDAO(ZonaDAO zonaDAO) {
 		this.zonaDAO = zonaDAO;
 	}
+
 	
 	
 	

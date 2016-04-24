@@ -40,7 +40,7 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 		c.addEventListener(Events.ON_USER, new EntregaEventListener(this));
 		binder = new AnnotateDataBinder(c);
 		pedidos  = new ArrayList<Pedido>();
-		pedidos = crearPedidos();
+//		pedidos = crearPedidos();
 		listboxPedidos.setItemRenderer(new PedidoRenderer((Window) c));
 		binder.loadAll();
 	}

@@ -17,9 +17,11 @@
 	   <context:annotation-config/>
 	   
 	   <!-- Servicios -->
+	   <bean id="mailService" name="mailService" class="ar.edu.unq.chasqui.services.impl.MailService"/>
+	   
 	   <bean id="fileSaver" name="fileSaver" class="ar.edu.unq.chasqui.services.impl.FileSaver"/>
 	   
-	   <bean id="usuarioService" name="usuarioService" class="ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl"/>
+	   <bean id="usuarioService" name="usuarioService" class="ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl" init-method="onStartUp"/>
 	   
 	   <bean id="zonaService" name="zonaService" class="ar.edu.unq.chasqui.services.impl.ZonaServiceImpl"/>
 	   
@@ -37,5 +39,23 @@
 	   <bean id="caracteristicaDAO" name="caracteristicaDAO" class="ar.edu.unq.chasqui.dao.impl.CaracteristicaDAOHbm">
 	   		<property name="sessionFactory" ref="sessionFactory"/>
 	   </bean>
+	   
+	   
+	   <!-- SERVICIO EMAIL -->
+	   
+	   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="mail.10grapes.com.ar"/>
+        <property name="port" value="587"/>
+        <property name="username" value="smtp@10grapes.com.ar"/>
+        <property name="password" value="SMTP587service"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
 	   
 </beans>

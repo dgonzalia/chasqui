@@ -25,7 +25,7 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 			<row zclass="none">
 				<hbox>
 					<space spacing="5px"/>
-					<image src="@{administracionWindow$composer.usuarioLogueado.getImagenPerfil}" height="100px" width="100px"/>
+					<image src="/imagenes/login.jpg" height="100px" width="100px"/>
 				</hbox>
 				<div>
 					<label value="${c:l('zk.label.administrador')}" style="font-size:30px;font-weight:bold; color:white"/>
@@ -58,7 +58,7 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 		forward="onClick=administracionWindow$composer.onCrearProductor"/>	
 </hbox>
 <hbox height="100%">
-	<div width="20%" height="100%">
+	<div width="30%" height="100%">
 	<radiogroup id="v1"/>
 		<vbox>
 			<listbox>
