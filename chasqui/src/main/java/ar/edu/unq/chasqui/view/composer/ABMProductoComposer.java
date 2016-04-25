@@ -127,7 +127,10 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		modoEdicion= true;
 		if(model.getCategoria() != null && model.getFabricante() != null){
 			categoriaSeleccionada = model.getCategoria();
-			productorSeleccionado = model.getFabricante();			
+			productorSeleccionado = model.getFabricante();
+			comboFabricantes.setValue(productorSeleccionado.toString());
+			comboCategorias.setValue(productorSeleccionado.toString());
+			
 		}
 		caracteristicas = model.getCaracteristicas();
 		nombreProducto.setValue(model.getNombre());
@@ -223,7 +226,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		}
 		caracteristicas.add(caracteristicaProductoSeleccionada);
 		comboCaracteristicas.setValue(null);
-		caracteristicaSeleccionada = null;
+		caracteristicaProductoSeleccionada = null;
 		refresh();
 		
 	}

@@ -21,14 +21,14 @@ style="overflow:auto">
 <separator spacing="15px"/>
 	<listbox  id="listboxPedidos" model="@{pedidosWindow$composer.pedidos}" mold="paging" rows="10" pageSize="10" >
 		<listhead>
-			<listheader label="ID del Pedido" hflex="2"/>
+			<listheader label="ID del Pedido" hflex="1"/>
 			<listheader label="Usuario Creador" hflex="2"/>
 			<listheader label="Fecha Creacion" hflex="1"/>
 			<listheader label="Monto Minimo" hflex="1"/>
 			<listheader label="Monto Actual" hflex="1"/>
 			<listheader label="Estado" hflex="1"/>
 			<listheader label="Direccion de Entrega" hflex="2"/>
-			<listheader label="Acciones" hflex="3"/>
+			<listheader label="Acciones" hflex="2"/>
 		</listhead>		
 	</listbox>
 <separator spacing="10px"/>

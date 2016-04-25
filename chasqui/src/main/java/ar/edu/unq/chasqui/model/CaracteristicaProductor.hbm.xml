@@ -6,7 +6,7 @@
     <class name="ar.edu.unq.chasqui.model.CaracteristicaProductor" table="CARACTERISTICA_PRODUCTOR">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="assigned" />
+            <generator class="native" />
         </id>
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />

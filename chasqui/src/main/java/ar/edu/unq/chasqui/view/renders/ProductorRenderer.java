@@ -26,7 +26,9 @@ public class ProductorRenderer implements ListitemRenderer<Fabricante>{
 	public void render(Listitem item, Fabricante f, int arg2) throws Exception {
 		
 		Listcell c1 = new Listcell(f.getNombre());
-		Listcell c2 = new Listcell();
+		Listcell c2 = new Listcell(f.getCalle());
+		Listcell c3 = new Listcell(String.valueOf(f.getAltura()));
+		Listcell c4 = new Listcell();
 		Hbox hbox = new Hbox();
 		
 		
@@ -49,10 +51,12 @@ public class ProductorRenderer implements ListitemRenderer<Fabricante>{
 		
 		ver.setParent(hbox);
 		eliminar.setParent(hbox);
-		hbox.setParent(c2);
+		hbox.setParent(c4);
 
 		c1.setParent(item);
 		c2.setParent(item);
+		c3.setParent(item);
+		c4.setParent(item);
 	}
 
 }

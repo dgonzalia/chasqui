@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping default-cascade="save-update">
+<hibernate-mapping>
     <class name="ar.edu.unq.chasqui.model.Fabricante" table="PRODUCTOR">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
@@ -13,13 +13,14 @@
         </property>
         <property name="calle" type="java.lang.String" column="CALLE"/>
         <property name="altura" type="java.lang.Integer" column="ALTURA"/>
-        <list name="productos" inverse="false" table="PRODUCTO" lazy="false">
+        <list name="productos" inverse="false" table="PRODUCTO" lazy="false" cascade="save-update">
             <key>
                 <column name="ID_PRODUCTOR" />
             </key>
             <list-index column="orden"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
         </list>
-        <many-to-one name="caracteristica" class="ar.edu.unq.chasqui.model.CaracteristicaProductor" column="ID_CARACTERISTICA" lazy="false" fetch="join"/>
+        <many-to-one name="caracteristica" class="ar.edu.unq.chasqui.model.CaracteristicaProductor" 
+        column="ID_CARACTERISTICA" lazy="false"/>
     </class>
 </hibernate-mapping>

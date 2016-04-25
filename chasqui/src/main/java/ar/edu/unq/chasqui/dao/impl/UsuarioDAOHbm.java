@@ -60,4 +60,10 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		return u;	
 	}
 
+	public void merge(Vendedor usuario) {
+		this.getHibernateTemplate().merge(usuario);
+		this.getHibernateTemplate().flush();
+		
+	}
+
 }

@@ -110,6 +110,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		administracionWindow.setVisible(true);
 		radioCategorias.setChecked(true);
 		radioAltaUsuario.setVisible(false);
+		radioAltaUsuario.getParent().getParent().setVisible(false);
 		productos = new ArrayList<Producto>();
 		onClick$radioCategorias();			
 	}

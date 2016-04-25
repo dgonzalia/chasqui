@@ -49,7 +49,7 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 </div>
 <separator spacing="5px"/>
 <hbox width="100%">
-	<space width="125px"/>
+	<space width="130px"/>
 	<toolbarbutton id="agregarButton" image="/imagenes/plus.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"
 		 forward="onClick=administracionWindow$composer.onCrearCategoria"/>
 	<toolbarbutton visible="false" id="agregarProductoButton" image="/imagenes/plus.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"
@@ -58,7 +58,7 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 		forward="onClick=administracionWindow$composer.onCrearProductor"/>	
 </hbox>
 <hbox height="100%">
-	<div width="30%" height="100%">
+	<div width="20%" height="100%">
 	<radiogroup id="v1"/>
 		<vbox>
 			<listbox>
@@ -144,6 +144,8 @@ visible="false" width="100%" height="100%" style="overflow:auto"  contentStyle="
 			rows="10">
 				<listhead>
 					<listheader label="${c:l('zk.listheader.label.administracion.productor')}" sort="auto"/>
+					<listheader label="Direccion" sort="auto"/>
+					<listheader label="Altura" sort="auto"/>
 					<listheader label="${c:l('zk.listheader.label.administracion.acciones')}" sort="auto"/>
 				</listhead>
 			</listbox>

@@ -41,7 +41,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 			img.setNombre("perfil.jpg");
 			img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
 			user.setImagenPerfil(img.getPath());
-			usuarioDAO.guardarUsuario(user);		
+			usuarioDAO.guardarUsuario(user);	
+			
+			Vendedor u2 = new Vendedor();
+			u2.setUsername("MatLock");
+			u2.setPassword(Encrypter.encrypt("federico"));
+			u2.setEmail("jfflores90@gmail");
+			u2.setIsRoot(false);
+			u2.setImagenPerfil(img.getPath());
+			usuarioDAO.guardarUsuario(u2);	
 		}
 	}
 
@@ -54,6 +62,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 			}
 		}
 		throw new Exception("Usuario o Password incorrectos!");
+	}
+
+	public void merguear(Vendedor usuario) {
+		usuarioDAO.merge(usuario);
+		
 	}
 
 }
