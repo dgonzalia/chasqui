@@ -35,6 +35,13 @@ public class CaracteristicaServiceImpl implements CaracteristicaService{
 		return caracteristicaDAO.buscarCaracteristicasProductorBy(idVendedor);
 	}
 
+	public void eliminarCaracteristica(Caracteristica c){
+		caracteristicaDAO.eliminarCaracteristica(c);
+	}
+	
+	public void eliminarCaracteristicaProductor(CaracteristicaProductor c){
+		caracteristicaDAO.eliminarCaracteristicaProductor(c);
+	}
 	
 	
 	public CaracteristicaDAO getCaracteristicaDAO() {

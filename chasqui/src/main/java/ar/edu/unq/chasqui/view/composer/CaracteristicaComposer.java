@@ -78,6 +78,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		// "          "            producto "    "
 		c.addEventListener(Events.ON_NOTIFY, new ArchivoListener(this));
 		c.addEventListener(Events.ON_UPLOAD, new ArchivoListener(this));
+		c.addEventListener(Events.ON_USER, new ArchivoListener(this));
 		this.binder.loadAll();
 	}
 	
@@ -144,12 +145,12 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 	
 	public void onClick$guardarCaracteristicaProductor(){
 		service.guardarCaracteristicaProductor(caracteristicasProductor);
-		alert("Las caracteristicas De los productores se han guardado correctamente");
+		Messagebox.show("Las caracteristicas de los productores se han guardado correctamento", "Información", Messagebox.OK, Messagebox.INFORMATION);
 	}
 	
 	public void onClick$guardarCaracteristica(){
 		service.guardaCaracteristicasProducto(caracteristicas);
-		alert("Las caracteristicas de los producto se han guardado correctamento");
+		Messagebox.show("Las caracteristicas de los productos se han guardado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
 	}
 	
 	public void actualizarImagen(UploadEvent evt){
@@ -205,6 +206,48 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 
 
 	
+	public void eliminarCaracteristica(final Caracteristica c){
+		Messagebox.show("Está seguro de eliminar la caracteristica seleccionada??", "Advertencia", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+				new EventListener<Event>() {
+					
+					public void onEvent(Event event) throws Exception {
+						switch ((Integer) (event.getData())){
+						case Messagebox.OK:
+							service.eliminarCaracteristica(c);
+							caracteristicas.remove(c);
+							Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
+						case Messagebox.NO:
+							break;
+						}
+						
+					}
+				});
+		this.binder.loadAll();
+	}
+	
+	
+public void eliminarCaracteristicaProductor(final CaracteristicaProductor c){
+	Messagebox.show("Está seguro de eliminar la caracteristica seleccionada??", "Advertencia", Messagebox.YES | Messagebox.NO, Messagebox.QUESTION,
+			new EventListener<Event>() {
+				
+				public void onEvent(Event event) throws Exception {
+					switch ((Integer) (event.getData())){
+					case Messagebox.OK:
+						service.eliminarCaracteristicaProductor(c);
+						caracteristicasProductor.remove(c);
+						Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
+					case Messagebox.NO:
+						break;
+					}
+					
+				}
+			});
+	this.binder.loadAll();
+	}
+	
+	
+	
+	
 
 	public List<Caracteristica> getCaracteristicas() {
 		return caracteristicas;
@@ -246,6 +289,14 @@ final class ArchivoListener implements EventListener<Event>{
 		}
 		if(event.getName().equals(Events.ON_UPLOAD)){
 			composer.actualizarImagenProductor((UploadEvent)event.getData());
+		}
+		if(event.getName().equals(Events.ON_USER)){
+			Object c = event.getData();
+			if(c instanceof Caracteristica){
+				composer.eliminarCaracteristica((Caracteristica) c);
+			}else{
+				composer.eliminarCaracteristicaProductor( (CaracteristicaProductor)c);				
+			}
 		}
 	}
 }

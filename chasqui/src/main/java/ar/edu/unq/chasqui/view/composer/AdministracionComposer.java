@@ -74,15 +74,15 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 			Executions.sendRedirect("/");
 			return;
 		}
-		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
+		super.doAfterCompose(comp);
 		if(usuarioLogueado.getIsRoot()){
 			inicializacionUsuarioROOT();
 		}else{
-			inicializacionUsuarioAdministrador();		
+			inicializacionUsuarioAdministrador();
 		}
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
-		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
+//		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
 
 		comp.addEventListener(Events.ON_USER, new CategoriaEventListener(this));
 		comp.addEventListener(Events.ON_NOTIFY, new ProductoEventListener(this));
@@ -111,7 +111,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		radioCategorias.setChecked(true);
 		radioAltaUsuario.setVisible(false);
 		radioAltaUsuario.getParent().getParent().setVisible(false);
-		productos = new ArrayList<Producto>();
+		refresh();
 		onClick$radioCategorias();			
 	}
 	
@@ -237,7 +237,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	}
 	
 	public void refresh(){
-		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
+//		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
 		productos= new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
 		binder.loadAll();
 	}
@@ -432,13 +432,13 @@ class RefreshEventListener implements EventListener<Event>{
 	public void onEvent(Event event) throws Exception {
 		if(event.getData() != null){
 			if(event.getData() instanceof Categoria){
-				Categoria c = (Categoria) event.getData();
-				composer.getUsuarioLogueado().getCategorias().add(c);				
+//				Categoria c = (Categoria) event.getData();
+//				composer.getUsuarioLogueado().getCategorias().add(c);				
 			}
 			if(event.getData() instanceof Producto){
-				Producto p= (Producto) event.getData();
-				p.getCategoria().agregarProducto(p);
-				composer.getProductos().add(p);
+//				Producto p= (Producto) event.getData();
+//				p.getCategoria().agregarProducto(p);
+//				composer.getProductos().add(p);
 			}
 		}
 		composer.refresh();

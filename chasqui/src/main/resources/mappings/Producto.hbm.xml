@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping default-cascade="save-update">
+<hibernate-mapping>
     <class name="ar.edu.unq.chasqui.model.Producto" table="PRODUCTO">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
@@ -25,7 +25,7 @@
         <many-to-one name="fabricante" class="ar.edu.unq.chasqui.model.Fabricante" fetch="join">
             <column name="ID_PRODUCTOR" />
         </many-to-one>
-        <list name="variantes" inverse="false" table="VARIANTE" lazy="false">
+        <list name="variantes" inverse="false" table="VARIANTE" lazy="false" cascade="all">
             <key>
                 <column name="ID_PRODUCTO" />
             </key>
