@@ -51,6 +51,18 @@ public class CaracteristicaDAOHbm extends HibernateDaoSupport implements Caracte
 		}
 		return resultado;
 	}
+
+	public void eliminarCaracteristica(Caracteristica c) {
+		this.getHibernateTemplate().delete(c);
+		this.getHibernateTemplate().flush();
+		
+	}
+
+	public void eliminarCaracteristicaProductor(CaracteristicaProductor c) {
+		this.getHibernateTemplate().delete(c);
+		this.getHibernateTemplate().flush();
+		
+	}
 	   
 	
 }

@@ -13,7 +13,10 @@ public interface CaracteristicaService {
 	public void guardaCaracteristicasProducto(List<Caracteristica>list);
 	@Transactional
 	public void guardarCaracteristicaProductor(List<CaracteristicaProductor>list);
-	
+	@Transactional
+	public void eliminarCaracteristica(Caracteristica c);
+	@Transactional
+	public void eliminarCaracteristicaProductor(CaracteristicaProductor c);
 	
 	
 	public List<Caracteristica> buscarCaracteristicasProductoBy(Integer idVendedor);
