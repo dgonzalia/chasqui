@@ -6,7 +6,11 @@
     <class name="ar.edu.unq.chasqui.model.Fabricante" table="PRODUCTOR">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="native" />
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+	            <param name="sequence_name">PRODUCTOR_SEQUENCE</param>
+	            <param name="optimizer">none</param>
+	            <param name="increment_size">1</param> 
+         	</generator>
         </id>
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
@@ -17,7 +21,7 @@
             <key>
                 <column name="ID_PRODUCTOR" />
             </key>
-            <list-index column="orden"/>
+            <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
         </list>
         <many-to-one name="caracteristica" class="ar.edu.unq.chasqui.model.CaracteristicaProductor" 

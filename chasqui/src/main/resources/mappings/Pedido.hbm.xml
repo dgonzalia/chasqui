@@ -6,32 +6,36 @@
     <class name="ar.edu.unq.chasqui.model.Pedido" table="PEDIDO">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="native" />
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+	            <param name="sequence_name">PEDIDO_SEQUENCE</param>
+	            <param name="optimizer">none</param>
+	            <param name="increment_size">1</param> 
+         	</generator>
         </id>
         <property name="estado" type="java.lang.String">
             <column name="ESTADO" />
         </property>
         <many-to-one name="usuarioCreador" class="ar.edu.unq.chasqui.model.Cliente" fetch="join">
-            <column name="USUARIOCREADOR" />
+            <column name="USUARIO_CREADOR" />
         </many-to-one>
         <property name="fechaCreacion" type="org.joda.time.DateTime">
-            <column name="FECHACREACION" />
+            <column name="FECHA_CREACION" />
         </property>
         <many-to-one name="direccionEntrega" class="ar.edu.unq.chasqui.model.Direccion" fetch="join">
-            <column name="DIRECCIONENTREGA" />
+            <column name="DIRECCION_ENTREGA" />
         </many-to-one>
         <property name="montoMinimo" type="java.lang.Integer">
-            <column name="MONTOMINIMO" />
+            <column name="MONTO_MINIMO" />
         </property>
         <property name="montoActual" type="java.lang.Integer">
-            <column name="MONTOACTUAL" />
+            <column name="MONTO_ACTUAL" />
         </property>
-<!--         <list name="productos" inverse="false" table="PRODUCTO" lazy="true" > -->
-<!--             <key> -->
-<!--                 <column name="ID" /> -->
-<!--             </key> -->
-<!--             <list-index></list-index> -->
-<!--             <one-to-many class="ar.edu.unq.chasqui.model.Producto"/> -->
-<!--         </list> -->
+        <list name="usuariosParticipantes" table="USUARIO_PARTICIPANTE" lazy="false">
+            <key>
+                <column name="ID_PEDIDO" />
+            </key>
+            <list-index column="ORDEN"/>
+            <one-to-many class="ar.edu.unq.chasqui.model.UsuarioParticipante" />
+        </list>
     </class>
 </hibernate-mapping>
