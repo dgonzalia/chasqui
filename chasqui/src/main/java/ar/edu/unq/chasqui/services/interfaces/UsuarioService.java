@@ -12,7 +12,10 @@ public interface UsuarioService {
 	public Usuario obtenerVendedorPorID(final Integer id);
 	public Usuario login (final String username, final String password) throws Exception;
 	@Transactional
+	public void modificarPasswordUsuario(String usuario,String password);
+	@Transactional
 	public void guardarUsuario(Usuario u);
 	@Transactional
 	public void merguear(Vendedor usuario);
+	public Usuario obtenerUsuarioPorEmail(String email);
 }

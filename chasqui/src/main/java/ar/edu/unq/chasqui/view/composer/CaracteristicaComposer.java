@@ -1,6 +1,5 @@
 package ar.edu.unq.chasqui.view.composer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -24,6 +23,7 @@ import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -61,6 +61,10 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 	private Imagen imagenProductor;
 	private Textbox txtbCaracteristicaProductor;
 	
+	private Tab tabProducto;
+	private Tab tabProductor;
+	Boolean ventanaProductor;
+	Boolean ventanaProducto;
 	
 	private CaracteristicaService service;
 	
@@ -69,6 +73,20 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		binder = new AnnotateDataBinder(c);
 		service = (CaracteristicaService) SpringUtil.getBean("caracteristicaService");
+		
+		ventanaProductor = (Boolean) Executions.getCurrent().getArg().get(Constantes.VENTANA_PRODUCTOR);
+		ventanaProducto = (Boolean) Executions.getCurrent().getArg().get(Constantes.VENTANA_PRODUCTO);
+		
+		if(ventanaProductor != null){
+			tabProducto.setDisabled(true);
+			tabProductor.setFocus(true);
+		}
+		
+		if(ventanaProducto != null){
+			tabProductor.setDisabled(true);
+			tabProducto.setFocus(true);
+		}
+		
 		caracteristicas = service.buscarCaracteristicasProductoBy(usuario.getId());
 		caracteristicasProductor = service.buscarCaracteristicasProductorBy(usuario.getId());
 		ltbCaracteristicas.setItemRenderer(new CaracteristicaRenderer((Window) c,false));
@@ -145,11 +163,19 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 	
 	public void onClick$guardarCaracteristicaProductor(){
 		service.guardarCaracteristicaProductor(caracteristicasProductor);
+		if(ventanaProductor != null){
+			Events.sendEvent(Events.ON_NOTIFY, this.self.getParent(), null);
+			this.self.detach();
+		}
 		Messagebox.show("Las caracteristicas de los productores se han guardado correctamento", "Información", Messagebox.OK, Messagebox.INFORMATION);
 	}
 	
 	public void onClick$guardarCaracteristica(){
 		service.guardaCaracteristicasProducto(caracteristicas);
+		if(ventanaProducto != null){
+			Events.sendEvent(Events.ON_NOTIFY, this.self.getParent(), null);
+			this.self.detach();
+		}
 		Messagebox.show("Las caracteristicas de los productos se han guardado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
 	}
 	

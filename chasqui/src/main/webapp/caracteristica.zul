@@ -8,8 +8,8 @@
 apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 	<tabbox>
 	<tabs>
-		<tab label="Producto"/>
-		<tab label="Productor"/>
+		<tab label="Producto" id="tabProducto"/>
+		<tab label="Productor" id="tabProductor"/>
 	</tabs>
 	<tabpanels>
 	<tabpanel>

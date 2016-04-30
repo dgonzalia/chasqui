@@ -1,16 +1,19 @@
 package ar.edu.unq.chasqui.dao.impl;
 
 import java.sql.SQLException;
+import java.util.List;
+
+import javax.management.RuntimeErrorException;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
-import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 
@@ -63,6 +66,17 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 	public void merge(Vendedor usuario) {
 		this.getHibernateTemplate().merge(usuario);
 		this.getHibernateTemplate().flush();
+		
+	}
+
+	public Usuario obtenerUsuarioPorEmail(String email) {
+		DetachedCriteria d = DetachedCriteria.forClass(Usuario.class);
+		d.add(Restrictions.eq("email",email));
+		List<Usuario> u = (List<Usuario>) this.getHibernateTemplate().findByCriteria(d);
+		if(u == null || u.size() > 1){
+			throw new RuntimeException("El email es invalido");
+		}
+		return u.get(0);
 		
 	}
 

@@ -37,8 +37,11 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 	<listitem>
 		<listcell label="Caracteristica:"/>
 		<listcell>
+			<hbox>
 			<combobox readonly="true" id="comboCaracteristica" model="@{productorWindow$composer.caracteristicas}"
 			selectedItem="@{productorWindow$composer.caracteristicaSeleccionada}"/>
+			<toolbarbutton image="/imagenes/plus.png" id="agregarCaracteristicaButton"/>
+			</hbox>
 		</listcell>
 	</listitem>
 </listbox>

@@ -11,4 +11,5 @@ public interface UsuarioDAO {
 	public void guardarUsuario(Usuario u);
 	public Usuario obtenerUsuarioPorNombre (String username);
 	public void merge(Vendedor usuario);
+	public Usuario obtenerUsuarioPorEmail(String email);
 }

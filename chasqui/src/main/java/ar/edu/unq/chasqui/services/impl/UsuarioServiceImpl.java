@@ -1,6 +1,5 @@
 package ar.edu.unq.chasqui.services.impl;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
@@ -28,6 +27,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 	
+	public void modificarPasswordUsuario(String usuario,String password){
+		Usuario u = usuarioDAO.obtenerUsuarioPorNombre(usuario);
+		u.setPassword(password);
+		usuarioDAO.guardarUsuario(u);
+	}
+	
 	
 	public void onStartUp() throws Exception{
 		Usuario u = usuarioDAO.obtenerUsuarioPorNombre("ROOT");
@@ -46,7 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(Encrypter.encrypt("federico"));
-			u2.setEmail("jfflores90@gmail");
+			u2.setEmail("jfflores90@gmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			usuarioDAO.guardarUsuario(u2);	
@@ -66,6 +71,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	public void merguear(Vendedor usuario) {
 		usuarioDAO.merge(usuario);
+		
+	}
+
+	public Usuario obtenerUsuarioPorEmail(String email) {
+		return usuarioDAO.obtenerUsuarioPorEmail(email);
 		
 	}
 

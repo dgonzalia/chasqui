@@ -15,6 +15,7 @@ import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Popup;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
@@ -22,6 +23,7 @@ import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.impl.MailService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @SuppressWarnings({ "serial", "deprecation" })
@@ -41,6 +43,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	private Window loginWindow;
 	
 	private UsuarioService service;
+	private MailService mailService;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
@@ -51,6 +54,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
+		mailService = (MailService) SpringUtil.getBean("mailService");
 		comp.addEventListener(Events.ON_NOTIFY, new EnvioEmailListener(this));
 	}
 	
@@ -75,8 +79,6 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 			passwordLoggin.setValue("");
 			usernameLoggin.setValue("");
 		}
-		// validar Usuario y re enviar a la pagina de adm 
-		// mandando por session al usuario 
 		
 	}
 	
@@ -101,11 +103,18 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	public void onEnviarEmail() {
 		try{
 			String email = emailTextbox.getValue();
-			if(StringUtils.isEmpty(email) || EmailValidator.getInstance().isValid(email)){
+			if(StringUtils.isEmpty(email) || !EmailValidator.getInstance().isValid(email)){
 				throw new WrongValueException(emailTextbox,"Por favor ingrese un email valido.");
 			}
-		}finally{
-			desbloquearPantalla();						
+			Usuario u = service.obtenerUsuarioPorEmail(email);
+			mailService.enviarEmailRecuperoContraseña(email, u.getUsername());
+			Messagebox.show("El Email ha sido enviado con exito!","Información",Messagebox.OK,Messagebox.INFORMATION);
+		}catch(Exception e){
+			throw new WrongValueException(emailTextbox,e.getMessage());
+		}
+		finally{
+			desbloquearPantalla();
+			emailPopUp.close();
 		}
 		
 	}

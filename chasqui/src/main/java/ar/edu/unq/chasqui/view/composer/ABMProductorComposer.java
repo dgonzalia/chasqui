@@ -2,7 +2,9 @@ package ar.edu.unq.chasqui.view.composer;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.zkoss.spring.SpringUtil;
@@ -16,17 +18,18 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Toolbarbutton;
+import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.CaracteristicaProductor;
 import ar.edu.unq.chasqui.model.Fabricante;
-import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.services.impl.FileSaver;
 import ar.edu.unq.chasqui.services.interfaces.CaracteristicaService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
+import ar.edu.unq.chasqui.view.genericEvents.RefreshListener;
+import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 
 @SuppressWarnings({"serial","deprecation"})
-public class ABMProductorComposer extends GenericForwardComposer<Component> {
+public class ABMProductorComposer extends GenericForwardComposer<Component> implements Refresher{
 
 	
 	private Textbox textboxNombreProductor;
@@ -51,7 +54,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> {
 		model = (Fabricante) Executions.getCurrent().getArg().get("productor");
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		service = (CaracteristicaService) SpringUtil.getBean("caracteristicaService");
-	
+		comp.addEventListener(Events.ON_NOTIFY, new RefreshListener<Refresher>(this));
 		caracteristicas = service.buscarCaracteristicasProductorBy(usuario.getId());
 		
 		if(model != null){
@@ -95,6 +98,18 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> {
 		this.self.detach();
 	}
 	
+	public void onClick$agregarCaracteristicaButton(){
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put(Constantes.VENTANA_PRODUCTOR, true);
+		Window w = (Window) Executions.getCurrent().createComponents("caracteristica.zul", this.self,params);
+		w.setClosable(true);
+		w.setHeight("60%");
+		w.setWidth("50%");
+		w.doModal();
+	}
+	
+	
+	
 	public void onClick$botonCancelar(){
 		this.self.detach();
 	}
@@ -134,6 +149,17 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> {
 		if(caracteristicaSeleccionada == null){
 			throw new WrongValueException(comboCaracteristica,"Debe seleccionar una caracteristica");
 		}
+		
+	}
+
+
+
+
+
+
+
+	public void refresh() {
+		this.binder.loadAll();
 		
 	}
 	

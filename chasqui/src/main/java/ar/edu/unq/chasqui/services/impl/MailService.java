@@ -14,6 +14,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+import ar.edu.unq.chasqui.security.Encrypter;
+import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import freemarker.template.Configuration;
 import freemarker.template.SimpleObjectWrapper;
 import freemarker.template.Template;
@@ -23,6 +26,9 @@ public class MailService {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	
 	
@@ -53,10 +59,33 @@ public class MailService {
 		writer.close();
 		helper.setText(writer.toString(),true);
 		helper.addInline("logochasqui", resource);
-		mailSender.send(m);
+		mailSender.send(m);		
+	}
+	
+	
+	public void enviarEmailRecuperoContraseña(String destino, String usuario) throws Exception{
 		
+		Template t = this.obtenerTemplate("emailRecupero.ftl");
+		MimeMessage m = mailSender.createMimeMessage();
+		m.setSubject(MimeUtility.encodeText("Aviso de Recupero de contraseña ","UTF-8","B"));
+		MimeMessageHelper helper = new MimeMessageHelper(m,true,"UTF-8");
+		StringWriter writer = new StringWriter();
+		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.jpg");
+		helper.setFrom("administrator-chasqui-noreply@chasqui.org");
+		helper.setTo(destino);
 		
+		String password = PasswordGenerator.generateRandomToken(); 
+		usuarioService.modificarPasswordUsuario(usuario, Encrypter.encrypt(password));
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("nombreUsuario", usuario);
+		params.put("passwordUsuario", password);
+		t.process(params, writer);
 		
+		writer.flush();
+		writer.close();
+		helper.setText(writer.toString(),true);
+		helper.addInline("logochasqui", resource);
+		mailSender.send(m);		
 		
 	}
 	
