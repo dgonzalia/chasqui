@@ -15,5 +15,12 @@
         <property name="usuario" type="java.lang.String">
             <column name="USUARIO" />
         </property>
+        <list name="pedidos" inverse="false" table="PEDIDO" lazy="false">
+            <key>
+                <column name="ID_HISTORIAL" />
+            </key>
+            <list-index column="ORDEN"/>
+            <one-to-many class="ar.edu.unq.chasqui.model.Pedido" />
+        </list>
     </class>
 </hibernate-mapping>

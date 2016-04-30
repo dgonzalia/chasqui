@@ -1,9 +1,12 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.List;
+
 public class Historial {
 
 	private Integer id;
 	private String usuario;
+	private List<Pedido> pedidos;
 	
 	//GETs & SETs 
 
@@ -21,6 +24,14 @@ public class Historial {
 	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 	
 }
