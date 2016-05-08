@@ -6,16 +6,20 @@
     <class name="ar.edu.unq.chasqui.model.Notificacion" table="NOTIFICACION">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="native" />
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+	            <param name="sequence_name">NOTIFICACION_SEQUENCE</param>
+	            <param name="optimizer">none</param>
+	            <param name="increment_size">1</param> 
+         	</generator>
         </id>
         <property name="fecha" type="org.joda.time.DateTime">
             <column name="FECHA" />
         </property>
         <many-to-one name="usuarioOrigen" class="ar.edu.unq.chasqui.model.Usuario" fetch="join">
-            <column name="USUARIOORIGEN" />
+            <column name="USUARIO_ORIGEN" />
         </many-to-one>
         <many-to-one name="usuarioDestino" class="ar.edu.unq.chasqui.model.Usuario" fetch="join">
-            <column name="USUARIODESTINO" />
+            <column name="USUARIO_DESTINO" />
         </many-to-one>
         <property name="mensaje" type="java.lang.String">
             <column name="MENSAJE" />

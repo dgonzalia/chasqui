@@ -6,7 +6,11 @@
     <class name="ar.edu.unq.chasqui.model.Variante" table="VARIANTE">
         <id name="id" type="java.lang.Integer">
             <column name="ID" />
-            <generator class="native" />
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> 
+	            <param name="sequence_name">VARIANTE_SEQUENCE</param>
+	            <param name="optimizer">none</param>
+	            <param name="increment_size">1</param> 
+         	</generator>
         </id>
         <list name="imagenes" inverse="false" table="IMAGEN" lazy="false">
             <key>
