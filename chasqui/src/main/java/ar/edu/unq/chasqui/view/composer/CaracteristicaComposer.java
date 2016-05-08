@@ -36,7 +36,7 @@ import ar.edu.unq.chasqui.services.interfaces.CaracteristicaService;
 import ar.edu.unq.chasqui.view.renders.CaracteristicaProductorRenderer;
 import ar.edu.unq.chasqui.view.renders.CaracteristicaRenderer;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({ "deprecation", "serial" })
 public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 
 	private Window caracteristicaWindow;
@@ -192,7 +192,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 			String path = context.getRealPath("/imagenes/");
-			imagen = fileSaver.guardarImagen(path +"/",usuario.getUsername(),image.getContent().getName(),icono);
+			imagen = fileSaver.guardarImagen(path +"/",usuario.getUsername(),"Icon_"+image.getContent().getName(),icono);
 			imgIcon.setSrc(imagen.getPath());
 			this.binder.loadAll();
 		}catch(Exception e){
@@ -218,7 +218,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 			String path = context.getRealPath("/imagenes/");
-			imagenProductor = fileSaver.guardarImagen(path +"/",usuario.getUsername(),image.getContent().getName(),icono);
+			imagenProductor = fileSaver.guardarImagen(path +"/",usuario.getUsername(),"Icon_"+image.getContent().getName(),icono);
 			imgIconProductor.setSrc(imagenProductor.getPath());
 			this.binder.loadAll();
 		}catch(Exception e){
