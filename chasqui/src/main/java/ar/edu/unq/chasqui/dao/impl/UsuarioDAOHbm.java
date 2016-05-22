@@ -3,10 +3,9 @@ package ar.edu.unq.chasqui.dao.impl;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -79,5 +78,7 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		return u.get(0);
 		
 	}
+
+	
 
 }

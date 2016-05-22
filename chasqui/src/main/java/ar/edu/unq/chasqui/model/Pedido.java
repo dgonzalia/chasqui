@@ -17,6 +17,7 @@ public class Pedido {
 	private Cliente usuarioCreador;
 	private Boolean alterable;
 	private DateTime fechaCreacion;
+	private DateTime fechaDeVencimiento;
 	private Direccion direccionEntrega;
 	private Double montoMinimo;
 	private Double montoActual;
@@ -30,6 +31,7 @@ public class Pedido {
 		c.setEmail(string);
 		usuarioCreador = c;
 		fechaCreacion = new DateTime(date.getTime());
+		fechaDeVencimiento = fechaCreacion.plusDays(3);
 		montoMinimo = j;
 		montoActual = k;
 		estado = estadoPedidoAbierto;
@@ -121,6 +123,22 @@ public class Pedido {
 	public void setAlterable(Boolean alterable) {
 		this.alterable = alterable;
 	}
+	
+	
+	public DateTime getFechaDeVencimiento() {
+		return fechaDeVencimiento;
+	}
+	
+	public void setFechaDeVencimiento(DateTime fechaDeVencimiento) {
+		this.fechaDeVencimiento = fechaDeVencimiento;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -8,6 +8,7 @@ public class Usuario {
 	private String imagenPerfil;
 	private String email;
 	private boolean isRoot;
+	private boolean enabled=true;
 	
 	
 	//GETs & SETs
@@ -60,6 +61,17 @@ public class Usuario {
 	public void setIsRoot(boolean isRoot) {
 		this.isRoot = isRoot;
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	
+
 	
 	
 	

@@ -3,6 +3,7 @@ package ar.edu.unq.chasqui.view.composer;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.cxf.common.util.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
@@ -62,6 +63,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	public void onClick$logginButton() throws Exception{
 		String password = passwordLoggin.getValue();
 		String usuario = usernameLoggin.getValue();
+		Vendedor v = (Vendedor) SecurityContextHolder.getContext().getAuthentication().getCredentials();
 		if (!password.matches("^[a-zA-Z0-9]*$") || password.length() < 8){
 			labelError.setVisible(true);
 			passwordLoggin.setValue("");
@@ -71,6 +73,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 		};
 		Usuario user = null;
 		try{
+			
 			user =service.login(usuario,password);
 			Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
 			Executions.sendRedirect("/administracion.zul");

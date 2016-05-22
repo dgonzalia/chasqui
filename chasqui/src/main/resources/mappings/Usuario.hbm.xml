@@ -23,5 +23,7 @@
             <column name="EMAIL" />
         </property>
         <property name="isRoot" column="ROOT" type="boolean"/>
+        <property name="enabled" column="ENABLED" type="boolean" />
+        
     </class>
 </hibernate-mapping>

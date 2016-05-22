@@ -82,8 +82,6 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 			inicializacionUsuarioAdministrador();
 		}
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
-//		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
-
 		comp.addEventListener(Events.ON_USER, new CategoriaEventListener(this));
 		comp.addEventListener(Events.ON_NOTIFY, new ProductoEventListener(this));
 		comp.addEventListener(Events.ON_RENDER, new RefreshEventListener(this));

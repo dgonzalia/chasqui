@@ -7,13 +7,17 @@ public class Cliente extends Usuario{
 	
 	private String nombre;
 	private String apellido;
-	private String telefonoFijo;
-	private String telefonoMovil;
+	private Integer telefonoFijo;
+	private Integer telefonoMovil;
 	private Direccion direccionPredeterminada;
 	private List<Direccion> direccionesAlternativas;
 	private List<Notificacion> notificaciones;
 	private Historial historialPedidos;
 	private List<Pedido> pedidos;
+	
+	// Atributos necesarios para la integracion con spring security
+	private String rol = "ROLE_USER";
+	private String token;
  
 	//GETs & SETs
 	
@@ -33,19 +37,19 @@ public class Cliente extends Usuario{
 		this.apellido = apellido;
 	}
 	
-	public String getTelefonoFijo() {
+	public Integer getTelefonoFijo() {
 		return telefonoFijo;
 	}
 	
-	public void setTelefonoFijo(String telefonoFijo) {
+	public void setTelefonoFijo(Integer telefonoFijo) {
 		this.telefonoFijo = telefonoFijo;
 	}
 	
-	public String getTelefonoMovil() {
+	public Integer getTelefonoMovil() {
 		return telefonoMovil;
 	}
 	
-	public void setTelefonoMovil(String telefonoMovil) {
+	public void setTelefonoMovil(Integer telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
 	}
 	
@@ -88,6 +92,27 @@ public class Cliente extends Usuario{
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	
+	
+	
+	
 	
 	
 		

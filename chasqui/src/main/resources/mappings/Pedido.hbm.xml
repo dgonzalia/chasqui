@@ -21,6 +21,7 @@
         <property name="fechaCreacion" type="org.joda.time.DateTime">
             <column name="FECHA_CREACION" />
         </property>
+        <property name="fechaDeVencimiento" type="org.joda.time.DateTime" column="FECHA_VENCIMIENTO"/>
         <many-to-one name="direccionEntrega" class="ar.edu.unq.chasqui.model.Direccion" fetch="join">
             <column name="DIRECCION_ENTREGA" />
         </many-to-one>

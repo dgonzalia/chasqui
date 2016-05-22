@@ -7,6 +7,7 @@
 
 <window id="loginWindow" border="normal" apply="ar.edu.unq.chasqui.view.composer.LoginComposer" width="100%"
 style="align=center;" visible="true" height="100%">
+	<html:form action="j_spring_security_check" method="POST"  xmlns:html="native">
 	<vbox>
 	<div align="right">
 		<image src="/imagenes/login.jpg"/>
@@ -18,15 +19,15 @@ style="align=center;" visible="true" height="100%">
 			visible="false"/>
 			<hbox>
 				<label value="${c:l('zk.loggin.username')}" style="font-size:15px;font-weight:bold;"/>
-				<textbox maxlength="10" id="usernameLoggin"/>		
+				<textbox maxlength="10" id="usernameLoggin" name="j_username" />		
 			</hbox>
 			<hbox>
 				<label value="${c:l('zk.loggin.password')}" style="font-size:15px;font-weight:bold;"/>
-				<textbox id="passwordLoggin" maxlength="15" type="password"/>
+				<textbox id="passwordLoggin" maxlength="15" type="password" name="j_password"/>
 			</hbox>
 			<div align="center">
 				<hbox >
-					<button id="logginButton" label="${c:l('zk.button.loggin')}"/>
+					<button id="logginButton" label="${c:l('zk.button.loggin')}" type="submit"/>
 				</hbox>
 				<toolbarbutton id="olvidoSuPassword" label="${c:l('zk.label.loggin.reset.password')}" 
          	   style="color:blue; text-decoration: underline; font-size:13px" forward="onClick=loginWindow$composer.onOlvidoPassword"/>				
@@ -34,6 +35,7 @@ style="align=center;" visible="true" height="100%">
 		</vbox>
 	</div>
 	</vbox>
+	</html:form>
 	
 	<popup id="emailPopUp" width="400px" height="auto">
 		<div align="right">

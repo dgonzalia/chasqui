@@ -16,7 +16,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	<!-- =========Servicios ========= -->
 	<!-- =========================== -->
 
-	<jaxrs:server id="feag" address="/">
+	<jaxrs:server id="feag" address="/user">
 		<jaxrs:serviceBeans>
 <!-- 		 BEANS QUE VAN A MANEJAR LOS SERVICIOS -->
  			<ref bean="mockServiceRest"/> 

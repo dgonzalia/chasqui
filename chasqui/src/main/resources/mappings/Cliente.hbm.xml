@@ -13,12 +13,14 @@
         <property name="apellido" type="java.lang.String">
             <column name="APELLIDO" />
         </property>
-        <property name="telefonoFijo" type="java.lang.String">
+        <property name="telefonoFijo" type="java.lang.Integer">
             <column name="TELEFONO_FIJO" />
         </property>
-        <property name="telefonoMovil" type="java.lang.String">
+        <property name="telefonoMovil" type="java.lang.Integer">
             <column name="TELEFONO_MOVIL" />
         </property>
+        <property name="rol" type="java.lang.String" column="ROL"/>
+        <property name="token" type="java.lang.String" column="TOKEN"/>
         <many-to-one name="direccionPredeterminada" class="ar.edu.unq.chasqui.model.Direccion" fetch="join">
             <column name="DIRECCION_PREDETERMINADA" />
         </many-to-one>

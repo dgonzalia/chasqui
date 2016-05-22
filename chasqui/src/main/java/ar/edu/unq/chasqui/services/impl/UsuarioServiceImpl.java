@@ -3,6 +3,7 @@ package ar.edu.unq.chasqui.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -50,11 +51,21 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
-			u2.setPassword(Encrypter.encrypt("federico"));
+			u2.setPassword("federico");
 			u2.setEmail("jfflores90@gmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			usuarioDAO.guardarUsuario(u2);	
+			
+		
+			Cliente c = new Cliente();
+			c.setToken("federico");
+			c.setEmail("matlock");
+			c.setNombre("JORGE");
+			
+			usuarioDAO.guardarUsuario(c);
+			
+		
 		}
 	}
 
@@ -78,5 +89,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioDAO.obtenerUsuarioPorEmail(email);
 		
 	}
+
+	
+
+	
 
 }
