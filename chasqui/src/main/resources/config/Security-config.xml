@@ -45,7 +45,7 @@
     
     
     <sec:http use-expressions="true">
-    	<sec:intercept-url pattern="/rest/client/**" access="hasAnyRole('ROLE_USER')"/>
+    	<sec:intercept-url pattern="/rest/user/**" access="hasAnyRole('ROLE_USER')"/>
     	<sec:http-basic/>    
     </sec:http>
     

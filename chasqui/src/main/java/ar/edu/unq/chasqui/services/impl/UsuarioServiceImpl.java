@@ -8,6 +8,8 @@ import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
+import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 public class UsuarioServiceImpl implements UsuarioService{
@@ -88,6 +90,26 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario obtenerUsuarioPorEmail(String email) {
 		return usuarioDAO.obtenerUsuarioPorEmail(email);
 		
+	}
+
+	public Cliente loginCliente(String email, String password) throws Exception {
+		Cliente c = (Cliente) obtenerUsuarioPorEmail(email);
+		if(c != null){
+			String passwordUser = Encrypter.decrypt(password);
+			if(passwordUser.equals(password)){
+				String token = PasswordGenerator.generateRandomToken();
+				c.setToken(token);
+				usuarioDAO.guardarUsuario(c);
+				return c;				
+			}
+		}
+		throw new RuntimeException("No existe el usuario");
+	}
+
+	public Cliente crearCliente(SingUpRequest request) throws Exception {
+		Cliente c = new Cliente(request);
+		usuarioDAO.guardarUsuario(c);
+		return c;
 	}
 
 	

@@ -4,9 +4,9 @@ public class Usuario {
 	
 	private Integer id;
 	private String username;
-	private String password;
+	protected String password;
 	private String imagenPerfil;
-	private String email;
+	protected String email;
 	private boolean isRoot;
 	private boolean enabled=true;
 	

@@ -2,11 +2,16 @@ package ar.edu.unq.chasqui.model;
 
 import java.util.List;
 
+import ar.edu.unq.chasqui.security.Encrypter;
+import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
+
 public class Cliente extends Usuario{
 
 	
 	private String nombre;
 	private String apellido;
+	private String nickName;
 	private Integer telefonoFijo;
 	private Integer telefonoMovil;
 	private Direccion direccionPredeterminada;
@@ -21,6 +26,23 @@ public class Cliente extends Usuario{
  
 	//GETs & SETs
 	
+	
+	public Cliente(){
+		
+	}
+	
+	public Cliente(SingUpRequest request) throws Exception {
+		nombre = request.getNombre();
+		apellido = request.getApellido();
+		nickName= request.getNickName();
+		email = request.getEmail();
+		telefonoFijo = request.getTelefonoFijo();
+		telefonoMovil = request.getTelefonoMovil();
+		direccionPredeterminada = new Direccion(request.getDireccion());
+		token = PasswordGenerator.generateRandomToken();
+		password = Encrypter.encrypt(request.getPassword());
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -83,6 +105,14 @@ public class Cliente extends Usuario{
 	
 	public void setHistorialPedidos(Historial historialPedidos) {
 		this.historialPedidos = historialPedidos;
+	}	
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public List<Pedido> getPedidos() {

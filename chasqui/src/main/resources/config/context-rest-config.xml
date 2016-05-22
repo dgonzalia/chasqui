@@ -19,7 +19,8 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	<jaxrs:server id="feag" address="/user">
 		<jaxrs:serviceBeans>
 <!-- 		 BEANS QUE VAN A MANEJAR LOS SERVICIOS -->
- 			<ref bean="mockServiceRest"/> 
+ 			<ref bean="mockServiceRest"/>
+ 			<ref bean="usuarioListener"/> 
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json" />
@@ -36,4 +37,6 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	</jaxrs:server>
 	
 	<bean id="mockServiceRest" class ="ar.edu.unq.chasqui.service.rest.impl.MockServiceImpl"/>
+	<bean id="usuarioListener" class="ar.edu.unq.chasqui.service.rest.impl.UsuarioListener"/>
+	
 </beans>
