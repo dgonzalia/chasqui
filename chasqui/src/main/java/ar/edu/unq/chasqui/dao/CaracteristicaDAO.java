@@ -10,8 +10,8 @@ public interface CaracteristicaDAO {
 	
 	public void guardaCaracteristicasProducto(List<Caracteristica>list);	
 	public void guardarCaracteristicaProductor(List<CaracteristicaProductor>list);	
-	public List<Caracteristica> buscarCaracteristicasProductoBy(Integer idVendedor);
-	public List<CaracteristicaProductor> buscarCaracteristicasProductorBy(Integer idVendedor);
+	public List<Caracteristica> buscarCaracteristicasProducto();
+	public List<CaracteristicaProductor> buscarCaracteristicasProductor();
 	public void eliminarCaracteristica(Caracteristica c);
 	public void eliminarCaracteristicaProductor(CaracteristicaProductor c);
 	

@@ -19,7 +19,7 @@ public interface CaracteristicaService {
 	public void eliminarCaracteristicaProductor(CaracteristicaProductor c);
 	
 	
-	public List<Caracteristica> buscarCaracteristicasProductoBy(Integer idVendedor);
-	public List<CaracteristicaProductor> buscarCaracteristicasProductorBy(Integer idVendedor);
+	public List<Caracteristica> buscarCaracteristicasProducto();
+	public List<CaracteristicaProductor> buscarCaracteristicasProductor();
 	
 }

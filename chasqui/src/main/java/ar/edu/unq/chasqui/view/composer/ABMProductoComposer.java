@@ -78,7 +78,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		caracteristicaService = (CaracteristicaService) SpringUtil.getBean("caracteristicaService");
-		caracteristicasProducto = caracteristicaService.buscarCaracteristicasProductoBy(usuario.getId());
+		caracteristicasProducto = caracteristicaService.buscarCaracteristicasProducto();
 		comp.addEventListener(Events.ON_RENDER, new RefreshListener<ABMProductoComposer>(this));
 		inicializarVentana(accion);	
 		binder = new AnnotateDataBinder(comp);
@@ -111,9 +111,6 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	public void inicializarModoLectura(){
 		inicializarModoEdicion();
 		modoEdicion = false;
-		nombreProducto.setDisabled(true);
-		comboCategorias.setDisabled(true);
-		comboFabricantes.setDisabled(true);
 		botonAgregarCaracteristica.setDisabled(true);
 		comboCaracteristicas.setDisabled(true);
 		botonAgregarFabricante.setDisabled(true);
@@ -121,6 +118,10 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		botonGuardar.setDisabled(true);
 		listboxCaracteristicas.setDisabled(true);
 		botonAgregarVariante.setDisabled(true);
+		nombreProducto.setDisabled(true);
+		comboCaracteristicas.setDisabled(true);
+		comboFabricantes.setDisabled(true);
+		comboCategorias.setDisabled(true);
 	}
 	
 	public void inicializarModoEdicion(){
@@ -167,9 +168,9 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		if(productorSeleccionado == null){
 			throw new WrongValueException(comboFabricantes,"Se debe seleccionar un productor");
 		}
-		if(caracteristicas == null || caracteristicas.isEmpty()){
-			throw new WrongValueException(listboxCaracteristicas,"Se debe agregar al menos una Caracteristica");
-		}
+//		if(caracteristicas == null || caracteristicas.isEmpty()){
+//			throw new WrongValueException(listboxCaracteristicas,"Se debe agregar al menos una Caracteristica");
+//		}
 		if(model.getVariantes() == null || model.getVariantes().isEmpty()){
 			throw new WrongValueException(listboxVariante,"Debe agregar al menos una varidad del producto");
 		}

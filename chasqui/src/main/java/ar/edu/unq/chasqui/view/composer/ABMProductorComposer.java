@@ -34,6 +34,9 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 	
 	private Textbox textboxNombreProductor;
 	private Textbox txtDireccion;
+	private Textbox txtLocalidad;
+	private Textbox txtProvincia;
+	private Textbox txtPais;
 	private Intbox altura;
 	private Combobox comboCaracteristica;
 	private CaracteristicaProductor caracteristicaSeleccionada;
@@ -55,7 +58,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		service = (CaracteristicaService) SpringUtil.getBean("caracteristicaService");
 		comp.addEventListener(Events.ON_NOTIFY, new RefreshListener<Refresher>(this));
-		caracteristicas = service.buscarCaracteristicasProductorBy(usuario.getId());
+		caracteristicas = service.buscarCaracteristicasProductor();
 		
 		if(model != null){
 			inicializarModoLectura();
@@ -75,10 +78,19 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		textboxNombreProductor.setValue(model.getNombre());
 		textboxNombreProductor.setDisabled(true);
 		txtDireccion.setDisabled(true);
-		txtDireccion.setValue(model.getCalle());
+		txtPais.setDisabled(true);
+		txtProvincia.setDisabled(true);
+		txtLocalidad.setDisabled(true);
+		txtPais.setValue(model.getCalle());
+		txtProvincia.setValue(model.getPais());
+		txtLocalidad.setValue(model.getProvincia());
+		txtDireccion.setValue(model.getLocalidad());
 		altura.setValue(model.getAltura());
 		caracteristicaSeleccionada = model.getCaracteristica();
-		comboCaracteristica.setValue(caracteristicaSeleccionada.getNombre());
+		if(caracteristicaSeleccionada != null){
+			comboCaracteristica.setValue(caracteristicaSeleccionada.getNombre());			
+		}
+		comboCaracteristica.setDisabled(true);
 		altura.setDisabled(true);
 		
 	}
@@ -87,11 +99,17 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		String productor = textboxNombreProductor.getValue();
 		Integer alt = altura.getValue();
 		String calle = txtDireccion.getValue();
-		validar(productor,alt,calle);
+		String pais = txtPais.getValue();
+		String provincia = txtProvincia.getValue();
+		String localidad = txtLocalidad.getValue();
+		validar(productor,alt,calle,pais,provincia,localidad);
 		model  = new Fabricante(productor);
 		model.setCaracteristica(caracteristicaSeleccionada);
 		model.setCalle(calle);
 		model.setAltura(alt);
+		model.setPais(pais);
+		model.setProvincia(provincia);
+		model.setLocalidad(localidad);
 		usuario.agregarProductor(model);
 		usuarioService.guardarUsuario(usuario);
 		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);
@@ -126,7 +144,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		this.caracteristicaSeleccionada = caracteristicaSeleccionada;
 	}
 	
-	private void validar(String productor,Integer alt, String calle) {
+	private void validar(String productor,Integer alt, String calle,String pais, String provincia, String localidad) {
 		if(StringUtils.isEmpty(productor)){
 			throw new WrongValueException(textboxNombreProductor,"El productor no debe ser vacio!");
 		}
@@ -139,6 +157,18 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 			throw new WrongValueException(textboxNombreProductor,"El productor debe ser un nombre sin numeros");
 		}
 		
+		if(StringUtils.isEmpty(pais)){
+			throw new WrongValueException(txtPais,"El pais no debe ser vacio!");
+		}
+		
+		if(StringUtils.isEmpty(provincia)){
+			throw new WrongValueException(txtProvincia,"La provincia no debe ser vacia!");
+		}
+		
+		if(StringUtils.isEmpty(localidad)){
+			throw new WrongValueException(txtLocalidad,"La localidad no debe ser vacia!");
+		}
+		
 		if(StringUtils.isEmpty(calle)){
 			throw new WrongValueException(txtDireccion,"La calle no debe ser vacía");
 		}
@@ -146,9 +176,9 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 			throw new WrongValueException(altura,"La altura no debe ser vacía");
 		}
 		
-		if(caracteristicaSeleccionada == null){
-			throw new WrongValueException(comboCaracteristica,"Debe seleccionar una caracteristica");
-		}
+//		if(caracteristicaSeleccionada == null){
+//			throw new WrongValueException(comboCaracteristica,"Debe seleccionar una caracteristica");
+//		}
 		
 	}
 

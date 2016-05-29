@@ -1,11 +1,14 @@
 package ar.edu.unq.chasqui.model;
 
-public class Caracteristica {
+import ar.edu.unq.chasqui.services.interfaces.ICaracteristica;
+
+public class Caracteristica implements ICaracteristica{
 	
 	private Integer id;
 	private Integer idVendedor;
 	private String nombre;
 	private String pathImagen;
+	private String descripcion;
 	//CONSTRUCTORs
 	
 	public Caracteristica(){}
@@ -47,6 +50,18 @@ public class Caracteristica {
 	public void setPathImagen(String pathImagen) {
 		this.pathImagen = pathImagen;
 	}
+	
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	
+	
 	
 	
 	

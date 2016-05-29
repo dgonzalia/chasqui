@@ -22,6 +22,30 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 	</listitem>
 	<listitem>
 		<listcell>
+			<label value="País:"/>
+		</listcell>
+		<listcell>
+			<textbox id="txtPais"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell>
+			<label value="Provincia:"/>
+		</listcell>
+		<listcell>
+			<textbox id="txtProvincia"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell>
+			<label value="Localidad:"/>
+		</listcell>
+		<listcell>
+			<textbox id="txtLocalidad"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell>
 			<label value="Direccion:"/>
 		</listcell>
 		<listcell>
@@ -39,8 +63,9 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 		<listcell>
 			<hbox>
 			<combobox readonly="true" id="comboCaracteristica" model="@{productorWindow$composer.caracteristicas}"
+			itemRenderer="ar.edu.unq.chasqui.view.renders.ComboCaracteristicaRenderer"
 			selectedItem="@{productorWindow$composer.caracteristicaSeleccionada}"/>
-			<toolbarbutton image="/imagenes/plus.png" id="agregarCaracteristicaButton"/>
+<!-- 			<toolbarbutton image="/imagenes/plus.png" id="agregarCaracteristicaButton"/> -->
 			</hbox>
 		</listcell>
 	</listitem>

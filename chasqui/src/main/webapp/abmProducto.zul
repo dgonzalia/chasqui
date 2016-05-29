@@ -86,13 +86,15 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 		<auxhead>
 			<auxheader colspan="2">
 				<combobox id="comboCaracteristicas" readonly="true" model="@{productosWindow$composer.caracteristicasProducto}"
-				selectedItem="@{productosWindow$composer.caracteristicaProductoSeleccionada}"/>
+				selectedItem="@{productosWindow$composer.caracteristicaProductoSeleccionada}"
+				itemRenderer="ar.edu.unq.chasqui.view.renders.ComboCaracteristicaRenderer"/>
 				<toolbarbutton id="botonAgregarCaracteristica" image="/imagenes/plus.png" 
 				label="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
 			</auxheader>
 		</auxhead>
-		<listitem self="@{each=caracteristica}">
+		<listitem self="@{each=caracteristica}">			
 			<listcell>
+				<image src="@{caracteristica.getPathImagen}"/>
 				<label  maxlength="25" value="@{caracteristica.getNombre}"/>
 			</listcell>
 			<listcell>

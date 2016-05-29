@@ -53,7 +53,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
-			u2.setPassword("federico");
+			u2.setPassword(Encrypter.encrypt("federico"));
 			u2.setEmail("jfflores90@gmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());

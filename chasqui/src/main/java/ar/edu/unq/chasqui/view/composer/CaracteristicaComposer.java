@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
+import org.zkforge.ckez.CKeditor;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
@@ -66,6 +67,9 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 	Boolean ventanaProductor;
 	Boolean ventanaProducto;
 	
+	CKeditor ckEditor;
+	CKeditor ckEditorProductor;
+	
 	private CaracteristicaService service;
 	
 	public void doAfterCompose(Component c) throws Exception{
@@ -87,8 +91,8 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 			tabProducto.setFocus(true);
 		}
 		
-		caracteristicas = service.buscarCaracteristicasProductoBy(usuario.getId());
-		caracteristicasProductor = service.buscarCaracteristicasProductorBy(usuario.getId());
+		caracteristicas = service.buscarCaracteristicasProducto();
+		caracteristicasProductor = service.buscarCaracteristicasProductor();
 		ltbCaracteristicas.setItemRenderer(new CaracteristicaRenderer((Window) c,false));
 		ltbCaracteristicasProductor.setItemRenderer(new CaracteristicaProductorRenderer((Window) c,false));
 		fileSaver= (FileSaver) SpringUtil.getBean("fileSaver");
@@ -97,6 +101,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		c.addEventListener(Events.ON_NOTIFY, new ArchivoListener(this));
 		c.addEventListener(Events.ON_UPLOAD, new ArchivoListener(this));
 		c.addEventListener(Events.ON_USER, new ArchivoListener(this));
+		c.addEventListener(Events.ON_OK, new ArchivoListener(this));
 		this.binder.loadAll();
 	}
 	
@@ -108,11 +113,12 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		Caracteristica c = new Caracteristica();
 		c.setNombre(carac);
 		c.setPathImagen(imagen.getPath());
-		c.setIdVendedor(usuario.getId());
+		c.setDescripcion(ckEditor.getValue());
 		caracteristicas.add(c);
 		txtbCaracteristica.setValue(null);
 		imagen = null;
 		imgIcon.setSrc(null);
+		ckEditor.setValue(null);
 		this.binder.loadAll();
 	}
 	
@@ -122,9 +128,10 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		CaracteristicaProductor c = new CaracteristicaProductor();
 		c.setNombre(carac);
 		c.setPathImagen(imagenProductor.getPath());
-		c.setIdVendedor(usuario.getId());
+		c.setDescripcion(ckEditorProductor.getValue());
 		caracteristicasProductor.add(c);
 		txtbCaracteristicaProductor.setValue(null);
+		ckEditorProductor.setValue(null);
 		imagenProductor = null;
 		imgIconProductor.setSrc(null);
 		this.binder.loadAll();
@@ -132,21 +139,33 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 	
 	private void validarCaracteristicaProductor(){
 		String c = txtbCaracteristicaProductor.getValue();
+		String descrpcion = ckEditorProductor.getValue();
 		if(StringUtils.isEmpty(c)){
 			throw new WrongValueException(txtbCaracteristicaProductor,"La caracteristica del productor no debe ser vacia");
 		}
 		if(imagenProductor == null){
 			throw new WrongValueException(imgIconProductor,"Debe asociar un icono a la caracteristica");
 		}
+		
+		if(StringUtils.isEmpty(descrpcion)){
+			throw new WrongValueException(ckEditorProductor,"Debe Agregar una descripcion");
+		}
 	}
 	
 	private void validarCaracteristica(){
 		String c = txtbCaracteristica.getValue();
+		String descrpcion = ckEditor.getValue();
+		
+		
 		if(StringUtils.isEmpty(c)){
 			throw new WrongValueException(txtbCaracteristica,"La caracteristica del productor no debe ser vacia");
 		}
 		if(imagen == null){
 			throw new WrongValueException(imgIcon,"Debe asociar un icono a la caracteristica");
+		}
+		
+		if(StringUtils.isEmpty(descrpcion)){
+			throw new WrongValueException(ckEditor,"Debe Agregar una descripcion");
 		}
 	}
 	
@@ -162,20 +181,33 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 	}
 	
 	public void onClick$guardarCaracteristicaProductor(){
+		Clients.showBusy("Guardando...");
+		Events.echoEvent(Events.ON_OK,this.self,"guardarCaracteristicaProductor");
+	}
+	
+	public void guardarCaracteristicaProductor(){
 		service.guardarCaracteristicaProductor(caracteristicasProductor);
 		if(ventanaProductor != null){
 			Events.sendEvent(Events.ON_NOTIFY, this.self.getParent(), null);
 			this.self.detach();
 		}
-		Messagebox.show("Las caracteristicas de los productores se han guardado correctamento", "Información", Messagebox.OK, Messagebox.INFORMATION);
+		Clients.clearBusy();
+		Messagebox.show("Las caracteristicas de los productores se han guardado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
+		
 	}
 	
 	public void onClick$guardarCaracteristica(){
+		Clients.showBusy("Guardando...");
+		Events.echoEvent(Events.ON_OK, this.self, "guardar");
+	}
+	
+	public void guardarCaracteristica(){
 		service.guardaCaracteristicasProducto(caracteristicas);
 		if(ventanaProducto != null){
 			Events.sendEvent(Events.ON_NOTIFY, this.self.getParent(), null);
 			this.self.detach();
 		}
+		Clients.clearBusy();
 		Messagebox.show("Las caracteristicas de los productos se han guardado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
 	}
 	
@@ -315,6 +347,14 @@ final class ArchivoListener implements EventListener<Event>{
 		}
 		if(event.getName().equals(Events.ON_UPLOAD)){
 			composer.actualizarImagenProductor((UploadEvent)event.getData());
+		}
+		if(event.getName().equals(Events.ON_OK)){
+			String ev = (String) event.getData();
+			if("guardar".equals(ev)){
+				composer.guardarCaracteristica();				
+			}else{
+				composer.guardarCaracteristicaProductor();
+			}
 		}
 		if(event.getName().equals(Events.ON_USER)){
 			Object c = event.getData();

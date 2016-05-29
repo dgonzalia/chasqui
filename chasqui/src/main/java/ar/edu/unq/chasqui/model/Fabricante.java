@@ -9,6 +9,9 @@ public class Fabricante {
 	private String nombre;
 	private String calle;
 	private Integer altura;
+	private String pais;
+	private String provincia;
+	private String localidad;
 	private List<Producto> productos;
 	private CaracteristicaProductor caracteristica;
  	
@@ -73,11 +76,34 @@ public class Fabricante {
 		this.caracteristica = caracteristica;
 	}
 	
+	public String getPais() {
+		return pais;
+	}
 	
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	
+	public String getProvincia() {
+		return provincia;
+	}
+	
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+	
+	public String getLocalidad() {
+		return localidad;
+	}
+	
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
+	}	
 	
 	
 	//METHODS
 	
+
 
 	@Override
 	public String toString(){

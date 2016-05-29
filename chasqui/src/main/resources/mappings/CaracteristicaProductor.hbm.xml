@@ -15,6 +15,7 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
+        <property name="descripcion" type="java.lang.String" column="DESCRIPCION"/>
         <property name="pathImagen" type="java.lang.String" column="PATH_IMAGEN"/>
         <property name="idVendedor" type="java.lang.Integer" column="ID_VENDEDOR"/>
     </class>

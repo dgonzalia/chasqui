@@ -34,8 +34,15 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 				</hbox>
 			</div>
 		</listcell>
-	</listitem>
+	</listitem>	
 </listbox>
+<separator spacing="15px"/>
+<div>
+	<div align="center">
+		<label value="Descripción" style="font-weight:bold; color:black"/>
+	</div>
+<ckeditor width="100%" height="100px" id="ckEditor" toolbar="Simple" customConfigurationsPath="/js/config.js"/>
+</div>
 <separator spacing="15px"/>
 <div align="center">
 	<button id="agregar" label="Agregar"/>
@@ -81,6 +88,13 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 		</listcell>
 	</listitem>
 </listbox>
+<separator spacing="15px"/>
+<div>
+	<div align="center">
+		<label value="Descripción" style="font-weight:bold; color:black"/>
+	</div>
+<ckeditor width="100%" height="100px" id="ckEditorProductor" toolbar="Simple" customConfigurationsPath="/js/config.js"/>
+</div>
 <separator spacing="15px"/>
 <div align="center">
 	<button id="agregarProductor" label="Agregar"/>

@@ -90,13 +90,18 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 
 	public void inicializacionUsuarioROOT(){
 		radioAltaUsuario.setChecked(true);
+		radioCategorias.getParent().getParent().setVisible(false);
 		radioCategorias.setDisabled(true);
 		radioProductos.setDisabled(true);
+		radioProductos.getParent().getParent().setVisible(false);
 		radioPedidos.setDisabled(true);
+		radioPedidos.getParent().getParent().setVisible(false);
 		radioProductores.setDisabled(true);
-		radioCaracteristicas.setDisabled(true);
+		radioProductores.getParent().getParent().setVisible(false);
+//		radioCaracteristicas.setDisabled(true);
 		listboxCategorias.setVisible(false);
 		radioConfiguracion.setDisabled(true);
+		radioConfiguracion.getParent().getParent().setVisible(false);
 		administracionWindow.setVisible(true);
 		onClick$radioAltaUsuario();
 	}
@@ -109,6 +114,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		radioCategorias.setChecked(true);
 		radioAltaUsuario.setVisible(false);
 		radioAltaUsuario.getParent().getParent().setVisible(false);
+		radioCaracteristicas.getParent().getParent().setVisible(false);
 		refresh();
 		onClick$radioCategorias();			
 	}

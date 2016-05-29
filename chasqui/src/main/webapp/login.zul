@@ -7,7 +7,7 @@
 
 <window id="loginWindow" border="normal" apply="ar.edu.unq.chasqui.view.composer.LoginComposer" width="100%"
 style="align=center;" visible="true" height="100%">
-	<html:form action="j_spring_security_check" method="POST"  xmlns:html="native">
+<!-- 	<html:form action="j_spring_security_check" method="POST"  xmlns:html="native"> -->
 	<vbox>
 	<div align="right">
 		<image src="/imagenes/login.jpg"/>
@@ -35,7 +35,7 @@ style="align=center;" visible="true" height="100%">
 		</vbox>
 	</div>
 	</vbox>
-	</html:form>
+<!-- 	</html:form> -->
 	
 	<popup id="emailPopUp" width="400px" height="auto">
 		<div align="right">

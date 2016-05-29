@@ -27,12 +27,12 @@ public class CaracteristicaServiceImpl implements CaracteristicaService{
 		
 	}
 
-	public List<Caracteristica> buscarCaracteristicasProductoBy(Integer idVendedor) {
-		return caracteristicaDAO.buscarCaracteristicasProductoBy(idVendedor);
+	public List<Caracteristica> buscarCaracteristicasProducto() {
+		return caracteristicaDAO.buscarCaracteristicasProducto();
 	}
 
-	public List<CaracteristicaProductor> buscarCaracteristicasProductorBy(Integer idVendedor) {
-		return caracteristicaDAO.buscarCaracteristicasProductorBy(idVendedor);
+	public List<CaracteristicaProductor> buscarCaracteristicasProductor() {
+		return caracteristicaDAO.buscarCaracteristicasProductor();
 	}
 
 	public void eliminarCaracteristica(Caracteristica c){

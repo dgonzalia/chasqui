@@ -16,6 +16,9 @@
             <column name="NOMBRE" />
         </property>
         <property name="calle" type="java.lang.String" column="CALLE"/>
+        <property name="pais" type="java.lang.String" column="PAIS"/>
+        <property name="provincia" type="java.lang.String" column="PROVINCIA"/>
+        <property name="localidad" type="java.lang.String" column="LOCALIDAD"/>
         <property name="altura" type="java.lang.Integer" column="ALTURA"/>
         <list name="productos" inverse="false" table="PRODUCTO" lazy="false" cascade="save-update">
             <key>

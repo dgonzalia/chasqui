@@ -29,10 +29,8 @@ public class CaracteristicaDAOHbm extends HibernateDaoSupport implements Caracte
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Caracteristica> buscarCaracteristicasProductoBy(Integer idVendedor) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(Caracteristica.class);
-		criteria.add(Restrictions.eq("idVendedor", idVendedor));
-		
+	public List<Caracteristica> buscarCaracteristicasProducto() {
+		DetachedCriteria criteria = DetachedCriteria.forClass(Caracteristica.class);		
 		List<Caracteristica> resultado = this.getHibernateTemplate().findByCriteria(criteria);
 		if(resultado == null){
 			resultado = new ArrayList<Caracteristica>();
@@ -42,9 +40,8 @@ public class CaracteristicaDAOHbm extends HibernateDaoSupport implements Caracte
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CaracteristicaProductor> buscarCaracteristicasProductorBy(Integer idVendedor) {
+	public List<CaracteristicaProductor> buscarCaracteristicasProductor() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(CaracteristicaProductor.class);
-		criteria.add(Restrictions.eq("idVendedor", idVendedor));
 		List<CaracteristicaProductor> resultado = this.getHibernateTemplate().findByCriteria(criteria);
 		if(resultado == null){
 			resultado = new ArrayList<CaracteristicaProductor>();

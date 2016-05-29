@@ -63,7 +63,7 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 	public void onClick$logginButton() throws Exception{
 		String password = passwordLoggin.getValue();
 		String usuario = usernameLoggin.getValue();
-		Vendedor v = (Vendedor) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+//		Vendedor v = (Vendedor) SecurityContextHolder.getContext().getAuthentication().getCredentials();
 		if (!password.matches("^[a-zA-Z0-9]*$") || password.length() < 8){
 			labelError.setVisible(true);
 			passwordLoggin.setValue("");
