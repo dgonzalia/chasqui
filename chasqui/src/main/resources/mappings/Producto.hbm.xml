@@ -19,22 +19,22 @@
             <column name="ID_CATEGORIA" />
         </many-to-one>
         
-        <list name="caracteristicas" inverse="false" table="PRODUCTO_CARACTERISTICA" lazy="false">
-            <key>
-                <column name="ID_PRODUCTO" />
-            </key>
-            <list-index column="ORDEN_CARACTERISTICA"/>
+        <bag name="caracteristicas" inverse="false" table="PRODUCTO_CARACTERISTICA" lazy="false">
+            <key update="false">
+                <column name="ID_PRODUCTO"/>
+            </key>            
+<!--             <list-index column="ORDEN_CARACTERISTICA"/> -->
             <many-to-many entity-name="ar.edu.unq.chasqui.model.Caracteristica" column="ID_PRODUCTO_CARACTERISTICA"/>
-        </list>
+        </bag>
         <many-to-one name="fabricante" class="ar.edu.unq.chasqui.model.Fabricante" fetch="join">
             <column name="ID_PRODUCTOR" />
         </many-to-one>
-        <list name="variantes" inverse="false" table="VARIANTE" lazy="false" cascade="all">
+        <bag name="variantes" inverse="false" table="VARIANTE" lazy="false" cascade="all">
             <key>
                 <column name="ID_PRODUCTO" />
             </key>
-            <list-index column="ORDEN"/>
+<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Variante" />
-        </list>
+        </bag>
     </class>
 </hibernate-mapping>

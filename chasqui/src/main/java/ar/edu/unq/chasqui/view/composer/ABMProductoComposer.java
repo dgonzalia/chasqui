@@ -148,7 +148,9 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		validaciones();
 		model.setNombre(nombreProducto.getValue());
 		model.setCaracteristicas(caracteristicas);
-		categoriaSeleccionada.agregarProducto(model);	
+		if(model.getId() == null){
+			categoriaSeleccionada.agregarProducto(model);							
+		}
 		model.setCategoria(categoriaSeleccionada);
 		model.setFabricante(productorSeleccionado);
 		productorSeleccionado.agregarProducto(model);

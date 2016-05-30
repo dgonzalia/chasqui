@@ -15,12 +15,12 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
-        <list name="productos" inverse="false" table="PRODUCTO" lazy="false">
+        <bag name="productos" inverse="false" table="PRODUCTO" lazy="false" fetch="join">
             <key>
                 <column name="ID_CATEGORIA" />
             </key>
-            <list-index column="ORDEN"/>
+<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
-        </list>
+        </bag>
     </class>
 </hibernate-mapping>

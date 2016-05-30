@@ -20,19 +20,19 @@
             <column name="DISTANCIA_COMPRA_COLECTIVA" />
         </property>
         <property name="mapaZonas" type="java.lang.String" column="MAPA"/>
-        <list name="categorias" inverse="false" table="CATEGORIA" lazy="false" cascade="all">
+        <bag name="categorias" inverse="false" table="CATEGORIA" lazy="false" cascade="all">
             <key>
                 <column name="ID_VENDEDOR" />
             </key>
-            <list-index column="ORDEN"/>
+<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Categoria" />
-        </list>
-        <list name="fabricantes" inverse="false" table="PRODUCTOR" lazy="false" cascade="all">
+        </bag>
+        <bag name="fabricantes" inverse="false" table="PRODUCTOR" lazy="false" cascade="all">
             <key>
                 <column name="ID_VENDEDOR" />
             </key>
-            <list-index column="ORDEN"/>
+<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Fabricante" />
-        </list>
+        </bag>
     </joined-subclass>
 </hibernate-mapping>

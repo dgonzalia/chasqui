@@ -124,6 +124,15 @@ public class Vendedor extends Usuario{
 	}
 	
 	
+	public List<Producto> getProductos(){
+		List<Producto>p = new ArrayList<Producto>();
+		for(Categoria c :categorias){
+			p.addAll(c.getProductos());
+		}
+		return p;
+	}
+	
+	
 	public void notificarCierrePedido () {
 		//TODO
 	}

@@ -20,13 +20,13 @@
         <property name="provincia" type="java.lang.String" column="PROVINCIA"/>
         <property name="localidad" type="java.lang.String" column="LOCALIDAD"/>
         <property name="altura" type="java.lang.Integer" column="ALTURA"/>
-        <list name="productos" inverse="false" table="PRODUCTO" lazy="false" cascade="save-update">
+        <bag name="productos" inverse="false" table="PRODUCTO" lazy="false" cascade="save-update">
             <key>
                 <column name="ID_PRODUCTOR" />
             </key>
-            <list-index column="ORDEN"/>
+<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
-        </list>
+        </bag>
         <many-to-one name="caracteristica" class="ar.edu.unq.chasqui.model.CaracteristicaProductor" 
         column="ID_CARACTERISTICA" lazy="false"/>
     </class>

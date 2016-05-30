@@ -64,8 +64,10 @@ public class Producto {
 	}
 	
 	
+		
 	//METHODS
 	
+
 
 	public static Producto crearProductoEmpty(){
 		Producto p = new Producto();

@@ -242,7 +242,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	
 	public void refresh(){
 //		usuarioLogueado = (Vendedor) usuarioService.obtenerVendedorPorID(usuarioLogueado.getId());
-		productos= new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
+//		productos= new ArrayList<Producto>(usuarioLogueado.obtenerProductos());
 		binder.loadAll();
 	}
 	
