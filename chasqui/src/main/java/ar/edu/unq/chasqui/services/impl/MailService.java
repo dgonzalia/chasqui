@@ -47,7 +47,7 @@ public class MailService {
 		m.setSubject(MimeUtility.encodeText("Bienvenido "+ usuario + " a Chasqui","UTF-8","B"));
 		MimeMessageHelper helper = new MimeMessageHelper(m,true,"UTF-8");
 		StringWriter writer = new StringWriter();
-		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.jpg");
+		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.png");
 		helper.setFrom("administrator-chasqui-noreply@chasqui.org");
 		helper.setTo(destino);
 		Map<String,Object> params = new HashMap<String,Object>();
@@ -70,7 +70,7 @@ public class MailService {
 		m.setSubject(MimeUtility.encodeText("Aviso de Recupero de contraseña ","UTF-8","B"));
 		MimeMessageHelper helper = new MimeMessageHelper(m,true,"UTF-8");
 		StringWriter writer = new StringWriter();
-		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.jpg");
+		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.png");
 		helper.setFrom("administrator-chasqui-noreply@chasqui.org");
 		helper.setTo(destino);
 		

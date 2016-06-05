@@ -8,12 +8,13 @@
 <window id="loginWindow" border="normal" apply="ar.edu.unq.chasqui.view.composer.LoginComposer" width="100%"
 style="align=center;" visible="true" height="100%">
 <!-- 	<html:form action="j_spring_security_check" method="POST"  xmlns:html="native"> -->
-	<vbox>
-	<div align="right">
-		<image src="/imagenes/login.jpg"/>
+<separator height="30%"/>
+	<vbox style="padding-left:40%;">
+	<div align="center">
+		<image src="/imagenes/logo_ch_login.png"/>
 	</div>
-	<separator height="50px"/>
-	<div style="padding-left:480px;">
+	<separator height="10px"/>
+	<div align="center">
 		<vbox>
 			<label id="labelError" style="font-weight:bold;color:red" value="${c:l('zk.label.error.loggin')}"
 			visible="false"/>
@@ -26,15 +27,16 @@ style="align=center;" visible="true" height="100%">
 				<textbox id="passwordLoggin" maxlength="15" type="password" name="j_password"/>
 			</hbox>
 			<div align="center">
-				<hbox >
+				<vbox >
 					<button id="logginButton" label="${c:l('zk.button.loggin')}" type="submit"/>
-				</hbox>
-				<toolbarbutton id="olvidoSuPassword" label="${c:l('zk.label.loggin.reset.password')}" 
-         	   style="color:blue; text-decoration: underline; font-size:13px" forward="onClick=loginWindow$composer.onOlvidoPassword"/>				
+					<toolbarbutton id="olvidoSuPassword" label="${c:l('zk.label.loggin.reset.password')}" 
+	         	   style="color:blue; text-decoration: font-size:30px" forward="onClick=loginWindow$composer.onOlvidoPassword"/>				
+				</vbox>
 			</div>
 		</vbox>
 	</div>
 	</vbox>
+
 <!-- 	</html:form> -->
 	
 	<popup id="emailPopUp" width="400px" height="auto">
