@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 
 public interface UsuarioService {
@@ -14,6 +15,7 @@ public interface UsuarioService {
 	public Usuario obtenerVendedorPorID(final Integer id);
 	public Usuario login (final String username, final String password) throws Exception;
 	public Cliente loginCliente(final String email, final String password) throws Exception;
+	public boolean existeUsuarioCon(String email);
 	@Transactional
 	public void modificarPasswordUsuario(String usuario,String password);
 	@Transactional
@@ -23,4 +25,7 @@ public interface UsuarioService {
 	public Usuario obtenerUsuarioPorEmail(String email);
 	@Transactional
 	public Cliente crearCliente(SingUpRequest request) throws Exception;
+	@Transactional
+	public void modificarUsuario(EditarPerfilRequest editRequest) throws Exception;
+	
 }

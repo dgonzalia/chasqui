@@ -1,13 +1,19 @@
 package ar.edu.unq.chasqui.service.rest.impl;
 
+import java.io.IOException;
+
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
+import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.hsqldb.lib.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
-import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.LoginRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 import ar.edu.unq.chasqui.service.rest.response.LoginResponse;
+import ar.edu.unq.chasqui.services.impl.MailService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 
@@ -29,6 +35,9 @@ public class SingInSingUpListener{
 	
 	@Autowired
 	UsuarioService usuarioService;
+	@Autowired
+	MailService mailService; 
+	
 	
 	@POST
 	@Path("/singIn")
@@ -50,14 +59,14 @@ public class SingInSingUpListener{
 	@POST
 	@Path("/singUp")
 	@Produces("application/json")
-	public Response singUp(@Multipart(value="singUpRequest",type="application/json") final String singUpRequest){
+	public Response singUp(@Multipart(value="singUpRequest",type="application/json") final String singUpRequest) {
 		try{
 			SingUpRequest request = toSingUpRequest(singUpRequest);
 			validarRequestCreacionDeUsuario(request);
 			Cliente c = usuarioService.crearCliente(request);
 			return toLoginResponse(c);
-		}catch(RequestIncorrectoException e){
-			return Response.status(400).entity(e.getMessage()).build();
+		}catch(RequestIncorrectoException | IOException e){
+			return Response.status(406).entity("Debe completar todos los campos").build();
 		}catch(UsuarioExistenteException e){
 			return Response.status(409).entity(e.getMessage()).build();
 		}catch(Exception e){
@@ -66,6 +75,21 @@ public class SingInSingUpListener{
 	}
 	
 	
+	
+	@GET
+	@Path("/resetPass/{email}")
+	@Produces("application/json")
+	public Response olvidoContraseña(@PathParam("email")final String email){
+		
+		try{
+			mailService.enviarEmailRecuperoContraseñaCliente(email);
+		}catch(UsuarioExistenteException e){
+			return Response.status(406).entity("Email invalido").build();
+		}catch(Exception e){
+			return Response.status(500).build();
+		}
+		return Response.ok().build();
+	}
 	
 	
 	
@@ -82,6 +106,10 @@ public class SingInSingUpListener{
 	private void validarRequestCreacionDeUsuario(SingUpRequest request) throws RequestIncorrectoException {
 		if(StringUtil.isEmpty(request.getEmail())){
 			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+		
+		if(!EmailValidator.getInstance().isValid(request.getEmail())){
+			throw new RequestIncorrectoException("Email invalido");
 		}
 		
 		if(StringUtil.isEmpty(request.getApellido())){
@@ -109,8 +137,7 @@ public class SingInSingUpListener{
 		
 		validarDireccion(request.getDireccion());
 		
-		Usuario u = usuarioService.obtenerUsuarioPorEmail(request.getEmail());
-		if(u != null){
+		if(usuarioService.existeUsuarioCon(request.getEmail())){
 			throw new UsuarioExistenteException();
 		}
 	}
@@ -145,9 +172,10 @@ public class SingInSingUpListener{
 
 
 
-	private SingUpRequest toSingUpRequest(String request) throws Exception{
+	private SingUpRequest toSingUpRequest(String request) throws IOException {
 		SingUpRequest singUpRequest = new SingUpRequest();
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		singUpRequest = mapper.readValue(request, SingUpRequest.class);
 		return singUpRequest;
 	}
@@ -160,9 +188,10 @@ public class SingInSingUpListener{
 
 
 
-	private LoginRequest toLoginRequest(String request) throws Exception{
+	private LoginRequest toLoginRequest(String request) throws IOException{
 		LoginRequest loginRequest = new LoginRequest();
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		loginRequest = mapper.readValue(request, LoginRequest.class);
 		return loginRequest;
 	}

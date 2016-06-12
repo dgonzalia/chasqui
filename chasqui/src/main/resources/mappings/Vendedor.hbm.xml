@@ -24,14 +24,12 @@
             <key>
                 <column name="ID_VENDEDOR" />
             </key>
-<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Categoria" />
         </bag>
         <bag name="fabricantes" inverse="false" table="PRODUCTOR" lazy="false" cascade="all">
             <key>
                 <column name="ID_VENDEDOR" />
             </key>
-<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Fabricante" />
         </bag>
     </joined-subclass>

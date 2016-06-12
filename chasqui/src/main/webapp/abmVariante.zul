@@ -22,7 +22,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMVarianteComposer" height="auto" width
 	<listitem>
 		<listcell label="${c:l('zk.listcell.label.abmProducto.precio')}"/>	
 		<listcell>
-			<intbox id="intboxPrecio" placeholder="I.E: 10"/>
+			<doublebox id="doubleboxPrecio" placeholder="I.E: 10.20"/>
 		</listcell>
 	</listitem>
 	<listitem>

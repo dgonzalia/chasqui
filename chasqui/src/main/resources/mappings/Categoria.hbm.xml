@@ -19,7 +19,6 @@
             <key>
                 <column name="ID_CATEGORIA" />
             </key>
-<!--             <list-index column="ORDEN"/> -->
             <one-to-many class="ar.edu.unq.chasqui.model.Producto" />
         </bag>
     </class>

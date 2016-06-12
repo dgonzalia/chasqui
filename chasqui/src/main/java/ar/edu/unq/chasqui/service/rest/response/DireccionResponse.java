@@ -1,14 +1,15 @@
-package ar.edu.unq.chasqui.service.rest.request;
+package ar.edu.unq.chasqui.service.rest.response;
 
 import java.io.Serializable;
 
+import ar.edu.unq.chasqui.model.Direccion;
 
-public class DireccionRequest implements Serializable{
+public class DireccionResponse implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4033188450893024938L;
+	private static final long serialVersionUID = 2706752008400147353L;
 	private String calle;
 	private Integer altura;
 	private String localidad;
@@ -16,6 +17,16 @@ public class DireccionRequest implements Serializable{
 	private Double latitud;
 	private Double longitud;
 	
+	
+	
+	public DireccionResponse(Direccion d){
+		this.altura = d.getAltura();
+		this.calle = d.getCalle();
+		this.localidad = d.getLocalidad();
+		this.codigoPostal = d.getCodigoPostal();
+		this.latitud = d.getLatitud();
+		this.longitud = d.getLongitud();
+	}
 	
 	public String getCalle() {
 		return calle;
@@ -55,7 +66,7 @@ public class DireccionRequest implements Serializable{
 	}
 	
 	
-	
+
 	
 	
 	

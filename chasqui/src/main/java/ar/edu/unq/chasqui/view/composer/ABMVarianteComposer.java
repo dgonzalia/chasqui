@@ -20,6 +20,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Filedownload;
 import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Image;
@@ -48,7 +49,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	private Producto producto;
 	private List<Imagen> imagenes;
 	
-	private Intbox intboxPrecio;
+	private Doublebox doubleboxPrecio;
 	private Intbox intboxStock;
 	private Textbox textboxNombre;
 	private CKeditor ckEditor;
@@ -80,11 +81,11 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	public void inicializarModoLectura(){
 		listImagenes.setDisabled(true);
 		imagenes.addAll(model.getImagenes());
-		intboxPrecio.setValue(model.getPrecio());
+		doubleboxPrecio.setValue(model.getPrecio());
 		intboxStock.setValue(model.getStock());
 		textboxNombre.setValue(model.getNombre());
 		ckEditor.setValue(model.getDescripcion());
-		intboxPrecio.setDisabled(true);
+		doubleboxPrecio.setDisabled(true);
 		intboxStock.setDisabled(true);
 		textboxNombre.setDisabled(true);
 		uploadImagen.setDisabled(true);
@@ -140,7 +141,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		model.setImagenes(imagenes);
 		model.setNombre(textboxNombre.getValue());
 		model.setStock(intboxStock.getValue());
-		model.setPrecio(intboxPrecio.getValue());
+		model.setPrecio(doubleboxPrecio.getValue());
 		producto.getVariantes().add(model);
 		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);
 		this.self.detach();
@@ -148,7 +149,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 
 	
 	private void ejecutarValidaciones(){
-		Integer precio = intboxPrecio.getValue();
+		Double precio = doubleboxPrecio.getValue();
 		Integer stock = intboxStock.getValue();
 		String descripcion = ckEditor.getValue();
 		String nombre = textboxNombre.getValue();
@@ -157,7 +158,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 			throw new WrongValueException(listImagenes,"se debe agregar al menos una imagen");
 		}
 		if(precio == null || precio < 0){
-			throw new WrongValueException(intboxPrecio,"El precio debe ser mayor a 0");
+			throw new WrongValueException(doubleboxPrecio,"El precio debe ser mayor a 0");
 		}
 		if(stock == null || stock < 0){
 			throw new WrongValueException(intboxStock,"El Stock debe ser mayor a 0");

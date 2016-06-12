@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -73,10 +72,17 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		d.add(Restrictions.eq("email",email));
 		List<Usuario> u = (List<Usuario>) this.getHibernateTemplate().findByCriteria(d);
 		if(u == null || u.size() > 1){
-			throw new RuntimeException("El email es invalido");
+			return null;
 		}
 		return u.get(0);
-		
+	}
+	
+	
+	public boolean existeUsuarioCon(String email) {
+		DetachedCriteria d = DetachedCriteria.forClass(Usuario.class);
+		d.add(Restrictions.eq("email",email));
+		List<Usuario> u = (List<Usuario>) this.getHibernateTemplate().findByCriteria(d);
+		return (u == null || u.size() > 0);
 	}
 
 	

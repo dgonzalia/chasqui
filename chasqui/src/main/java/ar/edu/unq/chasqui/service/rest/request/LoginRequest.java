@@ -1,7 +1,13 @@
 package ar.edu.unq.chasqui.service.rest.request;
 
-public class LoginRequest {
+import java.io.Serializable;
+
+public class LoginRequest implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7548566725788722753L;
 	private String email;
 	private String password;
 	

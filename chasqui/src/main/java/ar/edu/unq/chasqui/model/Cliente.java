@@ -2,8 +2,11 @@ package ar.edu.unq.chasqui.model;
 
 import java.util.List;
 
+import org.apache.cxf.common.util.StringUtils;
+
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 
 public class Cliente extends Usuario{
@@ -137,6 +140,32 @@ public class Cliente extends Usuario{
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public void modificarCon(EditarPerfilRequest editRequest) throws Exception {
+		if(!StringUtils.isEmpty(editRequest.getApellido())){
+			this.apellido = editRequest.getApellido();
+		}
+		
+		if(!StringUtils.isEmpty(editRequest.getNickName())){
+			this.nickName = editRequest.getNickName();
+		}
+		if(!StringUtils.isEmpty(editRequest.getNombre())){
+			this.nombre = editRequest.getNombre();
+		}
+		if(!StringUtils.isEmpty(editRequest.getPassword())){
+			this.password = Encrypter.encrypt(editRequest.getPassword());
+		}
+		if(editRequest.getTelefonoFijo() != null){
+			this.telefonoFijo = editRequest.getTelefonoFijo();
+		}
+		if(editRequest.getTelefonoMovil() != null){
+			this.telefonoMovil = editRequest.getTelefonoMovil();
+		}
+		
+		this.direccionPredeterminada.modificarCon(editRequest.getDireccion());
+		
+		
 	}
 	
 	

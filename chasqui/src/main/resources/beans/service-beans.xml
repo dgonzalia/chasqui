@@ -27,8 +27,14 @@
 	   
 	   <bean id="caracteristicaService" name="caracteristicaService" class="ar.edu.unq.chasqui.services.impl.CaracteristicaServiceImpl"/>
 	   
+	   <bean id="productoService" name="productoService" class="ar.edu.unq.chasqui.services.impl.ProductoServiceImpl"/>
+	   
 	   <!--  DAOS -->
 	   <bean name="usuarioDAO" id="usuarioDAO" class="ar.edu.unq.chasqui.dao.impl.UsuarioDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
+	   
+	   <bean name="productoDAO" id="productoDAO" class="ar.edu.unq.chasqui.dao.impl.ProductoDAOHbm">
 	   		<property name="sessionFactory" ref="sessionFactory"/>
 	   </bean>
 	   

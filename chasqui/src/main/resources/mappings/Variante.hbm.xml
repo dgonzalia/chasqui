@@ -25,7 +25,7 @@
         <property name="stock" type="java.lang.Integer">
             <column name="STOCK" />
         </property>
-        <property name="precio" type="java.lang.Integer">
+        <property name="precio" type="java.lang.Double">
             <column name="PRECIO" />
         </property>
         <property name="nombre" type="java.lang.String">

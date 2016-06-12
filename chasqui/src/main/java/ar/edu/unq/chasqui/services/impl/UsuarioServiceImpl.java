@@ -3,12 +3,14 @@ package ar.edu.unq.chasqui.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
+import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
@@ -54,7 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(Encrypter.encrypt("federico"));
-			u2.setEmail("jfflores90@gmail.com");
+			u2.setEmail("jfflores90");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			usuarioDAO.guardarUsuario(u2);	
@@ -62,8 +64,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 			Cliente c = new Cliente();
 			c.setToken("federico");
-			c.setEmail("matlock");
+			c.setPassword(Encrypter.encrypt("federico"));
+			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
+			c.setNickName("MatLock");
 			
 			usuarioDAO.guardarUsuario(c);
 			
@@ -91,11 +95,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioDAO.obtenerUsuarioPorEmail(email);
 		
 	}
+	
+	public boolean existeUsuarioCon(String email){
+		return usuarioDAO.existeUsuarioCon(email);
+	}
 
 	public Cliente loginCliente(String email, String password) throws Exception {
 		Cliente c = (Cliente) obtenerUsuarioPorEmail(email);
 		if(c != null){
-			String passwordUser = Encrypter.decrypt(password);
+			String passwordUser = Encrypter.decrypt(c.getPassword());
 			if(passwordUser.equals(password)){
 				String token = PasswordGenerator.generateRandomToken();
 				c.setToken(token);
@@ -103,7 +111,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 				return c;				
 			}
 		}
-		throw new RuntimeException("No existe el usuario");
+		throw new UsuarioExistenteException("No existe el usuario");
 	}
 
 	public Cliente crearCliente(SingUpRequest request) throws Exception {
@@ -111,6 +119,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDAO.guardarUsuario(c);
 		return c;
 	}
+
+	@Override
+	public void modificarUsuario(EditarPerfilRequest editRequest) throws Exception {
+		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(editRequest.getEmail());
+		if(c == null){
+			throw new UsuarioExistenteException("No existe el usuario");
+		}
+		c.modificarCon(editRequest);
+		usuarioDAO.guardarUsuario(c);
+	}
+
 
 	
 

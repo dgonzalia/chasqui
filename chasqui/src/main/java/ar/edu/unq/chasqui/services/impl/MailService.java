@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -62,7 +64,7 @@ public class MailService {
 		mailSender.send(m);		
 	}
 	
-	
+	@Transactional
 	public void enviarEmailRecuperoContraseña(String destino, String usuario) throws Exception{
 		
 		Template t = this.obtenerTemplate("emailRecupero.ftl");
@@ -87,6 +89,13 @@ public class MailService {
 		helper.addInline("logochasqui", resource);
 		mailSender.send(m);		
 		
+	}
+
+
+	@Transactional
+	public void enviarEmailRecuperoContraseñaCliente(String email) throws Exception {
+		Cliente c =(Cliente) usuarioService.obtenerUsuarioPorEmail(email);
+		this.enviarEmailRecuperoContraseña(email, c.getNickName());
 	}
 	
 	

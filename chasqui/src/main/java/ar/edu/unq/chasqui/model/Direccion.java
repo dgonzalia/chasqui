@@ -1,5 +1,7 @@
 package ar.edu.unq.chasqui.model;
 
+import org.apache.cxf.common.util.StringUtils;
+
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 
 public class Direccion {
@@ -83,6 +85,28 @@ public class Direccion {
 	
 	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
+	}
+
+	public void modificarCon(DireccionRequest direccion) {
+		if(!StringUtils.isEmpty(direccion.getCalle())){
+			this.calle = direccion.getCalle();
+		}
+		if(!StringUtils.isEmpty(direccion.getCodigoPostal())){
+			this.codigoPostal = direccion.getCodigoPostal();
+		}
+		if(!StringUtils.isEmpty(direccion.getLocalidad())){
+			this.localidad = direccion.getLocalidad();
+		}
+		if(direccion.getAltura() != null){
+			this.altura = direccion.getAltura();
+		}
+		if(direccion.getLatitud() != null){
+			this.latitud = direccion.getLatitud();
+		}
+		if(direccion.getLongitud() != null){
+			this.longitud = direccion.getLongitud();
+		}
+		
 	}
 	
 

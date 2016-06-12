@@ -2,29 +2,27 @@ package ar.edu.unq.chasqui.service.rest.request;
 
 import java.io.Serializable;
 
-public class SingUpRequest implements Serializable{
+public class EditarPerfilRequest implements Serializable{
 
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1485267484736523922L;
-	private String email;
+	private static final long serialVersionUID = -6246311656076856907L;
+	private DireccionRequest direccion;
 	private String password;
 	private String nickName;
 	private String nombre;
 	private String apellido;
 	private Integer telefonoFijo;
 	private Integer telefonoMovil;
-	private DireccionRequest direccion;
+	private String email;
 	
-	
-	
-	public String getEmail() {
-		return email;
+	public DireccionRequest getDireccion() {
+		return direccion;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setDireccion(DireccionRequest direccion) {
+		this.direccion = direccion;
 	}
 	public String getPassword() {
 		return password;
@@ -62,12 +60,15 @@ public class SingUpRequest implements Serializable{
 	public void setTelefonoMovil(Integer telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
 	}
-	public DireccionRequest getDireccion() {
-		return direccion;
+	public String getEmail() {
+		return email;
 	}
-	public void setDireccion(DireccionRequest direccion) {
-		this.direccion = direccion;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+	
+	
+	
 	
 	
 	

@@ -75,5 +75,7 @@ public class Producto {
 		p.setCaracteristicas(new ArrayList<Caracteristica>());
 		return p;
 	}
+
+
 	
 }

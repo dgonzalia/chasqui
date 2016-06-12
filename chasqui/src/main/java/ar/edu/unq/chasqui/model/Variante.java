@@ -8,7 +8,7 @@ public class Variante {
 	private List<Imagen> imagenes;
 	private String descripcion;
 	private Integer stock;
-	private Integer precio;
+	private Double precio;
 	private String nombre;
 	
 	
@@ -38,11 +38,11 @@ public class Variante {
 		this.descripcion = descripcion;
 	}
 	
-	public Integer getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
 	
-	public void setPrecio(Integer precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 	
