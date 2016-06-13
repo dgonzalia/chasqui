@@ -78,7 +78,7 @@ public class MailService {
 		helper.setTo(destino);
 		
 		String password = PasswordGenerator.generateRandomToken(); 
-		usuarioService.modificarPasswordUsuario(usuario, Encrypter.encrypt(password));
+		usuarioService.modificarPasswordUsuario(destino, Encrypter.encrypt(password));
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("nombreUsuario", usuario);
 		params.put("passwordUsuario", password);
