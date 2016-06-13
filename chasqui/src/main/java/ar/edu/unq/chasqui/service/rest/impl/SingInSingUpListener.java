@@ -88,7 +88,7 @@ public class SingInSingUpListener{
 		}catch(Exception e){
 			return Response.status(500).build();
 		}
-		return Response.ok().build();
+		return Response.ok().entity("Recibira en su casilla de correo una nueva password para ingresar.").build();
 	}
 	
 	

@@ -116,6 +116,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	public Cliente crearCliente(SingUpRequest request) throws Exception {
 		Cliente c = new Cliente(request);
+		c.setUsername(c.getNickName()); //TODO: capturar exepcion cuando un cliente intenta loguearse en el backoffice (Error de casteo a Vendedor)
 		usuarioDAO.guardarUsuario(c);
 		return c;
 	}
