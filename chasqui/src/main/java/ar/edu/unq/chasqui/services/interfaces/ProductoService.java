@@ -8,7 +8,7 @@ import ar.edu.unq.chasqui.model.Producto;
 
 public interface ProductoService {
 	
-	@Transactional(readOnly=true)
-	public List<Producto>obtenerProductos(Integer idCategoria,Integer pagina, Integer cantidadDeItems);
+	@Transactional
+	public List<Producto>obtenerProductosPorCategoria(Integer idCategoria,Integer pagina, Integer cantidadDeItems);
 	
 }

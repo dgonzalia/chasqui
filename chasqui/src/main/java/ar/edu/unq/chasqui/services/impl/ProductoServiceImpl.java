@@ -15,9 +15,9 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	
 	@Override
-	public List<Producto> obtenerProductos(Integer idCategoria, Integer pagina,
+	public List<Producto> obtenerProductosPorCategoria(Integer idCategoria, Integer pagina,
 			Integer cantidadDeItems) {
-		return productoDAO.obtenerProductos(idCategoria,pagina, cantidadDeItems);
+		return productoDAO.obtenerProductosPorCategoria(idCategoria,pagina, cantidadDeItems);
 	}
 
 }

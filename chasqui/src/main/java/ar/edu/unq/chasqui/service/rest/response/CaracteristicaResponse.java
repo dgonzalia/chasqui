@@ -2,7 +2,7 @@ package ar.edu.unq.chasqui.service.rest.response;
 
 import java.io.Serializable;
 
-import ar.edu.unq.chasqui.model.Caracteristica;
+import ar.edu.unq.chasqui.services.interfaces.ICaracteristica;
 
 public class CaracteristicaResponse implements Serializable{
 
@@ -12,8 +12,9 @@ public class CaracteristicaResponse implements Serializable{
 	private static final long serialVersionUID = -8267960233576142542L;
 	
 	private String nombre;
+	private Integer idMedalla;
 	private String pathImagen;
-	
+	private String descripcion;
 	
 	public String getNombre() {
 		return nombre;
@@ -26,12 +27,25 @@ public class CaracteristicaResponse implements Serializable{
 	}
 	public void setPathImagen(String pathImagen) {
 		this.pathImagen = pathImagen;
+	}	
+	public Integer getIdMedalla() {
+		return idMedalla;
+	}
+	public void setIdMedalla(Integer idMedalla) {
+		this.idMedalla = idMedalla;
+	}
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
-	
-	public CaracteristicaResponse(Caracteristica c){
+	public CaracteristicaResponse(ICaracteristica c){
 		this.pathImagen = c.getPathImagen();
 		this.nombre = c.getNombre();
+		this.descripcion = c.getDescripcion();
+		this.idMedalla = c.getId();
 	}
 	
 	

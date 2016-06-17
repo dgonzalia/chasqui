@@ -15,6 +15,7 @@ import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 
+@SuppressWarnings("unchecked")
 public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 
 	public Usuario obtenerUsuarioPorID(final Integer id) {

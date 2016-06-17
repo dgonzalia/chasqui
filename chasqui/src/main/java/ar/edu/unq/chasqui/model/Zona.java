@@ -1,5 +1,7 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 
 public class Zona {
@@ -58,6 +60,13 @@ public class Zona {
 
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public void editar(String msg, Date d, String zona) {
+		descripcion = msg;
+		fechaEntrega = new DateTime(d.getTime());
+		nombre = zona;
+		
 	}
 	
 	

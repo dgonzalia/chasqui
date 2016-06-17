@@ -34,6 +34,7 @@ public class ProductorRenderer implements ListitemRenderer<Fabricante>{
 		
 		Map<String,Object>params1 = new HashMap<String,Object>();
 		Map<String,Object>params2 = new HashMap<String,Object>();
+		Map<String,Object>params3 = new HashMap<String,Object>();
 		
 		params1.put("accion", "visualizar");
 		params1.put("productor", f);
@@ -41,6 +42,13 @@ public class ProductorRenderer implements ListitemRenderer<Fabricante>{
 		ver.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.visualizar"));
 		ver.setImage("/imagenes/eye.png");
 		ver.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params1);
+		
+		params3.put("accion", "edicion");
+		params3.put("productor", f);
+		Toolbarbutton edicion = new Toolbarbutton();
+		edicion.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.editar"));
+		edicion.setImage("/imagenes/editar.png");
+		edicion.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params3);
 		
 		params2.put("accion", "eliminar");
 		params2.put("productor", f);
@@ -50,6 +58,7 @@ public class ProductorRenderer implements ListitemRenderer<Fabricante>{
 		eliminar.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params2);
 		
 		ver.setParent(hbox);
+		edicion.setParent(hbox);
 		eliminar.setParent(hbox);
 		hbox.setParent(c4);
 

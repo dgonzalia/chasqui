@@ -10,7 +10,9 @@ public interface ZonaService {
 	
 	@Transactional
 	public void guardar(Zona z);
+	@Transactional
 	public List<Zona>buscarZonasBy(Integer idUsuario);
+	@Transactional
 	public void borrar(Zona z);
 
 }

@@ -17,9 +17,9 @@ public interface CaracteristicaService {
 	public void eliminarCaracteristica(Caracteristica c);
 	@Transactional
 	public void eliminarCaracteristicaProductor(CaracteristicaProductor c);
-	
-	
+	@Transactional
 	public List<Caracteristica> buscarCaracteristicasProducto();
+	@Transactional
 	public List<CaracteristicaProductor> buscarCaracteristicasProductor();
 	
 }

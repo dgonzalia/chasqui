@@ -6,6 +6,6 @@ import ar.edu.unq.chasqui.model.Producto;
 
 public interface ProductoDAO {
 
-	public List<Producto> obtenerProductos( Integer idCategoria, Integer pagina, Integer cantidadDeItems);
+	public List<Producto> obtenerProductosPorCategoria( Integer idCategoria, Integer pagina, Integer cantidadDeItems);
 
 }

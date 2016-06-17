@@ -29,6 +29,12 @@
 	   
 	   <bean id="productoService" name="productoService" class="ar.edu.unq.chasqui.services.impl.ProductoServiceImpl"/>
 	   
+	   <bean id="vendedorService" name="vendedorService" class="ar.edu.unq.chasqui.services.impl.VendedorServiceImpl"/>
+	   
+	   <bean id="categoriaService" name="categoriaService" class="ar.edu.unq.chasqui.services.impl.CategoriaServiceImpl"/>
+	 
+	   <bean id="productorService" name="productorService" class="ar.edu.unq.chasqui.services.impl.FabricanteServiceImpl"/>
+	 
 	   <!--  DAOS -->
 	   <bean name="usuarioDAO" id="usuarioDAO" class="ar.edu.unq.chasqui.dao.impl.UsuarioDAOHbm">
 	   		<property name="sessionFactory" ref="sessionFactory"/>
@@ -46,6 +52,17 @@
 	   		<property name="sessionFactory" ref="sessionFactory"/>
 	   </bean>
 	   
+	   <bean id="vendedorDAO" name="vendedorDAO" class="ar.edu.unq.chasqui.dao.impl.VendedorDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
+	   
+	   <bean id="categoriaDAO" name="categoriaDAO" class="ar.edu.unq.chasqui.dao.impl.CategoriaDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
+	   
+	   <bean id="fabricanteDAO" name="fabricanteDAO" class="ar.edu.unq.chasqui.dao.impl.FabricanteDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
 	   
 	   <!-- SERVICIO EMAIL -->
 	   

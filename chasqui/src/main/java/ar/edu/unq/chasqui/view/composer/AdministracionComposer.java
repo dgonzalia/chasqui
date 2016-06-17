@@ -324,6 +324,15 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		windowProducto.doModal();
 	}
 	
+	public void editarProductor(Fabricante f) {
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("accion", Constantes.VENTANA_MODO_EDICION);
+		params.put("productor", f);
+		Window windowProducto = (Window) Executions.createComponents("/abmProductor.zul", this.self, params);
+		windowProducto.doModal();
+		
+	}
+	
 	public void eliminarProductor(Fabricante f){
 		// mostrar cartel
 		usuarioLogueado.eliminarProductor(f);
@@ -420,6 +429,9 @@ class ProductoEventListener implements EventListener<Event>{
 		}
 		if(params.get("accion").equals("visualizar") && f != null){
 			this.composer.verProductor(f);
+		}
+		if(params.get("accion").equals("edicion") && f != null){
+			this.composer.editarProductor(f);
 		}
 		
 	}

@@ -12,6 +12,7 @@ public class Fabricante {
 	private String pais;
 	private String provincia;
 	private String localidad;
+	private String pathImagen;
 	private List<Producto> productos;
 	private CaracteristicaProductor caracteristica;
  	
@@ -99,10 +100,22 @@ public class Fabricante {
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}	
+	public String getPathImagen() {
+		return pathImagen;
+	}
+	
+	public void setPathImagen(String pathImagen) {
+		this.pathImagen = pathImagen;
+	}
+	
+	
+	
+	
 	
 	
 	//METHODS
 	
+
 
 
 	@Override

@@ -29,7 +29,7 @@ apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="60%"  closable="tr
 				<listitem>
 					<listcell label="Fecha de Entrega: "/>
 					<listcell>
-						<datebox id="fechaEntrega"  placeholder="dd/MM/yyyy"/>
+						<datebox id="fechaEntrega"  placeholder="dd/MM/yyyy" />
 					</listcell>
 				</listitem>
 				<listitem>
@@ -59,6 +59,8 @@ apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="60%"  closable="tr
 					<listcell>
 						<hbox align="center">
 							<image src="/imagenes/detach.png" forward="onClick=zonaWindow$composer.onEliminarZona"/>
+							<space spacing="15px"/>
+							<image src="/imagenes/editar.png" forward="onClick=zonaWindow$composer.onEditarZona"/>
 						</hbox>
 					</listcell>
 				</listitem>

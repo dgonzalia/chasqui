@@ -6,10 +6,6 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -17,10 +13,11 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import ar.edu.unq.chasqui.dao.ProductoDAO;
 import ar.edu.unq.chasqui.model.Producto;
 
+@SuppressWarnings("unchecked")
 public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 
 	@Override
-	public List<Producto> obtenerProductos(final Integer idCategoria, final Integer pagina,
+	public List<Producto> obtenerProductosPorCategoria(final Integer idCategoria, final Integer pagina,
 			final Integer cantidadDeItems) {
 		
 		final Integer inicio = calcularInicio(pagina,cantidadDeItems);
@@ -33,7 +30,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.createAlias("categoria", "c");
 				c.add(Restrictions.eq("c.id", idCategoria));
 				c.add((Restrictions.between("id",inicio,fin)));
-				c.addOrder(Order.desc("id"));
+				
 				return (List<Producto>)c.list();
 			}
 		});

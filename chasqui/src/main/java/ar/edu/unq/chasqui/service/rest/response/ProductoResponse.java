@@ -22,7 +22,8 @@ public class ProductoResponse implements Serializable {
 	private String nombreCategoria;
 	private String nombreFabricante;
 	private Double precio;
-	private List<CaracteristicaResponse>caracteristicas;
+	private List<CaracteristicaResponse>medallasProducto;
+	private List<CaracteristicaResponse>medallasProductor;
 	
 	
 	public Integer getIdCategoria() {
@@ -72,15 +73,19 @@ public class ProductoResponse implements Serializable {
 	}
 	public void setPrecio(Double precio) {
 		this.precio = precio;
+	}	
+	public List<CaracteristicaResponse> getMedallasProducto() {
+		return medallasProducto;
 	}
-	public List<CaracteristicaResponse> getCaracteristicas() {
-		return caracteristicas;
+	public void setMedallasProducto(List<CaracteristicaResponse> medallasProducto) {
+		this.medallasProducto = medallasProducto;
 	}
-	public void setCaracteristicas(List<CaracteristicaResponse> caracteristicas) {
-		this.caracteristicas = caracteristicas;
+	public List<CaracteristicaResponse> getMedallasProductor() {
+		return medallasProductor;
 	}
-	
-	
+	public void setMedallasProductor(List<CaracteristicaResponse> medallasProductor) {
+		this.medallasProductor = medallasProductor;
+	}
 	
 	public ProductoResponse (Producto p){
 		this.idCategoria = p.getCategoria().getId();
@@ -91,10 +96,12 @@ public class ProductoResponse implements Serializable {
 		this.nombreProducto = p.getNombre();
 		this.nombreFabricante = p.getFabricante().getNombre();
 		this.nombreCategoria = p.getCategoria().getNombre();
-		caracteristicas = new ArrayList<>();
+		medallasProducto = new ArrayList<>();
 		for(Caracteristica c : p.getCaracteristicas()){
-			caracteristicas.add(new CaracteristicaResponse(c));
+			medallasProducto.add(new CaracteristicaResponse(c));
 		}
+		medallasProductor=new ArrayList<CaracteristicaResponse>();
+		medallasProductor.add(new CaracteristicaResponse(p.getFabricante().getCaracteristica()));
 	}
 	
 	

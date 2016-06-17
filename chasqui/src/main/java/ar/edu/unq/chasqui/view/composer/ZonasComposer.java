@@ -110,19 +110,30 @@ public class ZonasComposer extends GenericForwardComposer<Component> {
 		String zona = nombreZona.getValue();
 		Date d = fechaEntrega.getValue();
 		String msg = txtDescripcion.getValue();
-		validarZona(zona,d,msg);
-		DateTime fecha = new DateTime();
-		Zona z = new Zona(zona,fecha,msg);
-		z.setNombre(zona);
-		z.setIdUsuario(usuario.getId());
-		z.setFechaEntrega(fecha);
-		z.setDescripcion(msg);
-		
-		
-		zonas.add(z);
+		if(zonaSeleccionada == null){
+			validarZona(zona,d,msg);
+			DateTime fecha = new DateTime();
+			Zona z = new Zona(zona,fecha,msg);
+			z.setNombre(zona);
+			z.setIdUsuario(usuario.getId());
+			z.setFechaEntrega(fecha);
+			z.setDescripcion(msg);		
+			zonas.add(z);			
+		}else{
+			zonaSeleccionada.editar(msg,d,zona);
+		}
 		limpiarCampos();
+		zonaSeleccionada = null;
 		this.binder.loadAll();
 		
+	}
+	
+	
+	public void onEditarZona(){
+		txtDescripcion.setValue(zonaSeleccionada.getDescripcion());
+		fechaEntrega.setValue(zonaSeleccionada.getFechaEntrega().toDate());
+		nombreZona.setValue(zonaSeleccionada.getNombre());
+		this.binder.loadAll();
 	}
 	
 	public void actualizarImagen(UploadEvent evt){
