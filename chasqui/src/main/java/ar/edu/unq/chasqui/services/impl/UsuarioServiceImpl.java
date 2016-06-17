@@ -32,8 +32,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 	
-	public void modificarPasswordUsuario(String usuario,String password){
-		Usuario u = usuarioDAO.obtenerUsuarioPorNombre(usuario);
+	public void modificarPasswordUsuario(String email,String password){
+		Usuario u = usuarioDAO.obtenerUsuarioPorEmail(email);
 		u.setPassword(password);
 		usuarioDAO.guardarUsuario(u);
 	}

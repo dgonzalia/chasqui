@@ -15,6 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
@@ -77,7 +78,7 @@ public class MailService {
 		helper.setTo(destino);
 		
 		String password = PasswordGenerator.generateRandomToken(); 
-		usuarioService.modificarPasswordUsuario(usuario, Encrypter.encrypt(password));
+		usuarioService.modificarPasswordUsuario(destino, Encrypter.encrypt(password));
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("nombreUsuario", usuario);
 		params.put("passwordUsuario", password);
@@ -94,8 +95,13 @@ public class MailService {
 
 	@Transactional
 	public void enviarEmailRecuperoContraseñaCliente(String email) throws Exception {
-		Cliente c =(Cliente) usuarioService.obtenerUsuarioPorEmail(email);
-		this.enviarEmailRecuperoContraseña(email, c.getNickName());
+		if (usuarioService.existeUsuarioCon(email)) {
+			Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(email);
+			this.enviarEmailRecuperoContraseña(email, c.getNickName());
+		}
+		else {
+			throw new UsuarioExistenteException() ;
+		}
 	}
 	
 	
