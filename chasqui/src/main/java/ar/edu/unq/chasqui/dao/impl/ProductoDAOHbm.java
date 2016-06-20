@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -31,10 +32,11 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 			@Override
 			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria c = session.createCriteria(Producto.class);
-				c.createAlias("categoria", "c");
-				c.add(Restrictions.eq("c.id", idCategoria));
-				c.add((Restrictions.between("id",inicio,fin)));
-				c.setMaxResults(cantidadDeItems);
+				c.createAlias("categoria", "c")
+				 .add(Restrictions.eq("c.id", idCategoria))
+				 .addOrder(Order.asc("id"))
+				 .setFirstResult(inicio)
+				 .setMaxResults(cantidadDeItems);
 				List<Producto>pss = (List<Producto>)c.list();
 				return (pss == null  || pss.isEmpty() ? new ArrayList<Producto>():  pss);
 			}
@@ -50,10 +52,11 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 			@Override
 			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria c = session.createCriteria(Producto.class);
-				c.createAlias("fabricante", "f");
-				c.add(Restrictions.eq("f.id", idProductor));
-				c.add(Restrictions.between("id", inicio,fin));
-				c.setMaxResults(cantItems);
+				c.createAlias("fabricante", "f")
+				 .add(Restrictions.eq("f.id", idProductor))
+				 .setFirstResult(inicio)
+				 .setMaxResults(cantItems)
+				 .addOrder(Order.asc("id"));
 				List<Producto>pss = (List<Producto>)c.list();
 				return (pss == null ? new ArrayList<Producto>():  pss);
 			}
@@ -70,10 +73,11 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 			@Override
 			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria c = session.createCriteria(Producto.class);
-				c.createAlias("caracteristicas", "m");
-				c.add(Restrictions.eq("m.id", idMedalla));
-				c.add(Restrictions.between("id", inicio,fin));
-				c.setMaxResults(cantItems);
+				c.createAlias("caracteristicas", "m")
+				 .add(Restrictions.eq("m.id", idMedalla))
+				 .setFirstResult(inicio)
+				 .setMaxResults(cantItems)
+				 .addOrder(Order.asc("id"));
 				List<Producto>pss = (List<Producto>)c.list();
 				return (pss == null ? new ArrayList<Producto>():  pss);
 			}
