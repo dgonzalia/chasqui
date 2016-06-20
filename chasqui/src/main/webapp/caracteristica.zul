@@ -57,7 +57,7 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 </listbox>
 <separator spacing="20px"/>
 <div align="center">
-	<button id="guardarCaracteristica" label="guardar"/>
+	<button id="guardarCaracteristica" label="Guardar Caract. Producto "/>
 </div>
 <separator spacing="20px"/>
 </tabpanel>
@@ -109,7 +109,7 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 </listbox>
 <separator spacing="20px"/>
 <div align="center">
-	<button id="guardarCaracteristicaProductor" label="guardar"/>
+	<button id="guardarCaracteristicaProductor" label="Guardar Caract. Productor"/>
 </div>
 <separator spacing="20px"/>
 </tabpanel>

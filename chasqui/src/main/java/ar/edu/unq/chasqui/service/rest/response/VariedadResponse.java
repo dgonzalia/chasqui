@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unq.chasqui.model.Caracteristica;
-import ar.edu.unq.chasqui.model.CaracteristicaProductor;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Variante;
 

@@ -43,7 +43,7 @@ public class CaracteristicaListener {
 
 
 
-	private Object toResponse(List<Caracteristica> buscarCaracteristicasProducto,
+	private List<CaracteristicaResponse> toResponse(List<Caracteristica> buscarCaracteristicasProducto,
 			List<CaracteristicaProductor> buscarCaracteristicasProductor) {
 		List<CaracteristicaResponse>response = new ArrayList<CaracteristicaResponse>();
 		List<ICaracteristica> icss = new ArrayList<ICaracteristica>();

@@ -1,6 +1,7 @@
 package ar.edu.unq.chasqui.dao.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -34,7 +35,8 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.add(Restrictions.eq("c.id", idCategoria));
 				c.add((Restrictions.between("id",inicio,fin)));
 				c.setMaxResults(cantidadDeItems);
-				return (List<Producto>)c.list();
+				List<Producto>pss = (List<Producto>)c.list();
+				return (pss == null ? new ArrayList<Producto>():  pss);
 			}
 		});
 	}
@@ -52,7 +54,8 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.add(Restrictions.eq("f.id", idProductor));
 				c.add(Restrictions.between("id", inicio,fin));
 				c.setMaxResults(cantItems);
-				return c.list();
+				List<Producto>pss = (List<Producto>)c.list();
+				return (pss == null ? new ArrayList<Producto>():  pss);
 			}
 		});
 	}
@@ -71,7 +74,8 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.add(Restrictions.eq("m.id", idMedalla));
 				c.add(Restrictions.between("id", inicio,fin));
 				c.setMaxResults(cantItems);
-				return c.list();
+				List<Producto>pss = (List<Producto>)c.list();
+				return (pss == null ? new ArrayList<Producto>():  pss);
 			}
 		});
 	}	
