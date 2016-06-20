@@ -14,7 +14,7 @@ public class VendedorResponse implements Serializable{
 	private String nombre;
 	
 	
-	
+	public VendedorResponse(){}
 	public VendedorResponse(Vendedor v){
 		id = v.getId();
 		nombre = v.getUsername();

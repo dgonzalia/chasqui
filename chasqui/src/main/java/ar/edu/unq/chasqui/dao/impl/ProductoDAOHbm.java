@@ -36,7 +36,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.add((Restrictions.between("id",inicio,fin)));
 				c.setMaxResults(cantidadDeItems);
 				List<Producto>pss = (List<Producto>)c.list();
-				return (pss == null ? new ArrayList<Producto>():  pss);
+				return (pss == null  || pss.isEmpty() ? new ArrayList<Producto>():  pss);
 			}
 		});
 	}

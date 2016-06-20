@@ -16,7 +16,7 @@ public class FabricanteResponse implements Serializable{
 	private String pathImagen;
 	
 	
-	
+	public FabricanteResponse(){}
 	public FabricanteResponse(Fabricante f) {
 		idProductor = f.getId();
 		nombreProductor = f.getNombre();

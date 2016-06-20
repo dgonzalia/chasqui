@@ -13,6 +13,8 @@ public class PerfilResponse {
 	  private Integer telefonoMovil;
 	  private DireccionResponse direccion;
 	  
+	  
+	public PerfilResponse(){}
 	public PerfilResponse(Cliente c){
 		this.email = c.getEmail();
 		this.nickName = c.getNickName();

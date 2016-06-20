@@ -14,6 +14,7 @@ public class CategoriaResponse implements Serializable{
 	private Integer idCategoria;
 	private String nombre;
 	
+	public CategoriaResponse(){}
 	
 	public CategoriaResponse(Categoria c){
 		idCategoria = c.getId();

@@ -18,7 +18,7 @@ public class DireccionResponse implements Serializable {
 	private Double longitud;
 	
 	
-	
+	public DireccionResponse(){}
 	public DireccionResponse(Direccion d){
 		this.altura = d.getAltura();
 		this.calle = d.getCalle();

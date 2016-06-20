@@ -16,7 +16,7 @@ public class ImagenResponse implements Serializable {
 	
 	
 	
-	
+	public ImagenResponse(){}
 	public ImagenResponse(Imagen i) {
 		nombre = i.getNombre();
 		path = i.getPath();

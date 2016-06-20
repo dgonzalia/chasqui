@@ -41,6 +41,9 @@ public class CaracteristicaResponse implements Serializable{
 		this.descripcion = descripcion;
 	}
 	
+	public CaracteristicaResponse(){
+	}
+	
 	public CaracteristicaResponse(ICaracteristica c){
 		this.pathImagen = c.getPathImagen();
 		this.nombre = c.getNombre();

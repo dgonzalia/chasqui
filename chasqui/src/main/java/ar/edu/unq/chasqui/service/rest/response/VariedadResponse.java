@@ -8,15 +8,12 @@ import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Variante;
 
-public class VariedadResponse implements Serializable{
 
+public class VariedadResponse implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5648828220930027872L;
-	
-	
-	
 	
 	private Integer idProducto;
 	private Integer idCategoria;
@@ -30,8 +27,8 @@ public class VariedadResponse implements Serializable{
 	private String descripcion;
 	private Double precio;
 	private Integer stock;
-	private List<CaracteristicaResponse>medallasProducto = new ArrayList<CaracteristicaResponse>();
-	private List<CaracteristicaResponse>medallasProductor= new ArrayList<CaracteristicaResponse>();
+	private List<CaracteristicaResponse>medallasProducto;
+	private List<CaracteristicaResponse>medallasProductor;
 	
 
 	public Integer getIdProducto() {
@@ -118,6 +115,11 @@ public class VariedadResponse implements Serializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+	
+	
+	public VariedadResponse(){}
+	
 	public VariedadResponse(Variante v, Producto p) {
 		idProducto = p.getId();
 		idCategoria = p.getCategoria().getId();
@@ -131,10 +133,16 @@ public class VariedadResponse implements Serializable{
 		precio = v.getPrecio();
 		stock = v.getStock();
 		descripcion = v.getDescripcion();
-		for(Caracteristica c : p.getCaracteristicas()){
-			medallasProducto.add(new CaracteristicaResponse(c));
+		if(p.getCaracteristicas() != null && !p.getCaracteristicas().isEmpty()){
+			medallasProducto = new ArrayList<CaracteristicaResponse>();
+			for(Caracteristica c : p.getCaracteristicas()){
+				medallasProducto.add(new CaracteristicaResponse(c));
+			}			
 		}
-		medallasProductor.add(new CaracteristicaResponse(p.getFabricante().getCaracteristica()));
+		if(p.getFabricante().getCaracteristica() != null){
+			medallasProductor = new ArrayList<CaracteristicaResponse>();
+			medallasProductor.add(new CaracteristicaResponse(p.getFabricante().getCaracteristica()));			
+		}
 	}
 	
 	
