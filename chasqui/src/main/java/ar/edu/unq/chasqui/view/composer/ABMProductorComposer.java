@@ -198,7 +198,11 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 			throw new WrongValueException(textboxNombreProductor,"El productor no debe ser vacio!");
 		}
 		
-		if(usuario.contieneProductor(productor)){
+		if(model == null && usuario.contieneProductor(productor)){
+			throw new WrongValueException("El usuario: " + usuario.getUsername() + " ya tiene el productor: " + productor );
+		}
+		
+		if(model != null && !model.getNombre().equals(productor) && usuario.contieneProductor(productor)){
 			throw new WrongValueException("El usuario: " + usuario.getUsername() + " ya tiene el productor: " + productor );
 		}
 		

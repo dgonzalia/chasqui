@@ -22,8 +22,10 @@ public class CategoriaDAOHbm extends HibernateDaoSupport implements CategoriaDAO
 
 			@Override
 			public List<Categoria> doInHibernate(Session session) throws HibernateException, SQLException {
-				String sql = "SELECT * FROM CARACTERISTICA WHERE ID_VENDEDOR = :vendedor";
-				Query hql = session.createSQLQuery(sql);
+				String sql = "SELECT * FROM CATEGORIA WHERE ID_VENDEDOR = :vendedor";
+				Query hql = session.createSQLQuery(sql)
+								   .addEntity(Categoria.class)
+								   .setInteger("vendedor", idVendedor);
 				List<Categoria> resultado = (List<Categoria>) hql.list();
 				
 				if(resultado == null || resultado.size() == 0 ){

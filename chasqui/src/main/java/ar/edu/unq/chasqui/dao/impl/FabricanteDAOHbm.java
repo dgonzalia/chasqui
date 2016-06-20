@@ -17,13 +17,15 @@ import ar.edu.unq.chasqui.model.Fabricante;
 public class FabricanteDAOHbm extends HibernateDaoSupport implements FabricanteDAO{
 
 	@Override
-	public List<Fabricante> obtenerProductoresDe(Integer idVendedor) {
+	public List<Fabricante> obtenerProductoresDe(final Integer idVendedor) {
 		return this.getHibernateTemplate().execute(new HibernateCallback<List<Fabricante>>() {
 
 			@Override
 			public List<Fabricante> doInHibernate(Session session) throws HibernateException, SQLException {
 				String sql = "SELECT * FROM PRODUCTOR WHERE ID_VENDEDOR = :vendedor";
-				Query hql = session.createSQLQuery(sql);
+				Query hql = session.createSQLQuery(sql)
+								   .addEntity(Fabricante.class)
+								   .setInteger("vendedor", idVendedor);
 				List<Fabricante> resultado = (List<Fabricante>) hql.list();
 				
 				if(resultado == null || resultado.size() == 0 ){

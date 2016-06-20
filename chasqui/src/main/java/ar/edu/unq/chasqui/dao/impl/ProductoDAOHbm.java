@@ -11,7 +11,10 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.ProductoDAO;
+import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
+import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
+import ar.edu.unq.chasqui.model.Variante;
 
 @SuppressWarnings("unchecked")
 public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
@@ -30,11 +33,66 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.createAlias("categoria", "c");
 				c.add(Restrictions.eq("c.id", idCategoria));
 				c.add((Restrictions.between("id",inicio,fin)));
-				
+				c.setMaxResults(cantidadDeItems);
 				return (List<Producto>)c.list();
 			}
 		});
 	}
+
+	@Override
+	public List<Producto> obtenerProductosPorProductor(final Integer idProductor, final Integer pagina, final Integer cantItems) {
+		final Integer inicio = calcularInicio(pagina,cantItems);
+		final Integer fin = calcularFin(pagina,cantItems);
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Producto>>() {
+
+			@Override
+			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Producto.class);
+				c.createAlias("fabricante", "f");
+				c.add(Restrictions.eq("f.id", idProductor));
+				c.add(Restrictions.between("id", inicio,fin));
+				c.setMaxResults(cantItems);
+				return c.list();
+			}
+		});
+	}
+	
+	
+	@Override
+	public List<Producto> obtenerProductosPorMedalla(final Integer idMedalla, final Integer pagina, final Integer cantItems) {
+		final Integer inicio = calcularInicio(pagina,cantItems);
+		final Integer fin = calcularFin(pagina,cantItems);
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Producto>>() {
+
+			@Override
+			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Producto.class);
+				c.createAlias("caracteristicas", "m");
+				c.add(Restrictions.eq("m.id", idMedalla));
+				c.add(Restrictions.between("id", inicio,fin));
+				c.setMaxResults(cantItems);
+				return c.list();
+			}
+		});
+	}	
+
+	@Override
+	public List<Imagen> obtenerImagenesDe(final Integer idProducto) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<List<Imagen>>() {
+
+			@Override
+			public List<Imagen> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.add(Restrictions.eq("id", idProducto));
+				Variante v = (Variante) c.uniqueResult();
+				if(v != null){
+					return v.getImagenes();
+				}
+				throw new ProductoInexsistenteException();
+			}
+		});
+	}
+	
 
 	private Integer calcularFin(Integer pagina, Integer cantidadDeItems) {
 		return calcularInicio(pagina,cantidadDeItems) + cantidadDeItems;

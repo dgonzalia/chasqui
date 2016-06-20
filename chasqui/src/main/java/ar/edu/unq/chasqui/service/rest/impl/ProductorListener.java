@@ -34,7 +34,7 @@ public class ProductorListener {
 		try{
 			return Response.ok(toResponse(productorService.obtenerProductoresDe(idVendedor))).build();
 		}catch(VendedorInexistenteException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(404).entity("Vendedor inexistente o el mismo no posee productores definidos").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}

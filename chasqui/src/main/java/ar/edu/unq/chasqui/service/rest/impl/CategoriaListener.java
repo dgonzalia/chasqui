@@ -33,7 +33,7 @@ public class CategoriaListener {
 		try{
 			return Response.ok().entity(toResponse(categoriaService.obtenerCategoriasDe(idVendedor))).build();
 		}catch(VendedorInexistenteException e){
-			return Response.status(406).entity("Parametro Incorrecto").build();
+			return Response.status(404).entity("Vendedor inexistente o el mismo no posee categorias definidas").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}

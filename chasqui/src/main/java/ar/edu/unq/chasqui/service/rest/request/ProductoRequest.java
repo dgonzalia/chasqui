@@ -5,7 +5,6 @@ public class ProductoRequest {
 	private Integer pagina;
 	private Integer cantItems;
 	private String  precio;
-	private Integer idCategoria;
 	
 	
 	public Integer getPagina() {
@@ -26,12 +25,7 @@ public class ProductoRequest {
 	public void setPrecio(String precio) {
 		this.precio = precio;
 	}
-	public Integer getIdCategoria() {
-		return idCategoria;
-	}
-	public void setIdCategoria(Integer idCategoria) {
-		this.idCategoria = idCategoria;
-	}
+
 	
 	
 	
