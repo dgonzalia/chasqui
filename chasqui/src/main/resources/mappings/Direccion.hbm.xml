@@ -24,11 +24,14 @@
         <property name="codigoPostal" type="java.lang.String">
             <column name="CODIGO_POSTAL" />
         </property>
-        <property name="latitud" type="java.lang.Double">
+        <property name="latitud" type="java.lang.String">
             <column name="LATITUD" />
         </property>
-        <property name="longitud" type="java.lang.Double">
+        <property name="longitud" type="java.lang.String">
             <column name="LONGITUD" />
         </property>
+        <property name="departamento" type="java.lang.String" column="DEPARTAMENTO"/>
+        <property name="alias" type="java.lang.String" column="ALIAS"/>
+        <property name="predeterminada" type="java.lang.Boolean" column="PREDETERMINADA"/>
     </class>
 </hibernate-mapping>

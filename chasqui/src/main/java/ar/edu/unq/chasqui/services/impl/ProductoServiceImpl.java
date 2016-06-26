@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ar.edu.unq.chasqui.dao.ProductoDAO;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Producto;
+import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
 public class ProductoServiceImpl implements ProductoService {
@@ -16,19 +17,19 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	
 	@Override
-	public List<Producto> obtenerProductosPorCategoria(Integer idCategoria, Integer pagina,
+	public List<Variante> obtenerVariantesPorCategoria(Integer idCategoria, Integer pagina,
 			Integer cantidadDeItems) {
-		return productoDAO.obtenerProductosPorCategoria(idCategoria,pagina, cantidadDeItems);
+		return productoDAO.obtenerVariantesPorCategoria(idCategoria,pagina, cantidadDeItems);
 	}
 
 	@Override
-	public List<Producto> obtenerProductosPorProductor(Integer idProductor, Integer pagina, Integer cantItems) {
-		return productoDAO.obtenerProductosPorProductor(idProductor, pagina, cantItems);
+	public List<Variante> obtenerVariantesPorProductor(Integer idProductor, Integer pagina, Integer cantItems) {
+		return productoDAO.obtenerVariantesPorProductor(idProductor, pagina, cantItems);
 	}
 	
 	@Override
-	public List<Producto> obtenerProductosPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems) {
-		return productoDAO.obtenerProductosPorMedalla(idMedalla, pagina, cantItems);
+	public List<Variante> obtenerVariantesPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems) {
+		return productoDAO.obtenerVariantesPorMedalla(idMedalla, pagina, cantItems);
 	}
 
 	@Override

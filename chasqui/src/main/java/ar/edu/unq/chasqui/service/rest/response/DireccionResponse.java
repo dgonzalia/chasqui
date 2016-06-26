@@ -14,8 +14,12 @@ public class DireccionResponse implements Serializable {
 	private Integer altura;
 	private String localidad;
 	private String codigoPostal;
-	private Double latitud;
-	private Double longitud;
+	private String latitud;
+	private String longitud;
+	private Boolean predeterminada;
+	private String departamento;
+	private String alias;
+	
 	
 	
 	public DireccionResponse(){}
@@ -26,6 +30,9 @@ public class DireccionResponse implements Serializable {
 		this.codigoPostal = d.getCodigoPostal();
 		this.latitud = d.getLatitud();
 		this.longitud = d.getLongitud();
+		alias = d.getAlias();
+		departamento = d.getDepartamento();
+		predeterminada = d.getPredeterminada();
 	}
 	
 	public String getCalle() {
@@ -52,18 +59,38 @@ public class DireccionResponse implements Serializable {
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
-	public Double getLatitud() {
+	public String getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(Double latitud) {
+	public void setLatitud(String latitud) {
 		this.latitud = latitud;
 	}
-	public Double getLongitud() {
+	public String getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(Double longitud) {
+	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
+	public Boolean getPredeterminada() {
+		return predeterminada;
+	}
+	public void setPredeterminada(Boolean predeterminada) {
+		this.predeterminada = predeterminada;
+	}
+	public String getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	public String getAlias() {
+		return alias;
+	}
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+	
+	
 	
 	
 

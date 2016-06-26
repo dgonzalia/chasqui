@@ -1,7 +1,6 @@
 package ar.edu.unq.chasqui.dao.impl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -22,64 +21,64 @@ import ar.edu.unq.chasqui.model.Variante;
 public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 
 	@Override
-	public List<Producto> obtenerProductosPorCategoria(final Integer idCategoria, final Integer pagina,
+	public List<Variante> obtenerVariantesPorCategoria(final Integer idCategoria, final Integer pagina,
 			final Integer cantidadDeItems) {
 		
 		final Integer inicio = calcularInicio(pagina,cantidadDeItems);
 		final Integer fin = calcularFin(pagina,cantidadDeItems);
-		return this.getHibernateTemplate().execute(new HibernateCallback<List<Producto>>() {
+		return this.getHibernateTemplate().execute(new HibernateCallback<List<Variante>>() {
 
 			@Override
-			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
-				Criteria c = session.createCriteria(Producto.class);
-				c.createAlias("categoria", "c")
+			public List<Variante> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.categoria", "c")
 				 .add(Restrictions.eq("c.id", idCategoria))
 				 .addOrder(Order.asc("id"))
-				 .setFirstResult(inicio)
+				 .setFirstResult(inicio )
 				 .setMaxResults(cantidadDeItems);
-				List<Producto>pss = (List<Producto>)c.list();
-				return (pss == null  || pss.isEmpty() ? new ArrayList<Producto>():  pss);
+				return (List<Variante>)c.list();
 			}
 		});
 	}
 
 	@Override
-	public List<Producto> obtenerProductosPorProductor(final Integer idProductor, final Integer pagina, final Integer cantItems) {
+	public List<Variante> obtenerVariantesPorProductor(final Integer idProductor, final Integer pagina, final Integer cantItems) {
 		final Integer inicio = calcularInicio(pagina,cantItems);
 		final Integer fin = calcularFin(pagina,cantItems);
-		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Producto>>() {
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Variante>>() {
 
 			@Override
-			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
-				Criteria c = session.createCriteria(Producto.class);
-				c.createAlias("fabricante", "f")
+			public List<Variante> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.fabricante", "f")
 				 .add(Restrictions.eq("f.id", idProductor))
 				 .setFirstResult(inicio)
 				 .setMaxResults(cantItems)
 				 .addOrder(Order.asc("id"));
-				List<Producto>pss = (List<Producto>)c.list();
-				return (pss == null ? new ArrayList<Producto>():  pss);
+				return (List<Variante>)c.list();
 			}
 		});
 	}
 	
 	
 	@Override
-	public List<Producto> obtenerProductosPorMedalla(final Integer idMedalla, final Integer pagina, final Integer cantItems) {
+	public List<Variante> obtenerVariantesPorMedalla(final Integer idMedalla, final Integer pagina, final Integer cantItems) {
 		final Integer inicio = calcularInicio(pagina,cantItems);
 		final Integer fin = calcularFin(pagina,cantItems);
-		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Producto>>() {
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Variante>>() {
 
 			@Override
-			public List<Producto> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Variante> doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria c = session.createCriteria(Producto.class);
-				c.createAlias("caracteristicas", "m")
+				c.createAlias("producto", "p")
+				 .createAlias("p.caracteristicas", "m")
 				 .add(Restrictions.eq("m.id", idMedalla))
 				 .setFirstResult(inicio)
 				 .setMaxResults(cantItems)
 				 .addOrder(Order.asc("id"));
-				List<Producto>pss = (List<Producto>)c.list();
-				return (pss == null ? new ArrayList<Producto>():  pss);
+				return  (List<Variante>)c.list();
 			}
 		});
 	}	
@@ -110,7 +109,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 		if(pagina == 1){
 			return 0;
 		}
-		return pagina * cantidadDeItems;
+		return (pagina - 1) * cantidadDeItems;
 	}
 	
 	

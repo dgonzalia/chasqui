@@ -19,11 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
+import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.model.Imagen;
-import ar.edu.unq.chasqui.model.Producto;
+import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.service.rest.request.ByCategoriaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByMedallaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByProductorRequest;
+import ar.edu.unq.chasqui.service.rest.request.ProductoRequest;
 import ar.edu.unq.chasqui.service.rest.response.ImagenResponse;
 import ar.edu.unq.chasqui.service.rest.response.ProductoResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
@@ -42,23 +44,25 @@ public class ProductoListener {
 	public Response obtenerTodosLosProductosByCategoria(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByCategoriaRequest request = toRequest(productoRequest);	
-			return toResponse(productoService.obtenerProductosPorCategoria(request.getIdCategoria(),request.getPagina(),request.getCantItems())
+			validarRequest(request);
+			return toResponse(productoService.obtenerVariantesPorCategoria(request.getIdCategoria(),request.getPagina(),request.getCantItems())
 					,request.getPagina(),request.getCantItems(),request.getPrecio());
-		}catch(IOException e){
-			return Response.status(406).entity("Parametros incorrectos").build();
+		}catch(IOException | RequestIncorrectoException e){
+			return Response.status(406).entity("Parametros incorrectos: " + e.getMessage()).build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}		
 	}
-	
-	
+
+
 	@POST
 	@Path("/byProductor")
 	@Produces("application/json")
 	public Response obtenerTodosLosProductosByProductor(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByProductorRequest request = toByProductorRequest(productoRequest);	
-			return toResponse(productoService.obtenerProductosPorProductor(request.getIdProductor(),request.getPagina(),request.getCantItems()),
+			validarRequest(request);
+			return toResponse(productoService.obtenerVariantesPorProductor(request.getIdProductor(),request.getPagina(),request.getCantItems()),
 					request.getPagina(),request.getCantItems(),request.getPrecio());
 		}catch(IOException e){
 			return Response.status(406).entity("Parametros incorrectos").build();
@@ -74,7 +78,8 @@ public class ProductoListener {
 	public Response obtenerTodosLosProductosByMedalla(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByMedallaRequest request = toByMedallaRequest(productoRequest);	
-			return toResponse(productoService.obtenerProductosPorMedalla(request.getIdMedalla(),request.getPagina(),request.getCantItems()),
+			validarRequest(request);
+			return toResponse(productoService.obtenerVariantesPorMedalla(request.getIdMedalla(),request.getPagina(),request.getCantItems()),
 					request.getPagina(),request.getCantItems(),request.getPrecio());
 		}catch(IOException e){
 			return Response.status(406).entity("Parametros incorrectos").build();
@@ -123,8 +128,8 @@ public class ProductoListener {
 	}
 
 
-	private Response toResponse(List<Producto> productos, Integer pagina, Integer items,String precio) {
-		return Response.ok(new ProductoResponse(productos,pagina,items, precio), MediaType.APPLICATION_JSON).build();
+	private Response toResponse(List<Variante> variantes, Integer pagina, Integer items,String precio) {
+		return Response.ok(new ProductoResponse(variantes,pagina,items, precio), MediaType.APPLICATION_JSON).build();
 	}
 	
 	
@@ -134,6 +139,15 @@ public class ProductoListener {
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
 		prodRequest = mapper.readValue(request, ByCategoriaRequest.class);
 		return prodRequest;
+	}
+	
+	
+	
+	private void validarRequest(ProductoRequest request) {
+		if(!("Down".equals(request.getPrecio()) || "Up".equals(request.getPrecio()))){
+			throw new RequestIncorrectoException("El orden debe ser 'Up' o 'Down'");
+		}
+		
 	}
 	
 	

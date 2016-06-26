@@ -22,13 +22,12 @@ public class ProductoResponse implements Serializable {
 	
 	public ProductoResponse(){}
 	
-	public ProductoResponse (List<Producto> prod,Integer pag,Integer items,final String precio){
+	public ProductoResponse (List<Variante> vrs,Integer pag,Integer items,final String precio){
 		cantItems = items;
 		pagina = pag;
-		for(Producto p : prod){
-			for(Variante v : p.getVariantes()){
-				productos.add(new VariedadResponse(v,p));				
-			}
+		for(Variante v : vrs){
+			productos.add(new VariedadResponse(v,v.getProducto()));				
+			
 		}
 		
 		Collections.sort(productos, new Comparator<VariedadResponse>(){
@@ -36,9 +35,9 @@ public class ProductoResponse implements Serializable {
 			@Override
 			public int compare(VariedadResponse o1, VariedadResponse o2) {
 				if(precio.equals("Up")){
-					return o1.getPrecio().compareTo(o2.getPrecio());
+					return o2.getPrecio().compareTo(o1.getPrecio());
 				}
-				return o2.getPrecio().compareTo(o1.getPrecio());
+				return o1.getPrecio().compareTo(o2.getPrecio());
 			}
 			
 		});

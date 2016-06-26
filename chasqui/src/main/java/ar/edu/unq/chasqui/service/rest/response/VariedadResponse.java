@@ -129,7 +129,7 @@ public class VariedadResponse implements Serializable{
 		nombreVariedad = v.getNombre();
 		nombreFabricante = p.getFabricante().getNombre();
 		precioParteEntera = String.valueOf(v.getPrecio().intValue());
-		precioParteDecimal = String.valueOf(v.getPrecio().floatValue());
+		precioParteDecimal = String.valueOf( v.getPrecio() -  v.getPrecio().intValue());
 		precio = v.getPrecio();
 		stock = v.getStock();
 		descripcion = v.getDescripcion();

@@ -1,11 +1,13 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
 
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 
@@ -17,7 +19,6 @@ public class Cliente extends Usuario{
 	private String nickName;
 	private Integer telefonoFijo;
 	private Integer telefonoMovil;
-	private Direccion direccionPredeterminada;
 	private List<Direccion> direccionesAlternativas;
 	private List<Notificacion> notificaciones;
 	private Historial historialPedidos;
@@ -41,7 +42,10 @@ public class Cliente extends Usuario{
 		email = request.getEmail();
 		telefonoFijo = request.getTelefonoFijo();
 		telefonoMovil = request.getTelefonoMovil();
-		direccionPredeterminada = new Direccion(request.getDireccion());
+		direccionesAlternativas = new ArrayList<Direccion>();
+		Direccion d = new Direccion(request.getDireccion());
+		d.setPredeterminada(true);
+		direccionesAlternativas.add(d);
 		token = PasswordGenerator.generateRandomToken();
 		password = Encrypter.encrypt(request.getPassword());
 	}
@@ -77,14 +81,7 @@ public class Cliente extends Usuario{
 	public void setTelefonoMovil(Integer telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
 	}
-	
-	public Direccion getDireccionPredeterminada() {
-		return direccionPredeterminada;
-	}
-	
-	public void setDireccionPredeterminada(Direccion direccionPredeterminada) {
-		this.direccionPredeterminada = direccionPredeterminada;
-	}
+
 	
 	public List<Direccion> getDireccionesAlternativas() {
 		return direccionesAlternativas;
@@ -162,9 +159,24 @@ public class Cliente extends Usuario{
 		if(editRequest.getTelefonoMovil() != null){
 			this.telefonoMovil = editRequest.getTelefonoMovil();
 		}
+		Direccion d = this.obtenerDireccionPredeterminada();
+		d.modificarCon(editRequest.getDireccion());
 		
-		this.direccionPredeterminada.modificarCon(editRequest.getDireccion());
 		
+	}
+
+	public Direccion obtenerDireccionPredeterminada() {
+		for(Direccion d : this.getDireccionesAlternativas()){
+			if(d.getPredeterminada()){
+				return d;
+			}
+		}
+		return null;
+	}
+
+	public void agregarDireccion(DireccionRequest request) {
+		Direccion d = new Direccion(request);
+		this.direccionesAlternativas.add(d);
 		
 	}
 	

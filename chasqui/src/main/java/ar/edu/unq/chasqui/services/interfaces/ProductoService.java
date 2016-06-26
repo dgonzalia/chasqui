@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.chasqui.model.Imagen;
-import ar.edu.unq.chasqui.model.Producto;
+import ar.edu.unq.chasqui.model.Variante;
 
 public interface ProductoService {
 	
 	@Transactional
-	public List<Producto>obtenerProductosPorCategoria(Integer idCategoria,Integer pagina, Integer cantidadDeItems);
+	public List<Variante>obtenerVariantesPorCategoria(Integer idCategoria,Integer pagina, Integer cantidadDeItems);
 	@Transactional
-	public List<Producto> obtenerProductosPorProductor(Integer idProductor, Integer pagina, Integer cantItems);
+	public List<Variante> obtenerVariantesPorProductor(Integer idProductor, Integer pagina, Integer cantItems);
 	@Transactional
-	public List<Producto> obtenerProductosPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems);
+	public List<Variante> obtenerVariantesPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems);
 	@Transactional
 	public List<Imagen> obtenerImagenesDe(Integer idProducto);
 	

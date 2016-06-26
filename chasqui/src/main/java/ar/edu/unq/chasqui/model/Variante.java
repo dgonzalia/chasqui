@@ -10,6 +10,7 @@ public class Variante {
 	private Integer stock;
 	private Double precio;
 	private String nombre;
+	private Producto producto;
 	
 	
 	//GETs & SETs
@@ -61,6 +62,15 @@ public class Variante {
 	public void setImagenes(List<Imagen> imagenes) {
 		this.imagenes = imagenes;
 	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 	
 		
+	
 }

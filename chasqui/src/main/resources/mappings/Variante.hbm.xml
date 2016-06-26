@@ -19,6 +19,7 @@
             <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Imagen" />
         </list>
+       <many-to-one name="producto" class="ar.edu.unq.chasqui.model.Producto" fetch="select" column="ID_PRODUCTO"/>
         <property name="descripcion" type="java.lang.String">
             <column name="DESCRIPCION" />
         </property>

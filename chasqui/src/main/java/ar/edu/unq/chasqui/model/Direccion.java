@@ -11,8 +11,11 @@ public class Direccion {
 	private Integer altura;
 	private String localidad;
 	private String codigoPostal;
-	private Double latitud;
-	private Double longitud;
+	private String alias;
+	private String departamento;
+	private String latitud;
+	private String longitud;
+	private Boolean predeterminada;
 	
 	
 	//GETs & SETs
@@ -24,6 +27,10 @@ public class Direccion {
 		altura = direccion.getAltura();
 		calle = direccion.getCalle();
 		codigoPostal = direccion.getCodigoPostal();
+		departamento = direccion.getDepartamento();
+		codigoPostal = direccion.getCodigoPostal();
+		predeterminada = false;
+		
 		
 	}
 	
@@ -63,6 +70,15 @@ public class Direccion {
 		this.localidad = localidad;
 	}
 	
+	
+	public Boolean getPredeterminada() {
+		return predeterminada;
+	}
+
+	public void setPredeterminada(Boolean determinada) {
+		this.predeterminada = determinada;
+	}
+
 	public String getCodigoPostal() {
 		return codigoPostal;
 	}
@@ -71,19 +87,35 @@ public class Direccion {
 		this.codigoPostal = codigoPostal;
 	}
 	
-	public Double getLatitud() {
+	public String getLatitud() {
 		return latitud;
 	}
 	
-	public void setLatitud(Double latitud) {
+	public String getAlias() {
+		return alias;
+	}
+	
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+	
+	public String getDepartamento() {
+		return departamento;
+	}
+	
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	
+	public void setLatitud(String latitud) {
 		this.latitud = latitud;
 	}
 	
-	public Double getLongitud() {
+	public String getLongitud() {
 		return longitud;
 	}
 	
-	public void setLongitud(Double longitud) {
+	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
 
@@ -106,8 +138,16 @@ public class Direccion {
 		if(direccion.getLongitud() != null){
 			this.longitud = direccion.getLongitud();
 		}
+		if(direccion.getAlias() != null){
+			this.alias = direccion.getAlias();
+		}
+		if(direccion.getDepartamento() != null){
+			this.departamento = direccion.getDepartamento();
+		}
 		
 	}
+	
+	
 	
 
 	

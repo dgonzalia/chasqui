@@ -1,15 +1,20 @@
 package ar.edu.unq.chasqui.services.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -68,7 +73,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
 			c.setNickName("MatLock");
-			
+			Direccion d = new Direccion();
+			d.setCalle("aaaa");
+			Direccion dd = new Direccion();
+			dd.setCalle("bbbb");
+			List<Direccion> dds = new ArrayList<Direccion>();
+			dds.add(dd);
+			c.setDireccionesAlternativas(dds);
 			usuarioDAO.guardarUsuario(c);
 			
 		
@@ -128,6 +139,20 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		c.modificarCon(editRequest);
 		usuarioDAO.guardarUsuario(c);
+	}
+
+	@Override
+	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) {
+		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(email);
+		return v.getDireccionesAlternativas();
+	}
+
+	@Override
+	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
+		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
+		v.agregarDireccion(request);
+		usuarioDAO.guardarUsuario(v);
+		
 	}
 
 

@@ -142,6 +142,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		model.setNombre(textboxNombre.getValue());
 		model.setStock(intboxStock.getValue());
 		model.setPrecio(doubleboxPrecio.getValue());
+		model.setProducto(producto);
 		producto.getVariantes().add(model);
 		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);
 		this.self.detach();
@@ -168,6 +169,10 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		}
 		if(StringUtils.isEmpty(nombre)){
 			throw new WrongValueException(textboxNombre,"El nombre no debe ser vacio");
+		}
+		
+		if(descripcion.length() > 255){
+			throw new WrongValueException(ckEditor,"La descripción es demasiado larga");
 		}
 		
 		

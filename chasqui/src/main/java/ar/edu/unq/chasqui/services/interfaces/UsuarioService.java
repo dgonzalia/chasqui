@@ -1,10 +1,14 @@
 package ar.edu.unq.chasqui.services.interfaces;
 
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 
@@ -27,5 +31,9 @@ public interface UsuarioService {
 	public Cliente crearCliente(SingUpRequest request) throws Exception;
 	@Transactional
 	public void modificarUsuario(EditarPerfilRequest editRequest) throws Exception;
+	@Transactional
+	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email);
+	@Transactional
+	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request);
 	
 }

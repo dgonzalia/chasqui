@@ -12,9 +12,11 @@ public class DireccionRequest implements Serializable{
 	private String calle;
 	private Integer altura;
 	private String localidad;
+	private String departamento;
+	private String alias;
 	private String codigoPostal;
-	private Double latitud;
-	private Double longitud;
+	private String latitud;
+	private String longitud;
 	
 	
 	public String getCalle() {
@@ -41,18 +43,32 @@ public class DireccionRequest implements Serializable{
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
-	public Double getLatitud() {
+	public String getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(Double latitud) {
+	public void setLatitud(String latitud) {
 		this.latitud = latitud;
 	}
-	public Double getLongitud() {
+	public String getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(Double longitud) {
+	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
+	public String getDepartamento() {
+		return departamento;
+	}
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+	public String getAlias() {
+		return alias;
+	}
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+	
+	
 	
 	
 	
