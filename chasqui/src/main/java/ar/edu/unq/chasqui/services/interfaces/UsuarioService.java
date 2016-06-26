@@ -35,5 +35,7 @@ public interface UsuarioService {
 	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email);
 	@Transactional
 	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request);
+	@Transactional
+	public void inicializarListasDe(Vendedor usuarioLogueado);
 	
 }

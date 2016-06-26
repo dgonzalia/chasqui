@@ -17,6 +17,7 @@ public class DireccionRequest implements Serializable{
 	private String codigoPostal;
 	private String latitud;
 	private String longitud;
+	private Boolean predeterminada;
 	
 	
 	public String getCalle() {
@@ -67,6 +68,14 @@ public class DireccionRequest implements Serializable{
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
+	public Boolean getPredeterminada() {
+		return predeterminada;
+	}
+	public void setPredeterminada(Boolean predeterminada) {
+		this.predeterminada = predeterminada;
+	}
+	
+	
 	
 	
 	

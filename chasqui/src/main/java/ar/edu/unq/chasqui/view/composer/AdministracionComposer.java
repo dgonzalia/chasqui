@@ -75,13 +75,13 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 			return;
 		}
 		binder = new AnnotateDataBinder(comp);
+		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		super.doAfterCompose(comp);
 		if(usuarioLogueado.getIsRoot()){
 			inicializacionUsuarioROOT();
 		}else{
 			inicializacionUsuarioAdministrador();
 		}
-		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		comp.addEventListener(Events.ON_USER, new CategoriaEventListener(this));
 		comp.addEventListener(Events.ON_NOTIFY, new ProductoEventListener(this));
 		comp.addEventListener(Events.ON_RENDER, new RefreshEventListener(this));

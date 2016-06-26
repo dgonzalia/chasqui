@@ -71,10 +71,11 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 			binder.loadAll();
 			return;
 		};
-		Usuario user = null;
+		Vendedor user = null;
 		try{
 			
-			user =service.login(usuario,password);
+			user =(Vendedor) service.login(usuario,password);
+			service.inicializarListasDe(user);
 			Executions.getCurrent().getSession().setAttribute(Constantes.SESSION_USERNAME, user);
 			Executions.sendRedirect("/administracion.zul");
 		}catch(Exception e){

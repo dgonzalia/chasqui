@@ -155,6 +155,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 
+	@Override
+	public void inicializarListasDe(Vendedor usuarioLogueado) {
+		usuarioDAO.inicializarListasDe(usuarioLogueado);
+		
+	}
+
 
 	
 

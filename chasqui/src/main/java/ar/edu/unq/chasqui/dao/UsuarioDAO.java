@@ -13,4 +13,5 @@ public interface UsuarioDAO {
 	public void merge(Vendedor usuario);
 	public Usuario obtenerUsuarioPorEmail(String email);
 	public boolean existeUsuarioCon(String email);
+	public void inicializarListasDe(Vendedor usuarioLogueado);
 }

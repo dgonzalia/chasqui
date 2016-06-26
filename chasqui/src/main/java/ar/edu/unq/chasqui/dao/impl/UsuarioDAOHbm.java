@@ -9,9 +9,13 @@ import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
+import ar.edu.unq.chasqui.model.Categoria;
+import ar.edu.unq.chasqui.model.Fabricante;
+import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 
@@ -57,11 +61,32 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 				criteria.add(Restrictions.eq("username", username));
 				return (Usuario) criteria.uniqueResult();
 			}
+
 			
 		});
 		return u;	
 	}
+	
+	public void inicializarListasDe(Vendedor v) {
+		HibernateTemplate ht =this.getHibernateTemplate();
+		ht.refresh(v);
+		ht.initialize(v.getFabricantes());
+		ht.initialize(v.getCategorias());
+		for(Categoria c : v.getCategorias()){
+			ht.initialize(c.getProductos());
+			for(Producto p : c.getProductos()){
+				ht.initialize(p.getVariantes());
+			}
+		}
+		for(Fabricante f : v.getFabricantes()){
+			ht.initialize(f.getProductos());
+		}
+		
+		
+		
+	}
 
+	
 	public void merge(Vendedor usuario) {
 		this.getHibernateTemplate().merge(usuario);
 		this.getHibernateTemplate().flush();
