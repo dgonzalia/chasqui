@@ -176,6 +176,10 @@ public class Cliente extends Usuario{
 
 	public void agregarDireccion(DireccionRequest request) {
 		Direccion d = new Direccion(request);
+		Direccion predeterminada = this.obtenerDireccionPredeterminada();
+		if(request.getPredeterminada()){
+			predeterminada.setPredeterminada(false);
+		}
 		this.direccionesAlternativas.add(d);
 		
 	}

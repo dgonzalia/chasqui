@@ -29,7 +29,7 @@ public class Direccion {
 		codigoPostal = direccion.getCodigoPostal();
 		departamento = direccion.getDepartamento();
 		codigoPostal = direccion.getCodigoPostal();
-		predeterminada = false;
+		predeterminada = direccion.getPredeterminada();
 		
 		
 	}
