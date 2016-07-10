@@ -72,7 +72,7 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		DetachedCriteria d = DetachedCriteria.forClass(Usuario.class);
 		d.add(Restrictions.eq("email",email));
 		List<Usuario> u = (List<Usuario>) this.getHibernateTemplate().findByCriteria(d);
-		if(u == null || u.size() > 1){
+		if(u == null || u.isEmpty() || u.size() > 1){
 			return null;
 		}
 		return u.get(0);
@@ -83,7 +83,7 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		DetachedCriteria d = DetachedCriteria.forClass(Usuario.class);
 		d.add(Restrictions.eq("email",email));
 		List<Usuario> u = (List<Usuario>) this.getHibernateTemplate().findByCriteria(d);
-		return (u == null || u.size() > 0);
+		return (u == null || u.isEmpty() ||  u.size() > 0);
 	}
 
 	
