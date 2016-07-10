@@ -13,10 +13,10 @@
         <property name="apellido" type="java.lang.String">
             <column name="APELLIDO" />
         </property>
-        <property name="telefonoFijo" type="java.lang.Integer">
+        <property name="telefonoFijo" type="java.lang.String">
             <column name="TELEFONO_FIJO" />
         </property>
-        <property name="telefonoMovil" type="java.lang.Integer">
+        <property name="telefonoMovil" type="java.lang.String">
             <column name="TELEFONO_MOVIL" />
         </property>
         <property name="nickName" type="java.lang.String" column="NICKNAME"/>

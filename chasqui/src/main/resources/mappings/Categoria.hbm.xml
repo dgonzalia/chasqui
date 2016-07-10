@@ -15,7 +15,7 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
-        <bag name="productos" inverse="false" table="PRODUCTO" lazy="false" fetch="join">
+        <bag name="productos" inverse="false" table="PRODUCTO" lazy="true" fetch="select">
             <key>
                 <column name="ID_CATEGORIA" />
             </key>

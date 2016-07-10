@@ -126,16 +126,16 @@ public class SingInSingUpListener{
 		if(StringUtil.isEmpty(request.getPassword())){
 			throw new RequestIncorrectoException("Debe completar todos los campos");
 		}
-		if(request.getDireccion() == null){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
+//		if(request.getDireccion() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
 		
 		if(request.getTelefonoFijo() == null){
 			throw new RequestIncorrectoException("Debe completar todos los campos");
 		}
 		
 		
-		validarDireccion(request.getDireccion());
+	//	validarDireccion(request.getDireccion());
 		
 		if(usuarioService.existeUsuarioCon(request.getEmail())){
 			throw new UsuarioExistenteException();
@@ -145,29 +145,29 @@ public class SingInSingUpListener{
 
 
 
-	private void validarDireccion(DireccionRequest direccion) {
-		if(StringUtils.isEmpty(direccion.getCalle())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		if(StringUtils.isEmpty(direccion.getLocalidad())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		if(StringUtils.isEmpty(direccion.getCodigoPostal())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		if(direccion.getAltura() == null){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		if(direccion.getLongitud() == null){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		if(direccion.getLatitud() == null){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-	}
+//	private void validarDireccion(DireccionRequest direccion) {
+//		if(StringUtils.isEmpty(direccion.getCalle())){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		
+//		if(StringUtils.isEmpty(direccion.getLocalidad())){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		
+//		if(StringUtils.isEmpty(direccion.getCodigoPostal())){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		
+//		if(direccion.getAltura() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		if(direccion.getLongitud() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		if(direccion.getLatitud() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//	}
 
 
 

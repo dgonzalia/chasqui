@@ -9,8 +9,8 @@ public class PerfilResponse {
 	  private String nickName;
 	  private String nombre;
 	  private String apellido;
-	  private Integer telefonoFijo;
-	  private Integer telefonoMovil;
+	  private String telefonoFijo;
+	  private String telefonoMovil;
 	  private DireccionResponse direccion;
 	  
 	  
@@ -57,19 +57,19 @@ public class PerfilResponse {
 		this.apellido = apellido;
 	}
 
-	public Integer getTelefonoFijo() {
+	public String getTelefonoFijo() {
 		return telefonoFijo;
 	}
 
-	public void setTelefonoFijo(Integer telefonoFijo) {
+	public void setTelefonoFijo(String telefonoFijo) {
 		this.telefonoFijo = telefonoFijo;
 	}
 
-	public Integer getTelefonoMovil() {
+	public String getTelefonoMovil() {
 		return telefonoMovil;
 	}
 
-	public void setTelefonoMovil(Integer telefonoMovil) {
+	public void setTelefonoMovil(String telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
 	}
 

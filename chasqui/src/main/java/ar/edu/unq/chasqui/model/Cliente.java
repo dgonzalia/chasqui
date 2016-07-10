@@ -1,6 +1,7 @@
 package ar.edu.unq.chasqui.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
@@ -17,8 +18,8 @@ public class Cliente extends Usuario{
 	private String nombre;
 	private String apellido;
 	private String nickName;
-	private Integer telefonoFijo;
-	private Integer telefonoMovil;
+	private String telefonoFijo;
+	private String telefonoMovil;
 	private List<Direccion> direccionesAlternativas;
 	private List<Notificacion> notificaciones;
 	private Historial historialPedidos;
@@ -43,9 +44,9 @@ public class Cliente extends Usuario{
 		telefonoFijo = request.getTelefonoFijo();
 		telefonoMovil = request.getTelefonoMovil();
 		direccionesAlternativas = new ArrayList<Direccion>();
-		Direccion d = new Direccion(request.getDireccion());
-		d.setPredeterminada(true);
-		direccionesAlternativas.add(d);
+//		Direccion d = new Direccion(request.getDireccion());
+//		d.setPredeterminada(true);
+//		direccionesAlternativas.add(d);
 		token = PasswordGenerator.generateRandomToken();
 		password = Encrypter.encrypt(request.getPassword());
 	}
@@ -66,19 +67,19 @@ public class Cliente extends Usuario{
 		this.apellido = apellido;
 	}
 	
-	public Integer getTelefonoFijo() {
+	public String getTelefonoFijo() {
 		return telefonoFijo;
 	}
 	
-	public void setTelefonoFijo(Integer telefonoFijo) {
+	public void setTelefonoFijo(String telefonoFijo) {
 		this.telefonoFijo = telefonoFijo;
 	}
 	
-	public Integer getTelefonoMovil() {
+	public String getTelefonoMovil() {
 		return telefonoMovil;
 	}
 	
-	public void setTelefonoMovil(Integer telefonoMovil) {
+	public void setTelefonoMovil(String telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
 	}
 
@@ -159,8 +160,8 @@ public class Cliente extends Usuario{
 		if(editRequest.getTelefonoMovil() != null){
 			this.telefonoMovil = editRequest.getTelefonoMovil();
 		}
-		Direccion d = this.obtenerDireccionPredeterminada();
-		d.modificarCon(editRequest.getDireccion());
+//		Direccion d = this.obtenerDireccionPredeterminada();
+//		d.modificarCon(editRequest.getDireccion());
 		
 		
 	}
@@ -183,7 +184,42 @@ public class Cliente extends Usuario{
 		this.direccionesAlternativas.add(d);
 		
 	}
-	
+
+	public void editarDireccionCon(DireccionRequest request,Integer idDireccion) {
+		Integer altura = request.getAltura();
+		String calle= request.getCalle();
+		String alias =request.getAlias();
+		String localidad = request.getLocalidad();
+		String departamento = request.getDepartamento();
+		String codigoPostal = request.getCodigoPostal();
+		String latitud = request.getLatitud();
+		String longitud = request.getLongitud();
+		boolean predeterminada = request.getPredeterminada();
+		
+		if(predeterminada){
+			Direccion pre = this.obtenerDireccionPredeterminada();
+			pre.setPredeterminada(false);
+		}
+		
+		for(Direccion d : direccionesAlternativas){
+			if(idDireccion.equals(d.getId())){
+				d.editate(altura,calle,alias,localidad,departamento,codigoPostal,latitud,longitud,predeterminada);
+			}
+		}
+		
+		
+	}
+
+	public void eliminarDireccion(Integer idDireccion) {
+		Iterator<Direccion>it = direccionesAlternativas.iterator();
+		while(it.hasNext()){
+			Direccion d = it.next();
+			if(d.getId().equals(idDireccion)){
+				direccionesAlternativas.remove(d);
+			}
+		}
+		
+	}
 	
 	
 	

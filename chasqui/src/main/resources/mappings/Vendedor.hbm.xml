@@ -20,13 +20,13 @@
             <column name="DISTANCIA_COMPRA_COLECTIVA" />
         </property>
         <property name="mapaZonas" type="java.lang.String" column="MAPA"/>
-        <bag name="categorias" inverse="false" table="CATEGORIA" lazy="false" cascade="all">
+        <bag name="categorias" inverse="false" table="CATEGORIA" lazy="true" cascade="all">
             <key>
                 <column name="ID_VENDEDOR" />
             </key>
             <one-to-many class="ar.edu.unq.chasqui.model.Categoria" />
         </bag>
-        <bag name="fabricantes" inverse="false" table="PRODUCTOR" lazy="false" cascade="all">
+        <bag name="fabricantes" inverse="false" table="PRODUCTOR" lazy="true" cascade="all">
             <key>
                 <column name="ID_VENDEDOR" />
             </key>

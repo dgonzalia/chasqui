@@ -14,9 +14,9 @@ public class SingUpRequest implements Serializable{
 	private String nickName;
 	private String nombre;
 	private String apellido;
-	private Integer telefonoFijo;
-	private Integer telefonoMovil;
-	private DireccionRequest direccion;
+	private String telefonoFijo;
+	private String telefonoMovil;
+	//private DireccionRequest direccion;
 	
 	
 	
@@ -50,24 +50,24 @@ public class SingUpRequest implements Serializable{
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public Integer getTelefonoFijo() {
+	public String getTelefonoFijo() {
 		return telefonoFijo;
 	}
-	public void setTelefonoFijo(Integer telefonoFijo) {
+	public void setTelefonoFijo(String telefonoFijo) {
 		this.telefonoFijo = telefonoFijo;
 	}
-	public Integer getTelefonoMovil() {
+	public String getTelefonoMovil() {
 		return telefonoMovil;
 	}
-	public void setTelefonoMovil(Integer telefonoMovil) {
+	public void setTelefonoMovil(String telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
 	}
-	public DireccionRequest getDireccion() {
-		return direccion;
-	}
-	public void setDireccion(DireccionRequest direccion) {
-		this.direccion = direccion;
-	}
+//	public DireccionRequest getDireccion() {
+//		return direccion;
+//	}
+//	public void setDireccion(DireccionRequest direccion) {
+//		this.direccion = direccion;
+//	}
 	
 	
 	

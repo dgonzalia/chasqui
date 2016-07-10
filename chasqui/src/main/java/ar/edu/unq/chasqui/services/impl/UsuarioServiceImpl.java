@@ -1,11 +1,13 @@
 package ar.edu.unq.chasqui.services.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
+import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
@@ -141,11 +143,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDAO.guardarUsuario(c);
 	}
 
-	@Override
-	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) {
-		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(email);
-		return v.getDireccionesAlternativas();
-	}
+//	@Override
+//	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) {
+//		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(email);
+//		return v.getDireccionesAlternativas();
+//	}
 
 	@Override
 	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
@@ -158,6 +160,37 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public void inicializarListasDe(Vendedor usuarioLogueado) {
 		usuarioDAO.inicializarListasDe(usuarioLogueado);
+		
+	}
+
+	@Override
+	public List<Direccion> obtenerDireccionesDeUsuarioCon(String mail) throws DireccionesInexistentes {
+		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
+		if(c == null){
+			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
+		}
+		return c.getDireccionesAlternativas();
+	}
+
+	@Override
+	public void editarDireccionDe(String mail,DireccionRequest request,Integer idDireccion) throws DireccionesInexistentes, UsuarioExistenteException {
+		Cliente c = (Cliente)usuarioDAO.obtenerUsuarioPorEmail(mail);
+		if(c == null){
+			throw new UsuarioExistenteException("No existe el usuario");
+		}
+		c.editarDireccionCon(request,idDireccion);
+		usuarioDAO.guardarUsuario(c);
+	}
+
+	@Override
+	public void eliminarDireccionDe(String mail, Integer idDireccion)
+			throws DireccionesInexistentes, UsuarioExistenteException {
+		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
+		if(c == null){
+			throw new UsuarioExistenteException("No existe el usuario");
+		}
+		c.eliminarDireccion(idDireccion);
+		usuarioDAO.guardarUsuario(c);
 		
 	}
 

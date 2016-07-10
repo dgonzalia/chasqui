@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -22,6 +24,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
@@ -30,6 +33,7 @@ import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.response.DireccionResponse;
 import ar.edu.unq.chasqui.service.rest.response.PerfilResponse;
+import ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @Service
@@ -74,7 +78,7 @@ public class UsuarioListener {
 	
 	
 	@GET
-	@Path("/dirs")
+	@Path("/dir")
 	@Produces("application/json")
 	public Response obtenerDirecciones(@Context HttpHeaders header){
 		try{
@@ -89,7 +93,7 @@ public class UsuarioListener {
 	
 	
 	@POST
-	@Path("/newDir")
+	@Path("/dir")
 	@Produces("application/json")
 	public Response agregarNuevaDireccion(@HeaderParam("mail") String mail,
 			@Multipart(value="direccionRequest", type="application/json")final String direccionRequest){
@@ -102,6 +106,43 @@ public class UsuarioListener {
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}
 	}
+	
+	
+	@PUT
+	@Path("/dir/{idDireccion}")
+	@Produces("application/json")
+	public Response editarDireccionDe(@HeaderParam("mail") String mail,
+			@Multipart(value="direccionRequest",type="application/json")String request,@PathParam("idDireccion")Integer idDireccion){
+		try{
+			DireccionRequest dirRequest = toDireccionRequest(request);
+			validarDireccionRequest(dirRequest);
+			usuarioService.editarDireccionDe(mail,dirRequest,idDireccion);
+			return Response.ok("Se ha registrado la modificacion de la direccion correctamente").build();			
+		}catch(RequestIncorrectoException e){
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(DireccionesInexistentes | UsuarioExistenteException e){
+			return Response.status(400).entity("No se han encontrado direcciones").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
+	
+	@DELETE
+	@Path("/dir/{idDireccion}")
+	@Produces("application/json")
+	public Response elimiarDireccionDe(@HeaderParam("mail")String mail,@PathParam("idDireccion")Integer idDireccion){
+
+		try{
+			usuarioService.eliminarDireccionDe(mail,idDireccion);
+			return Response.ok("Se ha eliminado la direccion correctamente.").build();
+		}catch(DireccionesInexistentes | UsuarioExistenteException e){
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+		
+	}
+	
 
 
 	private void validarDireccionRequest(DireccionRequest request) {
@@ -114,7 +155,7 @@ public class UsuarioListener {
 		if(StringUtils.isEmpty(request.getCodigoPostal())){
 			throw new RequestIncorrectoException();
 		}
-		if(StringUtils.isEmpty(request.getDepartamento())){
+		if(request.getPredeterminada() == null){
 			throw new RequestIncorrectoException();
 		}
 		if(StringUtils.isEmpty(request.getLocalidad())){
@@ -123,12 +164,7 @@ public class UsuarioListener {
 		if(request.getAltura() == null || request.getAltura() < 0){
 			throw new RequestIncorrectoException();
 		}
-		if(request.getLatitud() == null){
-			throw new RequestIncorrectoException();
-		}
-		if(request.getLongitud() == null){
-			throw new RequestIncorrectoException();
-		}		
+		
 		
 	}
 

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
+import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Usuario;
@@ -32,10 +34,14 @@ public interface UsuarioService {
 	@Transactional
 	public void modificarUsuario(EditarPerfilRequest editRequest) throws Exception;
 	@Transactional
-	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email);
+	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) throws DireccionesInexistentes;
 	@Transactional
 	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request);
 	@Transactional
 	public void inicializarListasDe(Vendedor usuarioLogueado);
+	@Transactional
+	public void editarDireccionDe(String mail, DireccionRequest request, Integer idDireccion)throws DireccionesInexistentes,UsuarioExistenteException;
+	@Transactional
+	public void eliminarDireccionDe(String mail, Integer idDireccion)throws DireccionesInexistentes,UsuarioExistenteException;
 	
 }

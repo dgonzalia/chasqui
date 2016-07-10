@@ -21,7 +21,7 @@
         <property name="localidad" type="java.lang.String" column="LOCALIDAD"/>
         <property name="altura" type="java.lang.Integer" column="ALTURA"/>
         <property name="pathImagen" type="java.lang.String" column="IMAGEN"/>
-        <bag name="productos" inverse="false" table="PRODUCTO" lazy="false" cascade="save-update">
+        <bag name="productos" inverse="false" table="PRODUCTO" lazy="true" cascade="save-update">
             <key>
                 <column name="ID_PRODUCTOR" />
             </key>
