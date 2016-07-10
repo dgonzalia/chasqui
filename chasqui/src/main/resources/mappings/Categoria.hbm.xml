@@ -15,6 +15,10 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
+           <many-to-one name="vendedor" class="ar.edu.unq.chasqui.model.Vendedor" fetch="join">
+            <column name="ID_VENDEDOR" />
+        </many-to-one>
+        
         <bag name="productos" inverse="false" table="PRODUCTO" lazy="true" fetch="select">
             <key>
                 <column name="ID_CATEGORIA" />

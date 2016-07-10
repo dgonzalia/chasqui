@@ -6,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.ProductoDAO;
 import ar.edu.unq.chasqui.model.Imagen;
-import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
+
+@SuppressWarnings("unchecked")
 public class ProductoServiceImpl implements ProductoService {
 
 	@Autowired
@@ -35,6 +36,11 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public List<Imagen> obtenerImagenesDe(Integer idProducto) {
 		return productoDAO.obtenerImagenesDe(idProducto);
+	}
+
+	@Override
+	public List<Variante> obtenerVariantesPorNombreODescripcion(String param,Integer pagina,Integer cantItems,Integer idVendedor) {
+		return productoDAO.obtenerVariantesPorNombreODescripcion(param,pagina,cantItems,idVendedor);
 	}
 
 }

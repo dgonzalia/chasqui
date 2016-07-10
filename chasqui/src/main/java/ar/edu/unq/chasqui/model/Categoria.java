@@ -8,6 +8,7 @@ public class Categoria {
 	private Integer id;
 	private String nombre;
 	private List<Producto> productos;
+	private Vendedor vendedor;
 	
 	public Categoria () {
 		productos = new ArrayList<Producto>();
@@ -38,9 +39,20 @@ public class Categoria {
 	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
+	
+	
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
+	
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
+	}
+	
+
 
 	//METHODS
-	
+
 	@Override
 	public String toString(){
 		return this.getNombre();

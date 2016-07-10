@@ -57,6 +57,7 @@ public class ABMCategoriaComposer extends GenericForwardComposer<Component> {
 		}else{
 			model = new Categoria();
 			model.setNombre(textboxNombreCategoria.getValue());
+			model.setVendedor(usuario);
 			usuario.agregarCategoria(model);
 //			model.setProductos(null);
 			usuarioService.guardarUsuario(usuario);
