@@ -50,7 +50,7 @@ public class ProductoListener {
 			return toResponse(productoService.obtenerVariantesPorCategoria(request.getIdCategoria(),request.getPagina(),request.getCantItems())
 					,request.getPagina(),request.getCantItems(),request.getPrecio());
 		}catch(IOException | RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros incorrectos: " + e.getMessage()).build();
+			return Response.status(406).entity("Parametros incorrectos").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}		
