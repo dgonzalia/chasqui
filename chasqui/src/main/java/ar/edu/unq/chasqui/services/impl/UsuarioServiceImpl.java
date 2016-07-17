@@ -1,7 +1,6 @@
 package ar.edu.unq.chasqui.services.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +105,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	public Usuario obtenerUsuarioPorEmail(String email) {
 		return usuarioDAO.obtenerUsuarioPorEmail(email);
-		
 	}
 	
 	public boolean existeUsuarioCon(String email){

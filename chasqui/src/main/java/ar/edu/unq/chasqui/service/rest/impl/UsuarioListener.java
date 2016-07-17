@@ -33,7 +33,6 @@ import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.response.DireccionResponse;
 import ar.edu.unq.chasqui.service.rest.response.PerfilResponse;
-import ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @Service
@@ -51,6 +50,9 @@ public class UsuarioListener {
 		try{			
 			String email = String.valueOf(header.getRequestHeader("mail").get(0));
 			Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(email);
+			if(c == null){
+				throw new UsuarioExistenteException();
+			}
 			return Response.ok(toResponse(c),MediaType.APPLICATION_JSON).build();			
 		}catch(IndexOutOfBoundsException | UsuarioExistenteException e){
 			return Response.status(406).entity("El email es invalido o el usuario no existe").build();
@@ -104,6 +106,8 @@ public class UsuarioListener {
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -121,7 +125,7 @@ public class UsuarioListener {
 		}catch(RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
-			return Response.status(400).entity("No se han encontrado direcciones").build();
+			return Response.status(404).entity("No se han encontrado direcciones").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -130,13 +134,13 @@ public class UsuarioListener {
 	@DELETE
 	@Path("/dir/{idDireccion}")
 	@Produces("application/json")
-	public Response elimiarDireccionDe(@HeaderParam("mail")String mail,@PathParam("idDireccion")Integer idDireccion){
+	public Response elimiarDireccionDe(@HeaderParam("user")String mail,@PathParam("idDireccion")Integer idDireccion){
 
 		try{
 			usuarioService.eliminarDireccionDe(mail,idDireccion);
 			return Response.ok("Se ha eliminado la direccion correctamente.").build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(404).entity("No se han encontrado direcciones").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}

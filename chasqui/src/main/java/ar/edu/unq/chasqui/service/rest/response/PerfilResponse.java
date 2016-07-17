@@ -22,7 +22,12 @@ public class PerfilResponse {
 		this.apellido = c.getApellido();
 		this.telefonoFijo = c.getTelefonoFijo();
 		this.telefonoMovil = c.getTelefonoMovil();
-		this.direccion = new DireccionResponse(c.obtenerDireccionPredeterminada());
+		if (c.obtenerDireccionPredeterminada() == null) {
+			this.direccion = null;
+		}
+		else {
+			this.direccion = new DireccionResponse(c.obtenerDireccionPredeterminada());
+		}
 	}
 
 	public String getEmail() {

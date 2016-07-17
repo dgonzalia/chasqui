@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
 
+import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
@@ -185,7 +186,7 @@ public class Cliente extends Usuario{
 		
 	}
 
-	public void editarDireccionCon(DireccionRequest request,Integer idDireccion) {
+	public void editarDireccionCon(DireccionRequest request,Integer idDireccion) throws DireccionesInexistentes {
 		Integer altura = request.getAltura();
 		String calle= request.getCalle();
 		String alias =request.getAlias();
@@ -198,25 +199,45 @@ public class Cliente extends Usuario{
 		
 		if(predeterminada){
 			Direccion pre = this.obtenerDireccionPredeterminada();
-			pre.setPredeterminada(false);
-		}
-		
-		for(Direccion d : direccionesAlternativas){
-			if(idDireccion.equals(d.getId())){
-				d.editate(altura,calle,alias,localidad,departamento,codigoPostal,latitud,longitud,predeterminada);
+			if (pre != null) {
+				pre.setPredeterminada(false);
 			}
 		}
 		
 		
+		if (contieneDireccionConId(idDireccion, direccionesAlternativas)) {
+			for(Direccion d : direccionesAlternativas){
+				if(idDireccion.equals(d.getId())){
+					d.editate(altura,calle,alias,localidad,departamento,codigoPostal,latitud,longitud,predeterminada);
+				}
+			}
+		}
+		else {
+			throw new DireccionesInexistentes(); 
+		}
 	}
 
-	public void eliminarDireccion(Integer idDireccion) {
-		Iterator<Direccion>it = direccionesAlternativas.iterator();
-		while(it.hasNext()){
-			Direccion d = it.next();
-			if(d.getId().equals(idDireccion)){
-				direccionesAlternativas.remove(d);
+	private boolean contieneDireccionConId(Integer idDireccion, List<Direccion> direccionesAlternativas) {
+		for (Direccion d : direccionesAlternativas) {
+			if(idDireccion.equals(d.getId())){
+				return true;
 			}
+		}
+		return false;
+	}
+
+	public void eliminarDireccion(Integer idDireccion) throws DireccionesInexistentes {
+		if (contieneDireccionConId(idDireccion, direccionesAlternativas)) {
+			Iterator<Direccion>it = direccionesAlternativas.iterator();
+			while(it.hasNext()){
+				Direccion d = it.next();
+				if(d.getId().equals(idDireccion)){
+					it.remove();
+				}
+			}
+		}
+		else {
+			throw new DireccionesInexistentes(); 
 		}
 		
 	}
