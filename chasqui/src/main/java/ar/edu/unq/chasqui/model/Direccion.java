@@ -28,7 +28,7 @@ public class Direccion {
 		calle = direccion.getCalle();
 		codigoPostal = direccion.getCodigoPostal();
 		departamento = direccion.getDepartamento();
-		codigoPostal = direccion.getCodigoPostal();
+		alias = direccion.getAlias();
 		predeterminada = direccion.getPredeterminada();
 		
 		

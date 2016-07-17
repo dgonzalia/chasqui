@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping default-cascade="all">
+<hibernate-mapping default-cascade="all-delete-orphan">
     <joined-subclass name="ar.edu.unq.chasqui.model.Cliente" extends="ar.edu.unq.chasqui.model.Usuario" table="CLIENTE" lazy="false">
         <key>
             <column name="ID" />

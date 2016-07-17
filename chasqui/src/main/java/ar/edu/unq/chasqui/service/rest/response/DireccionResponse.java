@@ -19,6 +19,7 @@ public class DireccionResponse implements Serializable {
 	private Boolean predeterminada;
 	private String departamento;
 	private String alias;
+	private Integer idDireccion;
 	
 	
 	
@@ -30,9 +31,10 @@ public class DireccionResponse implements Serializable {
 		this.codigoPostal = d.getCodigoPostal();
 		this.latitud = d.getLatitud();
 		this.longitud = d.getLongitud();
-		alias = d.getAlias();
-		departamento = d.getDepartamento();
-		predeterminada = d.getPredeterminada();
+		this.alias = d.getAlias();
+		this.departamento = d.getDepartamento();
+		this.predeterminada = d.getPredeterminada();
+		this.idDireccion = d.getId();
 	}
 	
 	public String getCalle() {
@@ -88,6 +90,12 @@ public class DireccionResponse implements Serializable {
 	}
 	public void setAlias(String alias) {
 		this.alias = alias;
+	}
+	public Integer getIdDireccion() {
+		return idDireccion;
+	}
+	public void setIdDireccion(Integer idDireccion) {
+		this.idDireccion = idDireccion;
 	}
 	
 	

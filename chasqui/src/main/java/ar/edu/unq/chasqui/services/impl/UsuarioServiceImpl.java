@@ -114,7 +114,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	public Usuario obtenerUsuarioPorEmail(String email) {
 		return usuarioDAO.obtenerUsuarioPorEmail(email);
-		
 	}
 	
 	public boolean existeUsuarioCon(String email){

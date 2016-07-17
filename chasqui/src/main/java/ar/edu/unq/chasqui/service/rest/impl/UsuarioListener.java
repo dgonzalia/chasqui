@@ -105,6 +105,8 @@ public class UsuarioListener {
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -122,7 +124,7 @@ public class UsuarioListener {
 		}catch(RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
-			return Response.status(400).entity("No se han encontrado direcciones").build();
+			return Response.status(404).entity("No se han encontrado direcciones").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}
@@ -136,7 +138,7 @@ public class UsuarioListener {
 			usuarioService.eliminarDireccionDe(mail,idDireccion);
 			return Response.ok("Se ha eliminado la direccion correctamente.").build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(404).entity("No se han encontrado direcciones").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}
