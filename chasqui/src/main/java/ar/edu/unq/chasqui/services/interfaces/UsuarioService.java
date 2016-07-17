@@ -43,5 +43,7 @@ public interface UsuarioService {
 	public void editarDireccionDe(String mail, DireccionRequest request, Integer idDireccion)throws DireccionesInexistentes,UsuarioExistenteException;
 	@Transactional
 	public void eliminarDireccionDe(String mail, Integer idDireccion)throws DireccionesInexistentes,UsuarioExistenteException;
+	@Transactional
+	public Cliente obtenerClienteConDireccion(String mail);
 	
 }

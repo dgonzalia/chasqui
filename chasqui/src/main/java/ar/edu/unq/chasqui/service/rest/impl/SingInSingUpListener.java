@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
-import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.LoginRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
 import ar.edu.unq.chasqui.service.rest.response.LoginResponse;

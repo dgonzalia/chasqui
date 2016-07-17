@@ -215,7 +215,7 @@ public class Cliente extends Usuario{
 		while(it.hasNext()){
 			Direccion d = it.next();
 			if(d.getId().equals(idDireccion)){
-				direccionesAlternativas.remove(d);
+				it.remove();
 			}
 		}
 		

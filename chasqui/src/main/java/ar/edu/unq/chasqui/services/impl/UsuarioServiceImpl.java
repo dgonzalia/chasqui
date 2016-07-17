@@ -164,6 +164,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDAO.inicializarListasDe(usuarioLogueado);
 		
 	}
+	
+	@Override
+	public Cliente obtenerClienteConDireccion(String mail){
+		Cliente c = usuarioDAO.obtenerClienteConDireccionPorEmail(mail);
+		if(c == null){
+			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
+		}
+		return c;
+	}
 
 	@Override
 	public List<Direccion> obtenerDireccionesDeUsuarioCon(String mail) throws DireccionesInexistentes {

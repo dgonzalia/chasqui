@@ -22,6 +22,7 @@ import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
@@ -46,10 +47,11 @@ public class UsuarioListener {
 	@GET
 	@Path("/read")
 	@Produces("application/json")
-	public Response obtenerDatosPerfilUsuario(@Context HttpHeaders header ){
-		try{			
+	public Response obtenerDatosPerfilUsuario(@Context HttpHeaders header){
+		try{	
+			SecurityContextHolder.getContext().getAuthentication().getName();
 			String email = String.valueOf(header.getRequestHeader("mail").get(0));
-			Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(email);
+			Cliente c =  usuarioService.obtenerClienteConDireccion(email);
 			return Response.ok(toResponse(c),MediaType.APPLICATION_JSON).build();			
 		}catch(IndexOutOfBoundsException | UsuarioExistenteException e){
 			return Response.status(406).entity("El email es invalido o el usuario no existe").build();
@@ -130,7 +132,6 @@ public class UsuarioListener {
 	@Path("/dir/{idDireccion}")
 	@Produces("application/json")
 	public Response elimiarDireccionDe(@HeaderParam("mail")String mail,@PathParam("idDireccion")Integer idDireccion){
-
 		try{
 			usuarioService.eliminarDireccionDe(mail,idDireccion);
 			return Response.ok("Se ha eliminado la direccion correctamente.").build();
