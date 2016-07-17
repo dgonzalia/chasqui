@@ -24,7 +24,7 @@ public class Pedido {
 	private List<UsuarioParticipante> usuariosParticipantes;
 	
 	//GETs & SETs
-	
+	//utilizado para mockear
 	public Pedido(int i, String string, Date date, Double j, Double k, String estadoPedidoAbierto,Boolean alterable) {
 		id=i;
 		Cliente c = new Cliente();

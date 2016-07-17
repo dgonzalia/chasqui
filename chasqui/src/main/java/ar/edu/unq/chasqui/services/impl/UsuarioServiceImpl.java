@@ -1,7 +1,6 @@
 package ar.edu.unq.chasqui.services.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(Encrypter.encrypt("federico"));
-			u2.setEmail("jfflores90");
+			u2.setEmail("jfflores90@gmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			usuarioDAO.guardarUsuario(u2);	
@@ -72,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Cliente c = new Cliente();
 			c.setToken("federico");
 			c.setPassword(Encrypter.encrypt("federico"));
-			c.setEmail("jfflores90@gmail.com");
+			c.setEmail("mat90@gmail.com");
 			c.setNombre("JORGE");
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();

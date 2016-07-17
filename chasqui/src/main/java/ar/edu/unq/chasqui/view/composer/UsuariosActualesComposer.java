@@ -1,22 +1,25 @@
 package ar.edu.unq.chasqui.view.composer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zkplus.spring.SpringUtil;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
+import ar.edu.unq.chasqui.services.interfaces.VendedorService;
 import ar.edu.unq.chasqui.view.renders.UsuarioRenderer;
 
 @SuppressWarnings({"serial","deprecation"})
@@ -28,6 +31,8 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 	private Window altaUsuarioWindow;
 	private Window administracionWindow;
 	private Vendedor usuarioSeleccionado;
+	private Vendedor usuarioLogueado;
+	private VendedorService vendedorService;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
@@ -38,7 +43,10 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		conectarVentanas(administracionWindow);
 		Events.sendEvent(Events.ON_USER,altaUsuarioWindow,this.self);
 		comp.addEventListener(Events.ON_NOTIFY, new AccionEventListener(this));
-		usuarios = new ArrayList<Vendedor>();
+		vendedorService = (VendedorService) SpringUtil.getBean("vendedorService");
+		usuarios = vendedorService.obtenerVendedores();
+		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		usuarios.add(usuarioLogueado);
 		binder.loadAll();
 	}
 	

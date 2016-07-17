@@ -111,16 +111,19 @@ public class LoginComposer  extends GenericForwardComposer<Component>{
 				throw new WrongValueException(emailTextbox,"Por favor ingrese un email valido.");
 			}
 			Usuario u = service.obtenerUsuarioPorEmail(email);
-			mailService.enviarEmailRecuperoContraseña(email, u.getUsername());
-			Messagebox.show("El Email ha sido enviado con exito!","Información",Messagebox.OK,Messagebox.INFORMATION);
+			if(u != null && u instanceof Vendedor){
+				mailService.enviarEmailRecuperoContraseña(email, u.getUsername());				
+				Messagebox.show("El Email ha sido enviado con exito!","Información",Messagebox.OK,Messagebox.INFORMATION);
+				desbloquearPantalla();
+				emailPopUp.close();
+			}else{
+				desbloquearPantalla();
+				throw new WrongValueException(emailTextbox,"Por favor ingrese un email valido.");
+			}
 		}catch(Exception e){
-			throw new WrongValueException(emailTextbox,e.getMessage());
-		}
-		finally{
 			desbloquearPantalla();
-			emailPopUp.close();
-		}
-		
+			throw new WrongValueException(emailTextbox,e.getMessage());
+		}		
 	}
 	
 	public void onClick$cerrarPopUpButton(){
