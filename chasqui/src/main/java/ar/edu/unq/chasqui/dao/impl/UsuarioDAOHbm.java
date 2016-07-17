@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -14,6 +15,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.model.Categoria;
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
@@ -93,14 +95,24 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		
 	}
 
-	public Usuario obtenerUsuarioPorEmail(String email) {
-		DetachedCriteria d = DetachedCriteria.forClass(Usuario.class);
-		d.add(Restrictions.eq("email",email));
-		List<Usuario> u = (List<Usuario>) this.getHibernateTemplate().findByCriteria(d);
-		if(u == null || u.isEmpty() || u.size() > 1){
-			return null;
+	public Usuario obtenerUsuarioPorEmail(final String email) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Usuario>() {
+
+			@Override
+			public Usuario doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria d = session.createCriteria(Usuario.class);
+				d.add(Restrictions.eq("email",email));
+				return (Usuario) d.uniqueResult();
+			}
+		});
+	}
+	
+	public Cliente obtenerClienteConDireccionPorEmail(final String email){
+		Cliente c = (Cliente) this.obtenerUsuarioPorEmail(email);
+		if(c != null){
+			Hibernate.initialize(c.getDireccionesAlternativas());			
 		}
-		return u.get(0);
+		return c;
 	}
 	
 	

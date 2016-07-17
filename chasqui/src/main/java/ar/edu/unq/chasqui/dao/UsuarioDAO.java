@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.dao;
 
+import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 
@@ -14,4 +15,5 @@ public interface UsuarioDAO {
 	public Usuario obtenerUsuarioPorEmail(String email);
 	public boolean existeUsuarioCon(String email);
 	public void inicializarListasDe(Vendedor usuarioLogueado);
+	public Cliente obtenerClienteConDireccionPorEmail(final String email);
 }

@@ -22,14 +22,14 @@
         <property name="nickName" type="java.lang.String" column="NICKNAME"/>
         <property name="rol" type="java.lang.String" column="ROL"/>
         <property name="token" type="java.lang.String" column="TOKEN"/>
-        <list name="direccionesAlternativas" inverse="false" table="DIRECCION" lazy="false">
+        <list name="direccionesAlternativas" inverse="false" table="DIRECCION" lazy="true">
             <key>
                 <column name="ID_CLIENTE" />
             </key>
             <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Direccion" />
         </list>
-        <list name="notificaciones" inverse="false" table="NOTIFICACION" lazy="false">
+        <list name="notificaciones" inverse="false" table="NOTIFICACION" lazy="true">
             <key>
                 <column name="ID_CLIENTE" />
             </key>
@@ -39,7 +39,7 @@
         <many-to-one name="historialPedidos" class="ar.edu.unq.chasqui.model.Historial" fetch="join">
             <column name="HISTORIAL_PEDIDOS" />
         </many-to-one>
-        <list name="pedidos" inverse="false" table="PEDIDO" lazy="false">
+        <list name="pedidos" inverse="false" table="PEDIDO" lazy="true" fetch="select">
             <key>
                 <column name="ID_CLIENTE" />
             </key>

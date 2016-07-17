@@ -33,7 +33,6 @@ import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.response.DireccionResponse;
 import ar.edu.unq.chasqui.service.rest.response.PerfilResponse;
-import ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 @Service

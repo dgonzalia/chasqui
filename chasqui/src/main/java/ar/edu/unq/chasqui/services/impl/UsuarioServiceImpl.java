@@ -76,10 +76,19 @@ public class UsuarioServiceImpl implements UsuarioService{
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();
 			d.setCalle("aaaa");
+			d.setAltura(12313);
+			d.setAlias("dir1");
+			d.setDepartamento("213123");
+			d.setPredeterminada(true);
 			Direccion dd = new Direccion();
 			dd.setCalle("bbbb");
+			dd.setAlias("dir2");
+			dd.setCodigoPostal("asdsa");
+			dd.setLocalidad("ffff");
+			dd.setAltura(111);
 			List<Direccion> dds = new ArrayList<Direccion>();
 			dds.add(dd);
+			dds.add(d);
 			c.setDireccionesAlternativas(dds);
 			usuarioDAO.guardarUsuario(c);
 			
@@ -142,12 +151,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDAO.guardarUsuario(c);
 	}
 
-//	@Override
-//	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) {
-//		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(email);
-//		return v.getDireccionesAlternativas();
-//	}
-
 	@Override
 	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
 		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
@@ -164,7 +167,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public List<Direccion> obtenerDireccionesDeUsuarioCon(String mail) throws DireccionesInexistentes {
-		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
+		Cliente c = usuarioDAO.obtenerClienteConDireccionPorEmail(mail);
 		if(c == null){
 			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
 		}
