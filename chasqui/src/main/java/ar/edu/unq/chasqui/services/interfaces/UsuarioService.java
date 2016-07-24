@@ -32,7 +32,7 @@ public interface UsuarioService {
 	@Transactional
 	public Cliente crearCliente(SingUpRequest request) throws Exception;
 	@Transactional
-	public void modificarUsuario(EditarPerfilRequest editRequest) throws Exception;
+	public void modificarUsuario(EditarPerfilRequest editRequest,String email) throws Exception;
 	@Transactional
 	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) throws DireccionesInexistentes;
 	@Transactional

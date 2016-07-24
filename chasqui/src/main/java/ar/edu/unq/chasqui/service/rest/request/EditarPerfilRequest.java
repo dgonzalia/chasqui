@@ -16,7 +16,6 @@ public class EditarPerfilRequest implements Serializable{
 	private String apellido;
 	private String telefonoFijo;
 	private String telefonoMovil;
-	private String email;
 	
 	public DireccionRequest getDireccion() {
 		return direccion;
@@ -59,12 +58,6 @@ public class EditarPerfilRequest implements Serializable{
 	}
 	public void setTelefonoMovil(String telefonoMovil) {
 		this.telefonoMovil = telefonoMovil;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	
 	

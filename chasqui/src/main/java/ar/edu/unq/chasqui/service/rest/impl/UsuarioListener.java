@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -49,8 +48,7 @@ public class UsuarioListener {
 	@Produces("application/json")
 	public Response obtenerDatosPerfilUsuario(@Context HttpHeaders header){
 		try{	
-			SecurityContextHolder.getContext().getAuthentication().getName();
-			String email = String.valueOf(header.getRequestHeader("mail").get(0));
+			String email = obtenerEmailDeContextoDeSeguridad();
 			Cliente c =  usuarioService.obtenerClienteConDireccion(email);
 			return Response.ok(toResponse(c),MediaType.APPLICATION_JSON).build();			
 		}catch(IndexOutOfBoundsException | UsuarioExistenteException e){
@@ -66,8 +64,9 @@ public class UsuarioListener {
 	@Produces("application/json")
 	public Response editarPerfilUsuario(@Multipart(value="editRequest", type="application/json")final String editRequest){
 		try{
+			String email = obtenerEmailDeContextoDeSeguridad();
 			EditarPerfilRequest request = toRequest(editRequest);
-			usuarioService.modificarUsuario(request);
+			usuarioService.modificarUsuario(request,email);
 		}catch(IOException | UsuarioExistenteException e){
 			return Response.status(406).entity("Parametros incorrectos").build();
 		}catch(Exception e){
@@ -83,7 +82,7 @@ public class UsuarioListener {
 	@Produces("application/json")
 	public Response obtenerDirecciones(@Context HttpHeaders header){
 		try{
-			String email = (String) header.getRequestHeader("mail").get(0);
+			String email = obtenerEmailDeContextoDeSeguridad();
 			return Response.ok(toDireccionResponse(usuarioService.obtenerDireccionesDeUsuarioCon(email))).build();			
 		}catch(IndexOutOfBoundsException | NullPointerException | UsuarioExistenteException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
@@ -96,11 +95,11 @@ public class UsuarioListener {
 	@POST
 	@Path("/dir")
 	@Produces("application/json")
-	public Response agregarNuevaDireccion(@HeaderParam("mail") String mail,
-			@Multipart(value="direccionRequest", type="application/json")final String direccionRequest){
+	public Response agregarNuevaDireccion(@Multipart(value="direccionRequest", type="application/json")final String direccionRequest){
 		try{
 			DireccionRequest request = toDireccionRequest(direccionRequest);
 			validarDireccionRequest(request);
+			String mail = obtenerEmailDeContextoDeSeguridad();
 			usuarioService.agregarDireccionAUsuarioCon(mail,request);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e){
@@ -114,9 +113,10 @@ public class UsuarioListener {
 	@PUT
 	@Path("/dir/{idDireccion}")
 	@Produces("application/json")
-	public Response editarDireccionDe(@HeaderParam("mail") String mail,
-			@Multipart(value="direccionRequest",type="application/json")String request,@PathParam("idDireccion")Integer idDireccion){
+	public Response editarDireccionDe(@Multipart(value="direccionRequest",type="application/json")String request,
+			@PathParam("idDireccion")Integer idDireccion){
 		try{
+			String mail = obtenerEmailDeContextoDeSeguridad();
 			DireccionRequest dirRequest = toDireccionRequest(request);
 			validarDireccionRequest(dirRequest);
 			usuarioService.editarDireccionDe(mail,dirRequest,idDireccion);
@@ -133,8 +133,9 @@ public class UsuarioListener {
 	@DELETE
 	@Path("/dir/{idDireccion}")
 	@Produces("application/json")
-	public Response elimiarDireccionDe(@HeaderParam("mail")String mail,@PathParam("idDireccion")Integer idDireccion){
+	public Response elimiarDireccionDe(@PathParam("idDireccion")Integer idDireccion){
 		try{
+			String mail = obtenerEmailDeContextoDeSeguridad();
 			usuarioService.eliminarDireccionDe(mail,idDireccion);
 			return Response.ok("Se ha eliminado la direccion correctamente.").build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
@@ -145,6 +146,11 @@ public class UsuarioListener {
 		
 	}
 	
+	
+	
+	private String obtenerEmailDeContextoDeSeguridad(){
+		return 	SecurityContextHolder.getContext().getAuthentication().getName();
+	}
 
 
 	private void validarDireccionRequest(DireccionRequest request) {

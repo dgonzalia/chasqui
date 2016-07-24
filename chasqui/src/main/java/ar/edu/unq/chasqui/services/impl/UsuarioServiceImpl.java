@@ -141,8 +141,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void modificarUsuario(EditarPerfilRequest editRequest) throws Exception {
-		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(editRequest.getEmail());
+	public void modificarUsuario(EditarPerfilRequest editRequest,String email) throws Exception {
+		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(email);
 		if(c == null){
 			throw new UsuarioExistenteException("No existe el usuario");
 		}
