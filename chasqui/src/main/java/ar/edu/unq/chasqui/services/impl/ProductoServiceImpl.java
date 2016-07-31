@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.ProductoDAO;
 import ar.edu.unq.chasqui.model.Imagen;
+import ar.edu.unq.chasqui.model.Pedido;
+import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
@@ -51,6 +53,16 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public void modificarVariante(Variante v) {
 		productoDAO.modificarVariante(v);		
+	}
+
+	@Override
+	public void eliminarReservasDe(Pedido p) {
+		for(ProductoPedido pp : p.getProductosEnPedido()){
+			Variante v = productoDAO.obtenervariantePor(pp.getIdVariedad());
+			v.eliminarReserva(pp.getCantidad());
+			productoDAO.modificarVariante(v);
+		}
+		
 	}
 
 }

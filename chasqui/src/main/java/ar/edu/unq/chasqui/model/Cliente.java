@@ -319,6 +319,12 @@ public class Cliente extends Usuario{
 		
 	}
 
+	public Pedido eliminarPedido(Integer idPedido) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		pedidos.remove(p);
+		return p;
+	}
+
 	
 	
 	

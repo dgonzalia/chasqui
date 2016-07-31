@@ -56,6 +56,8 @@ public interface UsuarioService {
 	public void agregarPedidoA(AgregarQuitarProductoAPedidoRequest request, String email);
 	@Transactional
 	public void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email);
+	@Transactional
+	public void eliminarPedidoPara(String email, Integer idPedido);
 	
 	
 }

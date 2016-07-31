@@ -78,7 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(encrypter.encrypt("federico"));
-			u2.setEmail("jfflores90@gmail.com");
+			u2.setEmail("jfflores90@gmail");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			u2.setMontoMinimoPedido(213);
@@ -89,7 +89,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Cliente c = new Cliente();
 			c.setToken("federico");
 			c.setPassword(encrypter.encrypt("federico"));
-			c.setEmail("mat90@gmail.com");
+			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();
@@ -277,7 +277,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new PedidoVigenteException("El usuario no posee el pedido con ID:" + request.getIdPedido()+" o el mismo no se encuentra vigente");
 		}
 		
-		if(c.varianteCorrespondeConPedido(v.getIdVendedor(),request.getIdPedido())){
+		if(!c.varianteCorrespondeConPedido(v.getIdVendedor(),request.getIdPedido())){
 			throw new RequestIncorrectoException("El producto no corresponde con el vendedor al que se le hizo el pedido con ID: "+ request.getIdPedido());
 		}		
 	}
@@ -302,6 +302,22 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new ProductoInexsistenteException("No se puede quitar mas cantidad de un producto de la que el usuario posee en su pedido");
 		}
 		
+		
+	}
+
+	@Override
+	public void eliminarPedidoPara(String email, Integer idPedido) {
+		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
+		validarEliminacionDePedidoPara(c,idPedido);
+		Pedido p = c.eliminarPedido(idPedido);
+		productoService.eliminarReservasDe(p);
+		usuarioDAO.guardarUsuario(c);
+	}
+
+	private void validarEliminacionDePedidoPara(Cliente c, Integer idPedido) {
+		if(!c.contienePedidoVigente(idPedido)){
+			throw new PedidoVigenteException("El usuario no posee el pedido con ID:" + idPedido+" o el mismo no se encuentra vigente");
+		}
 		
 	}
 

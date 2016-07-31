@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.exceptions.PedidoVigenteException;
+import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Pedido;
@@ -83,6 +84,8 @@ public class PedidoListener {
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e ){
 			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(PedidoVigenteException | ProductoInexsistenteException e){
+			return Response.status(404).entity(e.getMessage()).build();
 		}catch(Exception e){
 			return Response.status(500).encoding(e.getMessage()).build();
 		}
@@ -103,11 +106,32 @@ public class PedidoListener {
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(Exception e){
 			return Response.status(500).encoding(e.getMessage()).build();
+		}		
+	}
+	
+	
+	@DELETE
+	@Produces("application/json")
+	@Path("/individual/{idPedido}")
+	public Response eliminarPedido(@PathParam("idPedido")Integer idPedido){
+		try{
+			validarRequest(idPedido);
+			String email = obtenerEmailDeContextoDeSeguridad();
+			usuarioService.eliminarPedidoPara(email,idPedido);
+			return Response.ok().build();			
+		}catch(RequestIncorrectoException e){
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
 		}
 		
 	}
 	
-	
+	private void validarRequest(Integer idPedido){
+		if(idPedido == null || idPedido < 0){
+		throw new RequestIncorrectoException("La cantidad debe ser mayo  debe ser mayor a 0");
+		}
+	}
 	
 	private void validarRequest(AgregarQuitarProductoAPedidoRequest request) {
 		if(request.getIdPedido() == null){
