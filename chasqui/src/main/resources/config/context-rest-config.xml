@@ -44,6 +44,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	<jaxrs:server  address="/user">
 		<jaxrs:serviceBeans>
  			<ref bean="usuarioListener"/>
+ 			<ref bean="pedidoListener"/>
  		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="json" value="application/json" />
@@ -67,4 +68,5 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	<bean id="categoriaListener" class="ar.edu.unq.chasqui.service.rest.impl.CategoriaListener"/>
 	<bean id="productorListener" class="ar.edu.unq.chasqui.service.rest.impl.ProductorListener"/>
 	<bean id="caracteristicaListener" class="ar.edu.unq.chasqui.service.rest.impl.CaracteristicaListener"/>
+	<bean id="pedidoListener" class="ar.edu.unq.chasqui.service.rest.impl.PedidoListener"/>
 </beans>

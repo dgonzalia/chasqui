@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.cxf.common.util.StringUtils;
+import org.aspectj.org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.util.media.Media;
@@ -142,6 +143,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		model.setNombre(textboxNombre.getValue());
 		model.setStock(intboxStock.getValue());
 		model.setPrecio(doubleboxPrecio.getValue());
+		model.setCantidadReservada(0);
 		model.setProducto(producto);
 		producto.getVariantes().add(model);
 		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);

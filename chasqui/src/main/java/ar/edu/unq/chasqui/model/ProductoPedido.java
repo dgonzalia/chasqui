@@ -3,10 +3,12 @@ package ar.edu.unq.chasqui.model;
 public class ProductoPedido {
 
 	private Integer id;
+	private Integer idVariedad;
 	private Double precio;
 	private String nombreProducto;
 	private String nombreVariante;
 	private Integer cantidad;
+	private String imagen;
 	
 	//GETs & SETs
 	public Integer getId() {
@@ -45,5 +47,24 @@ public class ProductoPedido {
 	public void setNombreVariante(String nombreVariante) {
 		this.nombreVariante = nombreVariante;
 	}
+
+	public Integer getIdVariedad() {
+		return idVariedad;
+	}
+
+	public void setIdVariedad(Integer idVariedad) {
+		this.idVariedad = idVariedad;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	
+	
 	
 }

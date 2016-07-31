@@ -16,6 +16,8 @@
 	   <!-- fin de AOP -->
 	   <context:annotation-config/>
 	   
+	   
+	   
 	   <!-- Servicios -->
 	   <bean id="mailService" name="mailService" class="ar.edu.unq.chasqui.services.impl.MailService"/>
 	   
@@ -80,5 +82,9 @@
             </props>
         </property>
     </bean>
+    
+    
+    <!-- AOP -->
+    <bean name="loggerAspect" class="ar.edu.unq.chasqui.aspect.LoggerAspect"/>
 	   
 </beans>

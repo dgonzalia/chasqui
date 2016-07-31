@@ -10,7 +10,7 @@ import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
 
-@SuppressWarnings("unchecked")
+
 public class ProductoServiceImpl implements ProductoService {
 
 	@Autowired
@@ -41,6 +41,11 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public List<Variante> obtenerVariantesPorNombreODescripcion(String param,Integer pagina,Integer cantItems,Integer idVendedor) {
 		return productoDAO.obtenerVariantesPorNombreODescripcion(param,pagina,cantItems,idVendedor);
+	}
+	
+	@Override
+	public Variante obtenerVariantePor(Integer id){
+		return productoDAO.obtenervariantePor(id);
 	}
 
 }

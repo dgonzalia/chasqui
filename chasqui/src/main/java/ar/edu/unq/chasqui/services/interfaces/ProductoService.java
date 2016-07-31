@@ -19,5 +19,7 @@ public interface ProductoService {
 	public List<Imagen> obtenerImagenesDe(Integer idProducto);
 	@Transactional
 	public List<Variante> obtenerVariantesPorNombreODescripcion(String param,Integer pagina,Integer cantItems,Integer idVendedor) ;
+	@Transactional
+	public Variante obtenerVariantePor(Integer id);
 	
 }

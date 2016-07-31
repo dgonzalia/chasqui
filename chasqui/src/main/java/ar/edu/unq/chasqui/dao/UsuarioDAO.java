@@ -16,4 +16,5 @@ public interface UsuarioDAO {
 	public boolean existeUsuarioCon(String email);
 	public void inicializarListasDe(Vendedor usuarioLogueado);
 	public Cliente obtenerClienteConDireccionPorEmail(final String email);
+	public Cliente obtenerClienteConPedido(String mail);
 }

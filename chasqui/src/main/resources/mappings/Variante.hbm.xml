@@ -32,5 +32,6 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
+        <property name="cantidadReservada" column="RESERVADOS" type="java.lang.Integer" not-null="true" />
     </class>
 </hibernate-mapping>

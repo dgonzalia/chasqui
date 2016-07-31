@@ -1,10 +1,18 @@
 package ar.edu.unq.chasqui.model;
 
-import java.util.Date;
-
+/***
+ * a tener en cuenta mas adelante
+ *
+ */
+/*
 public class PedidoGrupal extends Pedido{
+
+	public PedidoGrupal(Integer idVendedor2, String email) {
+		super(idVendedor2, email);
+		// TODO Auto-generated constructor stub
+	}
 	
-	private String descripcion;
+	/*private String descripcion;
 
 	public PedidoGrupal(int i, String string, Date date, Double j, Double k,
 			String estadoPedidoAbierto,Boolean alterable,String descripcion) {
@@ -29,5 +37,4 @@ public class PedidoGrupal extends Pedido{
 		//TODO
 	}
 	
-	
-}
+}*/

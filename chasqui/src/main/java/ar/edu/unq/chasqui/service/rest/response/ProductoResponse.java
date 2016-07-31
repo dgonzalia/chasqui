@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Variante;
 
 public class ProductoResponse implements Serializable {

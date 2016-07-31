@@ -7,11 +7,13 @@ import java.util.List;
 import org.apache.cxf.common.util.StringUtils;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
+import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
+import ar.edu.unq.chasqui.view.composer.Constantes;
 
 public class Cliente extends Usuario{
 
@@ -239,6 +241,31 @@ public class Cliente extends Usuario{
 		else {
 			throw new DireccionesInexistentes(); 
 		}
+		
+	}
+
+	public Pedido obtenerPedidoActualDe(Integer idVendedor) throws PedidoInexistenteException {
+		for(Pedido p : pedidos){
+			if(p.getIdVendedor().equals(idVendedor) && p.getEstado().equals(Constantes.ESTADO_PEDIDO_ABIERTO)){
+				return p;
+			}
+		}		
+		throw new PedidoInexistenteException("El usuario: "+this.getNickName()+" no posee ningun pedido vigente ");
+	}
+
+	public boolean contienePedidoVigenteParaVendedor(Integer idVendedor) {
+		
+		for(Pedido p : pedidos){
+			if(p.getIdVendedor().equals(idVendedor) && p.estaVigente()){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	public void agregarPedido(Pedido p) {
+		this.pedidos.add(p);
 		
 	}
 	

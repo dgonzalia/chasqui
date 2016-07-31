@@ -8,6 +8,7 @@ public class Variante {
 	private List<Imagen> imagenes;
 	private String descripcion;
 	private Integer stock;
+	private Integer cantidadReservada;
 	private Double precio;
 	private String nombre;
 	private Producto producto;
@@ -70,6 +71,17 @@ public class Variante {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+
+	public Integer getCantidadReservada() {
+		return cantidadReservada;
+	}
+
+	public void setCantidadReservada(Integer cantidadReservada) {
+		this.cantidadReservada = cantidadReservada;
+	}
+
+
+	
 	
 		
 	

@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Checkbox;
-import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Hlayout;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
@@ -28,7 +27,7 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 	public void render(Listitem item, Pedido p, int arg2) throws Exception {
 		
 		Listcell c1 = new Listcell(String.valueOf(p.getId()));
-		Listcell c2 = new Listcell(p.getUsuarioCreador().getEmail());
+		Listcell c2 = new Listcell(p.getUsuarioCreador());
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		Date d = new Date(p.getFechaCreacion().getMillis());
 		Listcell c3 = new Listcell(format.format(d));

@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
+import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
+import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
@@ -45,5 +47,10 @@ public interface UsuarioService {
 	public void eliminarDireccionDe(String mail, Integer idDireccion)throws DireccionesInexistentes,UsuarioExistenteException;
 	@Transactional
 	public Cliente obtenerClienteConDireccion(String mail);
+	@Transactional
+	public Pedido obtenerPedidoActualDe(String mail,Integer idVendedor) throws PedidoInexistenteException;
+	@Transactional
+	public void crearPedidoPara(String mail,Integer idVendedor);
+	
 	
 }

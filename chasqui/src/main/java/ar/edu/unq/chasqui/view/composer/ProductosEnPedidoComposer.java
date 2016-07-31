@@ -24,7 +24,7 @@ public class ProductosEnPedidoComposer extends GenericForwardComposer<Component>
 		super.doAfterCompose(c);
 		binder = new AnnotateDataBinder(c);
 		Pedido p = (Pedido) Executions.getCurrent().getArg().get("pedido");
-		pedidos = toDTO(p.ordernarByUsuario());
+//		pedidos = p.getProductosEnPedido();
 		for(PedidoDTO t : pedidos){
 			total =+ t.getPrecio();
 			

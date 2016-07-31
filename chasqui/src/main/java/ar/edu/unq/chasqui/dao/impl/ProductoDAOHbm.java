@@ -136,6 +136,19 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 			}
 		});
 	}
+
+	@Override
+	public Variante obtenervariantePor(final Integer id) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Variante>() {
+
+			@Override
+			public Variante doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Variante.class);
+				criteria.add(Restrictions.eq("id", id));
+				return (Variante) criteria.uniqueResult();
+			}
+		});
+	}
 	
 	
 	

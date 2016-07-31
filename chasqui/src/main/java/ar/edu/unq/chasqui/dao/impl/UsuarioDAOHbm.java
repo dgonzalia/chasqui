@@ -123,6 +123,13 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		return (u == null || !u.isEmpty());
 	}
 
+	@Override
+	public Cliente obtenerClienteConPedido(String mail) {
+		Cliente c = (Cliente) this.obtenerUsuarioPorEmail(mail);
+		Hibernate.initialize(c.getPedidos());
+		return c;
+	}
+
 	
 
 }

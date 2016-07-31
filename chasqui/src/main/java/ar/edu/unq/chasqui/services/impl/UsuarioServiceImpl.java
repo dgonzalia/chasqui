@@ -3,14 +3,18 @@ package ar.edu.unq.chasqui.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
+import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
+import ar.edu.unq.chasqui.exceptions.PedidoVigenteException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
+import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
@@ -65,6 +69,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			u2.setEmail("jfflores90@gmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
+			u2.setMontoMinimoPedido(213);
+			u2.setFechaCierrePedido(new DateTime().plusDays(4));
 			usuarioDAO.guardarUsuario(u2);	
 			
 		
@@ -85,6 +91,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			dd.setAlias("dir2");
 			dd.setCodigoPostal("asdsa");
 			dd.setLocalidad("ffff");
+			dd.setPredeterminada(false);
 			dd.setAltura(111);
 			List<Direccion> dds = new ArrayList<Direccion>();
 			dds.add(dd);
@@ -164,6 +171,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 	
+
 	@Override
 	public Cliente obtenerClienteConDireccion(String mail){
 		Cliente c = usuarioDAO.obtenerClienteConDireccionPorEmail(mail);
@@ -200,6 +208,30 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new UsuarioExistenteException("No existe el usuario");
 		}
 		c.eliminarDireccion(idDireccion);
+		usuarioDAO.guardarUsuario(c);
+		
+	}
+
+	@Override
+	public Pedido obtenerPedidoActualDe(String mail,Integer idVendedor) throws PedidoInexistenteException {
+		return ( (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail)).obtenerPedidoActualDe(idVendedor);
+	}
+
+	@Override
+	public void crearPedidoPara(String mail,Integer idVendedor) {
+		Cliente c = usuarioDAO.obtenerClienteConPedido(mail);
+		Vendedor v = usuarioDAO.obtenerVendedorPorID(idVendedor);
+		if(c == null){
+			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
+		}
+		if(v == null ){
+			throw new UsuarioExistenteException("Vendedor Inexistente");
+		}
+		if(c.contienePedidoVigenteParaVendedor(idVendedor)){
+			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" ya posee un pedido vigente para el vendedor brindado");
+		}
+		Pedido p = new Pedido(v,c.getEmail());
+		c.agregarPedido(p);
 		usuarioDAO.guardarUsuario(c);
 		
 	}

@@ -24,5 +24,6 @@
         <property name="cantidad" type="java.lang.Integer">
             <column name="CANTIDAD" />
         </property>
+        <property name="imagen" column="IMAGEN" type="java.lang.String"/>
     </class>
 </hibernate-mapping>
