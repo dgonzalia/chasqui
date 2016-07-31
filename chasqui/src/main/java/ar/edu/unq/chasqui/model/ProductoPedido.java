@@ -72,6 +72,10 @@ public class ProductoPedido {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
+
+	public void restar(Integer cant) {
+		cantidad -= cant;
+	}
 	
 	
 	

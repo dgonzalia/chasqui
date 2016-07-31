@@ -169,6 +169,19 @@ public class Pedido {
 		productosEnPedido.add(pp);
 		
 	}
+
+	public ProductoPedido encontrarProductoPedido(Integer idVariante) {
+		for(ProductoPedido pp : this.getProductosEnPedido()){
+			if(pp.getIdVariedad().equals(idVariante)){
+				return pp;
+			}
+		}
+		return null;
+	}
+
+	public void eliminar(ProductoPedido pp) {
+		productosEnPedido.remove(pp);		
+	}
 	
 	
 	

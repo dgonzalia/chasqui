@@ -12,7 +12,7 @@ import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.service.rest.request.AgregarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -53,7 +53,9 @@ public interface UsuarioService {
 	@Transactional
 	public void crearPedidoPara(String mail,Integer idVendedor);
 	@Transactional
-	public void agregarPedidoA(AgregarProductoAPedidoRequest request, String email);
+	public void agregarPedidoA(AgregarQuitarProductoAPedidoRequest request, String email);
+	@Transactional
+	public void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email);
 	
 	
 }
