@@ -2,10 +2,10 @@ package ar.edu.unq.chasqui.security;
 
 public class PasswordGenerator {
 
-	private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijkmnopqrstuvwxyz";
+	private String ALPHA_NUMERIC_STRING;
 	  
 	  
-	public static String generateRandomToken() {
+	public String generateRandomToken() {
 		  StringBuilder builder = new StringBuilder();
 		  int lenght = 10;
 	  		while (lenght-- != 0) {
@@ -14,4 +14,17 @@ public class PasswordGenerator {
 	  		}
 	  		return builder.toString();
 	  }
+
+
+	public String getALPHA_NUMERIC_STRING() {
+		return ALPHA_NUMERIC_STRING;
+	}
+
+
+	public void setALPHA_NUMERIC_STRING(String aLPHA_NUMERIC_STRING) {
+		ALPHA_NUMERIC_STRING = aLPHA_NUMERIC_STRING;
+	}
+	
+	
+	
 }

@@ -8,7 +8,6 @@ import org.apache.cxf.common.util.StringUtils;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
-import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
@@ -39,7 +38,7 @@ public class Cliente extends Usuario{
 		
 	}
 	
-	public Cliente(SingUpRequest request) throws Exception {
+	public Cliente(SingUpRequest request,String nuevoToken) throws Exception {
 		nombre = request.getNombre();
 		apellido = request.getApellido();
 		nickName= request.getNickName();
@@ -47,11 +46,8 @@ public class Cliente extends Usuario{
 		telefonoFijo = request.getTelefonoFijo();
 		telefonoMovil = request.getTelefonoMovil();
 		direccionesAlternativas = new ArrayList<Direccion>();
-//		Direccion d = new Direccion(request.getDireccion());
-//		d.setPredeterminada(true);
-//		direccionesAlternativas.add(d);
-		token = PasswordGenerator.generateRandomToken();
-		password = Encrypter.encrypt(request.getPassword());
+		token = nuevoToken;
+		password = request.getPassword();
 	}
 
 	public String getNombre() {
@@ -155,7 +151,7 @@ public class Cliente extends Usuario{
 			this.nombre = editRequest.getNombre();
 		}
 		if(!StringUtils.isEmpty(editRequest.getPassword())){
-			this.password = Encrypter.encrypt(editRequest.getPassword());
+			this.password = editRequest.getPassword();
 		}
 		if(editRequest.getTelefonoFijo() != null){
 			this.telefonoFijo = editRequest.getTelefonoFijo();

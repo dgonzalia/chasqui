@@ -52,6 +52,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 	private Combobox comboCantidadDeKilometros;
 	private Checkbox checkUtilizarMismaFecha;
 	private Button zonaButton;
+	private Encrypter encrypter ;
 	private Datebox dateProximaEntrega;
 	private Textbox textboxClaveActual;
 	private Textbox textboxNuevaClaveRepita;
@@ -71,6 +72,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 			imagen.setPath(usuarioLogueado.getImagenPerfil());
 			fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 			usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
+			encrypter = (Encrypter) SpringUtil.getBean("encrypter");
 			binder = new AnnotateDataBinder(comp);
 			kilometroSeleccionado = usuarioLogueado.getDistanciaCompraColectiva();
 			DateTime d = new DateTime(usuarioLogueado.getFechaCierrePedido());
@@ -130,7 +132,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 			WrongValueException e2 = new WrongValueException(textboxNuevaClaveRepita,"Las contraseñas no coinciden!");
 			throw new WrongValuesException(new WrongValueException[] {e1,e2});
 		}
-		if( !StringUtils.isEmpty(claveActual) && !claveActual.equals(Encrypter.decrypt(usuarioLogueado.getPassword()))){
+		if( !StringUtils.isEmpty(claveActual) && !claveActual.equals(encrypter.decrypt(usuarioLogueado.getPassword()))){
 			throw new WrongValueException(textboxClaveActual,"La contraseña actual es incorrecta!");			
 		}
 		
@@ -139,7 +141,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 		}
 		
 		if(clavesNuevasNoEmpty){
-			usuarioLogueado.setPassword(Encrypter.encrypt(nuevaClave));
+			usuarioLogueado.setPassword(encrypter.encrypt(nuevaClave));
 		}
 		
 		

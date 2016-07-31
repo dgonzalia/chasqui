@@ -8,34 +8,54 @@ import javax.crypto.spec.SecretKeySpec;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
+@SuppressWarnings("restriction")
 public class Encrypter {
-		private static final String ALGORITHM = "AES";
-	    private static final String KEY = "1Hbfh667adfDEJ78";
-	    
-    public static String encrypt(String value) throws Exception{
+	
+	private String ALGORITHM;
+	private String KEY;
+
+    public String encrypt(String value) throws Exception{
 	        Key key = generateKey();
-	        Cipher cipher = Cipher.getInstance(Encrypter.ALGORITHM);
+	        Cipher cipher = Cipher.getInstance(this.ALGORITHM);
 	        cipher.init(Cipher.ENCRYPT_MODE, key);
 	        byte [] encryptedByteValue = cipher.doFinal(value.getBytes("utf-8"));
-	        String encryptedValue64 = new BASE64Encoder().encode(encryptedByteValue);
+			String encryptedValue64 = new BASE64Encoder().encode(encryptedByteValue);
 	        return encryptedValue64;
 	               
 	}
 	    
-	public static String decrypt(String value) throws Exception{
+
+	public  String decrypt(String value) throws Exception{
 	        Key key = generateKey();
-	        Cipher cipher = Cipher.getInstance(Encrypter.ALGORITHM);
+	        Cipher cipher = Cipher.getInstance(this.ALGORITHM);
 	        cipher.init(Cipher.DECRYPT_MODE, key);
-	        byte [] decryptedValue64 = new BASE64Decoder().decodeBuffer(value);
+			byte [] decryptedValue64 = new BASE64Decoder().decodeBuffer(value);
 	        byte [] decryptedByteValue = cipher.doFinal(decryptedValue64);
 	        String decryptedValue = new String(decryptedByteValue,"utf-8");
 	        return decryptedValue;
 	                
 	 }
 	    
-	 private static Key generateKey() throws Exception{
-	     Key key = new SecretKeySpec(Encrypter.KEY.getBytes(),Encrypter.ALGORITHM);
+	 private Key generateKey() throws Exception{
+	     Key key = new SecretKeySpec(this.KEY.getBytes(),this.ALGORITHM);
 	     return key;
 	 }
+
+
+	public String getALGORITHM() {
+		return ALGORITHM;
+	}
+	public void setALGORITHM(String aLGORITHM) {
+		ALGORITHM = aLGORITHM;
+	}
+	public String getKEY() {
+		return KEY;
+	}
+	public void setKEY(String kEY) {
+		KEY = kEY;
+	}
+	 
+	 
+	 
 	
 }

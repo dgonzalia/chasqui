@@ -15,8 +15,7 @@
 	   <aop:aspectj-autoproxy />
 	   <!-- fin de AOP -->
 	   <context:annotation-config/>
-	   
-	   
+	   <context:property-placeholder location="${ext.properties.dir:classpath:}/chasqui.properties" />
 	   
 	   <!-- Servicios -->
 	   <bean id="mailService" name="mailService" class="ar.edu.unq.chasqui.services.impl.MailService"/>
@@ -69,10 +68,10 @@
 	   <!-- SERVICIO EMAIL -->
 	   
 	   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="mail.10grapes.com.ar"/>
-        <property name="port" value="587"/>
-        <property name="username" value="smtp@10grapes.com.ar"/>
-        <property name="password" value="SMTP587service"/>
+        <property name="host" value="${email.host}"/>
+        <property name="port" value="${email.port}"/>
+        <property name="username" value="${email.username}"/>
+        <property name="password" value="${email.password}"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.transport.protocol">smtp</prop>
@@ -83,6 +82,15 @@
         </property>
     </bean>
     
+    
+    <bean name="encrypter" class="ar.edu.unq.chasqui.security.Encrypter">
+    	<property name="ALGORITHM" value="${encrypter.algorithm}"/>
+    	<property name="KEY" value="${encrypter.KEY}"/>
+    </bean>
+    
+    <bean name="passwordGenerator" class="ar.edu.unq.chasqui.security.PasswordGenerator">
+    	<property name="ALPHA_NUMERIC_STRING" value="${passwordGenerator.generador}"/>
+    </bean>
     
     <!-- AOP -->
     <bean name="loggerAspect" class="ar.edu.unq.chasqui.aspect.LoggerAspect"/>

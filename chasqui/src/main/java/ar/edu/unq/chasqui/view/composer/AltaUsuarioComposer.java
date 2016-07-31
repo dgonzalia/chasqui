@@ -19,6 +19,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.services.impl.MailService;
@@ -39,6 +40,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	
 	private UsuarioService service;
 	private MailService mailService;
+	private Encrypter encrypter;
 	
 	
 	@Override
@@ -47,6 +49,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
 		mailService = (MailService) SpringUtil.getBean("mailService");
+		encrypter = (Encrypter) SpringUtil.getBean("encrypter");
 		comp.addEventListener(Events.ON_NOTIFY, new GuardarUsuarioEventListener(this));
 		comp.addEventListener(Events.ON_USER, new GuardarUsuarioEventListener(this));
 		binder.loadAll();
@@ -68,6 +71,11 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		
 		if(email != null && !EmailValidator.getInstance().isValid(email)){
 			throw new WrongValueException(textboxEmail,"Por favor ingrese un email valido.");
+		}
+		
+		Usuario u = service.obtenerUsuarioPorEmail(email);
+		if(u != null){
+			throw new WrongValueException(textboxEmail,"Ya existe el usuario con el mail ingresado");
 		}
 		
 		validarPassword();
@@ -100,13 +108,13 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		if(model != null){
 			model.setUsername(username);
 			model.setEmail(email);
-			model.setPassword(Encrypter.encrypt(pwd));
+			model.setPassword(encrypter.encrypt(pwd));
 			if(model.getImagenPerfil() == null){
 				model.setImagenPerfil("/imagenes/usuarios/ROOT/perfil.jpg");				
 			}
 			return model;
 		}
-		return new Vendedor(username,email,Encrypter.encrypt(pwd));
+		return new Vendedor(username,email,encrypter.encrypt(pwd));
 	}
 	
 	public void guardar(){

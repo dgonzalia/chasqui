@@ -28,10 +28,13 @@ import freemarker.template.TemplateException;
 public class MailService {
 
 	@Autowired
-	private JavaMailSender mailSender;
-	
+	private JavaMailSender mailSender;	
 	@Autowired
-	private UsuarioService usuarioService;
+	private UsuarioService usuarioService;	
+	@Autowired
+	private Encrypter encrypter;
+	@Autowired
+	private PasswordGenerator passwordGenerator;
 	
 	
 	
@@ -77,8 +80,8 @@ public class MailService {
 		helper.setFrom("administrator-chasqui-noreply@chasqui.org");
 		helper.setTo(destino);
 		
-		String password = PasswordGenerator.generateRandomToken(); 
-		usuarioService.modificarPasswordUsuario(destino, Encrypter.encrypt(password));
+		String password = passwordGenerator.generateRandomToken(); 
+		usuarioService.modificarPasswordUsuario(destino, encrypter.encrypt(password));
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("nombreUsuario", usuario);
 		params.put("passwordUsuario", password);

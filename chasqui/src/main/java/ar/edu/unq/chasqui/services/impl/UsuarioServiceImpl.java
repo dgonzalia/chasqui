@@ -3,6 +3,7 @@ package ar.edu.unq.chasqui.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hsqldb.lib.StringUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +29,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired
 	private UsuarioDAO usuarioDAO;
+	@Autowired
+	private Encrypter encrypter;
+	@Autowired
+	private PasswordGenerator passwordGenerator;
 	
 	public Usuario obtenerUsuarioPorID(Integer id) {
 		return usuarioDAO.obtenerUsuarioPorID(id);
@@ -54,7 +59,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if(u == null){
 			Vendedor user = new Vendedor();
 			user.setUsername("ROOT");
-			user.setPassword(Encrypter.encrypt("chasquiadmin"));
+			user.setPassword(encrypter.encrypt("chasquiadmin"));
 			user.setEmail("jfflores90@gmail");
 			user.setIsRoot(true);
 			Imagen img = new Imagen();
@@ -65,7 +70,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
-			u2.setPassword(Encrypter.encrypt("federico"));
+			u2.setPassword(encrypter.encrypt("federico"));
 			u2.setEmail("jfflores90@gmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
@@ -76,7 +81,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 			Cliente c = new Cliente();
 			c.setToken("federico");
-			c.setPassword(Encrypter.encrypt("federico"));
+			c.setPassword(encrypter.encrypt("federico"));
 			c.setEmail("mat90@gmail.com");
 			c.setNombre("JORGE");
 			c.setNickName("MatLock");
@@ -106,7 +111,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario login(String username, String passwordHashed) throws Exception {
 		Usuario usuario = usuarioDAO.obtenerUsuarioPorNombre(username);
 		if (usuario != null ){
-			String passwordUser = Encrypter.decrypt(usuario.getPassword());
+			String passwordUser = encrypter.decrypt(usuario.getPassword());
 			if(passwordUser.equals(passwordHashed)){
 				return usuario;				
 			}
@@ -130,9 +135,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Cliente loginCliente(String email, String password) throws Exception {
 		Cliente c = (Cliente) obtenerUsuarioPorEmail(email);
 		if(c != null){
-			String passwordUser = Encrypter.decrypt(c.getPassword());
+			String passwordUser = encrypter.decrypt(c.getPassword());
 			if(passwordUser.equals(password)){
-				String token = PasswordGenerator.generateRandomToken();
+				String token = passwordGenerator.generateRandomToken();
 				c.setToken(token);
 				usuarioDAO.guardarUsuario(c);
 				return c;				
@@ -142,7 +147,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	public Cliente crearCliente(SingUpRequest request) throws Exception {
-		Cliente c = new Cliente(request);
+		Cliente c = new Cliente(request,passwordGenerator.generateRandomToken());
 		usuarioDAO.guardarUsuario(c);
 		return c;
 	}
@@ -152,6 +157,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Cliente c = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(email);
 		if(c == null){
 			throw new UsuarioExistenteException("No existe el usuario");
+		}
+		if(!StringUtil.isEmpty(editRequest.getPassword())){
+			editRequest.setPassword(encrypter.encrypt(editRequest.getPassword()));
 		}
 		c.modificarCon(editRequest);
 		usuarioDAO.guardarUsuario(c);
