@@ -250,7 +250,7 @@ public class Cliente extends Usuario{
 				return p;
 			}
 		}		
-		throw new PedidoInexistenteException("El usuario: "+this.getNickName()+" no posee ningun pedido vigente ");
+		throw new PedidoInexistenteException("El usuario: "+this.getNickName()+" no posee ningun pedido vigente para el vendedor solicitado");
 	}
 
 	public boolean contienePedidoVigenteParaVendedor(Integer idVendedor) {

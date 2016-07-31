@@ -38,7 +38,7 @@ public class PedidoListener {
 		String mail = obtenerEmailDeContextoDeSeguridad();
 		try{
 			usuarioService.crearPedidoPara(mail,idVendedor);
-			return Response.ok().build();
+			return Response.status(201).build();
 		}catch(PedidoVigenteException | UsuarioExistenteException e){
 			return Response.status(406).entity(e.getMessage()).build();
 		}catch(Exception e){
@@ -53,7 +53,7 @@ public class PedidoListener {
 		String mail =  obtenerEmailDeContextoDeSeguridad();
 		try{
 			return Response.ok(toResponse(usuarioService.obtenerPedidoActualDe(mail,idVendedor))).build();
-		}catch(UsuarioExistenteException | PedidoInexistenteException e){
+		}catch(PedidoInexistenteException e){
 			return Response.status(404).entity(e.getMessage()).build();
 		}
 		catch(Exception e){

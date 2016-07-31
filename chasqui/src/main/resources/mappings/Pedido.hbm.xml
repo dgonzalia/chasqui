@@ -12,16 +12,20 @@
 	            <param name="increment_size">1</param> 
          	</generator>
         </id>
+        <property name="idVendedor" type="java.lang.Integer">
+            <column name="ID_VENDEDOR" />
+        </property>
+        <property name="alterable" column="ALTERABLE" type="java.lang.Boolean"/>
         <property name="estado" type="java.lang.String">
             <column name="ESTADO" />
         </property>
         <property name="usuarioCreador" type="java.lang.String">
             <column name="USUARIO_CREADOR" />
         </property>
-        <property name="fechaCreacion" type="org.joda.time.DateTime">
+        <property name="fechaCreacion" type="org.joda.time.contrib.hibernate.PersistentDateTime">
             <column name="FECHA_CREACION" />
         </property>
-        <property name="fechaDeVencimiento" type="org.joda.time.DateTime" column="FECHA_VENCIMIENTO"/>
+        <property name="fechaDeVencimiento" type="org.joda.time.contrib.hibernate.PersistentDateTime" column="FECHA_VENCIMIENTO"/>
 <!--         <many-to-one name="direccionEntrega" class="ar.edu.unq.chasqui.model.Direccion" fetch="join" not-null="false" not-found="ignore"> -->
 <!--             <column name="DIRECCION_ENTREGA" /> -->
 <!--         </many-to-one> -->

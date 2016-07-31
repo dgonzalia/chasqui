@@ -1,7 +1,6 @@
 package ar.edu.unq.chasqui.model;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.joda.time.DateTime;
@@ -25,7 +24,6 @@ public class Pedido {
 	
 
 	public Pedido(Vendedor v,String email) {
-		alterable = true;
 		idVendedor = v.getId();
 		estado = Constantes.ESTADO_PEDIDO_ABIERTO;
 		usuarioCreador = email;
@@ -33,6 +31,7 @@ public class Pedido {
 		alterable = true;
 		perteneceAPedidoGrupal = false;
 		montoMinimo = new Double(v.getMontoMinimoPedido());
+		montoActual = new Double(0.0);
 		fechaDeVencimiento = v.getFechaCierrePedido();
 		productosEnPedido = new HashSet<ProductoPedido>();
 	}
