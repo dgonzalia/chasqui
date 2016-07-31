@@ -232,7 +232,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if(c == null){
 			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
 		}
-		if(v == null ){
+		if(v == null || v.getIsRoot() ){
 			throw new UsuarioExistenteException("Vendedor Inexistente");
 		}
 		if(c.contienePedidoVigenteParaVendedor(idVendedor)){

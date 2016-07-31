@@ -104,13 +104,15 @@ public class PedidoResponse implements Serializable {
 		id = p.getId();
 		estado = p.getEstado();
 		DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		fechaCreacion = f.format(p.getFechaCreacion());
-		fechaVencimiento = f.format(p.getFechaDeVencimiento());
+		fechaCreacion = f.format(p.getFechaCreacion().toDate());
+		fechaVencimiento = f.format(p.getFechaDeVencimiento().toDate());
 		montoMinimo = p.getMontoMinimo();
 		montoActual = p.getMontoActual();
 		productosResponse = new ArrayList<ProductoPedidoResponse>();
-		for(ProductoPedido pp : p.getProductosEnPedido()){
-			productosResponse.add(new ProductoPedidoResponse(pp));
+		if (p.getProductosEnPedido() != null) {
+			for(ProductoPedido pp : p.getProductosEnPedido()){
+				productosResponse.add(new ProductoPedidoResponse(pp));
+			}
 		}
 	}
 	
