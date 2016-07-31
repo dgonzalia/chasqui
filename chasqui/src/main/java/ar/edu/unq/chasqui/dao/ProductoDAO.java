@@ -17,6 +17,8 @@ public interface ProductoDAO {
 
 	public List<Variante> obtenerVariantesPorNombreODescripcion(String param,Integer pagina,Integer cantItems,Integer idVendedor);
 
-	public Variante obtenervariantePor(Integer id); 
+	public Variante obtenervariantePor(Integer id);
+
+	public void modificarVariante(Variante v); 
 
 }

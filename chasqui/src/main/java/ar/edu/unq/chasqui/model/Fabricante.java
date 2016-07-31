@@ -12,6 +12,7 @@ public class Fabricante {
 	private String pais;
 	private String provincia;
 	private String localidad;
+	private Integer idVendedor;
 	private String pathImagen;
 	private List<Producto> productos;
 	private CaracteristicaProductor caracteristica;
@@ -108,15 +109,16 @@ public class Fabricante {
 		this.pathImagen = pathImagen;
 	}
 	
+	public Integer getIdVendedor() {
+		return idVendedor;
+	}
 	
-	
-	
-	
+	public void setIdVendedor(Integer idVendedor) {
+		this.idVendedor = idVendedor;
+	}
+
 	
 	//METHODS
-	
-
-
 
 	@Override
 	public String toString(){

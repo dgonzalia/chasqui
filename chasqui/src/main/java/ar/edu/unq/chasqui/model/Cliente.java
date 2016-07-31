@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
+import org.joda.time.DateTime;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
@@ -263,6 +264,31 @@ public class Cliente extends Usuario{
 	public void agregarPedido(Pedido p) {
 		this.pedidos.add(p);
 		
+	}
+
+	public boolean contienePedidoVigente(Integer idPedido) {		
+		Pedido p = encontrarPedidoConId(idPedido);
+		return p != null && p.estaVigente();
+	}
+
+	public boolean varianteCorrespondeConPedido(Integer idVendedor, Integer idPedido) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		return p != null && p.getIdVendedor().equals(idVendedor);
+	}
+
+	public void agregarProductoAPedido(Variante v, Integer idPedido,Integer cantidad) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		ProductoPedido pp = new ProductoPedido(v,cantidad);
+		p.agregarProductoPedido(pp);
+	}
+
+	private Pedido encontrarPedidoConId(Integer idPedido) {
+		for(Pedido pe : pedidos){
+			if(pe.getId().equals(idPedido)){
+				return pe;
+			}
+		}
+		return null;
 	}
 	
 	

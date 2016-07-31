@@ -153,14 +153,6 @@ public class Pedido {
 	
 	//METHODS 
 
-
-
-
-
-	public void editarPedido () {
-		//TODO
-	}
-
 	public void confirmarte() {
 		if(this.getEstado().equals(Constantes.ESTADO_PEDIDO_CONFIRMADO) && alterable ){
 			this.estado = Constantes.ESTADO_PEDIDO_ENTREGADO;
@@ -171,6 +163,11 @@ public class Pedido {
 
 	public boolean estaVigente() {
 		return this.getEstado().equals(Constantes.ESTADO_PEDIDO_ABIERTO) &&  !this.getFechaDeVencimiento().isBeforeNow();
+	}
+
+	public void agregarProductoPedido(ProductoPedido pp) {
+		productosEnPedido.add(pp);
+		
 	}
 	
 	

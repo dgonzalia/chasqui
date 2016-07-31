@@ -21,5 +21,7 @@ public interface ProductoService {
 	public List<Variante> obtenerVariantesPorNombreODescripcion(String param,Integer pagina,Integer cantItems,Integer idVendedor) ;
 	@Transactional
 	public Variante obtenerVariantePor(Integer id);
+	@Transactional
+	public void modificarVariante(Variante v);
 	
 }

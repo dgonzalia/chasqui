@@ -149,6 +149,12 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 			}
 		});
 	}
+
+	@Override
+	public void modificarVariante(Variante v) {
+		this.getHibernateTemplate().saveOrUpdate(v);
+		this.getHibernateTemplate().flush();		
+	}
 	
 	
 	

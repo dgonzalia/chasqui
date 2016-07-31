@@ -48,4 +48,9 @@ public class ProductoServiceImpl implements ProductoService {
 		return productoDAO.obtenervariantePor(id);
 	}
 
+	@Override
+	public void modificarVariante(Variante v) {
+		productoDAO.modificarVariante(v);		
+	}
+
 }

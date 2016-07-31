@@ -11,18 +11,23 @@ import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.exceptions.PedidoVigenteException;
+import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
+import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
+import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
+import ar.edu.unq.chasqui.service.rest.request.AgregarProductoAPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
+import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
 public class UsuarioServiceImpl implements UsuarioService{
@@ -33,6 +38,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private Encrypter encrypter;
 	@Autowired
 	private PasswordGenerator passwordGenerator;
+	@Autowired
+	private ProductoService productoService;
 	
 	public Usuario obtenerUsuarioPorID(Integer id) {
 		return usuarioDAO.obtenerUsuarioPorID(id);
@@ -241,6 +248,36 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Pedido p = new Pedido(v,c.getEmail());
 		c.agregarPedido(p);
 		usuarioDAO.guardarUsuario(c);
+		
+	}
+
+	@Override
+	public void agregarPedidoA(AgregarProductoAPedidoRequest request, String email) {
+		Cliente c = usuarioDAO.obtenerClienteConDireccionPorEmail(email);
+		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
+		validar(v,c,request);
+		c.agregarProductoAPedido(v,request.getIdPedido(),request.getCantidad());
+		usuarioDAO.guardarUsuario(c);
+		v.reservarCantidad(request.getCantidad());
+		productoService.modificarVariante(v);		
+	}
+
+	private void validar(Variante v, Cliente c,AgregarProductoAPedidoRequest request) {
+		
+		if(v == null){
+			throw new ProductoInexsistenteException("No existe el producto con ID: "+ request.getIdVariante());
+		}
+		if(!v.tieneStockParaReservar(request.getCantidad())){
+			throw new ProductoInexsistenteException("El producto no posee más Stock");
+		}
+		
+		if(!c.contienePedidoVigente(request.getIdPedido())){
+			throw new PedidoVigenteException("El usuario no posee el pedido con ID:" + request.getIdPedido()+" o el mismo no se encuentra vigente");
+		}
+		
+		if(c.varianteCorrespondeConPedido(v.getIdVendedor(),request.getIdPedido())){
+			throw new RequestIncorrectoException("El producto no corresponde con el vendedor al que se le hizo el pedido con ID: "+ request.getIdPedido());
+		}
 		
 	}
 

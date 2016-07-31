@@ -80,6 +80,24 @@ public class Variante {
 		this.cantidadReservada = cantidadReservada;
 	}
 
+	public boolean tieneStockParaReservar(Integer cantidad) {
+		return this.getStock() - (this.getCantidadReservada() + cantidad)> 0;
+	}
+
+	
+	public boolean tieneStock(){
+		return this.getStock() - this.getCantidadReservada() > 0;
+	}
+	
+	public Integer getIdVendedor() {
+		return this.producto.getFabricante().getIdVendedor();
+	}
+
+	public void reservarCantidad(Integer cantidad) {
+		cantidadReservada += cantidad;
+		
+	}
+
 
 	
 	

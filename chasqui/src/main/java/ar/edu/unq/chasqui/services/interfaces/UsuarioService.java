@@ -12,6 +12,7 @@ import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.service.rest.request.AgregarProductoAPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -51,6 +52,8 @@ public interface UsuarioService {
 	public Pedido obtenerPedidoActualDe(String mail,Integer idVendedor) throws PedidoInexistenteException;
 	@Transactional
 	public void crearPedidoPara(String mail,Integer idVendedor);
+	@Transactional
+	public void agregarPedidoA(AgregarProductoAPedidoRequest request, String email);
 	
 	
 }
