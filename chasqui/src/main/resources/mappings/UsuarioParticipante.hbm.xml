@@ -15,12 +15,12 @@
         <property name="userName" type="java.lang.String">
             <column name="USERNAME" />
         </property>
-        <list name="productosEnPedido" inverse="false" table="PRODUCTO_PEDIDO" lazy="false">
+<!--         <list name="productosEnPedido" inverse="false" table="PRODUCTO_PEDIDO" lazy="false">
             <key>
                 <column name="ID" />
             </key>
             <list-index column="ORDEN"/>
             <one-to-many class="ar.edu.unq.chasqui.model.ProductoPedido" />
-        </list>
+        </list> -->
     </class>
 </hibernate-mapping>

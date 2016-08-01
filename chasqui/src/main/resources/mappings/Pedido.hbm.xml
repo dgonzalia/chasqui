@@ -26,9 +26,9 @@
             <column name="FECHA_CREACION" />
         </property>
         <property name="fechaDeVencimiento" type="org.joda.time.contrib.hibernate.PersistentDateTime" column="FECHA_VENCIMIENTO"/>
-<!--         <many-to-one name="direccionEntrega" class="ar.edu.unq.chasqui.model.Direccion" fetch="join" not-null="false" not-found="ignore"> -->
-<!--             <column name="DIRECCION_ENTREGA" /> -->
-<!--         </many-to-one> -->
+        <many-to-one name="direccionEntrega" class="ar.edu.unq.chasqui.model.Direccion" fetch="join" not-null="false" not-found="ignore">
+            <column name="DIRECCION_ENTREGA" />
+        </many-to-one>
         <property name="montoMinimo" type="java.lang.Double">
             <column name="MONTO_MINIMO" />
         </property>
@@ -36,11 +36,11 @@
             <column name="MONTO_ACTUAL" />
         </property>
         <property name="perteneceAPedidoGrupal" column="PERTENECE_A_GRUPAL" type="java.lang.Boolean"/>
-<!--         <set name="productosEnPedido" inverse="false" table="PRODUCTO_PEDIDO" lazy="false"  > -->
-<!--             <key> -->
-<!--                 <column name="ID_PEDIDO" /> -->
-<!--             </key> -->
-<!--             <one-to-many class="ar.edu.unq.chasqui.model.ProductoPedido" /> -->
-<!--         </set> -->
+        <set name="productosEnPedido" inverse="false" table="PRODUCTO_PEDIDO" lazy="false"  >
+            <key>
+                <column name="ID_PEDIDO" />
+            </key>
+            <one-to-many class="ar.edu.unq.chasqui.model.ProductoPedido" />
+        </set> 
     </class>
 </hibernate-mapping>

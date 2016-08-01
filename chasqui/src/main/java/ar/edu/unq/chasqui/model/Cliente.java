@@ -280,6 +280,7 @@ public class Cliente extends Usuario{
 		Pedido p = encontrarPedidoConId(idPedido);
 		ProductoPedido pp = new ProductoPedido(v,cantidad);
 		p.agregarProductoPedido(pp);
+		p.sumarAlMontoActual(v.getPrecio(), cantidad);
 	}
 
 	private Pedido encontrarPedidoConId(Integer idPedido) {

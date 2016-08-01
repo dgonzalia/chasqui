@@ -36,7 +36,7 @@
 				<prop key="hibernate.use_sql_comments">true</prop>
 <!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop> -->
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create-drop</prop> <!-- create-drop -->
+				<prop key="hibernate.hbm2ddl.auto">validate</prop> <!-- create-drop -->
 				<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
 				<prop key="hibernate.connection.autocommit">true</prop>
 				<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</prop>
@@ -51,7 +51,7 @@
  				<value>classpath*:mappings/Historial.hbm.xml</value>
 				<value>classpath*:mappings/Notificacion.hbm.xml</value>
 				<value>classpath*:mappings/Vendedor.hbm.xml</value>
-				<value>classpath*:mappings/UsuarioParticipante.hbm.xml</value>
+				<!-- <value>classpath*:mappings/UsuarioParticipante.hbm.xml</value> -->
 				<value>classpath*:mappings/Pedido.hbm.xml</value>
 				<value>classpath*:mappings/Cliente.hbm.xml</value>
 				<value>classpath*:mappings/Usuario.hbm.xml</value>

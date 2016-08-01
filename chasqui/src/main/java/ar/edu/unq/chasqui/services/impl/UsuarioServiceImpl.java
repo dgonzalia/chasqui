@@ -253,7 +253,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void agregarPedidoA(AgregarProductoAPedidoRequest request, String email) {
-		Cliente c = usuarioDAO.obtenerClienteConDireccionPorEmail(email);
+		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
 		validar(v,c,request);
 		c.agregarProductoAPedido(v,request.getIdPedido(),request.getCantidad());
@@ -262,7 +262,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		productoService.modificarVariante(v);		
 	}
 
-	private void validar(Variante v, Cliente c,AgregarProductoAPedidoRequest request) {
+	private void validar(Variante v, Cliente c, AgregarProductoAPedidoRequest request) {
 		
 		if(v == null){
 			throw new ProductoInexsistenteException("No existe el producto con ID: "+ request.getIdVariante());
@@ -275,7 +275,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new PedidoVigenteException("El usuario no posee el pedido con ID:" + request.getIdPedido()+" o el mismo no se encuentra vigente");
 		}
 		
-		if(c.varianteCorrespondeConPedido(v.getIdVendedor(),request.getIdPedido())){
+		if(!c.varianteCorrespondeConPedido(v.getIdVendedor(),request.getIdPedido())){
 			throw new RequestIncorrectoException("El producto no corresponde con el vendedor al que se le hizo el pedido con ID: "+ request.getIdPedido());
 		}
 		

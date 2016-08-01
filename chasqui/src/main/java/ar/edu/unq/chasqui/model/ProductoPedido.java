@@ -10,6 +10,9 @@ public class ProductoPedido {
 	private Integer cantidad;
 	private String imagen;
 	
+	
+	public ProductoPedido (){}
+	
 	public ProductoPedido(Variante v,Integer cant) {
 		idVariedad = v.getId();
 		cantidad = cant;

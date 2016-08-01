@@ -167,10 +167,11 @@ public class Pedido {
 
 	public void agregarProductoPedido(ProductoPedido pp) {
 		productosEnPedido.add(pp);
-		
 	}
 	
-	
+	public void sumarAlMontoActual (Double precio, Integer cantidad ) {
+		this.montoActual += precio * cantidad;
+	}
 	
 
 

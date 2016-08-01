@@ -81,7 +81,7 @@ public class PedidoListener {
 			usuarioService.agregarPedidoA(request,email);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e ){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(406).entity(e.getMessage()).build();
 		}catch(Exception e){
 			return Response.status(500).encoding(e.getMessage()).build();
 		}
