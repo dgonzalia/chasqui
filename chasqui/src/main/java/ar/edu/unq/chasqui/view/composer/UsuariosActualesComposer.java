@@ -33,6 +33,7 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 	private Vendedor usuarioSeleccionado;
 	private Vendedor usuarioLogueado;
 	private VendedorService vendedorService;
+	private UsuarioService usuarioService;
 	
 	@Override
 	public void doAfterCompose(Component comp) throws Exception{
@@ -44,6 +45,7 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		Events.sendEvent(Events.ON_USER,altaUsuarioWindow,this.self);
 		comp.addEventListener(Events.ON_NOTIFY, new AccionEventListener(this));
 		vendedorService = (VendedorService) SpringUtil.getBean("vendedorService");
+		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		usuarios = vendedorService.obtenerVendedores();
 		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		usuarios.add(usuarioLogueado);
@@ -108,8 +110,8 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 								params.put("accion", "eliminar");
 								params.put("usuario", u);
 								Events.sendEvent(Events.ON_USER,altaUsuarioWindow,params);
-								// eliminar usuario
 								usuarios.remove(u);
+								usuarioService.eliminarUsuario(u);
 								binder.loadAll();		
 							
 							case Messagebox.NO:
