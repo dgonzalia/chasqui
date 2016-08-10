@@ -5,11 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.cxf.common.util.StringUtils;
-import org.joda.time.DateTime;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
-import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -291,6 +289,43 @@ public class Cliente extends Usuario{
 		}
 		return null;
 	}
+
+	public boolean contieneProductoEnPedido(Variante v, Integer idPedido) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		ProductoPedido pp = p.encontrarProductoPedido(v.getId());
+		if(pp.getIdVariante().equals(v.getId())){
+			return true;
+		}
+		return false;
+	}
+
+	public boolean contieneCantidadDeProductoEnPedido(Variante v, Integer idPedido,Integer cantidad) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		ProductoPedido pp = p.encontrarProductoPedido(v.getId());
+		if(pp.getIdVariante().equals(v.getId()) &&  cantidad <= pp.getCantidad()){
+			return true;
+		}
+		return false;
+	}
+
+	public void eliminarProductoEnPedido(Integer idVariante, Double precio,Integer idPedido, Integer cantidad) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		ProductoPedido pp = p.encontrarProductoPedido(idVariante);
+		if(cantidad < pp.getCantidad()){
+			pp.restar(cantidad);
+		}else{
+			p.eliminar(pp);
+		}
+		p.restarAlMontoActual(precio, cantidad);
+	}
+
+	public Pedido eliminarPedido(Integer idPedido) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		pedidos.remove(p);
+		return p;
+	}
+
+	
 	
 	
 	

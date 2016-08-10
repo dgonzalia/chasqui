@@ -3,7 +3,7 @@ package ar.edu.unq.chasqui.model;
 public class ProductoPedido {
 
 	private Integer id;
-	private Integer idVariedad;
+	private Integer idVariante;
 	private Double precio;
 	private String nombreProducto;
 	private String nombreVariante;
@@ -14,7 +14,7 @@ public class ProductoPedido {
 	public ProductoPedido (){}
 	
 	public ProductoPedido(Variante v,Integer cant) {
-		idVariedad = v.getId();
+		idVariante = v.getId();
 		cantidad = cant;
 		nombreProducto = v.getProducto().getNombre();
 		nombreVariante = v.getNombre();
@@ -60,12 +60,12 @@ public class ProductoPedido {
 		this.nombreVariante = nombreVariante;
 	}
 
-	public Integer getIdVariedad() {
-		return idVariedad;
+	public Integer getIdVariante() {
+		return idVariante;
 	}
 
-	public void setIdVariedad(Integer idVariedad) {
-		this.idVariedad = idVariedad;
+	public void setIdVariante(Integer idVariante) {
+		this.idVariante = idVariante;
 	}
 
 	public String getImagen() {
@@ -74,6 +74,10 @@ public class ProductoPedido {
 
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
+	}
+
+	public void restar(Integer cant) {
+		cantidad -= cant;
 	}
 	
 	

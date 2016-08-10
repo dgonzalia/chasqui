@@ -2,7 +2,7 @@ package ar.edu.unq.chasqui.service.rest.request;
 
 import java.io.Serializable;
 
-public class AgregarProductoAPedidoRequest implements Serializable{
+public class AgregarQuitarProductoAPedidoRequest implements Serializable{
 
 	/**
 	 * 

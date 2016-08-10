@@ -12,6 +12,9 @@
 	            <param name="increment_size">1</param> 
          	</generator>
         </id>
+        <property name="idVariante" type="java.lang.Integer">
+            <column name="ID_VARIANTE" />
+        </property>
         <property name="precio" type="java.lang.Double">
             <column name="PRECIO" />
         </property>

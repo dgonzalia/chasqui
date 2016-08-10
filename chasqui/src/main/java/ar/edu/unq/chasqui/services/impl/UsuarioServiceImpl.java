@@ -23,7 +23,7 @@ import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
-import ar.edu.unq.chasqui.service.rest.request.AgregarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -78,7 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(encrypter.encrypt("federico"));
-			u2.setEmail("jfflores90@gmail.com");
+			u2.setEmail("jfflores90@gmail");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			u2.setMontoMinimoPedido(213);
@@ -89,7 +89,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Cliente c = new Cliente();
 			c.setToken("federico");
 			c.setPassword(encrypter.encrypt("federico"));
-			c.setEmail("mat90@gmail.com");
+			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();
@@ -252,7 +252,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void agregarPedidoA(AgregarProductoAPedidoRequest request, String email) {
+	public void agregarPedidoA(AgregarQuitarProductoAPedidoRequest request, String email) {
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
 		validar(v,c,request);
@@ -262,21 +262,61 @@ public class UsuarioServiceImpl implements UsuarioService{
 		productoService.modificarVariante(v);		
 	}
 
-	private void validar(Variante v, Cliente c, AgregarProductoAPedidoRequest request) {
-		
+	private void validar(Variante v, Cliente c,AgregarQuitarProductoAPedidoRequest request) {		
+		validacionesGenerales(v,c,request);		
+		if(!v.tieneStockParaReservar(request.getCantidad())){
+			throw new ProductoInexsistenteException("El producto no posee más Stock");
+		}	
+	}
+	
+	private void validacionesGenerales(Variante v, Cliente c, AgregarQuitarProductoAPedidoRequest request){
 		if(v == null){
 			throw new ProductoInexsistenteException("No existe el producto con ID: "+ request.getIdVariante());
 		}
-		if(!v.tieneStockParaReservar(request.getCantidad())){
-			throw new ProductoInexsistenteException("El producto no posee más Stock");
-		}
-		
 		if(!c.contienePedidoVigente(request.getIdPedido())){
 			throw new PedidoVigenteException("El usuario no posee el pedido con ID:" + request.getIdPedido()+" o el mismo no se encuentra vigente");
 		}
 		
 		if(!c.varianteCorrespondeConPedido(v.getIdVendedor(),request.getIdPedido())){
 			throw new RequestIncorrectoException("El producto no corresponde con el vendedor al que se le hizo el pedido con ID: "+ request.getIdPedido());
+		}		
+	}
+
+	@Override
+	public void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email) {
+		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
+		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
+		validarParaEliminar(v,c,request);
+		c.eliminarProductoEnPedido(request.getIdVariante(), v.getPrecio(),request.getIdPedido(),request.getCantidad());
+		v.eliminarReserva(request.getCantidad());
+		usuarioDAO.guardarUsuario(c);
+		productoService.modificarVariante(v);
+	}
+
+	private void validarParaEliminar(Variante v, Cliente c, AgregarQuitarProductoAPedidoRequest request) {
+		validacionesGenerales(v, c, request);
+		if(!c.contieneProductoEnPedido(v,request.getIdPedido())){
+			throw new ProductoInexsistenteException("El usuario no tiene el producto con ID: "+ request.getIdVariante()+" En el pedido");
+		}
+		if(!c.contieneCantidadDeProductoEnPedido(v,request.getIdPedido(),request.getCantidad())){
+			throw new ProductoInexsistenteException("No se puede quitar mas cantidad de un producto de la que el usuario posee en su pedido");
+		}
+		
+		
+	}
+
+	@Override
+	public void eliminarPedidoPara(String email, Integer idPedido) {
+		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
+		validarEliminacionDePedidoPara(c,idPedido);
+		Pedido p = c.eliminarPedido(idPedido);
+		productoService.eliminarReservasDe(p);
+		usuarioDAO.guardarUsuario(c);
+	}
+
+	private void validarEliminacionDePedidoPara(Cliente c, Integer idPedido) {
+		if(!c.contienePedidoVigente(idPedido)){
+			throw new PedidoVigenteException("El usuario no posee el pedido con ID:" + idPedido+" o el mismo no se encuentra vigente");
 		}
 		
 	}

@@ -98,6 +98,11 @@ public class Variante {
 		
 	}
 
+	public void eliminarReserva(Integer cantidad) {
+		cantidadReservada -= cantidad;
+		
+	}
+
 
 	
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.chasqui.model.Imagen;
+import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Variante;
 
 public interface ProductoService {
@@ -23,5 +24,6 @@ public interface ProductoService {
 	public Variante obtenerVariantePor(Integer id);
 	@Transactional
 	public void modificarVariante(Variante v);
+	public void eliminarReservasDe(Pedido p);
 	
 }

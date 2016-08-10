@@ -2,6 +2,7 @@ package ar.edu.unq.chasqui.service.rest.impl;
 
 import java.io.IOException;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -20,10 +21,11 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.exceptions.PedidoVigenteException;
+import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Pedido;
-import ar.edu.unq.chasqui.service.rest.request.AgregarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.response.PedidoResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -75,33 +77,78 @@ public class PedidoListener {
 	@Path("/individual")
 	public Response agregarProductoAPedido(@Multipart(value="agregarRequest", type="application/json")final String agregarRequest){
 		try{
-			AgregarProductoAPedidoRequest request = toAgregarPedidoRequest(agregarRequest);
+			AgregarQuitarProductoAPedidoRequest request = toAgregarPedidoRequest(agregarRequest);
 			String email = obtenerEmailDeContextoDeSeguridad();
 			validarRequest(request);
 			usuarioService.agregarPedidoA(request,email);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e ){
-			return Response.status(406).entity(e.getMessage()).build();
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(PedidoVigenteException | ProductoInexsistenteException e){
+			return Response.status(404).entity(e.getMessage()).build();
 		}catch(Exception e){
 			return Response.status(500).encoding(e.getMessage()).build();
 		}
 	}
 	
 	
+	@DELETE
+	@Produces("application/json")
+	@Path("/individual")
+	public Response eliminarProductoAlPedido(@Multipart(value="eliminarRequest", type="application/json") final String eliminarRequest){
+		try{
+			AgregarQuitarProductoAPedidoRequest request = toAgregarPedidoRequest(eliminarRequest);
+			String email = obtenerEmailDeContextoDeSeguridad();
+			validarRequest(request);
+			usuarioService.eliminarProductoDePedido(request,email);
+			return Response.ok().build();
+		}catch(IOException | RequestIncorrectoException e){
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).encoding(e.getMessage()).build();
+		}		
+	}
 	
-	private void validarRequest(AgregarProductoAPedidoRequest request) {
-		if( request.getIdPedido() == null){
+	
+	@DELETE
+	@Produces("application/json")
+	@Path("/individual/{idPedido}")
+	public Response eliminarPedido(@PathParam("idPedido")Integer idPedido){
+		try{
+			validarRequest(idPedido);
+			String email = obtenerEmailDeContextoDeSeguridad();
+			usuarioService.eliminarPedidoPara(email,idPedido);
+			return Response.ok().build();			
+		}catch(RequestIncorrectoException e){
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+		
+	}
+	
+	private void validarRequest(Integer idPedido){
+		if(idPedido == null || idPedido < 0){
+		throw new RequestIncorrectoException("La cantidad debe ser mayo  debe ser mayor a 0");
+		}
+	}
+	
+	private void validarRequest(AgregarQuitarProductoAPedidoRequest request) {
+		if(request.getIdPedido() == null){
 			throw new RequestIncorrectoException("El id De pedido no debe ser null");
 		}
 		if(request.getIdVariante() == null){
 			throw new RequestIncorrectoException("El id de variante no debe ser null");
-		}		
+		}
+		if(request.getCantidad() == null || request.getCantidad() <= 0){
+			throw new RequestIncorrectoException("La cantidad debe ser mayo  debe ser mayor a 0");
+		}
 	}
 
-	private AgregarProductoAPedidoRequest toAgregarPedidoRequest(String agregarRequest) throws IOException {
+	private AgregarQuitarProductoAPedidoRequest toAgregarPedidoRequest(String agregarRequest) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-		return mapper.readValue(agregarRequest, AgregarProductoAPedidoRequest.class);
+		return mapper.readValue(agregarRequest, AgregarQuitarProductoAPedidoRequest.class);
 	}
 
 	private PedidoResponse toResponse(Pedido pedido) {

@@ -168,9 +168,26 @@ public class Pedido {
 	public void agregarProductoPedido(ProductoPedido pp) {
 		productosEnPedido.add(pp);
 	}
+
+	public ProductoPedido encontrarProductoPedido(Integer idVariante) {
+		for(ProductoPedido pp : this.getProductosEnPedido()){
+			if(pp.getIdVariante().equals(idVariante)){
+				return pp;
+			}
+		}
+		return null;
+	}
+
+	public void eliminar(ProductoPedido pp) {
+		productosEnPedido.remove(pp);		
+	}
 	
 	public void sumarAlMontoActual (Double precio, Integer cantidad ) {
 		this.montoActual += precio * cantidad;
+	}
+	
+	public void restarAlMontoActual (Double precio, Integer cantidad ) {
+		this.montoActual -= precio * cantidad;
 	}
 	
 
