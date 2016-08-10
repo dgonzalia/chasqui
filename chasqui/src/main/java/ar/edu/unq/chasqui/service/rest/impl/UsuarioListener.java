@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,9 +30,11 @@ import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
+import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.response.DireccionResponse;
+import ar.edu.unq.chasqui.service.rest.response.NotificacionResponse;
 import ar.edu.unq.chasqui.service.rest.response.PerfilResponse;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 
@@ -56,8 +59,9 @@ public class UsuarioListener {
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}
-		
 	}
+	
+
 	
 	@PUT
 	@Path("/edit")
@@ -147,7 +151,45 @@ public class UsuarioListener {
 	}
 	
 	
+	@GET
+	@Path("/notificacion")
+	@Produces("application/json")
+	public Response obtenerNotificacionesDe(@HeaderParam("pagina")Integer pagina){
+		try{
+			String mail = obtenerEmailDeContextoDeSeguridad();			
+			return Response.ok(toNotificacionResponse(usuarioService.obtenerNotificacionesDe(mail,pagina))).build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+		
+	}
 	
+	
+	@POST
+	@Path("/notificacion")
+	@Produces("application/json")
+	public Response enviarNotificacionDeInvitacion(@HeaderParam("destino")String destino){
+		try{
+			String origen = obtenerEmailDeContextoDeSeguridad();
+			usuarioService.enviarInvitacionRequest(origen,destino);
+			return Response.ok().build();			
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
+		}
+	}
+	
+	
+	
+	private List<NotificacionResponse> toNotificacionResponse(List<Notificacion> notificaciones) {
+		List<NotificacionResponse>resultado= new ArrayList<NotificacionResponse>();
+		for(Notificacion n : notificaciones){
+			resultado.add(new NotificacionResponse(n));
+		}
+		return resultado;
+	}
+
+
+
 	private String obtenerEmailDeContextoDeSeguridad(){
 		return 	SecurityContextHolder.getContext().getAuthentication().getName();
 	}

@@ -106,6 +106,30 @@ public class MailService {
 			throw new UsuarioExistenteException() ;
 		}
 	}
+
+
+
+	public void enviarEmailDeInvitacionChasqui(Cliente clienteOrigen, String destino) throws Exception {
+		Template t = this.obtenerTemplate("emailInvitacion.ftl"); 
+		MimeMessage m = mailSender.createMimeMessage();
+		m.setSubject(MimeUtility.encodeText("Conocés Chasqui??","UTF-8","B"));
+		MimeMessageHelper helper = new MimeMessageHelper(m,true,"UTF-8");
+		StringWriter writer = new StringWriter();
+		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.png");
+		helper.setFrom("administrator-chasqui-noreply@chasqui.org");
+		helper.setTo(destino);
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("usuarioOrigen", clienteOrigen.getNickName());
+		params.put("mailOrigen",clienteOrigen.getEmail());
+		t.process(params, writer);
+		
+		writer.flush();
+		writer.close();
+		helper.setText(writer.toString(),true);
+		helper.addInline("logochasqui", resource);
+		mailSender.send(m);		
+		
+	}
 	
 	
 	

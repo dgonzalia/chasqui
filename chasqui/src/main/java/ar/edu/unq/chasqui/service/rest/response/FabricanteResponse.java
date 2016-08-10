@@ -1,7 +1,11 @@
 package ar.edu.unq.chasqui.service.rest.response;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import ar.edu.unq.chasqui.model.Caracteristica;
+import ar.edu.unq.chasqui.model.CaracteristicaProductor;
 import ar.edu.unq.chasqui.model.Fabricante;
 
 public class FabricanteResponse implements Serializable{
@@ -14,6 +18,8 @@ public class FabricanteResponse implements Serializable{
 	private Integer idProductor;
 	private String nombreProductor;
 	private String pathImagen;
+	private DireccionProductorResponse direccion;
+	private CaracteristicaResponse medalla;
 	
 	
 	public FabricanteResponse(){}
@@ -21,6 +27,8 @@ public class FabricanteResponse implements Serializable{
 		idProductor = f.getId();
 		nombreProductor = f.getNombre();
 		pathImagen = f.getPathImagen();
+		medalla = new CaracteristicaResponse(f.getCaracteristica());
+		direccion = new DireccionProductorResponse(f.getCalle(),f.getAltura(),f.getPais(),f.getLocalidad(),f.getProvincia());
 	}
 	
 	public Integer getIdProductor() {
@@ -41,6 +49,21 @@ public class FabricanteResponse implements Serializable{
 	public void setPathImagen(String pathImagen) {
 		this.pathImagen = pathImagen;
 	}
+	public DireccionProductorResponse getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(DireccionProductorResponse direccion) {
+		this.direccion = direccion;
+	}
+	public CaracteristicaResponse getMedalla() {
+		return medalla;
+	}
+	public void setMedalla(CaracteristicaResponse medalla) {
+		this.medalla = medalla;
+	}
+	
+	
+	
 	
 	
 	

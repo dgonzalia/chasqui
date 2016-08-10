@@ -12,12 +12,14 @@ public class VendedorResponse implements Serializable{
 	private static final long serialVersionUID = -4642765076419773900L;
 	private Integer id;
 	private String nombre;
+	private String imagen;
 	
 	
 	public VendedorResponse(){}
 	public VendedorResponse(Vendedor v){
 		id = v.getId();
 		nombre = v.getUsername();
+		imagen = v.getImagenPerfil();
 	}
 	
 	
@@ -36,6 +38,14 @@ public class VendedorResponse implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 	
 	
 	

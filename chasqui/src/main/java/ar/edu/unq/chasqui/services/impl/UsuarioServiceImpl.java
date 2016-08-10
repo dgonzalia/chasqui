@@ -17,6 +17,7 @@ import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
+import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
@@ -40,6 +41,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private PasswordGenerator passwordGenerator;
 	@Autowired
 	private ProductoService productoService;
+	@Autowired
+	private MailService mailService;
 	
 	public Usuario obtenerUsuarioPorID(Integer id) {
 		return usuarioDAO.obtenerUsuarioPorID(id);
@@ -324,6 +327,25 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public void eliminarUsuario(Vendedor u) {
 		usuarioDAO.eliminarUsuario(u);
+		
+	}
+
+	@Override
+	public List<Notificacion> obtenerNotificacionesDe(String mail, Integer pagina) {
+		return usuarioDAO.obtenerNotificacionesDe(mail,pagina);
+	}
+
+	@Override
+	public void enviarInvitacionRequest(String origen,String destino) throws Exception {
+		
+		Cliente clienteOrigen = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(origen);
+		Cliente clienteDestino = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(destino);
+		if(clienteDestino != null){
+			// enviar Notificacion de creacion de grupo
+		}else{
+			mailService.enviarEmailDeInvitacionChasqui(clienteOrigen,destino);
+		}
+		
 		
 	}
 

@@ -8,6 +8,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -17,6 +18,7 @@ import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Fabricante;
+import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -136,6 +138,31 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		this.getHibernateTemplate().flush();
 	}
 
+	@Override
+	public List<Notificacion> obtenerNotificacionesDe(final String mail, final Integer pagina) {
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Notificacion>>() {
+
+			@Override
+			public List<Notificacion> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Notificacion.class);
+				Integer inicio = calcularInicio(pagina, 5);
+				criteria.setFirstResult(inicio)
+						.setMaxResults(5)
+						.add(Restrictions.eq("usuarioDestino", mail))
+						.addOrder(Order.desc("id"));
+				return criteria.list();
+			}			
+		});
+	}
+
+	
+	
+	private Integer calcularInicio(Integer pagina, Integer cantidadDeItems) {		
+		if(pagina == 1){
+			return 0;
+		}
+		return (pagina - 1) * cantidadDeItems;
+	}
 	
 
 }

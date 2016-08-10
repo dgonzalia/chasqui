@@ -6,8 +6,8 @@ public class Notificacion {
 
 	private Integer id;
 	private DateTime fecha;
-	private Usuario usuarioOrigen;
-	private Usuario usuarioDestino;
+	private String usuarioOrigen;
+	private String usuarioDestino;
 	private String mensaje;
 	private String estado;
 	
@@ -29,22 +29,22 @@ public class Notificacion {
 		this.fecha = fecha;
 	}
 	
-	public Usuario getUsuarioOrigen() {
+	public String getUsuarioOrigen() {
 		return usuarioOrigen;
 	}
-	
-	public void setUsuarioOrigen(Usuario usuarioOrigen) {
+
+	public void setUsuarioOrigen(String usuarioOrigen) {
 		this.usuarioOrigen = usuarioOrigen;
 	}
-	
-	public Usuario getUsuarioDestino() {
+
+	public String getUsuarioDestino() {
 		return usuarioDestino;
 	}
-	
-	public void setUsuarioDestino(Usuario usuarioDestino) {
+
+	public void setUsuarioDestino(String usuarioDestino) {
 		this.usuarioDestino = usuarioDestino;
 	}
-	
+
 	public String getMensaje() {
 		return mensaje;
 	}

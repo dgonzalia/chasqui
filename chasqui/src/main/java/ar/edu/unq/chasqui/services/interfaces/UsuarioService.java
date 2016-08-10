@@ -9,6 +9,7 @@ import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
+import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -60,6 +61,10 @@ public interface UsuarioService {
 	public void eliminarPedidoPara(String email, Integer idPedido);
 	@Transactional
 	public void eliminarUsuario(Vendedor u);
+	@Transactional
+	public List<Notificacion> obtenerNotificacionesDe(String mail, Integer pagina);
+	@Transactional
+	public void enviarInvitacionRequest(String origen, String destino) throws Exception;
 	
 	
 }
