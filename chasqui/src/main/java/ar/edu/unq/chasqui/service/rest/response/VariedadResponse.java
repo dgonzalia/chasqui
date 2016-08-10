@@ -16,6 +16,7 @@ public class VariedadResponse implements Serializable{
 	private static final long serialVersionUID = 5648828220930027872L;
 	
 	private Integer idProducto;
+	private Integer idVariante;
 	private Integer idCategoria;
 	private Integer idFabricante;
 	private String imagenPrincipal;
@@ -116,12 +117,19 @@ public class VariedadResponse implements Serializable{
 		this.descripcion = descripcion;
 	}
 	
+	public Integer getIdVariante() {
+		return idVariante;
+	}
+	public void setIdVariante(Integer idVariante) {
+		this.idVariante = idVariante;
+	}
 	
 	
 	public VariedadResponse(){}
 	
 	public VariedadResponse(Variante v, Producto p) {
 		idProducto = p.getId();
+		idVariante = v.getId();
 		idCategoria = p.getCategoria().getId();
 		idFabricante = p.getFabricante().getId();
 		imagenPrincipal = v.getImagenes().get(0).getPath();
@@ -145,9 +153,4 @@ public class VariedadResponse implements Serializable{
 		}
 	}
 	
-	
-	
-	
-	
-
 }
