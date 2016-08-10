@@ -79,6 +79,11 @@ public class ProductoPedido {
 	public void restar(Integer cant) {
 		cantidad -= cant;
 	}
+
+	public void sumarCantidad(Integer cant) {
+		cantidad += cant;
+		
+	}
 	
 	
 	

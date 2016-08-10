@@ -130,6 +130,12 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		return c;
 	}
 
+	@Override
+	public void eliminarUsuario(Vendedor u) {
+		this.getHibernateTemplate().delete(u);
+		this.getHibernateTemplate().flush();
+	}
+
 	
 
 }

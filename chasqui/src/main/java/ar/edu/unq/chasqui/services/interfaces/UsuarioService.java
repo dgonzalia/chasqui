@@ -58,6 +58,8 @@ public interface UsuarioService {
 	public void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email);
 	@Transactional
 	public void eliminarPedidoPara(String email, Integer idPedido);
+	@Transactional
+	public void eliminarUsuario(Vendedor u);
 	
 	
 }

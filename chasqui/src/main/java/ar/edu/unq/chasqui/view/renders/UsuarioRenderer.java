@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.zkoss.util.resource.Labels;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Listcell;
@@ -13,6 +14,7 @@ import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.view.composer.Constantes;
 
 public class UsuarioRenderer implements ListitemRenderer<Vendedor>{
 
@@ -27,7 +29,7 @@ public class UsuarioRenderer implements ListitemRenderer<Vendedor>{
 		Listcell c2 = new Listcell();
 		Hbox hbox = new Hbox();
 		Toolbarbutton editar = new Toolbarbutton();
-		Toolbarbutton eliminar = new Toolbarbutton();
+		Vendedor usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		editar.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.editar"));
 		editar.setImage("/imagenes/editar.png");
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -37,12 +39,15 @@ public class UsuarioRenderer implements ListitemRenderer<Vendedor>{
 		Map<String,Object> map2 = new HashMap<String,Object>();
 		map2.put("accion", "eliminar");
 		map2.put("usuario", u);
-		eliminar.setImage("/imagenes/detach.png");
-		eliminar.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.eliminar"));
-		eliminar.addForward(Events.ON_CLICK, usuariosActualesWindow, Events.ON_NOTIFY,map2);
 		c1.setParent(item);
 		editar.setParent(hbox);
-		eliminar.setParent(hbox);
+		if(!usuarioLogueado.getUsername().equalsIgnoreCase(u.getUsername())){
+			Toolbarbutton eliminar = new Toolbarbutton();
+			eliminar.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.eliminar"));
+			eliminar.setImage("/imagenes/detach.png");
+			eliminar.addForward(Events.ON_CLICK, usuariosActualesWindow, Events.ON_NOTIFY,map2);
+			eliminar.setParent(hbox);			
+		}
 		hbox.setParent(c2);
 		c2.setParent(item);
 		

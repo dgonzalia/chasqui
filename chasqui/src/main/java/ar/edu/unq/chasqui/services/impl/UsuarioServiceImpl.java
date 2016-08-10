@@ -321,6 +321,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 
+	@Override
+	public void eliminarUsuario(Vendedor u) {
+		usuarioDAO.eliminarUsuario(u);
+		
+	}
+
 
 	
 

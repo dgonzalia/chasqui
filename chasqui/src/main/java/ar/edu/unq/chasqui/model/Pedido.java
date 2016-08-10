@@ -166,7 +166,30 @@ public class Pedido {
 	}
 
 	public void agregarProductoPedido(ProductoPedido pp) {
-		productosEnPedido.add(pp);
+		if(existeProductoEnPedido(pp)){
+			sumarCantidadAProductoExistente(pp);
+		}else{
+			productosEnPedido.add(pp);			
+		}
+		
+	}
+
+	private void sumarCantidadAProductoExistente(ProductoPedido pp) {
+		ProductoPedido p = encontrarProductoEnPedido(pp);
+		p.sumarCantidad(pp.getCantidad());
+	}
+
+	private ProductoPedido encontrarProductoEnPedido(ProductoPedido pp) {
+		for(ProductoPedido p : productosEnPedido){
+			if(p.getId().equals(pp.getIdVariante())){
+				return p;
+			}
+		}
+		return null;
+	}
+
+	private boolean existeProductoEnPedido(ProductoPedido p) {
+		return encontrarProductoEnPedido(p) != null;
 	}
 
 	public ProductoPedido encontrarProductoPedido(Integer idVariante) {

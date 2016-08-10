@@ -17,4 +17,5 @@ public interface UsuarioDAO {
 	public void inicializarListasDe(Vendedor usuarioLogueado);
 	public Cliente obtenerClienteConDireccionPorEmail(final String email);
 	public Cliente obtenerClienteConPedido(String mail);
+	public void eliminarUsuario(Vendedor u);
 }
