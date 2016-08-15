@@ -174,7 +174,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 //			throw new WrongValueException(listboxCaracteristicas,"Se debe agregar al menos una Caracteristica");
 //		}
 		if(model.getVariantes() == null || model.getVariantes().isEmpty()){
-			throw new WrongValueException(listboxVariante,"Debe agregar al menos una varidad del producto");
+			throw new WrongValueException(listboxVariante,"Debe agregar al menos una variedad del producto");
 		}
 	}
 	

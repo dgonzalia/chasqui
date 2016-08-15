@@ -49,7 +49,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 			<label value="Direccion:"/>
 		</listcell>
 		<listcell>
-			<textbox id="txtDireccion"/>
+			<textbox id="txtDireccion" maxlength="20"/>
 		</listcell>
 	</listitem>
 	<listitem>
