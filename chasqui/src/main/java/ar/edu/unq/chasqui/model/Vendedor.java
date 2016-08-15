@@ -141,5 +141,14 @@ public class Vendedor extends Usuario{
 		//TODO
 	}
 
+	public boolean contieneCategoria(String value) {
+		for(Categoria c : categorias){
+			if(c.getNombre().equalsIgnoreCase(value)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 
 }

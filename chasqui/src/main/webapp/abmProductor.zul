@@ -25,7 +25,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 			<label value="País:"/>
 		</listcell>
 		<listcell>
-			<textbox id="txtPais"/>
+			<textbox id="txtPais" maxlength="20"/>
 		</listcell>
 	</listitem>
 	<listitem>
@@ -33,7 +33,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 			<label value="Provincia:"/>
 		</listcell>
 		<listcell>
-			<textbox id="txtProvincia"/>
+			<textbox id="txtProvincia" maxlength="20"/>
 		</listcell>
 	</listitem>
 	<listitem>
@@ -41,7 +41,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 			<label value="Localidad:"/>
 		</listcell>
 		<listcell>
-			<textbox id="txtLocalidad"/>
+			<textbox id="txtLocalidad" maxlength="20"/>
 		</listcell>
 	</listitem>
 	<listitem>

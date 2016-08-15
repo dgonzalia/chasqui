@@ -48,6 +48,9 @@ public class ABMCategoriaComposer extends GenericForwardComposer<Component> {
 		if(StringUtils.isEmpty(textboxNombreCategoria.getValue())){
 			throw new WrongValueException("El nombre no debe ser vacio!");
 		}
+		if(usuario.contieneCategoria(textboxNombreCategoria.getValue())){
+			throw new WrongValueException("El usuario:" + usuario.getUsername() + " ya contiene la categoria: "+ textboxNombreCategoria.getValue());
+		}
 		
 		// guardar y cerrar
 		if(model != null){
