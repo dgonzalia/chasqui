@@ -321,8 +321,19 @@ public class Cliente extends Usuario{
 
 	public Pedido eliminarPedido(Integer idPedido) {
 		Pedido p = encontrarPedidoConId(idPedido);
+		p.setEstado(Constantes.ESTADO_PEDIDO_CANCELADO);
 		pedidos.remove(p);
 		return p;
+	}
+
+	public void confirmarPedido(Integer idPedido) {
+		Pedido p = encontrarPedidoConId(idPedido);
+		p.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
+		pedidos.remove(p);
+		if(historialPedidos != null){
+			historialPedidos = new Historial(this.getEmail());
+		}
+		historialPedidos.agregarAHistorial(p);
 	}
 
 	

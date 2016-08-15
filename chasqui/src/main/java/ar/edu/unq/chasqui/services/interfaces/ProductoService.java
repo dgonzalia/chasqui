@@ -24,6 +24,7 @@ public interface ProductoService {
 	public Variante obtenerVariantePor(Integer id);
 	@Transactional
 	public void modificarVariante(Variante v);
+	@Transactional
 	public void eliminarReservasDe(Pedido p);
 	
 }

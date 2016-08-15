@@ -22,4 +22,5 @@ public interface UsuarioDAO {
 	public Cliente obtenerClienteConPedido(String mail);
 	public void eliminarUsuario(Vendedor u);
 	public List<Notificacion> obtenerNotificacionesDe(String mail, Integer pagina);
+	public Cliente obtenerClienteConPedidoEHistorial(String mail);
 }

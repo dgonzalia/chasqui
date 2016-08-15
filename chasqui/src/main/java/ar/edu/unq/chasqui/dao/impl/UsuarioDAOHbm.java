@@ -131,6 +131,14 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		Hibernate.initialize(c.getPedidos());
 		return c;
 	}
+	
+	@Override
+	public Cliente obtenerClienteConPedidoEHistorial(String mail) {
+		Cliente c = (Cliente) this.obtenerUsuarioPorEmail(mail);
+		Hibernate.initialize(c.getPedidos());
+		Hibernate.initialize(c.getHistorialPedidos().getPedidos());
+		return c;
+	}
 
 	@Override
 	public void eliminarUsuario(Vendedor u) {

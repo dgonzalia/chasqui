@@ -65,6 +65,8 @@ public interface UsuarioService {
 	public List<Notificacion> obtenerNotificacionesDe(String mail, Integer pagina);
 	@Transactional
 	public void enviarInvitacionRequest(String origen, String destino) throws Exception;
+	@Transactional
+	public void confirmarPedido(String email, Integer idPedido) throws PedidoInexistenteException;
 	
 	
 }

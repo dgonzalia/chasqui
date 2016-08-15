@@ -123,13 +123,28 @@ public class PedidoListener {
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
+		}	
+	}
+	
+	@PUT
+	@Produces("application/json")
+	@Path("/individual/{idPedido}")
+	public Response confirmarPedido(@PathParam("idPedido") Integer idPedido){
+		try{
+			validarRequest(idPedido);
+			String email = obtenerEmailDeContextoDeSeguridad();
+			usuarioService.confirmarPedido(email,idPedido);
+			return Response.ok().build();
+		}catch(RequestIncorrectoException e){
+			return Response.status(406).entity("Parametros Incorrectos").build();
+		}catch(Exception e){
+			return Response.status(500).entity(e.getMessage()).build();
 		}
-		
 	}
 	
 	private void validarRequest(Integer idPedido){
 		if(idPedido == null || idPedido < 0){
-		throw new RequestIncorrectoException("La cantidad debe ser mayo  debe ser mayor a 0");
+		throw new RequestIncorrectoException("La cantidad debe ser mayor a 0");
 		}
 	}
 	

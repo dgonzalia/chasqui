@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Historial {
@@ -9,6 +10,11 @@ public class Historial {
 	private List<Pedido> pedidos;
 	
 	//GETs & SETs 
+
+	public Historial(String email) {
+		usuario = email;
+		pedidos = new ArrayList<Pedido>();
+	}
 
 	public Integer getId() {
 		return id;
@@ -32,6 +38,11 @@ public class Historial {
 
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public void agregarAHistorial(Pedido p) {
+		pedidos.add(p);
+		
 	}
 	
 }

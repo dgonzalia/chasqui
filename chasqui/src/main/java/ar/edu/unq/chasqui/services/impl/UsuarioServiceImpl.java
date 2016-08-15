@@ -349,6 +349,21 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 
+	@Override
+	public void confirmarPedido(String email, Integer idPedido) throws PedidoInexistenteException {
+		Cliente c = (Cliente) usuarioDAO.obtenerClienteConPedidoEHistorial(email);
+		validarConfirmacionDePedidoPara(c,idPedido);
+		c.confirmarPedido(idPedido);
+		usuarioDAO.guardarUsuario(c);
+		
+	}
+
+	private void validarConfirmacionDePedidoPara(Cliente c,Integer idPedido) throws PedidoInexistenteException {
+		if(!c.contienePedidoVigente(idPedido)){
+			throw new PedidoInexistenteException("El usuario: "+c.getNickName()+" no posee un pedido vigente con el ID otorgado");
+		}		
+	}
+
 
 	
 
