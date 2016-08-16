@@ -28,7 +28,8 @@
     <br>
     <br>
     <div style="margin-left:50px;">
-      Chasqui es una aplicacion de compras solidarias.
+      Chasqui es una aplicación que te permite conocer y comprar los productos de la economía social, que tienen precio justo, trabajo legítimo y de fabricación sustentable.
+      Descargate la app para navegar el catálogo de ${vendedor}
       <span>Le comentamos que el usuario: ${usuarioOrigen} (${mailOrigen}) desea invitarlo a que pruebes Chasqui. </span>
       </span>
 	  <br>

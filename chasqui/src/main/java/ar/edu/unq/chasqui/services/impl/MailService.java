@@ -121,6 +121,7 @@ public class MailService {
 		Map<String,Object> params = new HashMap<String,Object>();
 		params.put("usuarioOrigen", clienteOrigen.getNickName());
 		params.put("mailOrigen",clienteOrigen.getEmail());
+		params.put("vendedor", "Puente Del Sur");
 		t.process(params, writer);
 		
 		writer.flush();
