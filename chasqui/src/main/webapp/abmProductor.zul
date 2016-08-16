@@ -63,7 +63,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 			<image width="20px" height="20px" id="imagenProductor"/>
 		</listcell>
 		<listcell>
-			<fileupload label="Subir Imagen" id="uploadImagen" />
+			<fileupload label="Subir Imagen" id="uploadImagen" upload="true,maxsize=-1" />
 		</listcell>
 	</listitem>
 	<listitem>

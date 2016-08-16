@@ -225,7 +225,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 			if (media instanceof org.zkoss.image.Image) {
 				image.setContent((org.zkoss.image.Image) media);
 			} else {
-				Messagebox.show("El archivo no es una imagen","Error", Messagebox.OK, Messagebox.ERROR);
+				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
 			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
@@ -251,7 +251,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 			if (media instanceof org.zkoss.image.Image) {
 				image.setContent((org.zkoss.image.Image) media);
 			} else {
-				Messagebox.show("El archivo no es una imagen","Error", Messagebox.OK, Messagebox.ERROR);
+				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
 			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);

@@ -69,7 +69,7 @@ apply="ar.edu.unq.chasqui.view.composer.ZonasComposer" width="60%"  closable="tr
 		<tabpanel>
 			<div>
 				<hbox>
-					<fileupload label="Subir Imagen" id="uploadImagen"/>
+					<fileupload label="Subir Imagen" id="uploadImagen" upload="true,maxsize=-1"/>
 				</hbox>
 				<vlayout style="border:1px solid black;overflow:auto;" height="300px">
 					<div>

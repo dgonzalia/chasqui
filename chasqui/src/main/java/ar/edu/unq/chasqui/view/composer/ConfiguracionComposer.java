@@ -102,7 +102,7 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 			if (media instanceof org.zkoss.image.Image) {
 				image.setContent((org.zkoss.image.Image) media);
 			} else {
-				Messagebox.show("El archivo no es una imagen","Error", Messagebox.OK, Messagebox.ERROR);
+				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();

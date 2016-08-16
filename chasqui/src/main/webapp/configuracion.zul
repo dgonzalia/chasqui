@@ -81,7 +81,7 @@ apply="ar.edu.unq.chasqui.view.composer.ConfiguracionComposer" height="100%" wid
 						<image style="height:50px; width:50px" src="@{configuracionWindow$composer.imagen.getPath}"/>					
 				</listcell>
 				<listcell>
-						<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"/>
+						<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen" upload="true,maxsize=-1"/>
 				</listcell>
 			</listitem>
 		</listbox>

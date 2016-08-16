@@ -154,7 +154,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 			if (media instanceof org.zkoss.image.Image) {
 				image.setContent((org.zkoss.image.Image) media);
 			} else {
-				Messagebox.show("El archivo no es una imagen","Error", Messagebox.OK, Messagebox.ERROR);
+				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}		
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
@@ -199,7 +199,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		}
 		
 		if(model == null && usuario.contieneProductor(productor)){
-			throw new WrongValueException("El usuario: " + usuario.getUsername() + " ya tiene el productor: " + productor );
+			throw new WrongValueException(textboxNombreProductor,"El usuario: " + usuario.getUsername() + " ya tiene el productor: " + productor );
 		}
 		
 		if(model != null && !model.getNombre().equals(productor) && usuario.contieneProductor(productor)){

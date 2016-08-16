@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.cxf.common.util.StringUtils;
 import org.aspectj.org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.zkforge.ckez.CKeditor;
@@ -95,24 +96,26 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	}
 	
 	public void onUpload$uploadImagen(UploadEvent evt){
-		Media media = evt.getMedia();
-		Image image = new Image();
-		if (media instanceof org.zkoss.image.Image) {
-			image.setContent((org.zkoss.image.Image) media);
-		} else {
-			Messagebox.show("El archivo no es una imagen","Error", Messagebox.OK, Messagebox.ERROR);
-			return;
-		}
-		if(imagenes.size() == 3){
-			Messagebox.show("Solo está permitido hasta 3 imagenes por variedad del producto.");
-		}
-		
-		ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
-		String path = context.getRealPath("/imagenes/");
-		Imagen imagen = fileSaver.guardarImagen(path ,usuarioLogueado.getUsername(),image.getContent().getName(),image.getContent().getByteData());
-		imagen.setNombre(image.getContent().getName());
-		imagenes.add(imagen);
-		binder.loadAll();
+			
+			
+			Media media = evt.getMedia();
+			Image image = new Image();
+			if (media instanceof org.zkoss.image.Image) {
+				image.setContent((org.zkoss.image.Image) media);
+			} else {
+				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
+				return;
+			}
+			if(imagenes.size() == 3){
+				Messagebox.show("Solo está permitido hasta 3 imagenes por variedad del producto.");
+			}
+			
+			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
+			String path = context.getRealPath("/imagenes/");
+			Imagen imagen = fileSaver.guardarImagen(path ,usuarioLogueado.getUsername(),image.getContent().getName(),image.getContent().getByteData());
+			imagen.setNombre(image.getContent().getName());
+			imagenes.add(imagen);
+			binder.loadAll();
 	}
 
 	

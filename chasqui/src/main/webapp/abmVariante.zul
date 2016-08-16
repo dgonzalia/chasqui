@@ -50,7 +50,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMVarianteComposer" height="auto" width
 	</listitem>	
 </listbox>
 <div	align="center">
-	<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen" />
+	<fileupload label="${c:l('zk.button.label.examinar')}" id="uploadImagen"  upload="true,maxsize=-1" />
 </div>
 </hbox>
 
