@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class CategoriaListener {
 	@Produces("application/json")
 	public Response obtenerCategoriasDe(@PathParam("idVendedor")final Integer idVendedor){
 		try{
-			return Response.ok().entity(toResponse(categoriaService.obtenerCategoriasDe(idVendedor))).build();
+			return Response.ok(toResponse(categoriaService.obtenerCategoriasDe(idVendedor)),MediaType.APPLICATION_JSON).build();
 		}catch(VendedorInexistenteException e){
 			return Response.status(404).entity("Vendedor inexistente o el mismo no posee categorias definidas").build();
 		}catch(Exception e){

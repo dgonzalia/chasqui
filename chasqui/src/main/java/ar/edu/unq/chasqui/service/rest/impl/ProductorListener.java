@@ -7,6 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ProductorListener {
 	@Produces("application/json")
 	public Response obtenerProductoresDe(@PathParam("idVendedor")final Integer idVendedor){
 		try{
-			return Response.ok(toResponse(productorService.obtenerProductoresDe(idVendedor))).build();
+			return Response.ok(toResponse(productorService.obtenerProductoresDe(idVendedor)),MediaType.APPLICATION_JSON).build();
 		}catch(VendedorInexistenteException e){
 			return Response.status(404).entity("Vendedor inexistente o el mismo no posee productores definidos").build();
 		}catch(Exception e){

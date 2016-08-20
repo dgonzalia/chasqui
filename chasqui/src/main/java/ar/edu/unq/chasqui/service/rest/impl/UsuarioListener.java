@@ -87,7 +87,7 @@ public class UsuarioListener {
 	public Response obtenerDirecciones(@Context HttpHeaders header){
 		try{
 			String email = obtenerEmailDeContextoDeSeguridad();
-			return Response.ok(toDireccionResponse(usuarioService.obtenerDireccionesDeUsuarioCon(email))).build();			
+			return Response.ok(toDireccionResponse(usuarioService.obtenerDireccionesDeUsuarioCon(email)),MediaType.APPLICATION_JSON).build();			
 		}catch(IndexOutOfBoundsException | NullPointerException | UsuarioExistenteException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(Exception e){
@@ -157,7 +157,7 @@ public class UsuarioListener {
 	public Response obtenerNotificacionesDe(@HeaderParam("pagina")Integer pagina){
 		try{
 			String mail = obtenerEmailDeContextoDeSeguridad();			
-			return Response.ok(toNotificacionResponse(usuarioService.obtenerNotificacionesDe(mail,pagina))).build();
+			return Response.ok(toNotificacionResponse(usuarioService.obtenerNotificacionesDe(mail,pagina)),MediaType.APPLICATION_JSON).build();
 		}catch(Exception e){
 			return Response.status(500).entity(e.getMessage()).build();
 		}
