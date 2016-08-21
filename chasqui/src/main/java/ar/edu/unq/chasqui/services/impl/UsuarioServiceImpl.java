@@ -157,7 +157,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	public Cliente crearCliente(SingUpRequest request) throws Exception {
-		encrypter.encrypt(request.getPassword());
+		request.setPassword(encrypter.encrypt(request.getPassword()));
 		Cliente c = new Cliente(request,passwordGenerator.generateRandomToken());
 		usuarioDAO.guardarUsuario(c);
 		return c;
