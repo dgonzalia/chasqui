@@ -95,7 +95,7 @@ public class ProductoListener {
 	@Produces("application/json")
 	public Response obtenerImagenesDe(@PathParam(value="idVariedad")Integer idVariedad){
 		try{
-			return Response.ok(toResponseImagenes(productoService.obtenerImagenesDe(idVariedad))).build();
+			return Response.ok(toResponseImagenes(productoService.obtenerImagenesDe(idVariedad)),MediaType.APPLICATION_JSON).build();
 		}catch (ProductoInexsistenteException e){
 			return Response.status(404).entity("El producto no existe").build();
 		}catch(Exception e){
