@@ -14,6 +14,12 @@ public class ByMedallaRequest extends ProductoRequest{
 	}
 	
 	
+	@Override
+	public String toString(){
+		return "ByMedallaRequest [ idMedalla: "+ idMedalla + " pagina: "+ this.getPagina()+
+				" precio: "+this.getPrecio()+ "cantidad de items: "+this.getCantItems()+" ]";
+	}
+	
 	
 	
 }

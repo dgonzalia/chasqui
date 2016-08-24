@@ -60,7 +60,6 @@ public class SingInSingUpListener{
 	public Response singUp(@Multipart(value="singUpRequest",type="application/json") final String singUpRequest) {
 		try{
 			SingUpRequest request = toSingUpRequest(singUpRequest);
-			validarRequestCreacionDeUsuario(request);
 			Cliente c = usuarioService.crearCliente(request);
 			return toLoginResponse(c);
 		}catch(RequestIncorrectoException | IOException e){
@@ -88,85 +87,6 @@ public class SingInSingUpListener{
 		}
 		return Response.ok().entity("Recibira en su casilla de correo una nueva password para ingresar.").build();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-	private void validarRequestCreacionDeUsuario(SingUpRequest request) throws RequestIncorrectoException {
-		if(StringUtil.isEmpty(request.getEmail())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		if(!EmailValidator.getInstance().isValid(request.getEmail())){
-			throw new RequestIncorrectoException("Email invalido");
-		}
-		
-		if(StringUtil.isEmpty(request.getApellido())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		if(StringUtil.isEmpty(request.getNickName())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		if(StringUtil.isEmpty(request.getNombre())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		if(StringUtil.isEmpty(request.getPassword())){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-//		if(request.getDireccion() == null){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-		
-		if(request.getTelefonoFijo() == null){
-			throw new RequestIncorrectoException("Debe completar todos los campos");
-		}
-		
-		
-	//	validarDireccion(request.getDireccion());
-		
-		if(usuarioService.existeUsuarioCon(request.getEmail())){
-			throw new UsuarioExistenteException();
-		}
-	}
-
-
-
-
-//	private void validarDireccion(DireccionRequest direccion) {
-//		if(StringUtils.isEmpty(direccion.getCalle())){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-//		
-//		if(StringUtils.isEmpty(direccion.getLocalidad())){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-//		
-//		if(StringUtils.isEmpty(direccion.getCodigoPostal())){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-//		
-//		if(direccion.getAltura() == null){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-//		if(direccion.getLongitud() == null){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-//		if(direccion.getLatitud() == null){
-//			throw new RequestIncorrectoException("Debe completar todos los campos");
-//		}
-//	}
-
 
 
 

@@ -2,13 +2,22 @@ package ar.edu.unq.chasqui.services.impl;
 
 import java.util.List;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.dao.ProductoDAO;
+import ar.edu.unq.chasqui.exceptions.CaracteristicaInexistenteException;
+import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
+import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.model.Variante;
+import ar.edu.unq.chasqui.service.rest.request.ByCategoriaRequest;
+import ar.edu.unq.chasqui.service.rest.request.ByMedallaRequest;
+import ar.edu.unq.chasqui.service.rest.request.ByProductorRequest;
+import ar.edu.unq.chasqui.service.rest.request.ByQueryRequest;
+import ar.edu.unq.chasqui.service.rest.request.ProductoRequest;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
 
@@ -20,19 +29,21 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	
 	@Override
-	public List<Variante> obtenerVariantesPorCategoria(Integer idCategoria, Integer pagina,
-			Integer cantidadDeItems) {
-		return productoDAO.obtenerVariantesPorCategoria(idCategoria,pagina, cantidadDeItems);
+	public List<Variante> obtenerVariantesPorCategoria(ByCategoriaRequest request) {
+		validarCategoriaRequest(request);
+		return productoDAO.obtenerVariantesPorCategoria(request.getIdCategoria(),request.getPagina(), request.getCantItems());
 	}
 
 	@Override
-	public List<Variante> obtenerVariantesPorProductor(Integer idProductor, Integer pagina, Integer cantItems) {
-		return productoDAO.obtenerVariantesPorProductor(idProductor, pagina, cantItems);
+	public List<Variante> obtenerVariantesPorProductor(ByProductorRequest request) {
+		validarProductorRequest(request);
+		return productoDAO.obtenerVariantesPorProductor(request.getIdProductor(), request.getPagina(), request.getCantItems());
 	}
 	
 	@Override
-	public List<Variante> obtenerVariantesPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems) {
-		return productoDAO.obtenerVariantesPorMedalla(idMedalla, pagina, cantItems);
+	public List<Variante> obtenerVariantesPorMedalla(ByMedallaRequest request) {
+		validarMedallaRequest(request);
+		return productoDAO.obtenerVariantesPorMedalla(request.getIdMedalla(), request.getPagina(), request.getCantItems());
 	}
 
 	@Override
@@ -41,8 +52,9 @@ public class ProductoServiceImpl implements ProductoService {
 	}
 
 	@Override
-	public List<Variante> obtenerVariantesPorNombreODescripcion(String param,Integer pagina,Integer cantItems,Integer idVendedor) {
-		return productoDAO.obtenerVariantesPorNombreODescripcion(param,pagina,cantItems,idVendedor);
+	public List<Variante> obtenerVariantesPorNombreODescripcion(ByQueryRequest request) {
+		validarQueryRequest(request);
+		return productoDAO.obtenerVariantesPorNombreODescripcion(request.getQuery(),request.getPagina(),request.getCantItems(),request.getIdVendedor());
 	}
 	
 	@Override
@@ -65,4 +77,57 @@ public class ProductoServiceImpl implements ProductoService {
 		
 	}
 
+	@Override
+	public Caracteristica obtenerMedalla(Integer idMedalla) {
+		Caracteristica c = productoDAO.obtenerCaracteristicaPor(idMedalla);
+		if( c != null){
+			return c;
+		}
+		throw new CaracteristicaInexistenteException("No existe la medalla con ID: " + idMedalla);
+	}
+	
+	
+	
+	private void validarCategoriaRequest(ByCategoriaRequest request){
+		validarRequest(request);
+		if(request.getIdCategoria() == null){
+			throw new RequestIncorrectoException("El idProductor es obligatorio!");
+		}
+	}
+	
+	private void validarRequest(ProductoRequest request) {
+		if(!("Down".equals(request.getPrecio()) || "Up".equals(request.getPrecio()))){
+			throw new RequestIncorrectoException("El orden debe ser 'Up' o 'Down'");
+		}
+		if(request.getPagina() == null){
+			throw new RequestIncorrectoException("Debe especificar la pagina que se desea obtener!");
+		}
+		if(request.getCantItems() == null){
+			throw new RequestIncorrectoException("Debe especificar la cantidad de resultados");
+		}		
+	}
+	
+	private void validarMedallaRequest(ByMedallaRequest request){
+		validarRequest(request);
+		if(request.getIdMedalla() == null){
+			throw new RequestIncorrectoException("El idMedalla es obligatorio!");
+		}
+	}
+	
+	private void validarProductorRequest(ByProductorRequest request){
+		validarRequest(request);
+		if(request.getIdProductor() == null){
+			throw new RequestIncorrectoException("El idProductor es obligatorio!");
+		}
+	}
+	
+	private void validarQueryRequest(ByQueryRequest request) throws RequestIncorrectoException{
+		validarRequest(request);
+		if(StringUtils.isEmpty(request.getQuery())){
+			throw new RequestIncorrectoException("El valor query es obligatorio!");
+		}
+		if(request.getIdVendedor() == null ){
+			throw new RequestIncorrectoException("El vendedor es obligatorio!");
+		}
+	}
 }

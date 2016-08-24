@@ -3,6 +3,8 @@ package ar.edu.unq.chasqui.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.validator.routines.EmailValidator;
+import org.apache.cxf.common.util.StringUtils;
 import org.hsqldb.lib.StringUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,7 +159,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	public Cliente crearCliente(SingUpRequest request) throws Exception {
-		encrypter.encrypt(request.getPassword());
+		validarRequestCreacionDeUsuario(request);
+		request.setPassword(encrypter.encrypt(request.getPassword()));
 		Cliente c = new Cliente(request,passwordGenerator.generateRandomToken());
 		usuarioDAO.guardarUsuario(c);
 		return c;
@@ -178,6 +181,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
+		validarDireccionRequest(request);
 		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
 		v.agregarDireccion(request);
 		usuarioDAO.guardarUsuario(v);
@@ -211,6 +215,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void editarDireccionDe(String mail,DireccionRequest request,Integer idDireccion) throws DireccionesInexistentes, UsuarioExistenteException {
+		validarDireccionRequest(request);
 		Cliente c = (Cliente)usuarioDAO.obtenerUsuarioPorEmail(mail);
 		if(c == null){
 			throw new UsuarioExistenteException("No existe el usuario");
@@ -257,6 +262,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void agregarPedidoA(AgregarQuitarProductoAPedidoRequest request, String email) {
+		validarRequest(request);
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
 		validar(v,c,request);
@@ -271,6 +277,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if(!v.tieneStockParaReservar(request.getCantidad())){
 			throw new ProductoInexsistenteException("El producto no posee más Stock");
 		}	
+	}
+	
+	private void validarRequest(Integer idPedido){
+		if(idPedido == null || idPedido < 0){
+		throw new RequestIncorrectoException("La cantidad debe ser mayor a 0");
+		}
 	}
 	
 	private void validacionesGenerales(Variante v, Cliente c, AgregarQuitarProductoAPedidoRequest request){
@@ -288,6 +300,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email) {
+		validarRequest(request);
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
 		validarParaEliminar(v,c,request);
@@ -304,13 +317,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		if(!c.contieneCantidadDeProductoEnPedido(v,request.getIdPedido(),request.getCantidad())){
 			throw new ProductoInexsistenteException("No se puede quitar mas cantidad de un producto de la que el usuario posee en su pedido");
-		}
-		
-		
+		}	
 	}
 
 	@Override
 	public void eliminarPedidoPara(String email, Integer idPedido) {
+		validarRequest(idPedido);
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		validarEliminacionDePedidoPara(c,idPedido);
 		Pedido p = c.eliminarPedido(idPedido);
@@ -352,6 +364,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void confirmarPedido(String email, Integer idPedido) throws PedidoInexistenteException {
+		validarRequest(idPedido);
 		Cliente c = (Cliente) usuarioDAO.obtenerClienteConPedidoEHistorial(email);
 		validarConfirmacionDePedidoPara(c,idPedido);
 		c.confirmarPedido(idPedido);
@@ -364,7 +377,106 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new PedidoInexistenteException("El usuario: "+c.getNickName()+" no posee un pedido vigente con el ID otorgado");
 		}		
 	}
+	
+	private void validarRequest(AgregarQuitarProductoAPedidoRequest request) {
+		if(request.getIdPedido() == null){
+			throw new RequestIncorrectoException("El id De pedido no debe ser null");
+		}
+		if(request.getIdVariante() == null){
+			throw new RequestIncorrectoException("El id de variante no debe ser null");
+		}
+		if(request.getCantidad() == null || request.getCantidad() <= 0){
+			throw new RequestIncorrectoException("La cantidad debe ser mayo  debe ser mayor a 0");
+		}
+	}
 
+
+	
+	private void validarRequestCreacionDeUsuario(SingUpRequest request) throws RequestIncorrectoException {
+		if(StringUtil.isEmpty(request.getEmail())){
+			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+		
+		if(!EmailValidator.getInstance().isValid(request.getEmail())){
+			throw new RequestIncorrectoException("Email invalido");
+		}
+		
+		if(StringUtil.isEmpty(request.getApellido())){
+			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+		
+		if(StringUtil.isEmpty(request.getNickName())){
+			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+		
+		if(StringUtil.isEmpty(request.getNombre())){
+			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+		if(StringUtil.isEmpty(request.getPassword())){
+			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+//		if(request.getDireccion() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+		
+		if(request.getTelefonoFijo() == null){
+			throw new RequestIncorrectoException("Debe completar todos los campos");
+		}
+		
+		
+	//	validarDireccion(request.getDireccion());
+		
+		if(this.existeUsuarioCon(request.getEmail())){
+			throw new UsuarioExistenteException();
+		}
+	}
+	
+	private void validarDireccionRequest(DireccionRequest request) {
+		if(StringUtils.isEmpty(request.getAlias())){
+			throw new RequestIncorrectoException();
+		}
+		if(StringUtils.isEmpty(request.getCalle())){
+			throw new RequestIncorrectoException();
+		}
+		if(StringUtils.isEmpty(request.getCodigoPostal())){
+			throw new RequestIncorrectoException();
+		}
+		if(request.getPredeterminada() == null){
+			throw new RequestIncorrectoException();
+		}
+		if(StringUtils.isEmpty(request.getLocalidad())){
+			throw new RequestIncorrectoException();
+		}
+		if(request.getAltura() == null || request.getAltura() < 0){
+			throw new RequestIncorrectoException();
+		}
+		
+		
+	}
+	
+	// private void validarDireccion(DireccionRequest direccion) {
+//		if(StringUtils.isEmpty(direccion.getCalle())){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		
+//		if(StringUtils.isEmpty(direccion.getLocalidad())){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		
+//		if(StringUtils.isEmpty(direccion.getCodigoPostal())){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		
+//		if(direccion.getAltura() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		if(direccion.getLongitud() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//		if(direccion.getLatitud() == null){
+//			throw new RequestIncorrectoException("Debe completar todos los campos");
+//		}
+//	}
 
 	
 

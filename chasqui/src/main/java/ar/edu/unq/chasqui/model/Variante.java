@@ -101,11 +101,12 @@ public class Variante {
 	public void eliminarReserva(Integer cantidad) {
 		cantidadReservada -= cantidad;
 		
-	}
-
-
-	
-	
+	}	
 		
-	
+	@Override
+	public String toString(){
+		return "Variante: [ id:"+id+" Stock:"+stock+"Reservados:"+cantidadReservada+
+		 "Precio:"+precio+" Nombre:"+nombre+" idProducto:"+ producto.getId()+" ]";
+		
+	}
 }

@@ -102,7 +102,6 @@ public class UsuarioListener {
 	public Response agregarNuevaDireccion(@Multipart(value="direccionRequest", type="application/json")final String direccionRequest){
 		try{
 			DireccionRequest request = toDireccionRequest(direccionRequest);
-			validarDireccionRequest(request);
 			String mail = obtenerEmailDeContextoDeSeguridad();
 			usuarioService.agregarDireccionAUsuarioCon(mail,request);
 			return Response.ok().build();
@@ -122,7 +121,6 @@ public class UsuarioListener {
 		try{
 			String mail = obtenerEmailDeContextoDeSeguridad();
 			DireccionRequest dirRequest = toDireccionRequest(request);
-			validarDireccionRequest(dirRequest);
 			usuarioService.editarDireccionDe(mail,dirRequest,idDireccion);
 			return Response.ok("Se ha registrado la modificacion de la direccion correctamente").build();			
 		}catch(RequestIncorrectoException e){
@@ -194,29 +192,6 @@ public class UsuarioListener {
 		return 	SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 
-
-	private void validarDireccionRequest(DireccionRequest request) {
-		if(StringUtils.isEmpty(request.getAlias())){
-			throw new RequestIncorrectoException();
-		}
-		if(StringUtils.isEmpty(request.getCalle())){
-			throw new RequestIncorrectoException();
-		}
-		if(StringUtils.isEmpty(request.getCodigoPostal())){
-			throw new RequestIncorrectoException();
-		}
-		if(request.getPredeterminada() == null){
-			throw new RequestIncorrectoException();
-		}
-		if(StringUtils.isEmpty(request.getLocalidad())){
-			throw new RequestIncorrectoException();
-		}
-		if(request.getAltura() == null || request.getAltura() < 0){
-			throw new RequestIncorrectoException();
-		}
-		
-		
-	}
 
 	private List<DireccionResponse> toDireccionResponse(List<Direccion> dirs) {
 		List<DireccionResponse>rs = new ArrayList<DireccionResponse>();

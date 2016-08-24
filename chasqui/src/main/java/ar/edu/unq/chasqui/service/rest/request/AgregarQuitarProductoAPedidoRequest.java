@@ -32,7 +32,10 @@ public class AgregarQuitarProductoAPedidoRequest implements Serializable{
 	}
 	
 	
-
+	@Override
+	public String toString(){
+		return "AgregarOQuitarPedidoRequest: [ idPedido:"+idPedido+" idVariante:"+idVariante+" cantidad:"+cantidad+" ]";
+	}
 	
 	
 	

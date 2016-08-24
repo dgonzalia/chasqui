@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.ProductoDAO;
 import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
+import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Variante;
 
@@ -154,6 +155,20 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 	public void modificarVariante(Variante v) {
 		this.getHibernateTemplate().saveOrUpdate(v);
 		this.getHibernateTemplate().flush();		
+	}
+
+	@Override
+	public Caracteristica obtenerCaracteristicaPor(final Integer idMedalla) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Caracteristica>() {
+
+			@Override
+			public Caracteristica doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Caracteristica.class);
+				criteria.add(Restrictions.eq("id", idMedalla));
+				return (Caracteristica) criteria.uniqueResult();
+			}
+		});
+		
 	}
 	
 	

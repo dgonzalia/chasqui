@@ -22,7 +22,11 @@ public class ByQueryRequest extends ProductoRequest {
 		this.idVendedor = idVendedor;
 	}
 	
-	
+	@Override
+	public String toString(){
+		return "ByQueryRequest [ query: "+ query + " pagina: "+ this.getPagina()+
+				" precio: "+this.getPrecio()+ "cantidad de items: "+this.getCantItems()+" idVendedor: " + idVendedor+"]";
+	}
 	
 	
 }

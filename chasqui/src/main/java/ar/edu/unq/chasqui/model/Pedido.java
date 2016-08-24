@@ -140,15 +140,7 @@ public class Pedido {
 	
 	public void setFechaDeVencimiento(DateTime fechaDeVencimiento) {
 		this.fechaDeVencimiento = fechaDeVencimiento;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 	
 	
 	//METHODS 

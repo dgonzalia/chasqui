@@ -71,7 +71,11 @@ public class SingUpRequest implements Serializable{
 	
 	
 	
-	
+	@Override
+	public String toString(){
+		return "SingUpRequest: [ email:"+email+" nickName:"+nickName+
+				" nombre: "+nombre+" apellido:"+apellido+" telefonoFijo:"+telefonoFijo+" telefonoMovil:"+telefonoMovil;
+	}
 	
 	
 	

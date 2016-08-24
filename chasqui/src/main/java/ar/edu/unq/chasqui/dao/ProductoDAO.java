@@ -2,6 +2,7 @@ package ar.edu.unq.chasqui.dao;
 
 import java.util.List;
 
+import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Variante;
 
@@ -19,6 +20,8 @@ public interface ProductoDAO {
 
 	public Variante obtenervariantePor(Integer id);
 
-	public void modificarVariante(Variante v); 
+	public void modificarVariante(Variante v);
+
+	public Caracteristica obtenerCaracteristicaPor(Integer idMedalla); 
 
 }

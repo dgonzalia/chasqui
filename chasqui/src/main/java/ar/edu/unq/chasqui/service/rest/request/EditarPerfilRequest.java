@@ -64,7 +64,11 @@ public class EditarPerfilRequest implements Serializable{
 	
 	
 	
-	
+	@Override
+	public String toString(){
+		return "EditarPerfilRequest: [nickName:"+nickName+" nombre:"+nombre+" apellido:"+apellido+
+		 " telefonoFijo:"+telefonoFijo+" telefonoMovil:"+telefonoMovil+" ]";
+	}
 	
 	
 	

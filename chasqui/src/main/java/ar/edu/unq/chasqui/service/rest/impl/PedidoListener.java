@@ -80,7 +80,6 @@ public class PedidoListener {
 		try{
 			AgregarQuitarProductoAPedidoRequest request = toAgregarPedidoRequest(agregarRequest);
 			String email = obtenerEmailDeContextoDeSeguridad();
-			validarRequest(request);
 			usuarioService.agregarPedidoA(request,email);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e ){
@@ -100,7 +99,6 @@ public class PedidoListener {
 		try{
 			AgregarQuitarProductoAPedidoRequest request = toAgregarPedidoRequest(eliminarRequest);
 			String email = obtenerEmailDeContextoDeSeguridad();
-			validarRequest(request);
 			usuarioService.eliminarProductoDePedido(request,email);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e){
@@ -116,7 +114,6 @@ public class PedidoListener {
 	@Path("/individual/{idPedido}")
 	public Response eliminarPedido(@PathParam("idPedido")Integer idPedido){
 		try{
-			validarRequest(idPedido);
 			String email = obtenerEmailDeContextoDeSeguridad();
 			usuarioService.eliminarPedidoPara(email,idPedido);
 			return Response.ok().build();			
@@ -132,7 +129,6 @@ public class PedidoListener {
 	@Path("/individual/{idPedido}")
 	public Response confirmarPedido(@PathParam("idPedido") Integer idPedido){
 		try{
-			validarRequest(idPedido);
 			String email = obtenerEmailDeContextoDeSeguridad();
 			usuarioService.confirmarPedido(email,idPedido);
 			return Response.ok().build();
@@ -142,24 +138,8 @@ public class PedidoListener {
 			return Response.status(500).entity(e.getMessage()).build();
 		}
 	}
+
 	
-	private void validarRequest(Integer idPedido){
-		if(idPedido == null || idPedido < 0){
-		throw new RequestIncorrectoException("La cantidad debe ser mayor a 0");
-		}
-	}
-	
-	private void validarRequest(AgregarQuitarProductoAPedidoRequest request) {
-		if(request.getIdPedido() == null){
-			throw new RequestIncorrectoException("El id De pedido no debe ser null");
-		}
-		if(request.getIdVariante() == null){
-			throw new RequestIncorrectoException("El id de variante no debe ser null");
-		}
-		if(request.getCantidad() == null || request.getCantidad() <= 0){
-			throw new RequestIncorrectoException("La cantidad debe ser mayo  debe ser mayor a 0");
-		}
-	}
 
 	private AgregarQuitarProductoAPedidoRequest toAgregarPedidoRequest(String agregarRequest) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();

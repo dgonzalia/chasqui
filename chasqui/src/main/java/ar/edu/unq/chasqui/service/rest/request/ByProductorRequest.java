@@ -23,7 +23,11 @@ public class ByProductorRequest extends ProductoRequest implements Serializable 
 		this.idProductor = idProductor;
 	}
 	
-	
+	@Override
+	public String toString(){
+		return "ByProductorRequest [ idProductor: "+ idProductor + " pagina: "+ this.getPagina()+
+				" precio: "+this.getPrecio()+ "cantidad de items: "+this.getCantItems()+" ]";
+	}
 	
 	
 	

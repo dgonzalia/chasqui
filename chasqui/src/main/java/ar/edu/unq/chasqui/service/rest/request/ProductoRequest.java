@@ -1,6 +1,6 @@
 package ar.edu.unq.chasqui.service.rest.request;
 
-public class ProductoRequest {
+public abstract class ProductoRequest {
 
 	private Integer pagina;
 	private Integer cantItems;
