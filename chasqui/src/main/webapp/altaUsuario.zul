@@ -34,7 +34,7 @@ apply="ar.edu.unq.chasqui.view.composer.AltaUsuarioComposer" height="100%" width
 		<listitem>
 			<listcell label="${c:l('zk.label.altaUsuario.email')}"/>
 			<listcell>
-				<textbox id="textboxEmail"/>
+				<textbox id="textboxEmail" maxlength="25"/>
 			</listcell>
 		</listitem>
 	</listbox>

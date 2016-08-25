@@ -117,6 +117,35 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		return new Vendedor(username,email,encrypter.encrypt(pwd));
 	}
 	
+	
+	public void onBlur$textboxUsername(){
+		chequearTodosLosCamposEnBlanco();
+	}
+	
+	public void onBlur$textboxContraseña(){
+		chequearTodosLosCamposEnBlanco();
+	}
+	
+	public void onBlur$textboxContraseñaRepita(){
+		chequearTodosLosCamposEnBlanco();
+	}
+	
+	public void onBlur$textboxEmail(){
+		chequearTodosLosCamposEnBlanco();
+	}
+	
+	public void chequearTodosLosCamposEnBlanco(){
+		String username = textboxUsername.getValue();
+		String email = textboxEmail.getValue();
+		String nuevaClave = textboxContraseña.getValue();
+		String nuevaClaveRepita = textboxContraseñaRepita.getText();	
+		
+		if(StringUtils.isEmpty(username) && StringUtils.isEmpty(email) && StringUtils.isEmpty(nuevaClave) && StringUtils.isEmpty(nuevaClaveRepita)){
+			model = null;
+		}
+		this.binder.loadAll();
+	}
+	
 	public void guardar(){
 		try{      	
 			//Guardar

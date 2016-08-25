@@ -7,8 +7,8 @@
 <window id="usuariosActualesWindow" title="${c:l('zk.window.usuariosActuales.title')}" width="100%" border="nomal"
 apply="ar.edu.unq.chasqui.view.composer.UsuariosActualesComposer">
 
-	<listbox id="listboxUsuarios" model="@{usuariosActualesWindow$composer.usuarios}"
-	selectedItem="@{usuariosActualesWindow$composer.usuarioSeleccionado}">
+	<listbox id="listboxUsuarios" model="@{usuariosActualesWindow$composer.usuarios}">
+<!-- 	selectedItem="@{usuariosActualesWindow$composer.usuarioSeleccionado}"> -->
 		<listhead>
 			<listheader label="${c:l('zk.listheader.label.altaUsuario.username')}"/>
 			<listheader label="${c:l('zk.listheader.label.administracion.acciones')}"/>

@@ -84,11 +84,7 @@ public class UsuariosActualesComposer extends GenericForwardComposer<Component> 
 		Vendedor u = buscarVendededor(v);
 		if(u == null){
 			usuarios.add(v);			
-		}else{
-			usuarios.remove(u);
-			usuarios.add(v);
-		}
-		
+		}		
 		this.binder.loadAll();
 	}
 	

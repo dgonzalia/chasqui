@@ -10,7 +10,8 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
       
     <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider" />
 	<bean id='jacksonProvider' class='org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider' />
-	<bean id="cors-filter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/>
+<!-- 	<bean id="cors-filter" class="org.apache.cxf.rs.security.cors.CrossOriginResourceSharingFilter"/> -->
+	<bean id="cors-filter" class="ar.edu.unq.chasqui.service.rest.impl.CORSFilter"/>
 
 	<!-- =========================== -->
 	<!-- =========Servicios ========= -->
@@ -33,7 +34,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 		<jaxrs:providers>
 			<ref bean="jaxbProvider" />
 			<ref bean="jacksonProvider" />
-			<ref bean="cors-filter" />
+<!-- 			<ref bean="cors-filter" /> -->
 		</jaxrs:providers>
 		<jaxrs:features>
 			<cxf:logging />
@@ -52,7 +53,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 		<jaxrs:providers>
 			<ref bean="jaxbProvider" />
 			<ref bean="jacksonProvider" />
-			<ref bean="cors-filter" />
+<!-- 			<ref bean="cors-filter" /> -->
 		</jaxrs:providers>
 		<jaxrs:features>
 			<cxf:logging />
