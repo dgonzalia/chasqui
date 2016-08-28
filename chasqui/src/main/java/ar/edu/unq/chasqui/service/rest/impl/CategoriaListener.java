@@ -28,7 +28,7 @@ public class CategoriaListener {
 	
 	
 	@GET
-	@Path("/all/{idVendedor}")
+	@Path("/all/{idVendedor : \\d+ }")
 	@Produces("application/json")
 	public Response obtenerCategoriasDe(@PathParam("idVendedor")final Integer idVendedor){
 		try{

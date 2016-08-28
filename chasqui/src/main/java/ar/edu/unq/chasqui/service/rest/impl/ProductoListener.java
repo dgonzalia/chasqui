@@ -88,7 +88,7 @@ public class ProductoListener {
 	}
 	
 	@GET
-	@Path("/medalla/{idMedalla}")
+	@Path("/medalla/{idMedalla : \\d+}")
 	@Produces("application/json")
 	public Response obtenerMedalla(@PathParam(value="idMedalla")final Integer idMedalla){
 		try{

@@ -59,7 +59,7 @@ public class PedidoListener {
 	
 	@GET
 	@Produces("application/json")
-	@Path("/individual/{idVendedor}")
+	@Path("/individual/{idVendedor : \\d+}")
 	public Response obtenerPedidoActual(@PathParam("idVendedor")Integer idVendedor){
 		String mail =  obtenerEmailDeContextoDeSeguridad();
 		try{
@@ -111,7 +111,7 @@ public class PedidoListener {
 	
 	@DELETE
 	@Produces("application/json")
-	@Path("/individual/{idPedido}")
+	@Path("/individual/{idPedido : \\d+}")
 	public Response eliminarPedido(@PathParam("idPedido")Integer idPedido){
 		try{
 			String email = obtenerEmailDeContextoDeSeguridad();
@@ -126,7 +126,7 @@ public class PedidoListener {
 	
 	@PUT
 	@Produces("application/json")
-	@Path("/individual/{idPedido}")
+	@Path("/individual/{idPedido : \\d+}")
 	public Response confirmarPedido(@PathParam("idPedido") Integer idPedido){
 		try{
 			String email = obtenerEmailDeContextoDeSeguridad();

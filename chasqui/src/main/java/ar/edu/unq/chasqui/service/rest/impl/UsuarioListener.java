@@ -113,7 +113,7 @@ public class UsuarioListener {
 	
 	
 	@PUT
-	@Path("/dir/{idDireccion}")
+	@Path("/dir/{idDireccion : \\d+}")
 	@Produces("application/json")
 	public Response editarDireccionDe(@Multipart(value="direccionRequest",type="application/json")String request,
 			@PathParam("idDireccion")Integer idDireccion){
@@ -132,7 +132,7 @@ public class UsuarioListener {
 	}
 	
 	@DELETE
-	@Path("/dir/{idDireccion}")
+	@Path("/dir/{idDireccion : \\d+}")
 	@Produces("application/json")
 	public Response elimiarDireccionDe(@PathParam("idDireccion")Integer idDireccion){
 		try{

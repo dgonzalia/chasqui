@@ -29,7 +29,7 @@ public class ProductorListener {
 	
 	
 	@GET
-	@Path("/all/{idVendedor}")
+	@Path("/all/{idVendedor : \\d+}")
 	@Produces("application/json")
 	public Response obtenerProductoresDe(@PathParam("idVendedor")final Integer idVendedor){
 		try{
