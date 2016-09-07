@@ -26,6 +26,7 @@ public class VariedadResponse implements Serializable{
 	private String precioParteEntera;
 	private String precioParteDecimal;
 	private String descripcion;
+	private Boolean destacado;
 	private Double precio;
 	private Integer stock;
 	private List<CaracteristicaResponse>medallasProducto;
@@ -117,6 +118,12 @@ public class VariedadResponse implements Serializable{
 		this.descripcion = descripcion;
 	}
 	
+	public Boolean getDestacado() {
+		return destacado;
+	}
+	public void setDestacado(Boolean destacado) {
+		this.destacado = destacado;
+	}
 	public Integer getIdVariante() {
 		return idVariante;
 	}
@@ -130,6 +137,7 @@ public class VariedadResponse implements Serializable{
 	public VariedadResponse(Variante v, Producto p) {
 		idProducto = p.getId();
 		idVariante = v.getId();
+		destacado = v.getDestacado();
 		idCategoria = p.getCategoria().getId();
 		idFabricante = p.getFabricante().getId();
 		imagenPrincipal = v.getImagenes().get(0).getPath();
