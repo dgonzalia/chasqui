@@ -18,6 +18,8 @@ public class FabricanteResponse implements Serializable{
 	private Integer idProductor;
 	private String nombreProductor;
 	private String pathImagen;
+	private String descripcionCorta;
+	private String descripcionLarga;
 	private DireccionProductorResponse direccion;
 	private CaracteristicaResponse medalla;
 	
@@ -27,6 +29,8 @@ public class FabricanteResponse implements Serializable{
 		idProductor = f.getId();
 		nombreProductor = f.getNombre();
 		pathImagen = f.getPathImagen();
+		descripcionCorta = f.getDescripcionCorta();
+		descripcionLarga = f.getDescripcionLarga();
 		medalla = new CaracteristicaResponse(f.getCaracteristica());
 		direccion = new DireccionProductorResponse(f.getCalle(),f.getAltura(),f.getPais(),f.getLocalidad(),f.getProvincia());
 	}
@@ -61,6 +65,20 @@ public class FabricanteResponse implements Serializable{
 	public void setMedalla(CaracteristicaResponse medalla) {
 		this.medalla = medalla;
 	}
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+	public String getDescripcionLarga() {
+		return descripcionLarga;
+	}
+	public void setDescripcionLarga(String descripcionLarga) {
+		this.descripcionLarga = descripcionLarga;
+	}
+	
+	
 	
 	
 	
