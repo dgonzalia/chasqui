@@ -277,7 +277,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 					
 					public void onEvent(Event event) throws Exception {
 						switch ((Integer) (event.getData())){
-						case Messagebox.OK:
+						case Messagebox.YES:
 							service.eliminarCaracteristica(c);
 							caracteristicas.remove(c);
 							Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
@@ -297,7 +297,7 @@ public void eliminarCaracteristicaProductor(final CaracteristicaProductor c){
 				
 				public void onEvent(Event event) throws Exception {
 					switch ((Integer) (event.getData())){
-					case Messagebox.OK:
+					case Messagebox.YES:
 						service.eliminarCaracteristicaProductor(c);
 						caracteristicasProductor.remove(c);
 						Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
