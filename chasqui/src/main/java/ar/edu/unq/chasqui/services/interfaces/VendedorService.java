@@ -11,4 +11,7 @@ public interface VendedorService {
 	
 	@Transactional
 	public List<Vendedor> obtenerVendedores();
+	
+	@Transactional
+	public Vendedor obtenerVendedor(String nombreVendedor);
 }
