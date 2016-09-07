@@ -13,6 +13,8 @@ public class Fabricante {
 	private String provincia;
 	private String localidad;
 	private Integer idVendedor;
+	private String descripcionCorta;
+	private String descripcionLarga;
 	private String pathImagen;
 	private List<Producto> productos;
 	private CaracteristicaProductor caracteristica;
@@ -80,8 +82,24 @@ public class Fabricante {
 	
 	public String getPais() {
 		return pais;
-	}
+	}	
 	
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+
+	public String getDescripcionLarga() {
+		return descripcionLarga;
+	}
+
+	public void setDescripcionLarga(String descripcionLarga) {
+		this.descripcionLarga = descripcionLarga;
+	}
+
 	public void setPais(String pais) {
 		this.pais = pais;
 	}

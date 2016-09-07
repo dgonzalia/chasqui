@@ -69,7 +69,11 @@ public class ConfiguracionComposer extends GenericForwardComposer<Component>{
 		if(usuarioLogueado != null){
 			super.doAfterCompose(comp);
 			imagen = new Imagen();
-			imagen.setPath(usuarioLogueado.getImagenPerfil());
+			if(usuarioLogueado.getImagenPerfil() != null){
+				imagen.setPath(usuarioLogueado.getImagenPerfil());				
+			}else{
+				imagen.setPath("/imagenes/subirImagen.png");
+			}
 			fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 			usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 			encrypter = (Encrypter) SpringUtil.getBean("encrypter");

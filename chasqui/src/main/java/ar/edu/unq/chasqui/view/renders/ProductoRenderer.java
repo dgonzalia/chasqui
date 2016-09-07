@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.zkoss.util.resource.Labels;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Hbox;
@@ -46,14 +48,13 @@ public class ProductoRenderer implements ListitemRenderer<Producto>{
 		Toolbarbutton botonVisualizar = new Toolbarbutton();
 		botonVisualizar.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.visualizar"));
 		botonVisualizar.setImage("/imagenes/eye.png");
-		botonVisualizar.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params1);
-		
+		botonVisualizar.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params1);		
 		params2.put("accion", "editar");
 		params2.put("producto", p);
 		Toolbarbutton botonEditar = new Toolbarbutton();
 		botonEditar.setTooltiptext(Labels.getLabel("zk.toolbarbutton.administracion.tooltip.editar"));
 		botonEditar.setImage("/imagenes/editar.png");
-		botonEditar.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params2);
+		botonEditar.addForward(Events.ON_CLICK, administracionWindow, Events.ON_NOTIFY, params2);		
 		
 		params3.put("accion", "eliminar");
 		params3.put("producto", p);
@@ -72,5 +73,5 @@ public class ProductoRenderer implements ListitemRenderer<Producto>{
 		hboxImagenes.setParent(c6);
 		c6.setParent(item);
 	}
-
+	
 }

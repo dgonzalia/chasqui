@@ -68,6 +68,31 @@ public class MailService {
 		mailSender.send(m);		
 	}
 	
+	
+	
+	public void enviarEmailNotificacionPedido(String destino,String cuerpoEmail,String nombreUsuario, String apellidoUsuario) throws IOException, MessagingException, TemplateException{
+		Template t = this.obtenerTemplate("emailNotificacionPedido.ftl"); 
+		MimeMessage m = mailSender.createMimeMessage();
+		m.setSubject(MimeUtility.encodeText("Tu Pedido esta a punto de vencer","UTF-8","B"));
+		MimeMessageHelper helper = new MimeMessageHelper(m,true,"UTF-8");
+		StringWriter writer = new StringWriter();
+		ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.png");
+		helper.setFrom("administrator-chasqui-noreply@chasqui.org");
+		helper.setTo(destino);
+		Map<String,Object> params = new HashMap<String,Object>();
+		params.put("cuerpo", cuerpoEmail);
+		params.put("nombre", nombreUsuario);
+		params.put("apellido", apellidoUsuario);
+		t.process(params, writer);
+		
+		writer.flush();
+		writer.close();
+		helper.setText(writer.toString(),true);
+		helper.addInline("logochasqui", resource);
+		mailSender.send(m);		
+	}
+	
+	
 	@Transactional
 	public void enviarEmailRecuperoContraseña(String destino, String usuario) throws Exception{
 		

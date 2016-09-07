@@ -12,6 +12,7 @@ public class Variante {
 	private Double precio;
 	private String nombre;
 	private Producto producto;
+	private Boolean destacado;
 	
 	
 	//GETs & SETs
@@ -103,6 +104,14 @@ public class Variante {
 		
 	}	
 		
+	public Boolean getDestacado() {
+		return destacado;
+	}
+
+	public void setDestacado(Boolean destacado) {
+		this.destacado = destacado;
+	}
+
 	@Override
 	public String toString(){
 		return "Variante: [ id:"+id+" Stock:"+stock+"Reservados:"+cantidadReservada+

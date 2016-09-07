@@ -74,6 +74,7 @@ public class PedidoListener {
 	
 	
 	@PUT
+	//@Consumes("application/json")
 	@Produces("application/json")
 	@Path("/individual")
 	public Response agregarProductoAPedido(@Multipart(value="agregarRequest", type="application/json")final String agregarRequest){

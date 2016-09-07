@@ -12,7 +12,7 @@
 	            <param name="increment_size">1</param> 
          	</generator>
         </id>
-        <property name="fecha" type="org.joda.time.DateTime">
+        <property name="fecha" type="org.joda.time.contrib.hibernate.PersistentDateTime">
             <column name="FECHA" />
         </property>
         <property name="usuarioOrigen" type="java.lang.String" column="USUARIO_ORIGEN"/>

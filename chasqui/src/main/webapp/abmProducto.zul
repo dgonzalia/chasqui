@@ -56,26 +56,29 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 				label="${c:l('zk.toolbarbutton.administracion.tooltip.agregar')}"/>
 			</auxheader>
 		</auxhead>
-		<listitem self="@{each=variante}">
-			<listcell>
-				<label value="@{variante.getNombre}"/>
-			</listcell>
-			<listcell>
-				<hbox>
-					<image src="/imagenes/price.png" tooltiptext="${c:l('zk.listheader.label.administracion.producto.precio')}"/>		
-					<space spacing="5px"/>
-					<label value="@{variante.getPrecio}"/>
-				</hbox>			
-			</listcell>
-			<listcell label="@{variante.getStock }"/>
-			<listcell>
-				<image src="/imagenes/eye.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.visualizar')}"
-				forward="onClick=productosWindow$composer.onVerVariante"/>
-				<space spacing="10px"/>
-				<image src="/imagenes/trash.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.eliminar')}"
-				forward="onClick=productosWindow$composer.onEliminarVariante" visible="@{productosWindow$composer.modoEdicion}"/>
-			</listcell>
-		</listitem>
+<!-- 		<listitem self="@{each=variante}"> -->
+<!-- 			<listcell> -->
+<!-- 				<label value="@{variante.getNombre}"/> -->
+<!-- 			</listcell> -->
+<!-- 			<listcell> -->
+<!-- 				<hbox> -->
+<!-- 					<image src="/imagenes/price.png" tooltiptext="${c:l('zk.listheader.label.administracion.producto.precio')}"/>		 -->
+<!-- 					<space spacing="5px"/> -->
+<!-- 					<label value="@{variante.getPrecio}"/> -->
+<!-- 				</hbox>			 -->
+<!-- 			</listcell> -->
+<!-- 			<listcell label="@{variante.getStock }"/> -->
+<!-- 			<listcell> -->
+<!-- 				<toolbarbutton image="/imagenes/destacado_off.png" tooltiptext="Producto Destacado"  -->
+<!-- 				forward="onClick=productosWindow$composer.onDestacarVariante"/> -->
+<!-- 				<space spacing="10px"/> -->
+<!-- 				<toolbarbutton image="/imagenes/eye.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.visualizar')}" -->
+<!-- 				forward="onClick=productosWindow$composer.onVerVariante"/> -->
+<!-- 				<space spacing="10px"/> -->
+<!-- 				<toolbarbutton image="/imagenes/trash.png" tooltiptext="${c:l('zk.toolbarbutton.administracion.tooltip.eliminar')}" -->
+<!-- 				forward="onClick=productosWindow$composer.onEliminarVariante" visible="@{productosWindow$composer.modoEdicion}"/> -->
+<!-- 			</listcell> -->
+<!-- 		</listitem> -->
 	</listbox>
 	  <listbox id="listboxCaracteristicas" mold="paging" pageSize="3" selectedItem="@{productosWindow$composer.caracteristicaSeleccionada}"
 		model="@{productosWindow$composer.model.caracteristicas}" rows="3">

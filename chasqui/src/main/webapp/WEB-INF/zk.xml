@@ -7,6 +7,13 @@
 		<name>org.zkoss.util.label.web.charset</name>
 		<value>UTF-8</value>
 </library-property>
+<library-property>
+    <name>org.zkoss.zul.progressbox.position</name>
+    <value>center,center</value>
+</library-property>
+<client-config>
+		<processing-prompt-delay>1</processing-prompt-delay>
+</client-config>
 
 <library-property>
 		<name>org.zkoss.util.label.web.location</name>

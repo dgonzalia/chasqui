@@ -30,8 +30,10 @@ import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoReque
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
+import ar.edu.unq.chasqui.services.interfaces.PedidoService;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
+import ar.edu.unq.chasqui.view.composer.Constantes;
 
 public class UsuarioServiceImpl implements UsuarioService{
 
@@ -45,6 +47,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private ProductoService productoService;
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	PedidoService pedidoService;
 	
 	public Usuario obtenerUsuarioPorID(Integer id) {
 		return usuarioDAO.obtenerUsuarioPorID(id);
@@ -80,6 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			user.setImagenPerfil(img.getPath());
 			usuarioDAO.guardarUsuario(user);	
 			
+			DateTime cierre = new DateTime().plusDays(1);
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(encrypter.encrypt("federico"));
@@ -87,15 +92,28 @@ public class UsuarioServiceImpl implements UsuarioService{
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			u2.setMontoMinimoPedido(213);
-			u2.setFechaCierrePedido(new DateTime().plusDays(4));
+			u2.setFechaCierrePedido(cierre);
 			usuarioDAO.guardarUsuario(u2);	
 			
 		
+			//PRUEBA EMAIL
+			Pedido p = new Pedido();
+			DateTime dt = new DateTime();
+			dt.plusDays(3);
+			p.setAlterable(true);
+			p.setFechaCreacion(dt);
+			p.setFechaDeVencimiento(cierre);
+			p.setIdVendedor(2);
+			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+			p.setPerteneceAPedidoGrupal(false);
+			p.setUsuarioCreador("jfflores90@gmail.com");
+			pedidoService.guardar(p);
 			Cliente c = new Cliente();
 			c.setToken("federico");
 			c.setPassword(encrypter.encrypt("federico"));
 			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
+			c.setApellido("Flores");
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();
 			d.setCalle("aaaa");
@@ -111,12 +129,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 			dd.setPredeterminada(false);
 			dd.setAltura(111);
 			List<Direccion> dds = new ArrayList<Direccion>();
+			List<Pedido>pss = new ArrayList<Pedido>();
 			dds.add(dd);
 			dds.add(d);
+			c.setPedidos(pss);
 			c.setDireccionesAlternativas(dds);
+			c.getPedidos().add(p);
 			usuarioDAO.guardarUsuario(c);
 			
-		
 		}
 	}
 

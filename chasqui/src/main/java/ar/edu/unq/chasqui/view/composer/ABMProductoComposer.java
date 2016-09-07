@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zkplus.spring.SpringUtil;
@@ -32,11 +33,12 @@ import ar.edu.unq.chasqui.services.interfaces.CaracteristicaService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.view.genericEvents.RefreshListener;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
+import ar.edu.unq.chasqui.view.renders.VarianteItemRenderer;
 
 @SuppressWarnings({"serial","deprecation"})
 public class ABMProductoComposer extends GenericForwardComposer<Component> implements Refresher{
 
-	private AnnotateDataBinder binder;
+	public AnnotateDataBinder binder;
 	private Textbox nombreProducto;
 	private Combobox comboCategorias;
 	private Combobox comboFabricantes;
@@ -73,6 +75,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
+		listboxVariante.setItemRenderer(new VarianteItemRenderer(this));
 		model = (Producto) Executions.getCurrent().getArg().get("producto");
 		Integer accion = (Integer) Executions.getCurrent().getArg().get("accion");
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
@@ -139,6 +142,15 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	}
 
 	
+	public void onDestacarVariante(Variante v){
+		if(v.getDestacado()){
+			v.setDestacado(false);
+		}else{
+			v.setDestacado(true);
+		}
+		binder.loadAll();
+	}
+	
 	public void onClick$botonAgregarCategoria(){
 		Window w = (Window) Executions.createComponents("/abmCategoria.zul", this.self, null);
 		w.doModal();		
@@ -178,8 +190,8 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		}
 	}
 	
-	public void onEliminarVariante(){
-		model.getVariantes().remove(varianteSeleccionada);
+	public void onEliminarVariante(Variante v){
+		model.getVariantes().remove(v);
 		this.binder.loadAll();
 	}
 	
@@ -199,10 +211,10 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	
 	
 	
-	public void onVerVariante(){
+	public void onVerVariante(Variante v){
 		Map<String,Object>params = new HashMap<String,Object>();
 		params.put("producto",model);
-		params.put("variante", varianteSeleccionada);
+		params.put("variante", v);
 		Window w = (Window) Executions.createComponents("/abmVariante.zul", this.self, params);
 		w.doModal();
 	}

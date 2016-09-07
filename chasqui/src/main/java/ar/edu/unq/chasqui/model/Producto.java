@@ -75,6 +75,16 @@ public class Producto {
 		p.setCaracteristicas(new ArrayList<Caracteristica>());
 		return p;
 	}
+	
+	
+	public boolean tieneVarianteDestacada(){
+		for(Variante v : variantes){
+			if(v.getDestacado()){
+				return true;
+			}
+		}
+		return false;
+	}
 
 
 	

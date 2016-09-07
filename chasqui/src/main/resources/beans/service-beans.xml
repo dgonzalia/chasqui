@@ -35,6 +35,10 @@
 	   <bean id="categoriaService" name="categoriaService" class="ar.edu.unq.chasqui.services.impl.CategoriaServiceImpl"/>
 	 
 	   <bean id="productorService" name="productorService" class="ar.edu.unq.chasqui.services.impl.FabricanteServiceImpl"/>
+	   
+	   <bean id="pedidoService" name="pedidoService" class="ar.edu.unq.chasqui.services.impl.PedidoServiceImpl"/>
+	   
+	      <bean id="notificacionService" name="notificacionService" class="ar.edu.unq.chasqui.services.impl.NotificacionServiceImpl"/>
 	 
 	   <!--  DAOS -->
 	   <bean name="usuarioDAO" id="usuarioDAO" class="ar.edu.unq.chasqui.dao.impl.UsuarioDAOHbm">
@@ -65,6 +69,13 @@
 	   		<property name="sessionFactory" ref="sessionFactory"/>
 	   </bean>
 	   
+	   <bean id="notificacionDAO" name="notificacionDAO" class="ar.edu.unq.chasqui.dao.impl.NotificacionDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
+	   
+	   <bean id="pedidoDAO" name="pedidoDAO" class="ar.edu.unq.chasqui.dao.impl.PedidoDAOHbm">
+	   		<property name="sessionFactory" ref="sessionFactory"/>
+	   </bean>
 	   <!-- SERVICIO EMAIL -->
 	   
 	   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -86,6 +97,22 @@
     <bean name="encrypter" class="ar.edu.unq.chasqui.security.Encrypter">
     	<property name="ALGORITHM" value="${encrypter.algorithm}"/>
     	<property name="KEY" value="${encrypter.KEY}"/>
+    </bean>
+    
+    <bean id="nombreServidor" name="nombreServidor" class="java.lang.String">
+           <constructor-arg type="java.lang.String" value="${quartz.server}" />
+    </bean>
+    
+    <bean id="cantidadDeDiasParaEnviarNotificacion" name="cantidadDeDiasParaEnviarNotificacion" class="java.lang.Integer">
+           <constructor-arg value="${quartz.cantidadDeDias.avisos}" />
+    </bean>
+    
+    <bean id="cuerpoEmail" name="cuerpoEmail" class="java.lang.String">
+           <constructor-arg type="java.lang.String" value="${quartz.cuerpo.email.notificacion}" />
+    </bean>
+    
+    <bean id="mensajeNotificacionChasqui" name="mensajeNotificacionChasqui" class="java.lang.String">
+           <constructor-arg type="java.lang.String" value="${quartz.mensaje.notificacion.mobile}" />
     </bean>
     
     <bean name="passwordGenerator" class="ar.edu.unq.chasqui.security.PasswordGenerator">

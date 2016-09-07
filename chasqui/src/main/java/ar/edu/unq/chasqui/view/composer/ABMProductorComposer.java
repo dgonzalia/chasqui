@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang.StringUtils;
+import org.zkforge.ckez.CKeditor;
 import org.zkoss.spring.SpringUtil;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Component;
@@ -47,6 +48,8 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 	private Textbox txtLocalidad;
 	private Textbox txtProvincia;
 	private Textbox txtPais;
+	private Textbox descCorta;
+	private CKeditor descLarga;
 	private Intbox altura;
 	private Combobox comboCaracteristica;
 	private CaracteristicaProductor caracteristicaSeleccionada;
@@ -94,6 +97,8 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		txtLocalidad.setValue(model.getProvincia());
 		txtDireccion.setValue(model.getLocalidad());
 		altura.setValue(model.getAltura());
+		descCorta.setValue(model.getDescripcionCorta());
+		descLarga.setValue(model.getDescripcionLarga());
 		caracteristicaSeleccionada = model.getCaracteristica();
 		if(caracteristicaSeleccionada != null){
 			comboCaracteristica.setValue(caracteristicaSeleccionada.getNombre());			
@@ -105,6 +110,8 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		llenarCampos();
 		comboCaracteristica.setDisabled(true);
 		altura.setDisabled(true);
+		descLarga.setCustomConfigurationsPath("/js/ckEditorReadOnly.js");
+		descCorta.setDisabled(true);
 		textboxNombreProductor.setDisabled(true);
 		txtDireccion.setDisabled(true);
 		txtPais.setDisabled(true);
@@ -119,15 +126,19 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		Integer alt = altura.getValue();
 		String calle = txtDireccion.getValue();
 		String pais = txtPais.getValue();
+		String descorta = descCorta.getValue();
+		String deslarga = descLarga.getValue();
 		String provincia = txtProvincia.getValue();
 		String localidad = txtLocalidad.getValue();
-		validar(productor,alt,calle,pais,provincia,localidad);
+		validar(productor,alt,calle,pais,provincia,localidad,deslarga);
 		if(!existe){
 			model  = new Fabricante();			
 		}
 		model.setNombre(productor);
 		model.setCaracteristica(caracteristicaSeleccionada);
 		model.setCalle(calle);
+		model.setDescripcionCorta(descorta);
+		model.setDescripcionLarga(deslarga);
 		model.setAltura(alt);
 		model.setPais(pais);
 		model.setProvincia(provincia);
@@ -193,7 +204,7 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		this.caracteristicaSeleccionada = caracteristicaSeleccionada;
 	}
 	
-	private void validar(String productor,Integer alt, String calle,String pais, String provincia, String localidad) {
+	private void validar(String productor,Integer alt, String calle,String pais, String provincia, String localidad,String desclarga) {
 		if(StringUtils.isEmpty(productor)){
 			throw new WrongValueException(textboxNombreProductor,"El productor no debe ser vacio!");
 		}
@@ -227,6 +238,14 @@ public class ABMProductorComposer extends GenericForwardComposer<Component> impl
 		}
 		if(alt == null){
 			throw new WrongValueException(altura,"La altura no debe ser vacía");
+		}
+		
+		if(StringUtils.isEmpty(desclarga)){
+			throw new WrongValueException(descLarga,"La Descripción no debe ser vacía");
+		}
+		
+		if(desclarga.length() > 4000){
+			throw new WrongValueException(descLarga,"La Descripción no debe ser mayor a 4000 caracteres");
 		}
 		
 //		if(caracteristicaSeleccionada == null){

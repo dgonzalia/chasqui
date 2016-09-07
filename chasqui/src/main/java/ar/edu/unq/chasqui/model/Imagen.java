@@ -5,6 +5,7 @@ public class Imagen {
 	private Integer id;
 	private String path;
 	private String nombre;
+	private Boolean preview;
 	private String absolutePath;
 
 	//GETs & SETs
@@ -40,6 +41,17 @@ public class Imagen {
 	public void setAbsolutePath(String absolutePath) {
 		this.absolutePath = absolutePath;
 	}
+
+	public Boolean getPreview() {
+		return preview;
+	}
+
+	public void setPreview(Boolean preview) {
+		this.preview = preview;
+	}
+	
+	
+	
 		
 	
 

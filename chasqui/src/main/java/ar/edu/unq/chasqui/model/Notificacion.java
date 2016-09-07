@@ -13,6 +13,17 @@ public class Notificacion {
 	
 	//GETs & SETs
 	
+	
+	public Notificacion(String userOrigen,String userDestino,String msj,String est){
+		fecha = new DateTime();
+		usuarioOrigen = userOrigen;
+		usuarioDestino = userDestino;
+		mensaje = msj;
+		estado = est;
+	}
+	
+	public Notificacion(){}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -4,8 +4,8 @@
 <?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
 <?link rel="icon" type="image/x-icon" href="/imagenes/favicon.ico"?>
 <zk>
-<window title="Alta/Edición de Productores" id="productorWindow"
-apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" width="40%"  closable="true">
+<window title="Alta/Edición de Productores" id="productorWindow" position="center,top"
+apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" width="50%"  closable="true">
 
 <listbox>
 	<listhead>
@@ -56,6 +56,18 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 		<listcell label="Altura:"/>
 		<listcell>
 			<intbox id="altura" maxlength="4"/>
+		</listcell>
+	</listitem>
+	<listitem>
+		<listcell label="Descripción breve:"/>
+		<listcell>
+			<textbox id="descCorta" maxlength="30" rows="3" width="90%"/>
+		</listcell>
+	</listitem>
+	<listitem height="30%">
+		<listcell label="Descripción Larga:"/>
+		<listcell>
+			<ckeditor id="descLarga" height="100px" width="95%" toolbar="Simple" customConfigurationsPath="/js/config.js"/>
 		</listcell>
 	</listitem>
 	<listitem>
