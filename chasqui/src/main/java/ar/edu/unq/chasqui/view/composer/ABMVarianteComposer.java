@@ -55,6 +55,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 	private CKeditor ckEditor;
 	private Fileupload uploadImagen;
 	private Listbox listImagenes;
+	private boolean nuevaVariante=false;
 	
 	
 	public void doAfterCompose(Component c) throws Exception{
@@ -63,28 +64,39 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		model = (Variante) Executions.getCurrent().getArg().get("variante");
 		fileSaver = (FileSaver) SpringUtil.getBean("fileSaver");
 		producto = (Producto) Executions.getCurrent().getArg().get("producto");
+		boolean lectura = (Boolean) Executions.getCurrent().getArg().get("lectura");
 		c.addEventListener(Events.ON_CLICK, new BorrarImagenEventListener(this));
 		c.addEventListener(Events.ON_USER, new DescargarImagenEventListener(this));
 		imagenes = new ArrayList<Imagen>();
+		
 		if(model == null){
 			model = new Variante();
-			listImagenes.setItemRenderer(new ImagenesRender(c,true));
+			nuevaVariante = true;
+		}
+		if(!lectura){
+			llenarCampos();
+			listImagenes.setItemRenderer(new ImagenesRender(c,true,this));
 		}else{
 			inicializarModoLectura();
-			listImagenes.setItemRenderer(new ImagenesRender(c,false));
+			listImagenes.setItemRenderer(new ImagenesRender(c,false,this));
 		}
 		binder = new AnnotateDataBinder(c);
 		binder.loadAll();
 	}
 	
 	
-	public void inicializarModoLectura(){
-		listImagenes.setDisabled(true);
+	public void llenarCampos(){
 		imagenes.addAll(model.getImagenes());
 		doubleboxPrecio.setValue(model.getPrecio());
 		intboxStock.setValue(model.getStock());
 		textboxNombre.setValue(model.getNombre());
 		ckEditor.setValue(model.getDescripcion());
+		
+	}
+	
+	public void inicializarModoLectura(){
+		llenarCampos();
+		listImagenes.setDisabled(true);
 		doubleboxPrecio.setDisabled(true);
 		intboxStock.setDisabled(true);
 		textboxNombre.setDisabled(true);
@@ -112,6 +124,7 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 			String path = context.getRealPath("/imagenes/");
 			Imagen imagen = fileSaver.guardarImagen(path ,usuarioLogueado.getUsername(),image.getContent().getName(),image.getContent().getByteData());
 			imagen.setNombre(image.getContent().getName());
+			imagen.setPreview(false);
 			imagenes.add(imagen);
 			binder.loadAll();
 	}
@@ -147,7 +160,9 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		model.setCantidadReservada(0);
 		model.setProducto(producto);
 		model.setDestacado(false);
-		producto.getVariantes().add(model);
+		if(nuevaVariante){
+			producto.getVariantes().add(model);			
+		}
 		Events.sendEvent(Events.ON_RENDER,this.self.getParent(),null);
 		this.self.detach();
 	}
@@ -178,7 +193,15 @@ public class ABMVarianteComposer  extends GenericForwardComposer<Component> impl
 		if(descripcion.length() > 255){
 			throw new WrongValueException(ckEditor,"La descripción es demasiado larga");
 		}
-		
+		int previews = 0;
+		for(Imagen i : imagenes){
+			if(i.getPreview()){
+				previews++;
+			}
+		}
+		if(previews > 1){
+			throw new WrongValueException(listImagenes,"No se puede elegir mas de una imagen de previsualización");
+		}
 		
 	}
 

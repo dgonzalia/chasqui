@@ -61,8 +61,18 @@ public class VarianteItemRenderer implements ListitemRenderer<Variante>{
 		visualizar.setTooltip(Labels.getLabel("'zk.toolbarbutton.administracion.tooltip.visualizar'"));
 		visualizar.addEventListener(Events.ON_CLICK, new VisualizarListener(visualizar,composer,v));
 		
+		Space spps = new Space();
+		spps.setSpacing("10px");
+		
+		Toolbarbutton editar = new Toolbarbutton();
+		editar.setImage("/imagenes/editar.png");
+		editar.setTooltip(Labels.getLabel("Editar"));
+		editar.addEventListener(Events.ON_CLICK, new EditarListener(visualizar,composer,v));
+		
+		
 		Space spp = new Space();
-		sp.setSpacing("10px");
+		spp.setSpacing("10px");
+		
 		
 		Toolbarbutton borrar = new Toolbarbutton();
 		borrar.setImage("/imagenes/trash.png");
@@ -75,11 +85,12 @@ public class VarianteItemRenderer implements ListitemRenderer<Variante>{
 		l.setParent(hbox);
 		hbox.setParent(precio);
 		
-		stock.setParent(item);
 		
 		destacado.setParent(acciones);
 		sp.setParent(acciones);
 		visualizar.setParent(acciones);
+		spps.setParent(acciones);
+		editar.setParent(acciones);
 		spp.setParent(acciones);
 		borrar.setParent(acciones);
 		
@@ -128,6 +139,26 @@ class VisualizarListener implements EventListener<Event>{
 	@Override
 	public void onEvent(Event event) throws Exception {
 		c.onVerVariante(model);		
+	}
+	
+}
+
+
+class EditarListener implements EventListener<Event>{
+
+	Toolbarbutton desc;
+	ABMProductoComposer c;
+	Variante model;
+	
+	public EditarListener(Toolbarbutton destacado, ABMProductoComposer composer,Variante v) {
+		desc = destacado;
+		c = composer;
+		model = v;
+	}
+
+	@Override
+	public void onEvent(Event event) throws Exception {
+		c.onEditarVariante(model);		
 	}
 	
 }

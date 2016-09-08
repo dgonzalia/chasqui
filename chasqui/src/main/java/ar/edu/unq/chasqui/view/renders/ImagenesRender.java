@@ -1,6 +1,8 @@
 package ar.edu.unq.chasqui.view.renders;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Listcell;
@@ -11,15 +13,18 @@ import org.zkoss.zul.Toolbarbutton;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Imagen;
+import ar.edu.unq.chasqui.view.composer.ABMVarianteComposer;
 
 public class ImagenesRender implements ListitemRenderer<Imagen>{
 	
 	Window varianteWindow;
 	boolean lectura;
+	ABMVarianteComposer c;
 	
-	public ImagenesRender(Component comp,boolean lectura){
+	public ImagenesRender(Component comp,boolean lectura,ABMVarianteComposer composer){
 		varianteWindow = (Window) comp;
 		this.lectura = lectura;
+		c = composer;
 	}
 	
 	
@@ -31,11 +36,19 @@ public class ImagenesRender implements ListitemRenderer<Imagen>{
 		Space space = new Space();
 		space.setSpacing("5px");
 
+		Toolbarbutton preview = new Toolbarbutton();
+		Toolbarbutton trashbutton = new Toolbarbutton();
 		if(lectura){
-			Toolbarbutton trashbutton = new Toolbarbutton();
+			if(img.getPreview()){
+				preview.setImage("/imagenes/destacado_on.png");				
+			}else{
+				preview.setImage("/imagenes/destacado_off.png");
+			}
+			preview.addEventListener(Events.ON_CLICK, new PreviewListener(img,c));
+			preview.setTooltiptext("Eligir como imagen de previsualización");
+			
 			trashbutton.setImage("/imagenes/trash.png");
 			trashbutton.addForward(Events.ON_CLICK, varianteWindow, Events.ON_CLICK, img);
-			trashbutton.setParent(hbox);			
 		}
 		
 		Toolbarbutton downloadbutton = new Toolbarbutton();
@@ -43,10 +56,33 @@ public class ImagenesRender implements ListitemRenderer<Imagen>{
 		downloadbutton.addForward(Events.ON_CLICK, varianteWindow, Events.ON_USER, img);
 		
 		space.setParent(hbox);
+		preview.setParent(hbox); 
 		downloadbutton.setParent(hbox);
+		trashbutton.setParent(hbox);	
 		hbox.setParent(c2);
 		c1.setParent(item);
 		c2.setParent(item);
 	}
 
+}
+
+final class PreviewListener implements EventListener<Event>{
+	
+	Imagen model;
+	ABMVarianteComposer composer;
+	public PreviewListener(Imagen img,ABMVarianteComposer c) {
+		model = img;
+		composer = c;
+	}
+
+	@Override
+	public void onEvent(Event event) throws Exception {
+		if(model.getPreview()){
+			model.setPreview(false);
+		}else{
+			model.setPreview(true);				
+		}
+		composer.refresh();
+	}
+	
 }

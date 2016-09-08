@@ -215,6 +215,17 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 		Map<String,Object>params = new HashMap<String,Object>();
 		params.put("producto",model);
 		params.put("variante", v);
+		params.put("lectura", true);
+		Window w = (Window) Executions.createComponents("/abmVariante.zul", this.self, params);
+		w.doModal();
+	}
+	
+	
+	public void onEditarVariante(Variante v) {
+		Map<String,Object>params = new HashMap<String,Object>();
+		params.put("producto",model);
+		params.put("variante", v);
+		params.put("lectura", false);
 		Window w = (Window) Executions.createComponents("/abmVariante.zul", this.self, params);
 		w.doModal();
 	}
@@ -222,6 +233,7 @@ public class ABMProductoComposer extends GenericForwardComposer<Component> imple
 	public void onAltaVariante(){
 		Map<String,Object>params = new HashMap<String,Object>();
 		params.put("producto",model);
+		params.put("lectura", false);
 		Window w = (Window) Executions.createComponents("/abmVariante.zul", this.self, params);
 		w.doModal();
 	}

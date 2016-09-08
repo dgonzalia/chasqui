@@ -280,6 +280,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 						case Messagebox.YES:
 							service.eliminarCaracteristica(c);
 							caracteristicas.remove(c);
+							binder.loadAll();
 							Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
 						case Messagebox.NO:
 							break;
@@ -287,7 +288,6 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 						
 					}
 				});
-		this.binder.loadAll();
 	}
 	
 	
@@ -300,6 +300,7 @@ public void eliminarCaracteristicaProductor(final CaracteristicaProductor c){
 					case Messagebox.YES:
 						service.eliminarCaracteristicaProductor(c);
 						caracteristicasProductor.remove(c);
+						binder.loadAll();
 						Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
 					case Messagebox.NO:
 						break;
@@ -307,7 +308,6 @@ public void eliminarCaracteristicaProductor(final CaracteristicaProductor c){
 					
 				}
 			});
-	this.binder.loadAll();
 	}
 	
 	
