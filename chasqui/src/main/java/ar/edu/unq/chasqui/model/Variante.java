@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Variante {
@@ -16,6 +17,10 @@ public class Variante {
 	
 	
 	//GETs & SETs
+	
+	public Variante(){
+		imagenes = new ArrayList<Imagen>();
+	}
 	
 	public Integer getId() {
 		return id;
@@ -117,5 +122,14 @@ public class Variante {
 		return "Variante: [ id:"+id+" Stock:"+stock+"Reservados:"+cantidadReservada+
 		 "Precio:"+precio+" Nombre:"+nombre+" idProducto:"+ producto.getId()+" ]";
 		
+	}
+
+	public String obtenerImagenDePrevisualizacion() {
+		for(Imagen i : imagenes){
+			if(i.getPreview()){
+				return i.getPath();
+			}
+		}
+		return imagenes.get(0).getPath();
 	}
 }

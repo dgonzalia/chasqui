@@ -42,6 +42,8 @@ apply="ar.edu.unq.chasqui.view.composer.ABMVarianteComposer" height="auto" width
 		<listcell label="@{imagen.getNombre}"/>
 		<listcell>
 			<hbox>
+				<image src="/imagenes/destacado_off.png"/>
+				<space spacing="10px"/>
 				<image src="/imagenes/trash.png"/>
 				<space spacing="10px"/>
 				<image src="/imagenes/download.png" />

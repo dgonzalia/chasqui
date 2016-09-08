@@ -140,7 +140,7 @@ public class VariedadResponse implements Serializable{
 		destacado = v.getDestacado();
 		idCategoria = p.getCategoria().getId();
 		idFabricante = p.getFabricante().getId();
-		imagenPrincipal = v.getImagenes().get(0).getPath();
+		imagenPrincipal = v.obtenerImagenDePrevisualizacion();
 		nombreProducto = p.getNombre();
 		nombreVariedad = v.getNombre();
 		nombreFabricante = p.getFabricante().getNombre();

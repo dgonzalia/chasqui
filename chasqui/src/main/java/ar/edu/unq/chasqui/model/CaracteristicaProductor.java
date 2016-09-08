@@ -77,10 +77,10 @@ public class CaracteristicaProductor implements ICaracteristica{
 		if( obj == null){
 			return false;
 		}
-		if(! (obj instanceof Caracteristica)){
+		if(! (obj instanceof CaracteristicaProductor)){
 			return false;
 		}
-		if(((Caracteristica) obj).getNombre().equalsIgnoreCase(this.nombre)){
+		if(((CaracteristicaProductor) obj).getNombre().equalsIgnoreCase(this.nombre)){
 			return true;
 		}
 		return false;

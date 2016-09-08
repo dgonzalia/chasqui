@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
 
+import org.apache.cxf.common.util.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,7 +67,8 @@ public class AvisoPedidoQuartz {
 					Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(p.getUsuarioCreador());
 					mailService.enviarEmailNotificacionPedido(p.getUsuarioCreador(), cuerpoEmail, c.getNombre(), c.getApellido());
 				}else{
-					Notificacion n = new Notificacion("Chasqui", p.getUsuarioCreador(), mensajeNotificacionChasqui, Constantes.ESTADO_NOTIFICACION_NO_LEIDA);
+					String mensajeNotificacion = obtenerMensajeNotificacion(v);
+					Notificacion n = new Notificacion("Chasqui", p.getUsuarioCreador(), mensajeNotificacion, Constantes.ESTADO_NOTIFICACION_NO_LEIDA);
 					notificacionService.guardar(n);
 				}
 			}			
@@ -76,6 +78,13 @@ public class AvisoPedidoQuartz {
 		}
 	}
 
+
+	private String obtenerMensajeNotificacion(Vendedor v) {
+		if(!StringUtils.isEmpty(v.getMsjCierrePedido())){
+			return mensajeNotificacionChasqui;
+		}
+		return v.getMsjCierrePedido();
+	}
 
 	private String obtenerHostname(){
 		InetAddress inetAddr;
