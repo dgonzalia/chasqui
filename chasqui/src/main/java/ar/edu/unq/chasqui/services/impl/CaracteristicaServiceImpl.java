@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.unq.chasqui.aspect.Auditada;
 import ar.edu.unq.chasqui.dao.CaracteristicaDAO;
 import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.CaracteristicaProductor;
 import ar.edu.unq.chasqui.services.interfaces.CaracteristicaService;
 
+@Auditada
 public class CaracteristicaServiceImpl implements CaracteristicaService{
 
 	@Autowired

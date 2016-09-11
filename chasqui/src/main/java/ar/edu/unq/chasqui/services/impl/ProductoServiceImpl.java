@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.cxf.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.unq.chasqui.aspect.Auditada;
 import ar.edu.unq.chasqui.dao.ProductoDAO;
 import ar.edu.unq.chasqui.exceptions.CaracteristicaInexistenteException;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
@@ -21,7 +22,7 @@ import ar.edu.unq.chasqui.service.rest.request.ProductoRequest;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
 
-
+@Auditada
 public class ProductoServiceImpl implements ProductoService {
 
 	@Autowired

@@ -11,7 +11,9 @@ public class LoggerAspect {
 	private static final Logger logger = Logger.getLogger(LoggerAspect.class);
 	
 	
-	@Around("@annotation(org.springframework.transaction.annotation.Transactional)")
+//	@Around("@annotation(org.springframework.transaction.annotation.Transactional)")
+//	@Around("@annotation(ar.edu.unq.chasqui.aspect.Auditada)")
+	@Around("execution(public * @Auditada *.*(..))")
 	public Object logear(ProceedingJoinPoint pointcut)throws Throwable{
 		try{
 			return pointcut.proceed();			

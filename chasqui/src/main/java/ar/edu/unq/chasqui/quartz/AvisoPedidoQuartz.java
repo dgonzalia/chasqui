@@ -45,14 +45,14 @@ public class AvisoPedidoQuartz {
 	
 	public void execute(){
 		//AGREGAR VALIDACION DE SERVIDOR
-//		if(obtenerHostname().equals("hola")){
+		if(obtenerHostname().equals("hola")){
 			List<Vendedor>vendedores = vendedorService.obtenerVendedores();
 			for(Vendedor v : vendedores){
 				if(v.getUsername().equals("MatLock")){
 					enviarNotificacionesDePedidos(v);					
 				}
 			}					
-//		}
+		}
 		
 	}
 	

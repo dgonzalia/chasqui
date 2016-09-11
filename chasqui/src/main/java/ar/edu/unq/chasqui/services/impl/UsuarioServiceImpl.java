@@ -9,6 +9,7 @@ import org.hsqldb.lib.StringUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.unq.chasqui.aspect.Auditada;
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
@@ -35,6 +36,7 @@ import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.view.composer.Constantes;
 
+@Auditada
 public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired
@@ -82,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			img.setNombre("perfil.jpg");
 			img.setPath("/imagenes/usuarios/"+user.getUsername()+"/perfil.jpg");
 			user.setImagenPerfil(img.getPath());
-			usuarioDAO.guardarUsuario(user);	
+			this.guardarUsuario(user);	
 			
 			DateTime cierre = new DateTime().plusDays(1);
 			Vendedor u2 = new Vendedor();
@@ -93,7 +95,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			u2.setImagenPerfil(img.getPath());
 			u2.setMontoMinimoPedido(213);
 			u2.setFechaCierrePedido(cierre);
-			usuarioDAO.guardarUsuario(u2);	
+			this.guardarUsuario(u2);	
 			
 		
 			//PRUEBA EMAIL
@@ -135,7 +137,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			c.setPedidos(pss);
 			c.setDireccionesAlternativas(dds);
 			c.getPedidos().add(p);
-			usuarioDAO.guardarUsuario(c);
+			this.guardarUsuario(c);
 			
 		}
 	}
@@ -177,6 +179,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		throw new UsuarioExistenteException("No existe el usuario");
 	}
+
+	
 
 	public Cliente crearCliente(SingUpRequest request) throws Exception {
 		validarRequestCreacionDeUsuario(request);
@@ -447,7 +451,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	//	validarDireccion(request.getDireccion());
 		
 		if(this.existeUsuarioCon(request.getEmail())){
-			throw new UsuarioExistenteException();
+			throw new UsuarioExistenteException("El email ya se encuentra en uso");
 		}
 	}
 	

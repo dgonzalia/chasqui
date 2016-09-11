@@ -11,9 +11,7 @@
 	   http://www.springframework.org/schema/context
     	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	   
-	   <!-- necesario para aspectos -->
-	   <aop:aspectj-autoproxy />
-	   <!-- fin de AOP -->
+	 
 	   <context:annotation-config/>
 	   <context:property-placeholder location="${ext.properties.dir:classpath:}/chasqui.properties" />
 	   
@@ -120,6 +118,7 @@
     </bean>
     
     <!-- AOP -->
+    <aop:aspectj-autoproxy />
     <bean name="loggerAspect" class="ar.edu.unq.chasqui.aspect.LoggerAspect"/>
 	   
 </beans>

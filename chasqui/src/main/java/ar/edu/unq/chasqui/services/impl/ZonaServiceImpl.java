@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.unq.chasqui.aspect.Auditada;
 import ar.edu.unq.chasqui.dao.ZonaDAO;
 import ar.edu.unq.chasqui.model.Zona;
 import ar.edu.unq.chasqui.services.interfaces.ZonaService;
 
+@Auditada
 public class ZonaServiceImpl implements ZonaService{
 
 	
