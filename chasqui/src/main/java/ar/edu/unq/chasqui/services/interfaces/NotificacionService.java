@@ -7,6 +7,6 @@ import ar.edu.unq.chasqui.model.Notificacion;
 public interface NotificacionService {
 
 	@Transactional
-	public void guardar(Notificacion n);
+	public void guardar(Notificacion n,String idDispositivo);
 	
 }

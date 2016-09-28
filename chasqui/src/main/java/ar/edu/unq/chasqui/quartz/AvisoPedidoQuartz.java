@@ -63,13 +63,13 @@ public class AvisoPedidoQuartz {
 			for(Pedido p : pedidos){
 				DateTime dt = new DateTime();
 				DateTime fechaCierre = v.getFechaCierrePedido();//.plusDays(-1);
+				Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(p.getUsuarioCreador());
 				if(dt.getDayOfYear() == fechaCierre.getDayOfYear()){
-					Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(p.getUsuarioCreador());
 					mailService.enviarEmailNotificacionPedido(p.getUsuarioCreador(), cuerpoEmail, c.getNombre(), c.getApellido());
 				}else{
 					String mensajeNotificacion = obtenerMensajeNotificacion(v);
 					Notificacion n = new Notificacion("Chasqui", p.getUsuarioCreador(), mensajeNotificacion, Constantes.ESTADO_NOTIFICACION_NO_LEIDA);
-					notificacionService.guardar(n);
+					notificacionService.guardar(n,c.getIdDispositivo());
 				}
 			}			
 		}catch(Exception e){

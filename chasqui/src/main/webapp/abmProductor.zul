@@ -61,7 +61,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductorComposer" border="normal" wi
 	<listitem>
 		<listcell label="Descripción breve:"/>
 		<listcell>
-			<textbox id="descCorta" maxlength="30" rows="3" width="90%"/>
+			<textbox id="descCorta" maxlength="100" rows="3" width="90%"/>
 		</listcell>
 	</listitem>
 	<listitem height="30%">

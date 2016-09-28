@@ -22,7 +22,7 @@ public class NotificacionResponse implements Serializable {
 	public NotificacionResponse(Notificacion n) {
 		usuarioOrigen = n.getUsuarioOrigen();
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		fechaCreacion = format.format(n.getFecha());
+		fechaCreacion = format.format(n.getFecha().toDate());
 		mensaje = n.getMensaje();
 		estado = n.getEstado();
 		id = n.getId();

@@ -31,6 +31,7 @@ import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoReque
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
+import ar.edu.unq.chasqui.services.interfaces.NotificacionService;
 import ar.edu.unq.chasqui.services.interfaces.PedidoService;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -51,6 +52,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private MailService mailService;
 	@Autowired
 	PedidoService pedidoService;
+	@Autowired
+	NotificacionService notificacionService;
 	
 	public Usuario obtenerUsuarioPorID(Integer id) {
 		return usuarioDAO.obtenerUsuarioPorID(id);
@@ -97,7 +100,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 			u2.setFechaCierrePedido(cierre);
 			this.guardarUsuario(u2);	
 			
-		
+			
+			Notificacion n = new Notificacion("CHASQUI", "jfflores90@gmail.com", "PRUEBA NOTIFICACION", "No Leído");
+			
+			
+			notificacionService.guardar(n,"NULL");
+			
 			//PRUEBA EMAIL
 			Pedido p = new Pedido();
 			DateTime dt = new DateTime();
@@ -108,7 +116,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			p.setIdVendedor(2);
 			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
 			p.setPerteneceAPedidoGrupal(false);
-			p.setUsuarioCreador("jfflores90@gmail.com");
+			p.setUsuarioCreador("jfflores90@gmai");
 			pedidoService.guardar(p);
 			Cliente c = new Cliente();
 			c.setToken("federico");
@@ -475,6 +483,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 			throw new RequestIncorrectoException();
 		}
 		
+		
+	}
+
+	@Override
+	public void agregarIDDeDispositivo(String mail, String dispositivo) {
+		Cliente c = (Cliente) this.obtenerUsuarioPorEmail(mail);
+		if(c != null){
+			c.setIdDispositivo(dispositivo);
+			this.guardarUsuario(c);
+		}
 		
 	}
 	

@@ -68,6 +68,8 @@ public interface UsuarioService {
 	public void enviarInvitacionRequest(String origen, String destino) throws Exception;
 	@Transactional
 	public void confirmarPedido(String email, Integer idPedido) throws PedidoInexistenteException;
+	@Transactional
+	public void agregarIDDeDispositivo(String mail, String dispositivo);
 	
 	
 }

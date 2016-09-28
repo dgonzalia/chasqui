@@ -19,6 +19,7 @@
         <property name="telefonoMovil" type="java.lang.String">
             <column name="TELEFONO_MOVIL" />
         </property>
+        <property name="idDispositivo" type="java.lang.String" column="DISPOSITIVO"/> 
         <property name="nickName" type="java.lang.String" column="NICKNAME"/>
         <property name="rol" type="java.lang.String" column="ROL"/>
         <property name="token" type="java.lang.String" column="TOKEN"/>

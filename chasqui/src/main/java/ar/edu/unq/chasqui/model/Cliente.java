@@ -24,6 +24,7 @@ public class Cliente extends Usuario{
 	private List<Direccion> direccionesAlternativas;
 	private List<Notificacion> notificaciones;
 	private Historial historialPedidos;
+	private String idDispositivo;
 	private List<Pedido> pedidos;
 	
 	// Atributos necesarios para la integracion con spring security
@@ -61,6 +62,16 @@ public class Cliente extends Usuario{
 		return apellido;
 	}
 	
+	
+	
+	public String getIdDispositivo() {
+		return idDispositivo;
+	}
+
+	public void setIdDispositivo(String idDIspositivo) {
+		this.idDispositivo = idDIspositivo;
+	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}

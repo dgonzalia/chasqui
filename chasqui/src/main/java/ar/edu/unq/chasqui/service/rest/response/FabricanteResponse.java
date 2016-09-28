@@ -31,7 +31,9 @@ public class FabricanteResponse implements Serializable{
 		pathImagen = f.getPathImagen();
 		descripcionCorta = f.getDescripcionCorta();
 		descripcionLarga = f.getDescripcionLarga();
-		medalla = new CaracteristicaResponse(f.getCaracteristica());
+		if(f.getCaracteristica() != null){
+			medalla = new CaracteristicaResponse(f.getCaracteristica());			
+		}
 		direccion = new DireccionProductorResponse(f.getCalle(),f.getAltura(),f.getPais(),f.getLocalidad(),f.getProvincia());
 	}
 	

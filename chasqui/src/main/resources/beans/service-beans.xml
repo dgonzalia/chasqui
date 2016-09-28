@@ -117,6 +117,10 @@
     	<property name="ALPHA_NUMERIC_STRING" value="${passwordGenerator.generador}"/>
     </bean>
     
+    <bean name="GCM_API_KEY" class="java.lang.String">
+    	 <constructor-arg type="java.lang.String" value="${gcm.api.key}" />
+    </bean>
+    
     <!-- AOP -->
     <aop:aspectj-autoproxy />
     <bean name="loggerAspect" class="ar.edu.unq.chasqui.aspect.LoggerAspect"/>

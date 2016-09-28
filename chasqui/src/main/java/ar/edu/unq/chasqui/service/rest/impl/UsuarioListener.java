@@ -7,7 +7,6 @@ import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -61,6 +60,15 @@ public class UsuarioListener {
 		}
 	}
 	
+	
+	@PUT
+	@Path("/registrar/{dispositivo}")
+	@Produces("application/json")
+	public Response registrarDispositivo(@PathParam("dispositivo") String dispositivo){
+		String mail = obtenerEmailDeContextoDeSeguridad();
+		usuarioService.agregarIDDeDispositivo(mail,dispositivo);
+		return Response.ok().build();
+	}
 	
 	@PUT
 	@Path("/edit")
@@ -149,9 +157,9 @@ public class UsuarioListener {
 	
 	
 	@GET
-	@Path("/notificacion")
+	@Path("/notificacion/{pagina : \\d+}")
 	@Produces("application/json")
-	public Response obtenerNotificacionesDe(@HeaderParam("pagina")Integer pagina){
+	public Response obtenerNotificacionesDe(@PathParam("pagina")Integer pagina){
 		try{
 			String mail = obtenerEmailDeContextoDeSeguridad();			
 			return Response.ok(toNotificacionResponse(usuarioService.obtenerNotificacionesDe(mail,pagina)),MediaType.APPLICATION_JSON).build();
