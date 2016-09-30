@@ -19,7 +19,7 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 			<label value="Caracteristica del Producto:"/>
 		</listcell>
 		<listcell>
-			<textbox id="txtbCaracteristica"/>		
+			<textbox id="txtbCaracteristica" maxlength="20"/>		
 		</listcell>
 	</listitem>
 	<listitem>
@@ -67,10 +67,10 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 <listbox>
 		<listitem>
 		<listcell>
-			<label value="Caracteristica del Productor:"/>
+			<label value="Caracteristica del Productor:" />
 		</listcell>
 		<listcell>
-			<textbox id="txtbCaracteristicaProductor"/>		
+			<textbox id="txtbCaracteristicaProductor" maxlength="20"/>		
 		</listcell>
 	</listitem>
 	<listitem>
