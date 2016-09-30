@@ -29,8 +29,7 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 		<listcell>
 			<div align="right">
 				<hbox>
-					<fileupload label="Subir Imagen" id="uploadImagen" upload="true,maxsize=-1"/>
-					<image src="/imagenes/warning.png" tooltiptext="La imagen debe ser del tamaño de un icono, de lo contrario será redimensionada"/>					
+					<fileupload label="Subir Imagen" id="uploadImagen" upload="true,maxsize=-1"/>					
 				</hbox>
 			</div>
 		</listcell>
@@ -81,8 +80,7 @@ apply="ar.edu.unq.chasqui.view.composer.CaracteristicaComposer">
 		<listcell>
 			<div align="right">
 				<hbox>
-					<fileupload label="Subir Imagen" id="uploadImagenProductor" upload="true,maxsize=-1"/>
-					<image src="/imagenes/warning.png" tooltiptext="La imagen debe ser del tamaño de un icono, de lo contrario será redimensionada"/>					
+					<fileupload label="Subir Imagen" id="uploadImagenProductor" upload="true,maxsize=-1"/>										
 				</hbox>
 			</div>
 		</listcell>

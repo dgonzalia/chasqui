@@ -1,6 +1,9 @@
 package ar.edu.unq.chasqui.view.renders;
 
+
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zul.Hbox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.ListitemRenderer;
@@ -30,7 +33,12 @@ public class CaracteristicaRenderer implements ListitemRenderer<Caracteristica>{
 		
 		b.addForward(Events.ON_CLICK,window ,Events.ON_USER , c);
 		c1.setLabel(c.getNombre());
-		c2.setImage(c.getPathImagen());
+		Image img = new Image(c.getPathImagen());
+		img.setWidth("16px");
+		img.setHeight("16px");
+		Hbox hbox = new Hbox();
+		img.setParent(hbox);
+		hbox.setParent(c2);
 		b.setParent(c3);
 		
 		c1.setParent(item);

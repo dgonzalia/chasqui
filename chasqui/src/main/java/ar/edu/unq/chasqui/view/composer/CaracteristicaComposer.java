@@ -228,10 +228,11 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
-			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
+//			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 			String path = context.getRealPath("/imagenes/");
-			imagen = fileSaver.guardarImagen(path +"/",usuario.getUsername(),"Icon_"+image.getContent().getName(),icono);
+			imagen = fileSaver.guardarImagen(path +"/",usuario.getUsername(),image.getContent().getName(),image.getContent().getByteData());
+//			imagen = fileSaver.guardarImagen(path +"/",usuario.getUsername(),"Icon_"+image.getContent().getName(),icono);
 			imgIcon.setSrc(imagen.getPath());
 			this.binder.loadAll();
 		}catch(Exception e){
@@ -254,10 +255,11 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 				Messagebox.show("El archivo no es una imagen o es demasiado grande","Error", Messagebox.OK, Messagebox.ERROR);
 				return;
 			}
-			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
+//			byte[] icono = fileSaver.iconizar(image.getContent().getStreamData(),image.getContent().getName().split("\\.")[1]);
 			ServletContext context = Sessions.getCurrent().getWebApp().getServletContext();
 			String path = context.getRealPath("/imagenes/");
-			imagenProductor = fileSaver.guardarImagen(path +"/",usuario.getUsername(),"Icon_"+image.getContent().getName(),icono);
+//			imagenProductor = fileSaver.guardarImagen(path +"/",usuario.getUsername(),"Icon_"+image.getContent().getName(),icono);
+			imagenProductor = fileSaver.guardarImagen(path +"/",usuario.getUsername(),image.getContent().getName(),image.getContent().getByteData());
 			imgIconProductor.setSrc(imagenProductor.getPath());
 			this.binder.loadAll();
 		}catch(Exception e){
