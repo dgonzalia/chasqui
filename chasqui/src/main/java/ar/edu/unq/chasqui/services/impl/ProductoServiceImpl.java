@@ -92,7 +92,7 @@ public class ProductoServiceImpl implements ProductoService {
 	private void validarCategoriaRequest(ByCategoriaRequest request){
 		validarRequest(request);
 		if(request.getIdCategoria() == null){
-			throw new RequestIncorrectoException("El idProductor es obligatorio!");
+			throw new RequestIncorrectoException("El idCategoria es obligatorio!");
 		}
 	}
 	
