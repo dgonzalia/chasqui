@@ -49,7 +49,7 @@ public class ProductoListener {
 		try{
 			ByCategoriaRequest request = toRequest(productoRequest);	
 			return toResponse(productoService.obtenerVariantesPorCategoria(request)
-					,request.getPagina(),request.getCantItems(),request.getPrecio());
+					,request.getPagina(),request.getCantItems(),request.getPrecio(),productoService.totalVariantesPorCategoria(request));
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros incorrectos").build();
 		}catch(Exception e){
@@ -64,7 +64,8 @@ public class ProductoListener {
 	public Response obtenerTodosLosProductosByProductor(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByProductorRequest request = toByProductorRequest(productoRequest);	
-			return toResponse(productoService.obtenerVariantesPorProductor(request),request.getPagina(),request.getCantItems(),request.getPrecio());
+			return toResponse(productoService.obtenerVariantesPorProductor(request),request.getPagina(),request.getCantItems(),request.getPrecio(),
+							 productoService.totalVariantesPorProductor(request));
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros incorrectos").build();
 		}catch(Exception e){
@@ -79,7 +80,8 @@ public class ProductoListener {
 	public Response obtenerTodosLosProductosByMedalla(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByMedallaRequest request = toByMedallaRequest(productoRequest);	
-			return toResponse(productoService.obtenerVariantesPorMedalla(request),request.getPagina(),request.getCantItems(),request.getPrecio());
+			return toResponse(productoService.obtenerVariantesPorMedalla(request),request.getPagina(),request.getCantItems(),request.getPrecio(),
+					productoService.totalVariantesPorMedalla(request));
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros incorrectos").build();
 		}catch(Exception e){
@@ -122,7 +124,8 @@ public class ProductoListener {
 	public Response obtenerProductosPorDescripcionONombre(@Multipart(value="productoRequest", type="application/json") String productoRequest){
 		try{
 			ByQueryRequest request =toByQueryRequest(productoRequest);
-			return toResponse(productoService.obtenerVariantesPorNombreODescripcion(request),request.getPagina(),request.getCantItems(),request.getPrecio());			
+			return toResponse(productoService.obtenerVariantesPorNombreODescripcion(request),request.getPagina(),request.getCantItems(),request.getPrecio(),
+					productoService.totalVariantesPorNombreODescripcion(request));			
 		}catch(RequestIncorrectoException | IOException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(Exception e){
@@ -166,8 +169,8 @@ public class ProductoListener {
 	}
 
 
-	private Response toResponse(List<Variante> variantes, Integer pagina, Integer items,String precio) {
-		return Response.ok(new ProductoResponse(variantes,pagina,items, precio), MediaType.APPLICATION_JSON).build();
+	private Response toResponse(List<Variante> variantes, Integer pagina, Integer items,String precio, Long total) {
+		return Response.ok(new ProductoResponse(variantes,pagina,items, precio,total), MediaType.APPLICATION_JSON).build();
 	}
 	
 	

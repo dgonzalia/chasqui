@@ -8,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -169,6 +170,77 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 			}
 		});
 		
+	}
+
+	@Override
+	public Long totalVariantesPorCategoria(final Integer idCategoria) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Long>() {
+
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.categoria", "c")
+				 .add(Restrictions.eq("c.id", idCategoria))
+				 .setProjection(Projections.rowCount());				
+				return  (Long)c.uniqueResult();
+			}
+		});
+	}
+
+	@Override
+	public Long totalVariantesPorProductor(final Integer idProductor) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Long>() {
+
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.fabricante", "f")
+				 .add(Restrictions.eq("f.id", idProductor))
+				 .setProjection(Projections.rowCount());				
+				return  (Long)c.uniqueResult();
+			}
+		});
+	}
+
+	@Override
+	public Long totalVariantesPorMedalla(final Integer idMedalla) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Long>() {
+
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.caracteristicas", "m")
+				 .add(Restrictions.eq("m.id", idMedalla))
+				 .setProjection(Projections.rowCount());
+				
+				return  (Long)c.uniqueResult();
+			}
+		});
+	}
+
+	@Override
+	public Long totalVariantesPorNombreODescripcion(final String param,final Integer idVendedor) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Long>() {
+
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				Disjunction or = Restrictions.disjunction();
+				or.add(Restrictions.like("nombre","%" +param+ "%" ));
+				or.add(Restrictions.like("p.nombre","%" +param+ "%"));
+				or.add(Restrictions.like("descripcion","%" +param+ "%"));
+				c.createAlias("producto", "p")
+				 .createAlias("p.categoria", "c")
+				 .createAlias("c.vendedor", "v")
+				 .add(Restrictions.eq("v.id", idVendedor))
+				 .add(or)
+				 .setProjection(Projections.rowCount());
+				return  (Long) c.uniqueResult();
+			}
+		});
 	}
 	
 	

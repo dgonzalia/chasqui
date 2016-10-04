@@ -34,4 +34,14 @@ public interface ProductoService {
 	@Transactional
 	public Caracteristica obtenerMedalla(Integer idMedalla);
 	
+	@Transactional
+	public Long totalVariantesPorCategoria(ByCategoriaRequest request);
+	@Transactional
+	public Long totalVariantesPorProductor(ByProductorRequest request);
+	@Transactional
+	public Long totalVariantesPorMedalla(ByMedallaRequest request);
+	@Transactional
+	public Long totalVariantesPorNombreODescripcion(ByQueryRequest request);
+	
+	
 }

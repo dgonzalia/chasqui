@@ -22,6 +22,15 @@ public interface ProductoDAO {
 
 	public void modificarVariante(Variante v);
 
-	public Caracteristica obtenerCaracteristicaPor(Integer idMedalla); 
+	public Caracteristica obtenerCaracteristicaPor(Integer idMedalla);
+
+	public Long totalVariantesPorCategoria(Integer idCategoria);
+
+	public Long totalVariantesPorProductor(Integer idProductor);
+
+	public Long totalVariantesPorMedalla(Integer idMedalla);
+
+	public Long totalVariantesPorNombreODescripcion(String query,Integer idVendedor);
+
 
 }
