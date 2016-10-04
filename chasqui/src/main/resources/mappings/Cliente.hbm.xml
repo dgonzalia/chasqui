@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 06/03/2016 19:11:00 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping default-cascade="all-delete-orphan">
+<hibernate-mapping default-cascade="all">
     <joined-subclass name="ar.edu.unq.chasqui.model.Cliente" extends="ar.edu.unq.chasqui.model.Usuario" table="CLIENTE" lazy="false">
         <key>
             <column name="ID" />
@@ -23,7 +23,7 @@
         <property name="nickName" type="java.lang.String" column="NICKNAME"/>
         <property name="rol" type="java.lang.String" column="ROL"/>
         <property name="token" type="java.lang.String" column="TOKEN"/>
-        <list name="direccionesAlternativas" inverse="false" table="DIRECCION" lazy="true" cascade="all">
+        <list name="direccionesAlternativas" inverse="false" table="DIRECCION" lazy="true"  cascade="all">
             <key>
                 <column name="ID_CLIENTE" />
             </key>

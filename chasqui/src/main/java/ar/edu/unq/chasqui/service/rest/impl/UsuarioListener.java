@@ -30,6 +30,7 @@ import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Notificacion;
+import ar.edu.unq.chasqui.service.rest.request.DireccionEditRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.response.DireccionResponse;
@@ -110,8 +111,8 @@ public class UsuarioListener {
 		try{
 			DireccionRequest request = toDireccionRequest(direccionRequest);
 			String mail = obtenerEmailDeContextoDeSeguridad();
-			usuarioService.agregarDireccionAUsuarioCon(mail,request);
-			return Response.ok().build();
+			Integer id = usuarioService.agregarDireccionAUsuarioCon(mail,request);
+			return Response.ok(id).build();
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(Exception e){
@@ -120,16 +121,15 @@ public class UsuarioListener {
 	}
 	
 	
-	@PUT
-	@Path("/dir/{idDireccion : \\d+}")
+	@POST
+	@Path("/dir/edit")
 	@Produces("application/json")
-	public Response editarDireccionDe(@Multipart(value="direccionRequest",type="application/json")String request,
-			@PathParam("idDireccion")Integer idDireccion){
+	public Response editarDireccionDe(@Multipart(value="direccionRequest",type="application/json")String request){
 		try{
 			String mail = obtenerEmailDeContextoDeSeguridad();
-			DireccionRequest dirRequest = toDireccionRequest(request);
-			usuarioService.editarDireccionDe(mail,dirRequest,idDireccion);
-			return Response.ok("Se ha registrado la modificacion de la direccion correctamente").build();			
+			DireccionEditRequest dirRequest = toDireccionEditRequest(request);
+			usuarioService.editarDireccionDe(mail,dirRequest,dirRequest.getIdDireccion());
+			return Response.ok().build();			
 		}catch(RequestIncorrectoException e){
 			return Response.status(406).entity("Parametros Incorrectos").build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
@@ -139,14 +139,23 @@ public class UsuarioListener {
 		}
 	}
 	
-	@DELETE
+	private DireccionEditRequest toDireccionEditRequest(String req)throws IOException {
+		DireccionEditRequest request = new DireccionEditRequest();
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+		request = mapper.readValue(req, DireccionEditRequest.class);
+		return request;
+	}
+
+
+	@GET
 	@Path("/dir/{idDireccion : \\d+}")
 	@Produces("application/json")
 	public Response elimiarDireccionDe(@PathParam("idDireccion")Integer idDireccion){
 		try{
 			String mail = obtenerEmailDeContextoDeSeguridad();
 			usuarioService.eliminarDireccionDe(mail,idDireccion);
-			return Response.ok("Se ha eliminado la direccion correctamente.").build();
+			return Response.ok().build();
 		}catch(DireccionesInexistentes | UsuarioExistenteException e){
 			return Response.status(404).entity("No se han encontrado direcciones").build();
 		}catch(Exception e){
