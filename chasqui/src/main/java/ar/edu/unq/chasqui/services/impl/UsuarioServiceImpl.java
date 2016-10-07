@@ -123,6 +123,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
 			c.setApellido("Flores");
+			c.setTelefonoFijo("12314124");
+			c.setTelefonoMovil("1234214124");
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();
 			d.setAlias("CASA");
