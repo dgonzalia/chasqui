@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.chasqui.exceptions.VendedorInexistenteException;
 import ar.edu.unq.chasqui.model.Fabricante;
+import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.FabricanteResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductorService;
 
@@ -35,9 +36,9 @@ public class ProductorListener {
 		try{
 			return Response.ok(toResponse(productorService.obtenerProductoresDe(idVendedor)),MediaType.APPLICATION_JSON).build();
 		}catch(VendedorInexistenteException e){
-			return Response.status(404).entity("Vendedor inexistente o el mismo no posee productores definidos").build();
+			return Response.status(404).entity(new ChasquiError("Vendedor inexistente o el mismo no posee productores definidos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 

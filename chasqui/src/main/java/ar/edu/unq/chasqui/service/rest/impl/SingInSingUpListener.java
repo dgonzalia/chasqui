@@ -10,11 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.hsqldb.lib.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
@@ -22,6 +20,7 @@ import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
 import ar.edu.unq.chasqui.service.rest.request.LoginRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
+import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.LoginResponse;
 import ar.edu.unq.chasqui.services.impl.MailService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -63,9 +62,9 @@ public class SingInSingUpListener{
 			Cliente c = usuarioService.crearCliente(request);
 			return toLoginResponse(c);
 		}catch(RequestIncorrectoException | IOException e){
-			return Response.status(406).entity("Debe completar todos los campos").build();
+			return Response.status(406).entity(new ChasquiError("Debe completar todos los campos")).build();
 		}catch(UsuarioExistenteException e){
-			return Response.status(409).entity(e.getMessage()).build();
+			return Response.status(409).entity(new ChasquiError(e.getMessage())).build();
 		}catch(Exception e){
 			return Response.status(500).build();
 		}
@@ -81,11 +80,11 @@ public class SingInSingUpListener{
 		try{
 			mailService.enviarEmailRecuperoContraseñaCliente(email);
 		}catch(UsuarioExistenteException e){
-			return Response.status(406).entity("Email invalido").build();
+			return Response.status(406).entity(new ChasquiError("Email invalido")).build();
 		}catch(Exception e){
-			return Response.status(500).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
-		return Response.ok().entity("Recibira en su casilla de correo una nueva password para ingresar.").build();
+		return Response.ok().build();
 	}
 
 

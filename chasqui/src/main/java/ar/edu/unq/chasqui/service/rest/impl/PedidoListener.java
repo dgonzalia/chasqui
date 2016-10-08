@@ -27,6 +27,7 @@ import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.PedidoResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -51,9 +52,9 @@ public class PedidoListener {
 			usuarioService.crearPedidoPara(mail,idVendedor);
 			return Response.status(201).build();
 		}catch(PedidoVigenteException | UsuarioExistenteException e){
-			return Response.status(406).entity(e.getMessage()).build();
+			return Response.status(406).entity(new ChasquiError(e.getMessage())).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -65,10 +66,10 @@ public class PedidoListener {
 		try{
 			return Response.ok(toResponse(usuarioService.obtenerPedidoActualDe(mail,idVendedor)),MediaType.APPLICATION_JSON).build();
 		}catch(PedidoInexistenteException e){
-			return Response.status(404).entity(e.getMessage()).build();
+			return Response.status(404).entity(new ChasquiError(e.getMessage())).build();
 		}
 		catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}	
 	
@@ -84,11 +85,11 @@ public class PedidoListener {
 			usuarioService.agregarPedidoA(request,email);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e ){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(PedidoVigenteException | ProductoInexsistenteException e){
-			return Response.status(404).entity(e.getMessage()).build();
+			return Response.status(404).entity(new ChasquiError(e.getMessage())).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -103,9 +104,9 @@ public class PedidoListener {
 			usuarioService.eliminarProductoDePedido(request,email);
 			return Response.ok().build();
 		}catch(IOException | RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}		
 	}
 	
@@ -119,9 +120,9 @@ public class PedidoListener {
 			usuarioService.eliminarPedidoPara(email,idPedido);
 			return Response.ok().build();			
 		}catch(RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}	
 	}
 	
@@ -134,9 +135,9 @@ public class PedidoListener {
 			usuarioService.confirmarPedido(email,idPedido);
 			return Response.ok().build();
 		}catch(RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 
