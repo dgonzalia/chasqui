@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -122,8 +123,8 @@ public class UsuarioListener {
 	}
 	
 	
-	@POST
-	@Path("/dir/edit")
+	@PUT
+	@Path("/dir")
 	@Produces("application/json")
 	public Response editarDireccionDe(@Multipart(value="direccionRequest",type="application/json")String request){
 		try{
@@ -149,7 +150,7 @@ public class UsuarioListener {
 	}
 
 
-	@GET
+	@DELETE
 	@Path("/dir/{idDireccion : \\d+}")
 	@Produces("application/json")
 	public Response elimiarDireccionDe(@PathParam("idDireccion")Integer idDireccion){

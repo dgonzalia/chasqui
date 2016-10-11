@@ -34,7 +34,7 @@ public class NotificacionServiceImpl implements NotificacionService{
 		try{
 			Result r = sender.send(m, idDispositivo, 2);
 		}catch(Exception e){
-			
+			   
 		}
 	}
 
