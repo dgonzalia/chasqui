@@ -16,7 +16,7 @@
 	<bean id="cronTriggerAviso"
 		class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="avisoPedidoJob" />
-		<property name="cronExpression" value="0 0/5 * * * ?" />
+		<property name="cronExpression" value="${notificacion.cron.expression}" />
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
