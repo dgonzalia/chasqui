@@ -93,7 +93,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
 			u2.setPassword(encrypter.encrypt("federico"));
-			u2.setEmail("jfflores90@gmail");
+			u2.setEmail("floresfederico_993@hotmail.com");
 			u2.setIsRoot(false);
 			u2.setImagenPerfil(img.getPath());
 			u2.setMontoMinimoPedido(213);
@@ -117,20 +117,24 @@ public class UsuarioServiceImpl implements UsuarioService{
 			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
 			p.setPerteneceAPedidoGrupal(false);
 			p.setUsuarioCreador("jfflores90@gmai");
-			pedidoService.guardar(p);
 			Cliente c = new Cliente();
 			c.setToken("federico");
 			c.setPassword(encrypter.encrypt("federico"));
 			c.setEmail("jfflores90@gmail.com");
 			c.setNombre("JORGE");
 			c.setApellido("Flores");
+			c.setTelefonoFijo("12314124");
+			c.setTelefonoMovil("1234214124");
 			c.setNickName("MatLock");
 			Direccion d = new Direccion();
+			d.setAlias("CASA");
 			d.setCalle("aaaa");
 			d.setAltura(12313);
 			d.setAlias("dir1");
 			d.setDepartamento("213123");
 			d.setPredeterminada(true);
+			p.setDireccionEntrega(d);
+			pedidoService.guardar(p);
 			Direccion dd = new Direccion();
 			dd.setCalle("bbbb");
 			dd.setAlias("dir2");
@@ -138,6 +142,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			dd.setLocalidad("ffff");
 			dd.setPredeterminada(false);
 			dd.setAltura(111);
+			dd.setAlias("TRABAJO");
 			List<Direccion> dds = new ArrayList<Direccion>();
 			List<Pedido>pss = new ArrayList<Pedido>();
 			dds.add(dd);
@@ -212,11 +217,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
+	public Integer agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
 		validarDireccionRequest(request);
 		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
 		v.agregarDireccion(request);
 		usuarioDAO.guardarUsuario(v);
+		return v.getId();
 		
 	}
 

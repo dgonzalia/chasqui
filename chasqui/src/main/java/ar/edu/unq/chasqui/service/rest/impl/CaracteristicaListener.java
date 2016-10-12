@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ar.edu.unq.chasqui.model.Caracteristica;
 import ar.edu.unq.chasqui.model.CaracteristicaProductor;
 import ar.edu.unq.chasqui.service.rest.response.CaracteristicaResponse;
+import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.services.interfaces.CaracteristicaService;
 import ar.edu.unq.chasqui.services.interfaces.ICaracteristica;
 
@@ -38,7 +39,7 @@ public class CaracteristicaListener {
 					toResponse(caracteristicaService.buscarCaracteristicasProducto(),
 							caracteristicaService.buscarCaracteristicasProductor()),MediaType.APPLICATION_JSON).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 

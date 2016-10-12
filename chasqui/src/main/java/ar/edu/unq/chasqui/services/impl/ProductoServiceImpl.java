@@ -92,7 +92,7 @@ public class ProductoServiceImpl implements ProductoService {
 	private void validarCategoriaRequest(ByCategoriaRequest request){
 		validarRequest(request);
 		if(request.getIdCategoria() == null){
-			throw new RequestIncorrectoException("El idProductor es obligatorio!");
+			throw new RequestIncorrectoException("El idCategoria es obligatorio!");
 		}
 	}
 	
@@ -130,5 +130,25 @@ public class ProductoServiceImpl implements ProductoService {
 		if(request.getIdVendedor() == null ){
 			throw new RequestIncorrectoException("El vendedor es obligatorio!");
 		}
+	}
+
+	@Override
+	public Long totalVariantesPorCategoria(ByCategoriaRequest request) {
+		return productoDAO.totalVariantesPorCategoria(request.getIdCategoria());
+	}
+
+	@Override
+	public Long totalVariantesPorProductor(ByProductorRequest request) {
+		return productoDAO.totalVariantesPorProductor(request.getIdProductor());
+	}
+
+	@Override
+	public Long totalVariantesPorMedalla(ByMedallaRequest request) {
+		return productoDAO.totalVariantesPorMedalla(request.getIdMedalla());
+	}
+
+	@Override
+	public Long totalVariantesPorNombreODescripcion(ByQueryRequest request) {
+		return productoDAO.totalVariantesPorNombreODescripcion(request.getQuery(),request.getIdVendedor());
 	}
 }

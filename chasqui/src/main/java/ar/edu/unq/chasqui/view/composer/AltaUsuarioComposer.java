@@ -74,7 +74,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		}
 		
 		Usuario u = service.obtenerUsuarioPorEmail(email);
-		if(u != null){
+		if(u != null && model != null && !u.getId().equals(model.getId())){
 			throw new WrongValueException(textboxEmail,"Ya existe el usuario con el mail ingresado");
 		}
 		

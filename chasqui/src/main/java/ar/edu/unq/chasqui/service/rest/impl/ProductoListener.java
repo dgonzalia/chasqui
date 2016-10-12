@@ -12,7 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.apache.cxf.common.util.StringUtils;
 import org.apache.cxf.jaxrs.ext.multipart.Multipart;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -28,8 +27,8 @@ import ar.edu.unq.chasqui.service.rest.request.ByCategoriaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByMedallaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByProductorRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByQueryRequest;
-import ar.edu.unq.chasqui.service.rest.request.ProductoRequest;
 import ar.edu.unq.chasqui.service.rest.response.CaracteristicaResponse;
+import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.ImagenResponse;
 import ar.edu.unq.chasqui.service.rest.response.ProductoResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
@@ -49,11 +48,11 @@ public class ProductoListener {
 		try{
 			ByCategoriaRequest request = toRequest(productoRequest);	
 			return toResponse(productoService.obtenerVariantesPorCategoria(request)
-					,request.getPagina(),request.getCantItems(),request.getPrecio());
+					,request.getPagina(),request.getCantItems(),request.getPrecio(),productoService.totalVariantesPorCategoria(request));
 		}catch(IOException | RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}		
 	}
 
@@ -64,11 +63,12 @@ public class ProductoListener {
 	public Response obtenerTodosLosProductosByProductor(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByProductorRequest request = toByProductorRequest(productoRequest);	
-			return toResponse(productoService.obtenerVariantesPorProductor(request),request.getPagina(),request.getCantItems(),request.getPrecio());
+			return toResponse(productoService.obtenerVariantesPorProductor(request),request.getPagina(),request.getCantItems(),request.getPrecio(),
+							 productoService.totalVariantesPorProductor(request));
 		}catch(IOException | RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -79,11 +79,12 @@ public class ProductoListener {
 	public Response obtenerTodosLosProductosByMedalla(@Multipart(value="productoRequest", type="application/json")final String productoRequest){
 		try{
 			ByMedallaRequest request = toByMedallaRequest(productoRequest);	
-			return toResponse(productoService.obtenerVariantesPorMedalla(request),request.getPagina(),request.getCantItems(),request.getPrecio());
+			return toResponse(productoService.obtenerVariantesPorMedalla(request),request.getPagina(),request.getCantItems(),request.getPrecio(),
+					productoService.totalVariantesPorMedalla(request));
 		}catch(IOException | RequestIncorrectoException e){
-			return Response.status(406).entity("Parametros incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -94,7 +95,7 @@ public class ProductoListener {
 		try{
 			return toResponseMedalla(productoService.obtenerMedalla(idMedalla));
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -110,9 +111,9 @@ public class ProductoListener {
 		try{
 			return Response.ok(toResponseImagenes(productoService.obtenerImagenesDe(idVariedad)),MediaType.APPLICATION_JSON).build();
 		}catch (ProductoInexsistenteException e){
-			return Response.status(404).entity("El producto no existe").build();
+			return Response.status(404).entity(new ChasquiError("El producto no existe")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -122,11 +123,12 @@ public class ProductoListener {
 	public Response obtenerProductosPorDescripcionONombre(@Multipart(value="productoRequest", type="application/json") String productoRequest){
 		try{
 			ByQueryRequest request =toByQueryRequest(productoRequest);
-			return toResponse(productoService.obtenerVariantesPorNombreODescripcion(request),request.getPagina(),request.getCantItems(),request.getPrecio());			
+			return toResponse(productoService.obtenerVariantesPorNombreODescripcion(request),request.getPagina(),request.getCantItems(),request.getPrecio(),
+					productoService.totalVariantesPorNombreODescripcion(request));			
 		}catch(RequestIncorrectoException | IOException e){
-			return Response.status(406).entity("Parametros Incorrectos").build();
+			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 
@@ -166,8 +168,8 @@ public class ProductoListener {
 	}
 
 
-	private Response toResponse(List<Variante> variantes, Integer pagina, Integer items,String precio) {
-		return Response.ok(new ProductoResponse(variantes,pagina,items, precio), MediaType.APPLICATION_JSON).build();
+	private Response toResponse(List<Variante> variantes, Integer pagina, Integer items,String precio, Long total) {
+		return Response.ok(new ProductoResponse(variantes,pagina,items, precio,total), MediaType.APPLICATION_JSON).build();
 	}
 	
 	
