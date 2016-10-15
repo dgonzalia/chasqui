@@ -65,7 +65,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Div divCaracteristicas;
 	private UsuarioService usuarioService;
 	
-	private List<Producto>productos;
+//	private List<Producto>productos;
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		
@@ -290,7 +290,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	public void onEliminarProducto(Producto p){
 		// mostrar cartel
 		p.getCategoria().eliminarProducto(p);
-		productos.remove(p);
+		this.binder.loadAll();
+//		productos.remove(p);
 		alert("El producto: '" + p.getNombre() + "' fue eliminado con exito!");
 	}
 	
@@ -364,13 +365,13 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		this.productoSeleccionado = productoSeleccionado;
 	}
 
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
+//	public List<Producto> getProductos() {
+//		return productos;
+//	}
+//
+//	public void setProductos(List<Producto> productos) {
+//		this.productos = productos;
+//	}
 
 	
 	

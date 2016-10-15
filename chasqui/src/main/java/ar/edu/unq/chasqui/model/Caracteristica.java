@@ -9,6 +9,7 @@ public class Caracteristica implements ICaracteristica{
 	private String nombre;
 	private String pathImagen;
 	private String descripcion;
+	private Boolean eliminada;
 	//CONSTRUCTORs
 	
 	public Caracteristica(){}
@@ -62,6 +63,17 @@ public class Caracteristica implements ICaracteristica{
 	
 	
 	
+	
+	
+	
+	
+	public Boolean getEliminada() {
+		return eliminada;
+	}
+	
+	public void setEliminada(Boolean eliminada) {
+		this.eliminada = eliminada;
+	}
 	
 	
 	

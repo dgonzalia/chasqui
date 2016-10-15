@@ -9,6 +9,7 @@ public class CaracteristicaProductor implements ICaracteristica{
 	private String nombre;
 	private String pathImagen;
 	private String descripcion;
+	private Boolean eliminada;
 
 	//CONSTRUCTORs
 	
@@ -20,6 +21,15 @@ public class CaracteristicaProductor implements ICaracteristica{
 	
 	//GETs & SETs
 	
+	
+	public Boolean getEliminada() {
+		return eliminada;
+	}
+	
+	public void setEliminada(Boolean eliminada) {
+		this.eliminada = eliminada;
+	}
+
 	
 	public Integer getId() {
 		return id;
