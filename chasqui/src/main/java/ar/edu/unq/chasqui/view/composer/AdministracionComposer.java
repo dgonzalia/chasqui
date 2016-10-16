@@ -290,6 +290,7 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	public void onEliminarProducto(Producto p){
 		// mostrar cartel
 		p.getCategoria().eliminarProducto(p);
+		usuarioService.guardarUsuario(usuarioLogueado);
 		this.binder.loadAll();
 //		productos.remove(p);
 		alert("El producto: '" + p.getNombre() + "' fue eliminado con exito!");
