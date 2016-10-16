@@ -11,4 +11,6 @@ public interface ProductorService {
 	
 	@Transactional
 	public List<Fabricante>obtenerProductoresDe(Integer idVendedor);
+//	@Transactional
+//	public void eliminarProductor(Fabricante f);
 }

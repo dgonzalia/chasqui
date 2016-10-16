@@ -1,8 +1,6 @@
 package ar.edu.unq.chasqui.view.composer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.zkoss.zk.ui.Component;
@@ -25,6 +23,8 @@ import ar.edu.unq.chasqui.model.Categoria;
 import ar.edu.unq.chasqui.model.Fabricante;
 import ar.edu.unq.chasqui.model.Producto;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.interfaces.ProductoService;
+import ar.edu.unq.chasqui.services.interfaces.ProductorService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.view.genericEvents.Refresher;
 import ar.edu.unq.chasqui.view.renders.CategoriaRenderer;
@@ -64,6 +64,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	private Div divPedidos;
 	private Div divCaracteristicas;
 	private UsuarioService usuarioService;
+	ProductoService  productoService;
+	ProductorService productorService;
 	
 //	private List<Producto>productos;
 	
@@ -76,6 +78,8 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 		}
 		binder = new AnnotateDataBinder(comp);
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
+		productoService = (ProductoService) SpringUtil.getBean("productoService");
+		productorService = (ProductorService) SpringUtil.getBean("productorService");
 		super.doAfterCompose(comp);
 		if(usuarioLogueado.getIsRoot()){
 			inicializacionUsuarioROOT();
@@ -336,8 +340,14 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	}
 	
 	public void eliminarProductor(Fabricante f){
+		if (f.getProductos() != null && f.getProductos().size() > 0){
+			Messagebox.show("El productor: '" + f.getNombre() + "' aún tiene productos asociados. desasocie los mismos para eliminar el productor"
+					, "Error!", Messagebox.OK, Messagebox.ERROR);
+			return;
+		}
 		// mostrar cartel
 		usuarioLogueado.eliminarProductor(f);
+		usuarioService.guardarUsuario(usuarioLogueado);
 		alert("El productor: '" + f.getNombre() + "' fue eliminado con exito!");
 		this.binder.loadAll();
 	}
