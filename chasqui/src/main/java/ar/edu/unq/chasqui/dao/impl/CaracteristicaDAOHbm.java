@@ -30,7 +30,8 @@ public class CaracteristicaDAOHbm extends HibernateDaoSupport implements Caracte
 
 	@SuppressWarnings("unchecked")
 	public List<Caracteristica> buscarCaracteristicasProducto() {
-		DetachedCriteria criteria = DetachedCriteria.forClass(Caracteristica.class);		
+		DetachedCriteria criteria = DetachedCriteria.forClass(Caracteristica.class);
+		criteria.add(Restrictions.eq("eliminada",false));
 		List<Caracteristica> resultado = this.getHibernateTemplate().findByCriteria(criteria);
 		if(resultado == null){
 			resultado = new ArrayList<Caracteristica>();
@@ -42,6 +43,7 @@ public class CaracteristicaDAOHbm extends HibernateDaoSupport implements Caracte
 	@SuppressWarnings("unchecked")
 	public List<CaracteristicaProductor> buscarCaracteristicasProductor() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(CaracteristicaProductor.class);
+		criteria.add(Restrictions.eq("eliminada",false));
 		List<CaracteristicaProductor> resultado = this.getHibernateTemplate().findByCriteria(criteria);
 		if(resultado == null){
 			resultado = new ArrayList<CaracteristicaProductor>();
@@ -57,6 +59,20 @@ public class CaracteristicaDAOHbm extends HibernateDaoSupport implements Caracte
 
 	public void eliminarCaracteristicaProductor(CaracteristicaProductor c) {
 		this.getHibernateTemplate().delete(c);
+		this.getHibernateTemplate().flush();
+		
+	}
+
+	@Override
+	public void actualizarCaracteristicaProductor(CaracteristicaProductor c) {
+		this.getHibernateTemplate().saveOrUpdate(c);
+		this.getHibernateTemplate().flush();
+		
+	}
+
+	@Override
+	public void actualizar(Caracteristica c) {
+		this.getHibernateTemplate().saveOrUpdate(c);
 		this.getHibernateTemplate().flush();
 		
 	}

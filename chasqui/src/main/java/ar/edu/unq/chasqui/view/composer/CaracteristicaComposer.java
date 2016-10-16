@@ -112,6 +112,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		validarCaracteristica();
 		Caracteristica c = new Caracteristica();
 		c.setNombre(carac);
+		c.setEliminada(false);
 		c.setPathImagen(imagen.getPath());
 		c.setDescripcion(ckEditor.getValue());
 		caracteristicas.add(c);
@@ -127,6 +128,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		validarCaracteristicaProductor();
 		CaracteristicaProductor c = new CaracteristicaProductor();
 		c.setNombre(carac);
+		c.setEliminada(false);
 		c.setPathImagen(imagenProductor.getPath());
 		c.setDescripcion(ckEditorProductor.getValue());
 		caracteristicasProductor.add(c);
@@ -280,7 +282,8 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 					public void onEvent(Event event) throws Exception {
 						switch ((Integer) (event.getData())){
 						case Messagebox.YES:
-							service.eliminarCaracteristica(c);
+							c.setEliminada(true);
+							service.actualizarCaracteristica(c);
 							caracteristicas.remove(c);
 							binder.loadAll();
 							Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);
@@ -300,7 +303,8 @@ public void eliminarCaracteristicaProductor(final CaracteristicaProductor c){
 				public void onEvent(Event event) throws Exception {
 					switch ((Integer) (event.getData())){
 					case Messagebox.YES:
-						service.eliminarCaracteristicaProductor(c);
+						c.setEliminada(true);
+						service.actualizarCaracteristicaProductor(c);
 						caracteristicasProductor.remove(c);
 						binder.loadAll();
 						Messagebox.show("Las caracteristica se ha borrado correctamente", "Información", Messagebox.OK, Messagebox.INFORMATION);

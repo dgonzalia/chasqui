@@ -21,5 +21,9 @@ public interface CaracteristicaService {
 	public List<Caracteristica> buscarCaracteristicasProducto();
 	@Transactional
 	public List<CaracteristicaProductor> buscarCaracteristicasProductor();
+	@Transactional
+	public void actualizarCaracteristica(Caracteristica c);
+	@Transactional
+	void actualizarCaracteristicaProductor(CaracteristicaProductor c);
 	
 }

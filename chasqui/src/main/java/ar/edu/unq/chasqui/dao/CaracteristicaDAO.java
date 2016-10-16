@@ -14,5 +14,7 @@ public interface CaracteristicaDAO {
 	public List<CaracteristicaProductor> buscarCaracteristicasProductor();
 	public void eliminarCaracteristica(Caracteristica c);
 	public void eliminarCaracteristicaProductor(CaracteristicaProductor c);
+	public void actualizarCaracteristicaProductor(CaracteristicaProductor c);
+	public void actualizar(Caracteristica c);
 	
 }

@@ -54,6 +54,19 @@ public class CaracteristicaServiceImpl implements CaracteristicaService{
 		this.caracteristicaDAO = caracteristicaDAO;
 	}
 
+	@Override
+	public void actualizarCaracteristica(Caracteristica c) {
+		caracteristicaDAO.actualizar(c);
+		
+	}
+	
+	
+	@Override
+	public void actualizarCaracteristicaProductor(CaracteristicaProductor c) {
+		caracteristicaDAO.actualizarCaracteristicaProductor(c);
+		
+	}
+
 	
 	
 	
