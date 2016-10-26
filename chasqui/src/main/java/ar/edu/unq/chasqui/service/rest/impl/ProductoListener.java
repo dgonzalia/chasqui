@@ -18,6 +18,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.unq.chasqui.exceptions.CaracteristicaInexistenteException;
 import ar.edu.unq.chasqui.exceptions.ProductoInexsistenteException;
 import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.model.Caracteristica;
@@ -94,7 +95,10 @@ public class ProductoListener {
 	public Response obtenerMedalla(@PathParam(value="idMedalla")final Integer idMedalla){
 		try{
 			return toResponseMedalla(productoService.obtenerMedalla(idMedalla));
-		}catch(Exception e){
+		}catch(CaracteristicaInexistenteException e){
+			return Response.status(404).entity(new ChasquiError(e.getMessage())).build();
+		}
+		catch(Exception e){
 			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}

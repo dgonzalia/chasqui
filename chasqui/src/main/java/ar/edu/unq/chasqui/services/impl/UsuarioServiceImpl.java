@@ -351,7 +351,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private void validarParaEliminar(Variante v, Cliente c, AgregarQuitarProductoAPedidoRequest request) {
 		validacionesGenerales(v, c, request);
 		if(!c.contieneProductoEnPedido(v,request.getIdPedido())){
-			throw new ProductoInexsistenteException("El usuario no tiene el producto con ID: "+ request.getIdVariante()+" En el pedido");
+			throw new ProductoInexsistenteException("El usuario no tiene el producto con ID "+ request.getIdVariante()+" en el pedido");
 		}
 		if(!c.contieneCantidadDeProductoEnPedido(v,request.getIdPedido(),request.getCantidad())){
 			throw new ProductoInexsistenteException("No se puede quitar mas cantidad de un producto de la que el usuario posee en su pedido");

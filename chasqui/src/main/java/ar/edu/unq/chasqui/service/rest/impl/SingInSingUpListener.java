@@ -46,7 +46,7 @@ public class SingInSingUpListener{
 			Cliente c = usuarioService.loginCliente(request.getEmail(), request.getPassword());
 			return toLoginResponse(c);
 		}catch(Exception e){
-			return Response.status(401).build();
+			return Response.status(401).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -66,7 +66,7 @@ public class SingInSingUpListener{
 		}catch(UsuarioExistenteException e){
 			return Response.status(409).entity(new ChasquiError(e.getMessage())).build();
 		}catch(Exception e){
-			return Response.status(500).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
