@@ -20,7 +20,6 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	<jaxrs:server  address="/client">
 		<jaxrs:serviceBeans>
 <!-- 		 BEANS QUE VAN A MANEJAR LOS SERVICIOS -->
- 			<ref bean="mockServiceRest"/>
  			<ref bean="ssoListener"/>
  			<ref bean="productoListener"/>
  			<ref bean="vendedorListener"/>
@@ -61,7 +60,6 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 	</jaxrs:server>
 	
 	
-	<bean id="mockServiceRest" class ="ar.edu.unq.chasqui.service.rest.impl.MockServiceImpl"/>
 	<bean id="usuarioListener" class="ar.edu.unq.chasqui.service.rest.impl.UsuarioListener"/>
 	<bean id="ssoListener" class="ar.edu.unq.chasqui.service.rest.impl.SingInSingUpListener"/>
 	<bean id="productoListener" class="ar.edu.unq.chasqui.service.rest.impl.ProductoListener"/>
