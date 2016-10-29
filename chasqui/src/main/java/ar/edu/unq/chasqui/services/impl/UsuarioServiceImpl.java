@@ -220,9 +220,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Integer agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
 		validarDireccionRequest(request);
 		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
-		v.agregarDireccion(request);
+		Direccion d = v.agregarDireccion(request);
 		usuarioDAO.guardarUsuario(v);
-		return v.getId();
+		return d.getId();
 		
 	}
 
@@ -292,6 +292,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if(c.contienePedidoVigenteParaVendedor(idVendedor)){
 			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" ya posee un pedido vigente para el vendedor brindado");
 		}
+		DateTime d = new DateTime();
+		if(v.getFechaCierrePedido().isBefore(d)){
+			v.setFechaCierrePedido(v.getFechaCierrePedido().plusMonths(1));
+			usuarioDAO.guardarUsuario(v);
+		}
+		
 		Pedido p = new Pedido(v,c.getEmail());
 		c.agregarPedido(p);
 		usuarioDAO.guardarUsuario(c);
