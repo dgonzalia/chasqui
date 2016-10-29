@@ -62,6 +62,13 @@ public class UsuarioListener {
 		}
 	}
 	
+	@GET
+	@Path("/check")
+	@Produces("application/json")
+	public Response esTokenValido(){
+		return Response.ok().build();
+	}
+	
 	
 	@PUT
 	@Path("/registrar/{dispositivo}")
