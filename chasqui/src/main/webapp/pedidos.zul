@@ -15,11 +15,12 @@ style="overflow:auto">
 		<label value="Fecha Hasta:"/>
 		<datebox id="hasta"/>	
 		<space spacing="10px"/>
-		<button label="Buscar"/>
+		<combobox id="estadosListbox" readonly="true" model="@{pedidosWindow$composer.estados}" selectedItem="@{pedidosWindow$composer.estadoSeleccionado}"/>
+		<button label="Buscar" id="buscar"/>
 	</hbox>
 </div>
 <separator spacing="15px"/>
-	<listbox  id="listboxPedidos" model="@{pedidosWindow$composer.pedidos}" mold="paging" rows="10" pageSize="10" >
+	<listbox  id="listboxPedidos" model="@{pedidosWindow$composer.pedidos}" mold="paging" pageSize="10" rows="10">
 		<listhead>
 			<listheader label="ID del Pedido" hflex="1"/>
 			<listheader label="Usuario Creador" hflex="2"/>

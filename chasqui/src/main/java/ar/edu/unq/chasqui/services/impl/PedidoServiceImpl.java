@@ -1,5 +1,6 @@
 package ar.edu.unq.chasqui.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -25,6 +26,22 @@ public class PedidoServiceImpl implements PedidoService {
 	@Override
 	public void guardar(Pedido p) {
 		pedidoDAO.guardar(p);
+		
+	}
+
+	@Override
+	public List<Pedido> obtenerPedidosDeVendedor(Integer idVendedor) {
+		return pedidoDAO.obtenerPedidos(idVendedor);
+	}
+
+	@Override
+	public int totalPedidosParaVendedor(Integer id) {
+		return pedidoDAO.obtenerTotalPaginasDePedidosParaVendedor(id);
+	}
+
+	@Override
+	public List<Pedido> obtenerPedidosDeVendedor(Integer id, Date desde, Date hasta, String estadoSeleccionado) {
+		return pedidoDAO.obtenerPedidos(id,desde,hasta,estadoSeleccionado);
 		
 	}
 

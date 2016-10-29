@@ -1,6 +1,7 @@
 package ar.edu.unq.chasqui.services.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -22,6 +23,7 @@ import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Pedido;
+import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -108,15 +110,55 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 			//PRUEBA EMAIL
 			Pedido p = new Pedido();
+			Pedido p2 = new Pedido();
+			Pedido p3 = new Pedido();
 			DateTime dt = new DateTime();
 			dt.plusDays(3);
 			p.setAlterable(true);
+			ProductoPedido pp = new ProductoPedido();
+			pp.setCantidad(4);
+			pp.setIdVariante(1);
+			pp.setNombreProducto("hola");
+			pp.setNombreVariante("a");
+			pp.setPrecio(44.4);
+			p.setProductosEnPedido(new HashSet<ProductoPedido>());
+			p.agregarProductoPedido(pp);
+			p.setMontoActual(40.4);
+			p.setMontoMinimo(50.5);
 			p.setFechaCreacion(dt);
 			p.setFechaDeVencimiento(cierre);
 			p.setIdVendedor(2);
 			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
 			p.setPerteneceAPedidoGrupal(false);
 			p.setUsuarioCreador("jfflores90@gmai");
+
+
+			p2.setProductosEnPedido(new HashSet<ProductoPedido>());
+			p2.agregarProductoPedido(pp);
+			p2.setMontoActual(42.4);
+			p2.setMontoMinimo(50.5);
+			p2.setFechaCreacion(dt);
+			p2.setFechaDeVencimiento(cierre);
+			p2.setIdVendedor(2);
+			p2.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+			p2.setPerteneceAPedidoGrupal(false);
+			p2.setUsuarioCreador("jfflores90@gmai");
+			
+			
+			p3.setProductosEnPedido(new HashSet<ProductoPedido>());
+			p3.agregarProductoPedido(pp);
+			p3.setMontoActual(43.4);
+			p3.setMontoMinimo(50.5);
+			p3.setFechaCreacion(dt);
+			p3.setFechaDeVencimiento(cierre);
+			p3.setIdVendedor(2);
+			p3.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+			p3.setPerteneceAPedidoGrupal(false);
+			p3.setUsuarioCreador("jfflores90@gmai");
+			
+			p2.setAlterable(true);
+			p3.setAlterable(true);
+			
 			Cliente c = new Cliente();
 			c.setToken("federico");
 			c.setPassword(encrypter.encrypt("federico"));
@@ -134,6 +176,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 			d.setDepartamento("213123");
 			d.setPredeterminada(true);
 			p.setDireccionEntrega(d);
+			p2.setDireccionEntrega(d);
+			p3.setDireccionEntrega(d);
+//			p.setDireccionEntrega(d);
 			pedidoService.guardar(p);
 			Direccion dd = new Direccion();
 			dd.setCalle("bbbb");
@@ -150,6 +195,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			c.setPedidos(pss);
 			c.setDireccionesAlternativas(dds);
 			c.getPedidos().add(p);
+			c.getPedidos().add(p2);
+			c.getPedidos().add(p3);
 			this.guardarUsuario(c);
 			
 		}

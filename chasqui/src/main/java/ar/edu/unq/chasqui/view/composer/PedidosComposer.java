@@ -1,11 +1,13 @@
 package ar.edu.unq.chasqui.view.composer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.zkoss.spring.SpringUtil;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
@@ -14,13 +16,17 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Paging;
 import org.zkoss.zul.Window;
 
 import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Pedido;
-import ar.edu.unq.chasqui.model.ProductoPedido;
+import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.services.interfaces.PedidoService;
 import ar.edu.unq.chasqui.view.renders.PedidoRenderer;
 
 @SuppressWarnings({"serial","deprecation","unused"})
@@ -31,18 +37,44 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	private Listbox listboxPedidos;
 	private Button confirmarEntregabtn;
 	private AnnotateDataBinder binder;
-	
+	private PedidoService pedidoService;
+	private Combobox estadosListbox;
+	private String estadoSeleccionado;
+	private List<String>estados;
 	private List<Pedido>pedidos;
-	
+	Vendedor usuarioLogueado;
+	private Paging paginal;
+	private Button buscar;
+	private Integer maximaPaginaVisitada = 1;
 	
 	public void doAfterCompose(Component c) throws Exception{
-		super.doAfterCompose(c);
-		c.addEventListener(Events.ON_USER, new EntregaEventListener(this));
-		binder = new AnnotateDataBinder(c);
-		pedidos  = new ArrayList<Pedido>();
-		//pedidos = crearPedidos(); 
-		listboxPedidos.setItemRenderer(new PedidoRenderer((Window) c));
-		binder.loadAll();
+		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
+		if(usuarioLogueado != null){
+			super.doAfterCompose(c);
+			c.addEventListener(Events.ON_USER, new EntregaEventListener(this));
+			pedidoService = (PedidoService) SpringUtil.getBean("pedidoService");
+			pedidos  = pedidoService.obtenerPedidosDeVendedor(usuarioLogueado.getId());
+			estados = Arrays.asList(Constantes.ESTADO_PEDIDO_ABIERTO,Constantes.ESTADO_PEDIDO_CANCELADO,Constantes.ESTADO_PEDIDO_CONFIRMADO,Constantes.ESTADO_PEDIDO_ENTREGADO);
+			binder = new AnnotateDataBinder(c);
+			//pedidos = crearPedidos(); 
+			listboxPedidos.setItemRenderer(new PedidoRenderer((Window) c));
+			binder.loadAll();
+			
+		}
+	}
+	
+	public void onClick$buscar(){
+		Date d = desde.getValue();
+		Date h = hasta.getValue();
+		
+		if(d != null && h != null){
+			if(h.before(d)){
+				Messagebox.show("La fecha hasta debe ser posterior a la fecha desde", "Error", Messagebox.OK,Messagebox.EXCLAMATION);
+			}
+		}		
+		pedidos.clear();
+		pedidos.addAll(pedidoService.obtenerPedidosDeVendedor(usuarioLogueado.getId(),d,h,estadoSeleccionado));
+		this.binder.loadAll();
 	}
 
 
@@ -115,14 +147,34 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	
 	
 	
+	public String getEstadoSeleccionado() {
+		return estadoSeleccionado;
+	}
+
+	public void setEstadoSeleccionado(String estadoSeleccionado) {
+		this.estadoSeleccionado = estadoSeleccionado;
+	}
+
 	public void onClick$confirmarEntregabtn(){
 		for(Pedido p : this.pedidos){
-			p.confirmarte();
+			if(p.getEstado().equals(Constantes.ESTADO_PEDIDO_ENTREGADO)){
+				pedidoService.guardar(p);
+			}
 		}
-		
-		// guardarPedido
 		this.binder.loadAll();
 	}
+
+	public List<String> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<String> estados) {
+		this.estados = estados;
+	}
+	
+	
+	
+	
 	
 	
 	

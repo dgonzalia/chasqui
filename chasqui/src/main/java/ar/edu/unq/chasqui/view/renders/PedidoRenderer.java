@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Hlayout;
@@ -24,7 +26,7 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		pedidoWindow = w;
 	}
 	
-	public void render(Listitem item, Pedido p, int arg2) throws Exception {
+	public void render(Listitem item, final Pedido p, int arg2) throws Exception {
 		
 		Listcell c1 = new Listcell(String.valueOf(p.getId()));
 		Listcell c2 = new Listcell(p.getUsuarioCreador());
@@ -33,7 +35,7 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		Listcell c3 = new Listcell(format.format(d));
 		Listcell c4 = new Listcell(String.valueOf(p.getMontoMinimo()));
 		Listcell c5 = new Listcell(String.valueOf(p.getMontoActual()));
-		Checkbox c = new Checkbox("Entregado");
+		final Checkbox c = new Checkbox("Entregado");
 		if(p.getMontoMinimo() < p.getMontoActual()){
 			c5.setStyle("color:green;");
 		}else{
@@ -63,8 +65,18 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		params.put("pedido", p);
 		b.addForward(Events.ON_CLICK, pedidoWindow, Events.ON_USER, params);
 		
-		HashMap<String,Object> params2 = new HashMap<String,Object>();
-		params2.put("pedido", p);
+		c.addEventListener(Events.ON_CHECK,new EventListener<Event>() {
+
+			@Override
+			public void onEvent(Event event) throws Exception {
+				if(c.isChecked()){
+					p.setEstado(Constantes.ESTADO_PEDIDO_ENTREGADO);
+				}else{
+					p.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
+				}				
+			}
+		});
+		
 		Space s = new Space();
 		s.setSpacing("10px");
 		
