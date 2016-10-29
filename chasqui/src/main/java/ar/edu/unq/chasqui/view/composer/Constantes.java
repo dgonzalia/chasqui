@@ -16,6 +16,6 @@ public class Constantes {
 	public final static String VENTANA_PRODUCTO = "VENTANA_PRODUCTO";
 	
 	public final static String ESTADO_NOTIFICACION_NO_LEIDA = "No Leído";
-	public final static String ESTADO_NOTIFICACION_LEIDA = "No Leído";
+	public final static String ESTADO_NOTIFICACION_LEIDA = "Leído";
 			
 }

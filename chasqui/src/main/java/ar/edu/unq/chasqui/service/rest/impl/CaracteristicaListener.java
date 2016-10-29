@@ -42,8 +42,31 @@ public class CaracteristicaListener {
 			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
+	
+	@GET
+	@Path("producto/all")
+	@Produces("application/json")
+	public Response obtenerMedallasProducto(){
+		try{
 
+			return Response.ok(
+					toResponse(caracteristicaService.buscarCaracteristicasProducto(),new ArrayList<CaracteristicaProductor>()),MediaType.APPLICATION_JSON).build();
+		}catch(Exception e){
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
+		}
+	}
 
+	@GET
+	@Path("productor/all")
+	@Produces("application/json")
+	public Response obtenerMedallasProductor(){
+		try{
+			return Response.ok(
+					toResponse(new ArrayList<Caracteristica>(),caracteristicaService.buscarCaracteristicasProductor()),MediaType.APPLICATION_JSON).build();
+		}catch(Exception e){
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
+		}
+	}
 
 	private List<CaracteristicaResponse> toResponse(List<Caracteristica> buscarCaracteristicasProducto,
 			List<CaracteristicaProductor> buscarCaracteristicasProductor) {

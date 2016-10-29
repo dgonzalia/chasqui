@@ -58,7 +58,7 @@ public class UsuarioListener {
 		}catch(IndexOutOfBoundsException | UsuarioExistenteException e){
 			return Response.status(406).entity(new ChasquiError("El email es invalido o el usuario no existe")).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 	
@@ -182,7 +182,7 @@ public class UsuarioListener {
 			String mail = obtenerEmailDeContextoDeSeguridad();			
 			return Response.ok(toNotificacionResponse(usuarioService.obtenerNotificacionesDe(mail,pagina)),MediaType.APPLICATION_JSON).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 		
 	}

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ar.edu.unq.chasqui.exceptions.VendedorInexistenteException;
 import ar.edu.unq.chasqui.model.Vendedor;
+import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.VendedorResponse;
 import ar.edu.unq.chasqui.services.interfaces.VendedorService;
 
@@ -36,7 +37,7 @@ public class VendedorListener {
 		try{
 			return Response.ok(toResponse(vendedorService.obtenerVendedores()),MediaType.APPLICATION_JSON).build();
 		}catch(Exception e){
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError (e.getMessage())).build();
 		}
 	}
 	
@@ -48,9 +49,9 @@ public class VendedorListener {
 		try{
 			return Response.ok(new VendedorResponse(vendedorService.obtenerVendedor(nombreVendedor))).build();
 		}catch(VendedorInexistenteException e){
-			return Response.status(406).entity(e.getMessage()).build();
+			return Response.status(406).entity(new ChasquiError(e.getMessage())).build();
 		}catch(Exception e){			
-			return Response.status(500).entity(e.getMessage()).build();
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
 	}
 
