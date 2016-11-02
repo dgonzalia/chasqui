@@ -264,12 +264,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Integer agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
+	public Direccion agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
 		validarDireccionRequest(request);
 		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
 		Direccion d = v.agregarDireccion(request);
 		usuarioDAO.guardarUsuario(v);
-		return d.getId();
+		return d;
 		
 	}
 

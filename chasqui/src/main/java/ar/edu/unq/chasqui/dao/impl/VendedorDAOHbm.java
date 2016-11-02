@@ -27,7 +27,7 @@ public class VendedorDAOHbm  extends HibernateDaoSupport implements VendedorDAO{
 
 	@Override
 	public Vendedor obtenerVendedor(final String nombreVendedor) {
-		return (Vendedor) this.getHibernateTemplate().executeFind(new HibernateCallback<Vendedor>() {
+		return (Vendedor) this.getHibernateTemplate().execute(new HibernateCallback<Vendedor>() {
 
 			@Override
 			public Vendedor doInHibernate(Session session)

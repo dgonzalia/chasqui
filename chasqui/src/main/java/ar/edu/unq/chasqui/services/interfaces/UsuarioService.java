@@ -41,7 +41,7 @@ public interface UsuarioService {
 	@Transactional
 	public List<Direccion> obtenerDireccionesDeUsuarioCon(String email) throws DireccionesInexistentes;
 	@Transactional
-	public Integer agregarDireccionAUsuarioCon(String mail, DireccionRequest request);
+	public Direccion agregarDireccionAUsuarioCon(String mail, DireccionRequest request);
 	@Transactional
 	public void inicializarListasDe(Vendedor usuarioLogueado);
 	@Transactional
