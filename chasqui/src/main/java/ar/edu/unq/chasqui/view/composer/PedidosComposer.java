@@ -158,6 +158,7 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	public void onClick$confirmarEntregabtn(){
 		for(Pedido p : this.pedidos){
 			if(p.getEstado().equals(Constantes.ESTADO_PEDIDO_ENTREGADO)){
+				p.confirmarte();
 				pedidoService.guardar(p);
 			}
 		}

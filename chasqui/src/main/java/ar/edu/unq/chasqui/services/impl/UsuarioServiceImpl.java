@@ -30,6 +30,7 @@ import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.ConfirmarPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -370,6 +371,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}	
 	}
 	
+	private void validarRequest(ConfirmarPedidoRequest request){
+		validarRequest(request.getIdPedido());
+		validarRequest(request.getIdDireccion());
+		
+	}
+	
 	private void validarRequest(Integer idPedido){
 		if(idPedido == null || idPedido < 0){
 		throw new RequestIncorrectoException("La cantidad debe ser mayor a 0");
@@ -454,19 +461,23 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void confirmarPedido(String email, Integer idPedido) throws PedidoInexistenteException {
-		validarRequest(idPedido);
+	public void confirmarPedido(String email, ConfirmarPedidoRequest request) throws PedidoInexistenteException {
+		validarRequest(request);
 		Cliente c = (Cliente) usuarioDAO.obtenerClienteConPedidoEHistorial(email);
-		validarConfirmacionDePedidoPara(c,idPedido);
-		c.confirmarPedido(idPedido);
+		validarConfirmacionDePedidoPara(c,request);
+		c.confirmarPedido(request);
 		usuarioDAO.guardarUsuario(c);
 		
 	}
 
-	private void validarConfirmacionDePedidoPara(Cliente c,Integer idPedido) throws PedidoInexistenteException {
-		if(!c.contienePedidoVigente(idPedido)){
+	private void validarConfirmacionDePedidoPara(Cliente c,ConfirmarPedidoRequest request) throws PedidoInexistenteException {
+		if(!c.contienePedidoVigente(request.getIdPedido())){
 			throw new PedidoInexistenteException("El usuario: "+c.getNickName()+" no posee un pedido vigente con el ID otorgado");
 		}		
+		
+		if(!c.contieneDireccion(request.getIdDireccion())){
+			throw new PedidoInexistenteException("El usuario: "+c.getNickName()+" no posee una direccion con el ID otorgado");
+		}
 	}
 	
 	private void validarRequest(AgregarQuitarProductoAPedidoRequest request) {

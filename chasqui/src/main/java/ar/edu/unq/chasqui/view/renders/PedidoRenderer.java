@@ -54,7 +54,10 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 			c.setChecked(true);
 		}
 		
-		String direccion= p.getDireccionEntrega().getCalle() +" "+ p.getDireccionEntrega().getAltura();
+		String direccion= "";
+		if(p.getDireccionEntrega() != null){
+			direccion = p.getDireccionEntrega().getCalle() +" "+ p.getDireccionEntrega().getAltura();
+		}
 		Listcell c7 = new Listcell(direccion);
 		Listcell c8 = new Listcell();
 		

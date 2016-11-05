@@ -2,6 +2,7 @@ package ar.edu.unq.chasqui.service.rest.impl;
 
 import java.io.IOException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -27,6 +28,7 @@ import ar.edu.unq.chasqui.exceptions.RequestIncorrectoException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.ConfirmarPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.PedidoResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
@@ -126,15 +128,16 @@ public class PedidoListener {
 		}	
 	}
 	
-	@PUT
+	@POST
 	@Produces("application/json")
-	@Path("/individual/{idPedido : \\d+}")
-	public Response confirmarPedido(@PathParam("idPedido") Integer idPedido){
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/confirmar")
+	public Response confirmarPedido(ConfirmarPedidoRequest request){
 		try{
 			String email = obtenerEmailDeContextoDeSeguridad();
-			usuarioService.confirmarPedido(email,idPedido);
+			usuarioService.confirmarPedido(email,request);
 			return Response.ok().build();
-		}catch(RequestIncorrectoException e){
+		}catch(PedidoInexistenteException e){
 			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(Exception e){
 			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();

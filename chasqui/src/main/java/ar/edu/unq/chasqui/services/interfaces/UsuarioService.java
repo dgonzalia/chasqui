@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.unq.chasqui.aspect.Auditada;
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
@@ -15,6 +14,7 @@ import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.ConfirmarPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -67,7 +67,7 @@ public interface UsuarioService {
 	@Transactional
 	public void enviarInvitacionRequest(String origen, String destino) throws Exception;
 	@Transactional
-	public void confirmarPedido(String email, Integer idPedido) throws PedidoInexistenteException;
+	public void confirmarPedido(String email, ConfirmarPedidoRequest req) throws PedidoInexistenteException;
 	@Transactional
 	public void agregarIDDeDispositivo(String mail, String dispositivo);
 	

@@ -8,6 +8,7 @@ import org.apache.cxf.common.util.StringUtils;
 
 import ar.edu.unq.chasqui.exceptions.DireccionesInexistentes;
 import ar.edu.unq.chasqui.exceptions.PedidoInexistenteException;
+import ar.edu.unq.chasqui.service.rest.request.ConfirmarPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.DireccionRequest;
 import ar.edu.unq.chasqui.service.rest.request.EditarPerfilRequest;
 import ar.edu.unq.chasqui.service.rest.request.SingUpRequest;
@@ -338,14 +339,34 @@ public class Cliente extends Usuario{
 		return p;
 	}
 
-	public void confirmarPedido(Integer idPedido) {
-		Pedido p = encontrarPedidoConId(idPedido);
+	public void confirmarPedido(ConfirmarPedidoRequest request) {
+		Pedido p = encontrarPedidoConId(request.getIdPedido());
 		p.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
+		p.setDireccionEntrega(this.obtenerDireccionConId(request.getIdDireccion()));
 		pedidos.remove(p);
 		if(historialPedidos != null){
 			historialPedidos = new Historial(this.getEmail());
 		}
 		historialPedidos.agregarAHistorial(p);
+	}
+	
+	
+	public Direccion obtenerDireccionConId(Integer id){
+		for(Direccion d : direccionesAlternativas){
+			if(d.getId().equals(id)){
+				return d;
+			}
+		}
+		return null;
+	}
+
+	public boolean contieneDireccion(Integer idDireccion) {
+		for(Direccion d : direccionesAlternativas){
+			if(d.getId().equals(idDireccion)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	
