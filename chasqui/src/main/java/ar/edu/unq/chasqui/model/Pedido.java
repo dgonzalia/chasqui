@@ -23,10 +23,11 @@ public class Pedido {
 	private Set<ProductoPedido>productosEnPedido;
 	
 
-	public Pedido(Vendedor v,String email) {
+	public Pedido(Vendedor v,Cliente c) {
 		idVendedor = v.getId();
 		estado = Constantes.ESTADO_PEDIDO_ABIERTO;
-		usuarioCreador = email;
+		direccionEntrega = c.obtenerDireccionPredeterminada();
+		usuarioCreador = c.getEmail();
 		fechaCreacion = new DateTime();
 		alterable = true;
 		perteneceAPedidoGrupal = false;

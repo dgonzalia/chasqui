@@ -342,7 +342,9 @@ public class Cliente extends Usuario{
 	public void confirmarPedido(ConfirmarPedidoRequest request) {
 		Pedido p = encontrarPedidoConId(request.getIdPedido());
 		p.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
-		p.setDireccionEntrega(this.obtenerDireccionConId(request.getIdDireccion()));
+		if(request.getIdDireccion() != null){
+			p.setDireccionEntrega(this.obtenerDireccionConId(request.getIdDireccion()));			
+		}
 		pedidos.remove(p);
 		if(historialPedidos != null){
 			historialPedidos = new Historial(this.getEmail());

@@ -340,13 +340,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if(c.contienePedidoVigenteParaVendedor(idVendedor)){
 			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" ya posee un pedido vigente para el vendedor brindado");
 		}
+		
+		if(c.obtenerDireccionPredeterminada() == null){
+			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" no posee una direccion predeterminada");
+		}
 		DateTime d = new DateTime();
 		if(v.getFechaCierrePedido().isBefore(d)){
 			v.setFechaCierrePedido(v.getFechaCierrePedido().plusMonths(1));
 			usuarioDAO.guardarUsuario(v);
 		}
 		
-		Pedido p = new Pedido(v,c.getEmail());
+		Pedido p = new Pedido(v,c);
 		c.agregarPedido(p);
 		usuarioDAO.guardarUsuario(c);
 		
@@ -373,7 +377,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	private void validarRequest(ConfirmarPedidoRequest request){
 		validarRequest(request.getIdPedido());
-		validarRequest(request.getIdDireccion());
+//		validarRequest(request.getIdDireccion());
 		
 	}
 	
