@@ -97,7 +97,7 @@ apply="ar.edu.unq.chasqui.view.composer.ABMProductoComposer" width="60%" closabl
 		</auxhead>
 		<listitem self="@{each=caracteristica}">			
 			<listcell>
-				<image src="@{caracteristica.getPathImagen}"/>
+				<image src="@{caracteristica.getPathImagen}" height="16px" width="16px"/>
 				<label  maxlength="25" value="@{caracteristica.getNombre}"/>
 			</listcell>
 			<listcell>
