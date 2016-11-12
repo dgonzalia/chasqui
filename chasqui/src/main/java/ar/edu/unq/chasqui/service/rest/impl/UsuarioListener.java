@@ -184,7 +184,42 @@ public class UsuarioListener {
 		}catch(Exception e){
 			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
-		
+	}
+	
+	@GET
+	@Path("/notificacion/noLeidas")
+	@Produces("application/json")
+	public Response obtenerNotificacionesNoLeidas(){
+		try{
+			String mail = obtenerEmailDeContextoDeSeguridad();			
+			return Response.ok(toNotificacionResponse(usuarioService.obtenerNotificacionesNoLeidas(mail)),MediaType.APPLICATION_JSON).build();
+		}catch(Exception e){
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
+		}
+	}
+	
+	@POST
+	@Path("/notificacion/{id : \\d+}")
+	@Produces("application/json")
+	public Response leerNotificacion(@PathParam("pagina")Integer id){
+		try{
+			usuarioService.leerNotificacion(id);
+			return Response.ok().build();
+		}catch(Exception e){
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
+		}
+	}
+	
+	@GET
+	@Path("/notificacion/total")
+	@Produces("application/json")
+	public Response obtenerTotalNotificaciones(){
+		try{
+			String mail = obtenerEmailDeContextoDeSeguridad();			
+			return Response.ok(usuarioService.obtenerTotalNotificacionesDe(mail)).build();
+		}catch(Exception e){
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
+		}
 	}
 	
 	

@@ -569,6 +569,26 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		
 	}
+
+	@Override
+	public List<Notificacion> obtenerNotificacionesNoLeidas(String mail) {
+		return usuarioDAO.obtenerNotificacionNoLeidas(mail);
+	}
+
+	@Override
+	public Integer obtenerTotalNotificacionesDe(String mail) {
+		return usuarioDAO.obtenerTotalNotificacionesDe(mail);
+	}
+
+	@Override
+	public void leerNotificacion(Integer id) {
+		Notificacion n = usuarioDAO.obtenerNotificacion(id);
+		if(n != null){
+			n.setEstado("Leído");
+			usuarioDAO.guardar(n);
+		}
+		
+	}
 	
 	// private void validarDireccion(DireccionRequest direccion) {
 //		if(StringUtils.isEmpty(direccion.getCalle())){

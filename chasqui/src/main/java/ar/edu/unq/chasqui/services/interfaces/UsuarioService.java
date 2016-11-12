@@ -70,6 +70,12 @@ public interface UsuarioService {
 	public void confirmarPedido(String email, ConfirmarPedidoRequest req) throws PedidoInexistenteException;
 	@Transactional
 	public void agregarIDDeDispositivo(String mail, String dispositivo);
+	@Transactional
+	public List<Notificacion> obtenerNotificacionesNoLeidas(String mail);
+	@Transactional
+	public Integer obtenerTotalNotificacionesDe(String mail);
+	@Transactional
+	public void leerNotificacion(Integer id);
 	
 	
 }

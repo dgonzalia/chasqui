@@ -9,6 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -171,6 +172,59 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		}
 		return (pagina - 1) * cantidadDeItems;
 	}
+
+	@Override
+	public List<Notificacion> obtenerNotificacionNoLeidas(final String mail) {
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Notificacion>>() {
+
+			@Override
+			public List<Notificacion> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Notificacion.class);
+				criteria.add(Restrictions.eq("usuarioDestino", mail))
+						.add(Restrictions.eq("estado","No Leída"))
+						.addOrder(Order.desc("id"));
+				return criteria.list();
+			}			
+		});
+	}
+
+	@Override
+	public Integer obtenerTotalNotificacionesDe(final String mail) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Integer>() {
+
+			@Override
+			public Integer doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Notificacion.class);
+				criteria.add(Restrictions.eq("usuarioDestino", mail))
+						.addOrder(Order.desc("id"))
+						.setProjection(Projections.rowCount());				
+				return  ((Long)criteria.uniqueResult()).intValue();
+			}			
+		});
+	}
+
+	
+	@Override
+	public Notificacion obtenerNotificacion(final Integer id) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Notificacion>() {
+
+			@Override
+			public Notificacion doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Notificacion.class);
+				criteria.add(Restrictions.eq("id", id));			
+				return  (Notificacion) criteria.uniqueResult();
+			}			
+		});
+	}
+
+	@Override
+	public void guardar(Notificacion n) {
+		this.getHibernateTemplate().saveOrUpdate(n);
+		this.getHibernateTemplate().flush();
+		
+	}
+	
+	
 	
 
 }
