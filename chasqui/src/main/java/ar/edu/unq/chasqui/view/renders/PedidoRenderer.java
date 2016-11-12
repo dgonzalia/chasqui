@@ -83,7 +83,7 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		Space s = new Space();
 		s.setSpacing("10px");
 		
-		if(!p.getAlterable()){
+		if(!p.getAlterable() || ! p.getEstado().equals(Constantes.ESTADO_PEDIDO_CONFIRMADO)){
 			c.setDisabled(true);
 		}
 		

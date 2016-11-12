@@ -45,7 +45,7 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	Vendedor usuarioLogueado;
 	private Paging paginal;
 	private Button buscar;
-	private Integer maximaPaginaVisitada = 1;
+//	private Integer maximaPaginaVisitada = 1;
 	
 	public void doAfterCompose(Component c) throws Exception{
 		usuarioLogueado = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
