@@ -110,8 +110,11 @@ public class ProductoServiceImpl implements ProductoService {
 	
 	private void validarMedallaRequest(ByMedallaRequest request){
 		validarRequest(request);
-		if(request.getIdMedalla() == null){
-			throw new RequestIncorrectoException("El idMedalla es obligatorio!");
+		if(request.getIdMedalla() == null || request.getIdMedalla() < 0){
+			throw new RequestIncorrectoException("El idMedalla no es valido!");
+		}
+		if(request.getIdVendedor() == null || request.getIdVendedor() < 0 ){
+			throw new RequestIncorrectoException("El idVendedor no es valido!");
 		}
 	}
 	
