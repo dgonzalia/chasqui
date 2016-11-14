@@ -343,19 +343,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public void crearPedidoPara(String mail,Integer idVendedor) {
 		Cliente c = usuarioDAO.obtenerClienteConPedido(mail);
 		Vendedor v = usuarioDAO.obtenerVendedorPorID(idVendedor);
-		if(c == null){
-			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
-		}
-		if(v == null || v.getIsRoot() ){
-			throw new UsuarioExistenteException("Vendedor Inexistente");
-		}
-		if(c.contienePedidoVigenteParaVendedor(idVendedor)){
-			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" ya posee un pedido vigente para el vendedor brindado");
-		}
-		
-		if(c.obtenerDireccionPredeterminada() == null){
-			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" no posee una direccion predeterminada");
-		}
+		validarVendedorParaCreacionDePedido( c, v);
 		DateTime d = new DateTime();
 		if(v.getFechaCierrePedido().isBefore(d)){
 			v.setFechaCierrePedido(v.getFechaCierrePedido().plusMonths(1));
@@ -366,6 +354,31 @@ public class UsuarioServiceImpl implements UsuarioService{
 		c.agregarPedido(p);
 		usuarioDAO.guardarUsuario(c);
 		
+	}
+
+	private void validarVendedorParaCreacionDePedido(Cliente c, Vendedor v) {
+		if(c == null){
+			throw new UsuarioExistenteException("No se ha encontrado el usuario con el mail otorgado");
+		}
+		if(v == null || v.getIsRoot() ){
+			throw new UsuarioExistenteException("Vendedor Inexistente");
+		}
+		
+		if(v.getFechaCierrePedido() == null){
+			throw new UsuarioExistenteException("El Vendedor al que se le desea crear un pedido, aún no ha definido la fecha de cierre. No es posible crear el pedido");
+		}
+		
+		if(v.getMontoMinimoPedido() == null || v.getMontoMinimoPedido() < 0){
+			throw new UsuarioExistenteException("El Vendedor al que se le desea crear un pedido, aún no ha definido el monto minimo de compra. No es posible crear el pedido");
+		}
+		
+		if(c.contienePedidoVigenteParaVendedor(v.getId())){
+			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" ya posee un pedido vigente para el vendedor brindado");
+		}
+		
+		if(c.obtenerDireccionPredeterminada() == null){
+			throw new PedidoVigenteException("El usuario: "+ c.getNickName() +" no posee una direccion predeterminada");
+		}
 	}
 
 	@Override
