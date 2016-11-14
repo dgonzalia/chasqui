@@ -4,6 +4,7 @@ public class ByMedallaRequest extends ProductoRequest{
 
 	
 	private Integer idMedalla;
+	private Integer idVendedor;
 
 	public Integer getIdMedalla() {
 		return idMedalla;
@@ -14,6 +15,16 @@ public class ByMedallaRequest extends ProductoRequest{
 	}
 	
 	
+	
+	
+	public Integer getIdVendedor() {
+		return idVendedor;
+	}
+
+	public void setIdVendedor(Integer idVendedor) {
+		this.idVendedor = idVendedor;
+	}
+
 	@Override
 	public String toString(){
 		return "ByMedallaRequest [ idMedalla: "+ idMedalla + " pagina: "+ this.getPagina()+

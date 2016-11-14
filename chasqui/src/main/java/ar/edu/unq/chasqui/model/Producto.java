@@ -63,11 +63,8 @@ public class Producto {
 		this.caracteristicas = caracteristica;
 	}
 	
-	
 		
 	//METHODS
-	
-
 
 	public static Producto crearProductoEmpty(){
 		Producto p = new Producto();

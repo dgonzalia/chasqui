@@ -12,7 +12,7 @@ public interface ProductoDAO {
 
 	public List<Variante> obtenerVariantesPorProductor(Integer idProductor, Integer pagina, Integer cantItems);
 
-	public List<Variante> obtenerVariantesPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems);
+	public List<Variante> obtenerVariantesPorMedalla(Integer idMedalla, Integer pagina, Integer cantItems,Integer idVendedor);
 
 	public List<Imagen> obtenerImagenesDe(Integer idVariante);
 

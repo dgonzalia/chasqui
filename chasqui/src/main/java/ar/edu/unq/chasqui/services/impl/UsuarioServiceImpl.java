@@ -101,7 +101,19 @@ public class UsuarioServiceImpl implements UsuarioService{
 			u2.setImagenPerfil(img.getPath());
 			u2.setMontoMinimoPedido(213);
 			u2.setFechaCierrePedido(cierre);
-			this.guardarUsuario(u2);	
+			
+			
+			
+			Vendedor u3 = new Vendedor();
+			u3.setUsername("Matt");
+			u3.setPassword(encrypter.encrypt("federico"));
+			u3.setEmail("floresfederwico_993@hotmail.com");
+			u3.setIsRoot(false);
+			u3.setImagenPerfil(img.getPath());
+			u3.setMontoMinimoPedido(213);
+			u3.setFechaCierrePedido(cierre);
+			this.guardarUsuario(u2);
+			this.guardarUsuario(u3);
 			
 			
 			Notificacion n = new Notificacion("CHASQUI", "jfflores90@gmail.com", "PRUEBA NOTIFICACION", "No Leído");

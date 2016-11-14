@@ -181,7 +181,7 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 			public List<Notificacion> doInHibernate(Session session) throws HibernateException, SQLException {
 				Criteria criteria = session.createCriteria(Notificacion.class);
 				criteria.add(Restrictions.eq("usuarioDestino", mail))
-						.add(Restrictions.eq("estado","No Leída"))
+						.add(Restrictions.eq("estado","No Leído"))
 						.addOrder(Order.desc("id"));
 				return criteria.list();
 			}			

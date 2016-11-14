@@ -66,7 +66,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 	
 	
 	@Override
-	public List<Variante> obtenerVariantesPorMedalla(final Integer idMedalla, final Integer pagina, final Integer cantItems) {
+	public List<Variante> obtenerVariantesPorMedalla(final Integer idMedalla, final Integer pagina, final Integer cantItems,final Integer idVendedor) {
 		final Integer inicio = calcularInicio(pagina,cantItems);
 		final Integer fin = calcularFin(pagina,cantItems);
 		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Variante>>() {
@@ -76,7 +76,9 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				Criteria c = session.createCriteria(Variante.class);
 				c.createAlias("producto", "p")
 				 .createAlias("p.caracteristicas", "m")
+				 .createAlias("p.fabricante", "f")
 				 .add(Restrictions.eq("m.id", idMedalla))
+				 .add(Restrictions.eq("f.idVendedor",idVendedor))
 				 .setFirstResult(inicio)
 				 .setMaxResults(cantItems)
 				 .addOrder(Order.asc("id"));

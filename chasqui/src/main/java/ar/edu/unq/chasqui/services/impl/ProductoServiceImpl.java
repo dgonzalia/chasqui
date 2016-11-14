@@ -44,7 +44,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public List<Variante> obtenerVariantesPorMedalla(ByMedallaRequest request) {
 		validarMedallaRequest(request);
-		return productoDAO.obtenerVariantesPorMedalla(request.getIdMedalla(), request.getPagina(), request.getCantItems());
+		return productoDAO.obtenerVariantesPorMedalla(request.getIdMedalla(), request.getPagina(), request.getCantItems(),request.getIdVendedor());
 	}
 
 	@Override

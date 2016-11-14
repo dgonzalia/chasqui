@@ -201,7 +201,7 @@ public class UsuarioListener {
 	@POST
 	@Path("/notificacion/{id : \\d+}")
 	@Produces("application/json")
-	public Response leerNotificacion(@PathParam("pagina")Integer id){
+	public Response leerNotificacion(@PathParam("id")Integer id){
 		try{
 			usuarioService.leerNotificacion(id);
 			return Response.ok().build();
