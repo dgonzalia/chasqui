@@ -148,4 +148,8 @@ public class Fabricante {
 		
 	}
 
+	public void eliminarProducto (Producto producto) {
+		productos.remove(producto);
+	}
+
 }
