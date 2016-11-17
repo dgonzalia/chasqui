@@ -16,7 +16,7 @@
             <column name="NOMBRE" />
         </property>
         <property name="eliminada" type="java.lang.Boolean" column="ELIMINADA"/>
-        <property name="descripcion" type="java.lang.String" column="DESCRIPCION" length="4096"/>
+        <property name="descripcion" type="java.lang.String" column="DESCRIPCION"/>
         <property name="pathImagen" type="java.lang.String" column="PATH_IMAGEN"/>
         <property name="idVendedor" type="java.lang.Integer" column="ID_VENDEDOR"/>
     </class>
