@@ -121,7 +121,6 @@ public class UsuarioListener {
 			DireccionRequest request = toDireccionRequest(direccionRequest);
 			String mail = obtenerEmailDeContextoDeSeguridad();
 			return Response.ok(new DireccionResponse(usuarioService.agregarDireccionAUsuarioCon(mail,request)), MediaType.APPLICATION_JSON).build();
-			//return Response.ok(id).build();
 		}catch(IOException | RequestIncorrectoException e){
 			return Response.status(406).entity(new ChasquiError("Parametros Incorrectos")).build();
 		}catch(Exception e){
