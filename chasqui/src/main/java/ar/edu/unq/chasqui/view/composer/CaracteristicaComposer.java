@@ -152,7 +152,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 		if(StringUtils.isEmpty(descrpcion)){
 			throw new WrongValueException(ckEditorProductor,"Debe Agregar una descripcion");
 		}
-		if(descrpcion.length() > 255){
+		if(descrpcion.length() > 4096){
 			throw new WrongValueException(ckEditorProductor,"La Descripción es demasiado larga");			
 		}
 	}
@@ -173,7 +173,7 @@ public class CaracteristicaComposer extends GenericForwardComposer<Component>{
 			throw new WrongValueException(ckEditor,"Debe Agregar una descripcion");
 		}
 		
-		if(descrpcion.length() > 255){
+		if(descrpcion.length() > 4096){
 			throw new WrongValueException(ckEditor,"La descripción es demasiado larga");
 		}
 	}
