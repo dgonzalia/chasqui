@@ -20,6 +20,12 @@ apply="ar.edu.unq.chasqui.view.composer.AltaUsuarioComposer" height="100%" width
 			</listcell>
 		</listitem>
 		<listitem>
+			<listcell label="Nombre: "/>
+			<listcell>
+				<textbox id="textboxNombre" maxlength="15"/>
+			</listcell>
+		</listitem>
+		<listitem>
 			<listcell label="${c:l('zk.label.configuracion.nueva.clave')}"/>
 			<listcell>
 				<textbox id="textboxContraseña" type="password" maxlength="15"/>

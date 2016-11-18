@@ -9,6 +9,7 @@ public class Vendedor extends Usuario{
 
 	
 	private Integer montoMinimoPedido;
+	private String nombre;
 	private DateTime fechaCierrePedido;
 	private String msjCierrePedido;
 	private Integer distanciaCompraColectiva;
@@ -17,13 +18,23 @@ public class Vendedor extends Usuario{
 	private List<Fabricante> fabricantes;
 	
 	
-	//GETs & SETs
-
-	public Vendedor(String username, String email, String pwd) {
+	//GETs & SETs	
+	
+	
+	public Vendedor(String nombre,String username, String email, String pwd) {
 		this.setUsername(username);
 		this.setEmail(email);
+		this.setNombre(nombre);
 		this.setPassword(pwd);
 		this.setIsRoot(false);
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public Vendedor() {

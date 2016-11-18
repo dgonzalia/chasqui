@@ -614,6 +614,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		
 	}
+
 	
 	// private void validarDireccion(DireccionRequest direccion) {
 //		if(StringUtils.isEmpty(direccion.getCalle())){

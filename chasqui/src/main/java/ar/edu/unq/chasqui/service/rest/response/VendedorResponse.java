@@ -18,7 +18,7 @@ public class VendedorResponse implements Serializable{
 	public VendedorResponse(){}
 	public VendedorResponse(Vendedor v){
 		id = v.getId();
-		nombre = v.getUsername();
+		nombre = v.getNombre();
 		imagen = v.getImagenPerfil();
 	}
 	

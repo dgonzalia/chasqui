@@ -34,7 +34,7 @@ public class VendedorDAOHbm  extends HibernateDaoSupport implements VendedorDAO{
 					throws HibernateException, SQLException {
 				Criteria criteria = session.createCriteria(Vendedor.class);
 				criteria.add(Restrictions.eq("isRoot", false))
-				.add(Restrictions.eq("username", nombreVendedor));
+				.add(Restrictions.eq("nombre", nombreVendedor));
 				return (Vendedor) criteria.uniqueResult();
 			}
 		});

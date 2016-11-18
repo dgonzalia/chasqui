@@ -24,6 +24,7 @@ import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.services.impl.MailService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
+import ar.edu.unq.chasqui.services.interfaces.VendedorService;
 
 @SuppressWarnings({"serial","deprecation"})
 public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
@@ -31,6 +32,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	@SuppressWarnings("unused")
 	private Button buttonGuardar;
 	private Textbox textboxEmail;
+	private Textbox textboxNombre;
 	private Textbox textboxContraseñaRepita;
 	private Textbox textboxContraseña;
 	private Textbox textboxUsername;
@@ -41,6 +43,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	private UsuarioService service;
 	private MailService mailService;
 	private Encrypter encrypter;
+	private VendedorService vendedorService;
 	
 	
 	@Override
@@ -49,6 +52,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		binder = new AnnotateDataBinder(comp);
 		service = (UsuarioService) SpringUtil.getBean("usuarioService");
 		mailService = (MailService) SpringUtil.getBean("mailService");
+		vendedorService = (VendedorService) SpringUtil.getBean("vendedorService");
 		encrypter = (Encrypter) SpringUtil.getBean("encrypter");
 		comp.addEventListener(Events.ON_NOTIFY, new GuardarUsuarioEventListener(this));
 		comp.addEventListener(Events.ON_USER, new GuardarUsuarioEventListener(this));
@@ -65,18 +69,28 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	private void validacionesParaGuardar() {
 		String username = textboxUsername.getValue();
 		String email = textboxEmail.getValue();
+		String nombre = textboxNombre.getValue();
 		if(StringUtils.isEmpty(username)){
 			throw new WrongValueException(textboxUsername,"El usuario no deber ser vacio!");
+		}
+		
+		if(StringUtils.isEmpty(nombre)){
+			throw new WrongValueException(textboxNombre,"El nombre no deber ser vacio!");
 		}
 		
 		if(email != null && !EmailValidator.getInstance().isValid(email)){
 			throw new WrongValueException(textboxEmail,"Por favor ingrese un email valido.");
 		}
 		
+		Vendedor v = vendedorService.obtenerVendedor(nombre);
+		if(v != null && model != null && !v.getId().equals(model.getId())){
+			throw new WrongValueException(textboxNombre,"Ya existe el usuario con el nombre ingresado");
+		}
 		Usuario u = service.obtenerUsuarioPorEmail(email);
 		if(u != null && model != null && !u.getId().equals(model.getId())){
 			throw new WrongValueException(textboxEmail,"Ya existe el usuario con el mail ingresado");
 		}
+		
 		
 		validarPassword();
 	}
@@ -104,17 +118,18 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		}
 	}
 	
-	private Vendedor actualizarVendedor(String username,String email,String pwd) throws Exception{
+	private Vendedor actualizarVendedor(String nombre,String username,String email,String pwd) throws Exception{
 		if(model != null){
 			model.setUsername(username);
 			model.setEmail(email);
+			model.setNombre(nombre);
 			model.setPassword(encrypter.encrypt(pwd));
 			if(model.getImagenPerfil() == null){
 				model.setImagenPerfil("/imagenes/usuarios/ROOT/perfil.jpg");				
 			}
 			return model;
 		}
-		return new Vendedor(username,email,encrypter.encrypt(pwd));
+		return new Vendedor(nombre,username,email,encrypter.encrypt(pwd));
 	}
 	
 	
@@ -134,13 +149,19 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		chequearTodosLosCamposEnBlanco();
 	}
 	
+
+	public void onBlur$textboxNombre(){
+		chequearTodosLosCamposEnBlanco();
+	}
+	
 	public void chequearTodosLosCamposEnBlanco(){
 		String username = textboxUsername.getValue();
 		String email = textboxEmail.getValue();
+		String nombre = textboxNombre.getValue();
 		String nuevaClave = textboxContraseña.getValue();
 		String nuevaClaveRepita = textboxContraseñaRepita.getText();	
 		
-		if(StringUtils.isEmpty(username) && StringUtils.isEmpty(email) && StringUtils.isEmpty(nuevaClave) && StringUtils.isEmpty(nuevaClaveRepita)){
+		if(StringUtils.isEmpty(username) && StringUtils.isEmpty(nombre) && StringUtils.isEmpty(email) && StringUtils.isEmpty(nuevaClave) && StringUtils.isEmpty(nuevaClaveRepita)){
 			model = null;
 		}
 		this.binder.loadAll();
@@ -152,7 +173,8 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			String username = textboxUsername.getValue();
 			String email = textboxEmail.getValue();
 			String pwd = textboxContraseña.getValue();
-			Vendedor v = actualizarVendedor(username,email,pwd);
+			String nombre = textboxNombre.getValue();
+			Vendedor v = actualizarVendedor(nombre,username,email,pwd);
 			if(v.getId() == null){
 				mailService.enviarEmailBienvenidaVendedor(email, username, pwd);
 			}
@@ -190,6 +212,11 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	public void llenarCombosConUser(Vendedor user){
 		textboxUsername.setValue(user.getUsername());
 		textboxEmail.setValue(user.getEmail());
+		// parche momentaneo hasta que todos los vendedores que fueron dados de alta ANTES de agregar este campo
+		// lo tengan incluido
+		if(user.getNombre() != null){
+			textboxNombre.setValue(user.getNombre());			
+		}
 		model = user;
 	}
 
