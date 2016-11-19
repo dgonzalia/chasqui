@@ -95,6 +95,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			DateTime cierre = new DateTime().plusDays(1);
 			Vendedor u2 = new Vendedor();
 			u2.setUsername("MatLock");
+			u2.setNombre("MatLock - Nombre");
 			u2.setPassword(encrypter.encrypt("federico"));
 			u2.setEmail("floresfederico_993@hotmail.com");
 			u2.setIsRoot(false);
@@ -106,6 +107,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 			Vendedor u3 = new Vendedor();
 			u3.setUsername("Matt");
+			u3.setNombre("Matt - Nombre");
 			u3.setPassword(encrypter.encrypt("federico"));
 			u3.setEmail("floresfederwico_993@hotmail.com");
 			u3.setIsRoot(false);

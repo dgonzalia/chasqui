@@ -19,6 +19,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
+import ar.edu.unq.chasqui.exceptions.VendedorInexistenteException;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Vendedor;
 import ar.edu.unq.chasqui.security.Encrypter;
@@ -82,7 +83,12 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			throw new WrongValueException(textboxEmail,"Por favor ingrese un email valido.");
 		}
 		
-		Vendedor v = vendedorService.obtenerVendedor(nombre);
+		Vendedor v = null;
+		try{
+			v = vendedorService.obtenerVendedor(nombre);			
+		}catch(VendedorInexistenteException e){
+			
+		}
 		if(v != null && model != null && !v.getId().equals(model.getId())){
 			throw new WrongValueException(textboxNombre,"Ya existe el usuario con el nombre ingresado");
 		}
@@ -99,6 +105,10 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	private void validarPassword(){
 		String nuevaClave = textboxContraseña.getValue();
 		String nuevaClaveRepita = textboxContraseñaRepita.getText();	
+		
+		if(StringUtils.isEmpty(nuevaClave) && StringUtils.isEmpty(nuevaClaveRepita)){
+			return;
+		}	
 		
 		if(StringUtils.isEmpty(nuevaClave)){
 			throw new WrongValueException(textboxContraseña,"La contraseña no debe ser vacia!");
@@ -195,6 +205,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	
 	public void limpiarCampos(){
 		textboxEmail.setValue(null);
+		textboxNombre.setValue(null);
 		textboxContraseñaRepita.setValue(null);
 		textboxContraseña.setValue(null);
 		textboxUsername.setValue(null);
