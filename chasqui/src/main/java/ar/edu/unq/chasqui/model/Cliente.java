@@ -254,7 +254,7 @@ public class Cliente extends Usuario{
 
 	public Pedido obtenerPedidoActualDe(Integer idVendedor) throws PedidoInexistenteException {
 		for(Pedido p : pedidos){
-			if(p.getIdVendedor().equals(idVendedor) && p.getEstado().equals(Constantes.ESTADO_PEDIDO_ABIERTO)){
+			if(p.getIdVendedor().equals(idVendedor) && p.estaVigente()){
 				return p;
 			}
 		}		
@@ -306,7 +306,7 @@ public class Cliente extends Usuario{
 	public boolean contieneProductoEnPedido(Variante v, Integer idPedido) {
 		Pedido p = encontrarPedidoConId(idPedido);
 		ProductoPedido pp = p.encontrarProductoPedido(v.getId());
-		if(pp.getIdVariante().equals(v.getId())){
+		if(pp != null && pp.getIdVariante().equals(v.getId())){
 			return true;
 		}
 		return false;
@@ -346,7 +346,7 @@ public class Cliente extends Usuario{
 			p.setDireccionEntrega(this.obtenerDireccionConId(request.getIdDireccion()));			
 		}
 		pedidos.remove(p);
-		if(historialPedidos != null){
+		if(historialPedidos == null){
 			historialPedidos = new Historial(this.getEmail());
 		}
 		historialPedidos.agregarAHistorial(p);

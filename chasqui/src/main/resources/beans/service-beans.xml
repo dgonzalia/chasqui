@@ -13,8 +13,8 @@
 	   
 	 
 	   <context:annotation-config/>
-	   <context:property-placeholder location="${ext.properties.dir:classpath:}/chasqui.properties" />
-	   
+<!-- 	   <context:property-placeholder location="${ext.properties.dir:classpath:}/chasqui.properties" /> -->
+	   <context:property-placeholder location="classpath:chasqui.properties" /> 
 	   <!-- Servicios -->
 	   <bean id="mailService" name="mailService" class="ar.edu.unq.chasqui.services.impl.MailService"/>
 	   
