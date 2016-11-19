@@ -221,6 +221,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 	}
 	
 	public void llenarCombosConUser(Vendedor user){
+		limpiarCampos();
 		textboxUsername.setValue(user.getUsername());
 		textboxEmail.setValue(user.getEmail());
 		// parche momentaneo hasta que todos los vendedores que fueron dados de alta ANTES de agregar este campo
