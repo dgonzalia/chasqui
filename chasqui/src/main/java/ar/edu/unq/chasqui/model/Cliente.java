@@ -218,7 +218,8 @@ public class Cliente extends Usuario{
 		if (contieneDireccionConId(idDireccion, direccionesAlternativas)) {
 			for(Direccion d : direccionesAlternativas){
 				if(idDireccion.equals(d.getId())){
-					d.editate(altura,calle,alias,localidad,departamento,codigoPostal,latitud,longitud,predeterminada);
+//					d.editate(altura,calle,alias,localidad,departamento,codigoPostal,latitud,longitud,predeterminada);
+					d.modificarCon(request);
 				}
 			}
 		}

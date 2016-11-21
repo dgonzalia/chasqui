@@ -144,39 +144,42 @@ public class Direccion {
 		if(direccion.getDepartamento() != null){
 			this.departamento = direccion.getDepartamento();
 		}
+		if(direccion.getPredeterminada() != null){
+			this.predeterminada = direccion.getPredeterminada();
+		}
 		
 	}
 
-	public void editate(Integer altura2, String calle2, String alias2, String localidad2, String departamento2,
-			String codigoPostal2, String latitud2, String longitud2, boolean predeterminada2) {
-		if(!StringUtils.isEmpty(calle2)){
-			calle = calle2;			
-		}
-		if(altura2 != null){
-			altura = altura2;			
-		}
-		if(!StringUtils.isEmpty(alias2)){
-			alias = alias2;			
-		}
-		if(!StringUtils.isEmpty(localidad2)){
-			localidad = localidad2;			
-		}
-		if(!StringUtils.isEmpty(departamento2)){
-			departamento=departamento2;			
-		}
-		if(!StringUtils.isEmpty(codigoPostal2)){
-			codigoPostal=codigoPostal2;
-		}
-		if(!StringUtils.isEmpty(latitud2)){
-			latitud=latitud2;
-		}
-		if(!StringUtils.isEmpty(longitud2)){
-			longitud=longitud2;
-		}
-		predeterminada = predeterminada2;
-		
-		
-	}
+//	public void editate(Integer altura2, String calle2, String alias2, String localidad2, String departamento2,
+//			String codigoPostal2, String latitud2, String longitud2, boolean predeterminada2) {
+//		if(!StringUtils.isEmpty(calle2)){
+//			calle = calle2;			
+//		}
+//		if(altura2 != null){
+//			altura = altura2;			
+//		}
+//		if(!StringUtils.isEmpty(alias2)){
+//			alias = alias2;			
+//		}
+//		if(!StringUtils.isEmpty(localidad2)){
+//			localidad = localidad2;			
+//		}
+//		if(!StringUtils.isEmpty(departamento2)){
+//			departamento=departamento2;			
+//		}
+//		if(!StringUtils.isEmpty(codigoPostal2)){
+//			codigoPostal=codigoPostal2;
+//		}
+//		if(!StringUtils.isEmpty(latitud2)){
+//			latitud=latitud2;
+//		}
+//		if(!StringUtils.isEmpty(longitud2)){
+//			longitud=longitud2;
+//		}
+//		predeterminada = predeterminada2;
+//		
+//		
+//	}
 	
 	
 	
