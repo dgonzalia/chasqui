@@ -26,7 +26,7 @@ public class VendedorDAOHbm  extends HibernateDaoSupport implements VendedorDAO{
 	}
 
 	@Override
-	public Vendedor obtenerVendedor(final String nombreVendedor) {
+	public Vendedor obtenerVendedor(final String username) {
 		return (Vendedor) this.getHibernateTemplate().execute(new HibernateCallback<Vendedor>() {
 
 			@Override
@@ -34,7 +34,7 @@ public class VendedorDAOHbm  extends HibernateDaoSupport implements VendedorDAO{
 					throws HibernateException, SQLException {
 				Criteria criteria = session.createCriteria(Vendedor.class);
 				criteria.add(Restrictions.eq("isRoot", false))
-				.add(Restrictions.eq("nombre", nombreVendedor));
+				.add(Restrictions.eq("username", username));
 				return (Vendedor) criteria.uniqueResult();
 			}
 		});

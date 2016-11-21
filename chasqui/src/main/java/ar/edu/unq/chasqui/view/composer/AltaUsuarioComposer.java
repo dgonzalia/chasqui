@@ -84,8 +84,8 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 		}
 		
 		Vendedor v = null;
-		try{
-			v = vendedorService.obtenerVendedor(nombre);			
+		try{		
+			v = vendedorService.obtenerVendedor(username);			
 		}catch(VendedorInexistenteException e){
 			
 		}
@@ -93,7 +93,7 @@ public class AltaUsuarioComposer extends GenericForwardComposer<Component> {
 			throw new WrongValueException(textboxNombre,"Ya existe el usuario con el nombre ingresado");
 		}
 		Usuario u = service.obtenerUsuarioPorEmail(email);
-		if(u != null && model != null && !u.getId().equals(model.getId())){
+		if( (u != null && model == null) || (u != null && model != null && !u.getId().equals(model.getId())) ){
 			throw new WrongValueException(textboxEmail,"Ya existe el usuario con el mail ingresado");
 		}
 		
