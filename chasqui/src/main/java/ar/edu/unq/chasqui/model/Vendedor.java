@@ -142,15 +142,6 @@ public class Vendedor extends Usuario{
 		}
 		return p;
 	}
-	
-	
-	public void notificarCierrePedido () {
-		//TODO
-	}
-	
-	public void notificarFechaEntrega() {
-		//TODO
-	}
 
 	public boolean contieneCategoria(String value) {
 		for(Categoria c : categorias){
