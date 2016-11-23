@@ -149,8 +149,8 @@ public class Pedido {
 	public void confirmarte() {
 		if(this.getEstado().equals(Constantes.ESTADO_PEDIDO_CONFIRMADO) && alterable ){
 			this.estado = Constantes.ESTADO_PEDIDO_ENTREGADO;
+			this.alterable=false;
 		}
-		this.alterable=false;
 		
 	}
 
@@ -174,7 +174,7 @@ public class Pedido {
 
 	private ProductoPedido encontrarProductoEnPedido(ProductoPedido pp) {
 		for(ProductoPedido p : productosEnPedido){
-			if(p.getId().equals(pp.getIdVariante())){
+			if(p.getIdVariante().equals(pp.getIdVariante())){
 				return p;
 			}
 		}
