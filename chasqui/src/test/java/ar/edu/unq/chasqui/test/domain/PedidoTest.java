@@ -55,7 +55,7 @@ public class PedidoTest {
 		pp.setImagen("a");
 		pp.setNombreProducto("nombre");
 		pp.setNombreVariante("variante");
-		pp.setPrecio(40.40);
+		pp.setPrecio(10.0);
 		pp.setCantidad(1);
 	}
 
