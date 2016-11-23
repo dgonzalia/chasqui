@@ -86,28 +86,10 @@ public class Variante {
 		this.cantidadReservada = cantidadReservada;
 	}
 
-	public boolean tieneStockParaReservar(Integer cantidad) {
-		return this.getStock() - (this.getCantidadReservada() + cantidad)> 0;
-	}
-
-	
-	public boolean tieneStock(){
-		return this.getStock() - this.getCantidadReservada() > 0;
-	}
 	
 	public Integer getIdVendedor() {
 		return this.producto.getFabricante().getIdVendedor();
 	}
-
-	public void reservarCantidad(Integer cantidad) {
-		cantidadReservada += cantidad;
-		
-	}
-
-	public void eliminarReserva(Integer cantidad) {
-		cantidadReservada -= cantidad;
-		
-	}	
 		
 	public Boolean getDestacado() {
 		return destacado;
@@ -116,6 +98,8 @@ public class Variante {
 	public void setDestacado(Boolean destacado) {
 		this.destacado = destacado;
 	}
+	
+	// METHODS
 
 	@Override
 	public String toString(){
@@ -132,4 +116,18 @@ public class Variante {
 		}
 		return imagenes.get(0).getPath();
 	}
+	
+	public boolean tieneStockParaReservar(Integer cantidad) {
+		return this.getStock() - (this.getCantidadReservada() + cantidad)> 0;
+	}
+	
+	public void reservarCantidad(Integer cantidad) {
+		cantidadReservada += cantidad;
+	}
+
+	public void eliminarReserva(Integer cantidad) {
+		cantidadReservada -= cantidad;
+		
+	}	
+	
 }
