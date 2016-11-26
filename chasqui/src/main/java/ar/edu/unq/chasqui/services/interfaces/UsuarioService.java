@@ -76,6 +76,8 @@ public interface UsuarioService {
 	public Integer obtenerTotalNotificacionesDe(String mail);
 	@Transactional
 	public void leerNotificacion(Integer id);
+	@Transactional
+	public List<Pedido> obtenerPedidosVigentesDe(String mail);
 	
 	
 }

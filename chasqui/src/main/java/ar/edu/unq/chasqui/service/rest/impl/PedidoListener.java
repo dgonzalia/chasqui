@@ -1,6 +1,8 @@
 package ar.edu.unq.chasqui.service.rest.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -76,6 +78,19 @@ public class PedidoListener {
 	}	
 	
 	
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/vigentes")
+	public Response obtenerPedidosVigentes(){
+		String mail =  obtenerEmailDeContextoDeSeguridad();
+		try{
+			return Response.ok(toListResponse(usuarioService.obtenerPedidosVigentesDe(mail)),MediaType.APPLICATION_JSON).build();
+		}catch(Exception e){
+			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
+		}
+	}
+
 	@PUT
 	//@Consumes("application/json")
 	@Produces("application/json")
@@ -159,6 +174,15 @@ public class PedidoListener {
 		return 	SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 	
+	
+	private List<PedidoResponse> toListResponse(List<Pedido> obtenerPedidosVigentesDe) {
+		List<PedidoResponse> resultado = new ArrayList<PedidoResponse>();
+		for(Pedido p : obtenerPedidosVigentesDe){
+			resultado.add(new PedidoResponse(p));
+		}
+		return resultado;
+	}
+
 	
 
 }

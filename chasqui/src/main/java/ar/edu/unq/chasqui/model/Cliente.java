@@ -372,6 +372,16 @@ public class Cliente extends Usuario{
 		return false;
 	}
 
+	public List<Pedido> obtenerPedidosVigentes() {
+		List<Pedido> resultado = new ArrayList<Pedido>();
+		for(Pedido p : pedidos){
+			if(p.estaVigente()){
+				resultado.add(p);
+			}
+		}
+		return resultado;
+	}
+
 	
 	
 	

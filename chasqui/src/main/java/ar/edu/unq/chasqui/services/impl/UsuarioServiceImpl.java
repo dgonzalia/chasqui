@@ -335,10 +335,17 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioDAO.guardarUsuario(c);
 		
 	}
+	
 
 	@Override
 	public Pedido obtenerPedidoActualDe(String mail,Integer idVendedor) throws PedidoInexistenteException {
 		return ( (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail)).obtenerPedidoActualDe(idVendedor);
+	}
+	
+	
+	@Override
+	public List<Pedido> obtenerPedidosVigentesDe(String mail) {
+		return ( (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail)).obtenerPedidosVigentes();
 	}
 
 	@Override
