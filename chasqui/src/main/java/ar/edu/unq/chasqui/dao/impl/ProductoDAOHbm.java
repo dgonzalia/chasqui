@@ -36,6 +36,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.createAlias("producto", "p")
 				 .createAlias("p.categoria", "c")
 				 .add(Restrictions.eq("c.id", idCategoria))
+				 .add(Restrictions.sqlRestriction("( STOCK - RESERVADOS) > 0"))
 				 .addOrder(Order.asc("id"))
 				 .setFirstResult(inicio )
 				 .setMaxResults(cantidadDeItems);
@@ -56,6 +57,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				c.createAlias("producto", "p")
 				 .createAlias("p.fabricante", "f")
 				 .add(Restrictions.eq("f.id", idProductor))
+				 .add(Restrictions.sqlRestriction("( STOCK - RESERVADOS) > 0"))
 				 .setFirstResult(inicio)
 				 .setMaxResults(cantItems)
 				 .addOrder(Order.asc("id"));
@@ -79,6 +81,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				 .createAlias("p.fabricante", "f")
 				 .add(Restrictions.eq("m.id", idMedalla))
 				 .add(Restrictions.eq("f.idVendedor",idVendedor))
+				 .add(Restrictions.sqlRestriction("( STOCK - RESERVADOS) > 0"))
 				 .setFirstResult(inicio)
 				 .setMaxResults(cantItems)
 				 .addOrder(Order.asc("id"));
@@ -132,6 +135,7 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				 .createAlias("p.categoria", "c")
 				 .createAlias("c.vendedor", "v")
 				 .add(Restrictions.eq("v.id", idVendedor))
+				 .add(Restrictions.sqlRestriction("( STOCK - RESERVADOS) > 0"))
 				 .add(or)
 				 .setFirstResult(inicio)
 				 .setMaxResults(cantItems)

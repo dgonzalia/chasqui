@@ -1,7 +1,5 @@
 package ar.edu.unq.chasqui.services.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -23,7 +21,6 @@ import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Pedido;
-import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -38,7 +35,6 @@ import ar.edu.unq.chasqui.services.interfaces.NotificacionService;
 import ar.edu.unq.chasqui.services.interfaces.PedidoService;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
-import ar.edu.unq.chasqui.view.composer.Constantes;
 
 @Auditada
 public class UsuarioServiceImpl implements UsuarioService{
@@ -216,6 +212,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 			
 		}
 	}
+	
+	/**
+	 * Este metodo solo se debe usar para los tear down de los test
+	 * @param obj
+	 */
+	public <T> void deleteObject(T obj){
+		usuarioDAO.deleteObject(obj);
+	}
+	
 
 	public Usuario login(String username, String passwordHashed) throws Exception {
 		Usuario usuario = usuarioDAO.obtenerUsuarioPorNombre(username);

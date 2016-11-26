@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unq.chasqui.aspect.Auditada;
-import ar.edu.unq.chasqui.dao.UsuarioDAO;
 import ar.edu.unq.chasqui.dao.VendedorDAO;
 import ar.edu.unq.chasqui.exceptions.VendedorInexistenteException;
 import ar.edu.unq.chasqui.model.Vendedor;

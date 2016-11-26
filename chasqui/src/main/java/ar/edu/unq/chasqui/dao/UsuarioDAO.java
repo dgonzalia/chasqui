@@ -27,4 +27,5 @@ public interface UsuarioDAO {
 	public Integer obtenerTotalNotificacionesDe(String mail);
 	public Notificacion obtenerNotificacion(Integer id);
 	public void guardar(Notificacion n);
+	public <T> void deleteObject(T obj);
 }

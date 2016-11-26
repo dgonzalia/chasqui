@@ -78,6 +78,8 @@ public interface UsuarioService {
 	public void leerNotificacion(Integer id);
 	@Transactional
 	public List<Pedido> obtenerPedidosVigentesDe(String mail);
+	@Transactional
+	public <T> void deleteObject(T object);
 	
 	
 }

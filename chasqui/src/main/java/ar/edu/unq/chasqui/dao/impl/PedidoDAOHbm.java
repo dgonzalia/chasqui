@@ -99,8 +99,7 @@ public class PedidoDAOHbm extends HibernateDaoSupport implements PedidoDAO {
 				if(desde != null && hasta != null){
 					DateTime d = new DateTime(desde.getTime());
 					DateTime h = new DateTime(hasta.getTime());
-					c.add(Restrictions.eq("fechaCreacion", d))
-					.add(Restrictions.eq("fechaCreacion", h));
+					c.add(Restrictions.between("fechaCreacion", d, h));
 				}
 				
 				return (List<Pedido>)c.list();

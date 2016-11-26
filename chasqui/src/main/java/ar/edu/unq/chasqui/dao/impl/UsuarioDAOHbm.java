@@ -223,6 +223,13 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		this.getHibernateTemplate().flush();
 		
 	}
+
+	@Override
+	public <T> void deleteObject(T obj) {
+		this.getHibernateTemplate().delete(obj);
+		this.getHibernateTemplate().flush();
+		
+	}
 	
 	
 	
