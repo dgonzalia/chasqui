@@ -267,6 +267,7 @@ public class ClienteTest {
 		cliente.confirmarPedido(request);
 		assertEquals(cliente.getPedidos().size(),1);
 		assertTrue(cliente.getHistorialPedidos() != null);
+		assertEquals(cliente.getHistorialPedidos().getPedidos().size(),1);
 	}
 	
 	@Test
