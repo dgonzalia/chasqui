@@ -35,6 +35,7 @@
         <property name="montoActual" type="java.lang.Double">
             <column name="MONTO_ACTUAL" />
         </property>
+        <property name="nombreVendedor" type="java.lang.String" column="NOMBRE_VENDEDOR"/>
         <property name="perteneceAPedidoGrupal" column="PERTENECE_A_GRUPAL" type="java.lang.Boolean"/>
         <set name="productosEnPedido" inverse="false" table="PRODUCTO_PEDIDO" lazy="false"  >
             <key>
