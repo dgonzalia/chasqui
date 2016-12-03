@@ -15,6 +15,10 @@ public class Historial {
 		usuario = email;
 		pedidos = new ArrayList<Pedido>();
 	}
+	
+	public Historial(){
+		
+	}
 
 	public Integer getId() {
 		return id;

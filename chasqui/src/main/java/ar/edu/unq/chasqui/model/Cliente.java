@@ -197,14 +197,6 @@ public class Cliente extends Usuario{
 	}
 
 	public void editarDireccionCon(DireccionRequest request,Integer idDireccion) throws DireccionesInexistentes {
-		Integer altura = request.getAltura();
-		String calle= request.getCalle();
-		String alias =request.getAlias();
-		String localidad = request.getLocalidad();
-		String departamento = request.getDepartamento();
-		String codigoPostal = request.getCodigoPostal();
-		String latitud = request.getLatitud();
-		String longitud = request.getLongitud();
 		boolean predeterminada = request.getPredeterminada();
 		
 		if(predeterminada){

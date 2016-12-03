@@ -328,6 +328,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 		if(c == null){
 			throw new UsuarioExistenteException("No existe el usuario");
 		}
+		if(idDireccion == null){
+			throw new DireccionesInexistentes("No existe la direccion que se desea editar");
+		}
 		c.editarDireccionCon(request,idDireccion);
 		usuarioDAO.guardarUsuario(c);
 	}

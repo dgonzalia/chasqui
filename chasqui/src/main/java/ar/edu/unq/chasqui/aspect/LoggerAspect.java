@@ -29,7 +29,7 @@ public class LoggerAspect {
 		if(args != null){
 			String params = "[";
 			for(int i=0;i<args.length;i++){
-				params += args[i].toString() + ",";
+				params += String.valueOf(args[i]) + ",";
 			}
 			return params += "]";
 		}

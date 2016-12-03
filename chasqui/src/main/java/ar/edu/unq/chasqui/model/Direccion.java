@@ -141,9 +141,7 @@ public class Direccion {
 		if(direccion.getAlias() != null){
 			this.alias = direccion.getAlias();
 		}
-		if(direccion.getDepartamento() != null){
-			this.departamento = direccion.getDepartamento();
-		}
+		this.departamento = direccion.getDepartamento();
 		if(direccion.getPredeterminada() != null){
 			this.predeterminada = direccion.getPredeterminada();
 		}
