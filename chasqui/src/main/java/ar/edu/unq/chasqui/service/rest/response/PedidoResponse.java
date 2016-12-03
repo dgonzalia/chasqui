@@ -23,6 +23,7 @@ public class PedidoResponse implements Serializable {
 	private String fechaVencimiento;
 	private Double montoMinimo;
 	private Double montoActual;
+	private String nombreVendedor;
 	private List<ProductoPedidoResponse> productosResponse;	
 	
 	
@@ -84,7 +85,20 @@ public class PedidoResponse implements Serializable {
 	public void setMontoActual(Double montoActual) {
 		this.montoActual = montoActual;
 	}
+	
+	
+	
 
+
+
+	public String getNombreVendedor() {
+		return nombreVendedor;
+	}
+
+
+	public void setNombreVendedor(String nombreVendedor) {
+		this.nombreVendedor = nombreVendedor;
+	}
 
 
 	public List<ProductoPedidoResponse> getProductosResponse() {
@@ -103,6 +117,7 @@ public class PedidoResponse implements Serializable {
 	public PedidoResponse(Pedido p){
 		id = p.getId();
 		estado = p.getEstado();
+		nombreVendedor=p.getNombreVendedor();
 		DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		fechaCreacion = f.format(p.getFechaCreacion().toDate());
 		fechaVencimiento = f.format(p.getFechaDeVencimiento().toDate());

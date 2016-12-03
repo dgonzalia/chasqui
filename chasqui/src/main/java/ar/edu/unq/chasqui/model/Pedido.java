@@ -12,6 +12,7 @@ public class Pedido {
 	private Integer id;
 	private Integer idVendedor;
 	private String estado;
+	private String nombreVendedor;
 	private String usuarioCreador;
 	private Boolean alterable;
 	private DateTime fechaCreacion;
@@ -25,6 +26,7 @@ public class Pedido {
 
 	public Pedido(Vendedor v,Cliente c) {
 		idVendedor = v.getId();
+		nombreVendedor = v.getNombre();
 		estado = Constantes.ESTADO_PEDIDO_ABIERTO;
 		direccionEntrega = c.obtenerDireccionPredeterminada();
 		usuarioCreador = c.getEmail();
@@ -49,6 +51,16 @@ public class Pedido {
 		this.id = id;
 	}
 	
+	
+	
+	public String getNombreVendedor() {
+		return nombreVendedor;
+	}
+
+	public void setNombreVendedor(String nombreVendedor) {
+		this.nombreVendedor = nombreVendedor;
+	}
+
 	public String getEstado() {
 		return estado;
 	}
