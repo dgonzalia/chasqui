@@ -287,6 +287,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Direccion agregarDireccionAUsuarioCon(String mail, DireccionRequest request) {
 		validarDireccionRequest(request);
 		Cliente v = (Cliente) usuarioDAO.obtenerUsuarioPorEmail(mail);
+		if(v == null){
+			throw new UsuarioExistenteException("No existe el usuario con el mail: " + mail ); 
+		}
 		Direccion d = v.agregarDireccion(request);
 		usuarioDAO.guardarUsuario(v);
 		return d;
@@ -324,6 +327,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Cliente c = (Cliente)usuarioDAO.obtenerUsuarioPorEmail(mail);
 		if(c == null){
 			throw new UsuarioExistenteException("No existe el usuario");
+		}
+		if(idDireccion == null){
+			throw new DireccionesInexistentes("No existe la direccion que se desea editar");
 		}
 		c.editarDireccionCon(request,idDireccion);
 		usuarioDAO.guardarUsuario(c);
