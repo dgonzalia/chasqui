@@ -7,7 +7,6 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -31,6 +30,7 @@ import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.service.rest.request.AgregarQuitarProductoAPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.request.ConfirmarPedidoRequest;
+import ar.edu.unq.chasqui.service.rest.request.CrearPedidoRequest;
 import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.PedidoResponse;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
@@ -50,9 +50,10 @@ public class PedidoListener {
 	@POST
 	@Produces("application/json")
 	@Path("/individual")
-	public Response crearPedidoIndividualParaUsuario(@HeaderParam("idVendedor") Integer idVendedor){
+	public Response crearPedidoIndividualParaUsuario(@Multipart(value="crearRequest", type="application/json") final String crearRequest){
 		String mail = obtenerEmailDeContextoDeSeguridad();
 		try{
+			Integer idVendedor = toCrearPedidoRequest(crearRequest).getIdVendedor();
 			usuarioService.crearPedidoPara(mail,idVendedor);
 			return Response.status(201).build();
 		}catch(PedidoVigenteException | UsuarioExistenteException e){
@@ -92,9 +93,8 @@ public class PedidoListener {
 	}
 
 	@PUT
-	//@Consumes("application/json")
 	@Produces("application/json")
-	@Path("/individual")
+	@Path("/individual/agregar-producto")
 	public Response agregarProductoAPedido(@Multipart(value="agregarRequest", type="application/json")final String agregarRequest){
 		try{
 			AgregarQuitarProductoAPedidoRequest request = toAgregarPedidoRequest(agregarRequest);
@@ -111,9 +111,9 @@ public class PedidoListener {
 	}
 	
 	
-	@DELETE
+	@PUT
 	@Produces("application/json")
-	@Path("/individual")
+	@Path("/individual/eliminar-producto")
 	public Response eliminarProductoAlPedido(@Multipart(value="eliminarRequest", type="application/json") final String eliminarRequest){
 		try{
 			AgregarQuitarProductoAPedidoRequest request = toAgregarPedidoRequest(eliminarRequest);
@@ -182,7 +182,11 @@ public class PedidoListener {
 		}
 		return resultado;
 	}
-
 	
+	private CrearPedidoRequest toCrearPedidoRequest (String crearRequest) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
+		return mapper.readValue(crearRequest, CrearPedidoRequest.class);
+	}
 
 }
