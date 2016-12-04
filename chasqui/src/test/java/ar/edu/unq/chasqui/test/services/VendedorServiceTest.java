@@ -3,7 +3,6 @@ package ar.edu.unq.chasqui.test.services;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.joda.time.DateTime;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import ar.edu.unq.chasqui.exceptions.VendedorInexistenteException;
 import ar.edu.unq.chasqui.model.Vendedor;
-import ar.edu.unq.chasqui.security.Encrypter;
-import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
 import ar.edu.unq.chasqui.services.interfaces.VendedorService;
 
 @ContextConfiguration(locations = {

@@ -20,11 +20,11 @@
         </many-to-one>
         
         <bag name="caracteristicas" inverse="false" table="PRODUCTO_CARACTERISTICA" lazy="false">
-            <key update="false">
+            <key>
                 <column name="ID_PRODUCTO"/>
             </key>            
 <!--             <list-index column="ORDEN_CARACTERISTICA"/> -->
-            <many-to-many entity-name="ar.edu.unq.chasqui.model.Caracteristica" column="ID_PRODUCTO_CARACTERISTICA"/>
+            <many-to-many entity-name="ar.edu.unq.chasqui.model.Caracteristica" column="ID_PRODUCTO_CARACTERISTICA" />
         </bag>
         <many-to-one name="fabricante" class="ar.edu.unq.chasqui.model.Fabricante" fetch="join">
             <column name="ID_PRODUCTOR" />

@@ -1,5 +1,7 @@
 package ar.edu.unq.chasqui.services.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -7,6 +9,7 @@ import org.apache.cxf.common.util.StringUtils;
 import org.hsqldb.lib.StringUtil;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.chasqui.aspect.Auditada;
 import ar.edu.unq.chasqui.dao.UsuarioDAO;
@@ -21,6 +24,7 @@ import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Pedido;
+import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -35,6 +39,7 @@ import ar.edu.unq.chasqui.services.interfaces.NotificacionService;
 import ar.edu.unq.chasqui.services.interfaces.PedidoService;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
+import ar.edu.unq.chasqui.view.composer.Constantes;
 
 @Auditada
 public class UsuarioServiceImpl implements UsuarioService{
@@ -217,6 +222,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	 * Este metodo solo se debe usar para los tear down de los test
 	 * @param obj
 	 */
+	@Transactional
 	public <T> void deleteObject(T obj){
 		usuarioDAO.deleteObject(obj);
 	}

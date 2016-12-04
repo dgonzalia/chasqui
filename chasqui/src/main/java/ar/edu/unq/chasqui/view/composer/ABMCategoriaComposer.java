@@ -24,11 +24,13 @@ public class ABMCategoriaComposer extends GenericForwardComposer<Component> {
 	private AnnotateDataBinder binder;
 	private Vendedor usuario;
 	private UsuarioService usuarioService;
+	private Boolean esEdicion;
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		binder = new AnnotateDataBinder(comp);
 		model = (Categoria) Executions.getCurrent().getArg().get("categoria");
+		esEdicion = (Boolean) Executions.getCurrent().getArg().get("esEdicion");
 		usuarioService = (UsuarioService) SpringUtil.getBean("usuarioService");
 		usuario = (Vendedor) Executions.getCurrent().getSession().getAttribute(Constantes.SESSION_USERNAME);
 		if(model != null){
@@ -48,7 +50,7 @@ public class ABMCategoriaComposer extends GenericForwardComposer<Component> {
 		if(StringUtils.isEmpty(textboxNombreCategoria.getValue())){
 			throw new WrongValueException("El nombre no debe ser vacio!");
 		}
-		if(usuario.contieneCategoria(textboxNombreCategoria.getValue())){
+		if(usuario.contieneCategoria(textboxNombreCategoria.getValue()) && !esEdicion){
 			throw new WrongValueException("El usuario:" + usuario.getUsername() + " ya contiene la categoria: "+ textboxNombreCategoria.getValue());
 		}
 		

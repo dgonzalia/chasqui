@@ -87,7 +87,6 @@ public class ProductoServiceTest extends GenericSetUp {
 	
 	@After
 	public void tearDown(){
-		usuarioService.deleteObject(p);
 		super.tearDown();
 	}
 	

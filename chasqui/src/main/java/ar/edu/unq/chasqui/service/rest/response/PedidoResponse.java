@@ -18,6 +18,7 @@ public class PedidoResponse implements Serializable {
 	
 	
 	private Integer id;
+	private Integer idVendedor;
 	private String estado;
 	private String fechaCreacion;
 	private String fechaVencimiento;
@@ -39,6 +40,15 @@ public class PedidoResponse implements Serializable {
 
 	public String getEstado() {
 		return estado;
+	}
+
+	public Integer getIdVendedor() {
+		return idVendedor;
+	}
+
+
+	public void setIdVendedor(Integer idVendedor) {
+		this.idVendedor = idVendedor;
 	}
 
 
@@ -116,6 +126,7 @@ public class PedidoResponse implements Serializable {
 	
 	public PedidoResponse(Pedido p){
 		id = p.getId();
+		idVendedor = p.getIdVendedor();
 		estado = p.getEstado();
 		nombreVendedor=p.getNombreVendedor();
 		DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

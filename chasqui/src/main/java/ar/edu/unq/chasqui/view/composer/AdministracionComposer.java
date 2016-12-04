@@ -258,12 +258,15 @@ public class AdministracionComposer extends GenericForwardComposer<Component> im
 	public void onEditarCategoria(Categoria c){
 		Map<String,Object>params = new HashMap<String,Object>();
 		params.put("categoria",c);
+		params.put("esEdicion", true);
 		Window abmCategoria = (Window) Executions.createComponents("/abmCategoria.zul", this.self,params );
 		abmCategoria.doModal();
 	}
 	
 	public void onCrearCategoria(){
-		Window abmCategoria = (Window) Executions.createComponents("/abmCategoria.zul", this.self,null);
+		Map<String,Object>params = new HashMap<String,Object>();
+		params.put("esEdicion", false);
+		Window abmCategoria = (Window) Executions.createComponents("/abmCategoria.zul", this.self,params);
 		abmCategoria.doModal();
 	}
 	
