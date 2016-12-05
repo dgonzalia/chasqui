@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -226,10 +227,25 @@ public class UsuarioDAOHbm extends HibernateDaoSupport implements UsuarioDAO {
 		
 	}
 
+	/**
+	 * ESTE METODO SOLO DEBE USARSE PARA LOS TEST
+	 */
 	@Override
 	public <T> void deleteObject(T obj) {
+		this.getHibernateTemplate().execute(new HibernateCallback<T>() {
+
+			@Override
+			public T doInHibernate(Session session) throws HibernateException, SQLException {
+				Query deleteProductoPedido = session.createSQLQuery("DELETE FROM PRODUCTO_PEDIDO");
+				Query deletePedido = session.createSQLQuery("DELETE FROM PEDIDO");
+				deleteProductoPedido.executeUpdate();
+				deletePedido.executeUpdate();
+				return null;
+			}
+		});
 		this.getHibernateTemplate().delete(obj);
 		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
 		
 	}
 	
