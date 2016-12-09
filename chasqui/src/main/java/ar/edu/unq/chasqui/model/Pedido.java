@@ -167,7 +167,8 @@ public class Pedido {
 	}
 
 	public boolean estaVigente() {
-		return this.getEstado().equals(Constantes.ESTADO_PEDIDO_ABIERTO) &&  !this.getFechaDeVencimiento().isBeforeNow();
+		return this.getEstado().equals(Constantes.ESTADO_PEDIDO_ABIERTO) &&
+				this.getFechaDeVencimiento().isAfterNow();
 	}
 
 	public void agregarProductoPedido(ProductoPedido pp) {

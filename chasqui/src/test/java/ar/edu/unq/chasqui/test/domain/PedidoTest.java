@@ -33,11 +33,11 @@ public class PedidoTest {
 		
 		pedido.setAlterable(true);
 		pedido.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
-		pedido.setFechaDeVencimiento(new DateTime().plusMonths(2));
+		pedido.setFechaDeVencimiento(new DateTime().plusMonths(-2));
 		
 		pedidoInvalido.setAlterable(true);
 		pedidoInvalido.setEstado(Constantes.ESTADO_PEDIDO_CANCELADO);
-		pedidoInvalido.setFechaDeVencimiento(new DateTime().plusMonths(2));
+		pedidoInvalido.setFechaDeVencimiento(new DateTime().plusMonths(-2));
 		
 		pedidoInvalidoFecha.setAlterable(true);
 		pedidoInvalidoFecha.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
