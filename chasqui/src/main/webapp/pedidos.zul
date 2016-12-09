@@ -17,6 +17,7 @@ style="overflow:auto">
 		<space spacing="10px"/>
 		<combobox id="estadosListbox" readonly="true" model="@{pedidosWindow$composer.estados}" selectedItem="@{pedidosWindow$composer.estadoSeleccionado}"/>
 		<button label="Buscar" id="buscar"/>
+		<button label="Limpiar Campos" id="limpiarCamposbtn"/>
 	</hbox>
 </div>
 <separator spacing="15px"/>

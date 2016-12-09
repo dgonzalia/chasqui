@@ -22,6 +22,8 @@ public class VendedorDAOHbm  extends HibernateDaoSupport implements VendedorDAO{
 	public List<Vendedor> obtenerVendedores() {
 		DetachedCriteria criteria = DetachedCriteria.forClass(Vendedor.class);
 		criteria.add(Restrictions.eq("isRoot", false));
+		criteria.add(Restrictions.isNotNull("montoMinimoPedido"));
+		criteria.add(Restrictions.isNotNull("fechaCierrePedido"));
 		return this.getHibernateTemplate().findByCriteria(criteria);
 	}
 
@@ -35,6 +37,8 @@ public class VendedorDAOHbm  extends HibernateDaoSupport implements VendedorDAO{
 				Criteria criteria = session.createCriteria(Vendedor.class);
 				criteria.add(Restrictions.eq("isRoot", false))
 				.add(Restrictions.eq("username", username));
+				criteria.add(Restrictions.isNotNull("montoMinimoPedido"));
+				criteria.add(Restrictions.isNotNull("fechaCierrePedido"));
 				return (Vendedor) criteria.uniqueResult();
 			}
 		});

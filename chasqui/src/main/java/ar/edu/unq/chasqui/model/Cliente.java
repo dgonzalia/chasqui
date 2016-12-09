@@ -287,7 +287,7 @@ public class Cliente extends Usuario{
 		p.sumarAlMontoActual(v.getPrecio(), cantidad);
 	}
 
-	private Pedido encontrarPedidoConId(Integer idPedido) {
+	public Pedido encontrarPedidoConId(Integer idPedido) {
 		for(Pedido pe : pedidos){
 			if(pe.getId().equals(idPedido)){
 				return pe;
