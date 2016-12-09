@@ -97,7 +97,7 @@ public class ClienteTest {
 		pedido.setFechaCreacion(new DateTime());
 		pedido.setIdVendedor(1);
 		pedido.setId(1);
-		pedido.setFechaDeVencimiento(new DateTime().plusMonths(12));
+		pedido.setFechaDeVencimiento(new DateTime().plusMonths(2));
 		
 		pedidoNoVigente = new Pedido();
 		pedidoNoVigente.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
