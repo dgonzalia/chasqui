@@ -28,8 +28,7 @@ public class ProductosEnPedidoComposer extends GenericForwardComposer<Component>
 		param.put(p.getUsuarioCreador(), new ArrayList<ProductoPedido>(p.getProductosEnPedido()));
 		pedidos = toDTO(param);
 		for(PedidoDTO t : pedidos){
-			total =+ t.getPrecio();
-			
+			total =+  (t.getPrecio() * t.getCantidad());
 		}
 		this.binder.loadAll();
 		

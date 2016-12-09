@@ -154,6 +154,15 @@ public class PedidosComposer  extends GenericForwardComposer<Component>{
 	public void setEstadoSeleccionado(String estadoSeleccionado) {
 		this.estadoSeleccionado = estadoSeleccionado;
 	}
+	
+	public void onClick$limpiarCamposbtn(){
+		estadoSeleccionado = "";
+		desde.setValue(null);
+		hasta.setValue(null);
+		estadosListbox.setValue("");
+		pedidos = pedidoService.obtenerPedidosDeVendedor(usuarioLogueado.getId());
+		this.binder.loadAll();
+	}
 
 	public void onClick$confirmarEntregabtn(){
 		for(Pedido p : this.pedidos){

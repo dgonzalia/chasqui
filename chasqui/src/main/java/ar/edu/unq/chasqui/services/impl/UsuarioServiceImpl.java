@@ -93,127 +93,127 @@ public class UsuarioServiceImpl implements UsuarioService{
 			user.setImagenPerfil(img.getPath());
 			this.guardarUsuario(user);	
 			
-//			DateTime cierre = new DateTime().plusDays(1);
-//			Vendedor u2 = new Vendedor();
-//			u2.setUsername("MatLock");
-//			u2.setNombre("MatLock - Nombre");
-//			u2.setPassword(encrypter.encrypt("federico"));
-//			u2.setEmail("floresfederico_993@hotmail.com");
-//			u2.setIsRoot(false);
-//			u2.setImagenPerfil(img.getPath());
-//			u2.setMontoMinimoPedido(213);
-//			u2.setFechaCierrePedido(cierre);
-//			
-//			
-//			
-//			Vendedor u3 = new Vendedor();
-//			u3.setUsername("Matt");
-//			u3.setNombre("Matt - Nombre");
-//			u3.setPassword(encrypter.encrypt("federico"));
-//			u3.setEmail("floresfederwico_993@hotmail.com");
-//			u3.setIsRoot(false);
-//			u3.setImagenPerfil(img.getPath());
-//			u3.setMontoMinimoPedido(213);
-//			u3.setFechaCierrePedido(cierre);
-//			this.guardarUsuario(u2);
-//			this.guardarUsuario(u3);
-//			
-//			
-//			Notificacion n = new Notificacion("CHASQUI", "jfflores90@gmail.com", "PRUEBA NOTIFICACION", "No Leído");
-//			
-//			
-//			notificacionService.guardar(n,"NULL");
-//			
-//			//PRUEBA EMAIL
-//			Pedido p = new Pedido();
-//			Pedido p2 = new Pedido();
-//			Pedido p3 = new Pedido();
-//			DateTime dt = new DateTime();
-//			dt.plusDays(3);
-//			p.setAlterable(true);
-//			ProductoPedido pp = new ProductoPedido();
-//			pp.setCantidad(4);
-//			pp.setIdVariante(1);
-//			pp.setNombreProducto("hola");
-//			pp.setNombreVariante("a");
-//			pp.setPrecio(44.4);
-//			p.setProductosEnPedido(new HashSet<ProductoPedido>());
-//			p.agregarProductoPedido(pp);
-//			p.setMontoActual(40.4);
-//			p.setMontoMinimo(50.5);
-//			p.setFechaCreacion(dt);
-//			p.setFechaDeVencimiento(cierre);
-//			p.setIdVendedor(2);
-//			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
-//			p.setPerteneceAPedidoGrupal(false);
-//			p.setUsuarioCreador("jfflores90@gmai");
-//
-//
-//			p2.setProductosEnPedido(new HashSet<ProductoPedido>());
-//			p2.agregarProductoPedido(pp);
-//			p2.setMontoActual(42.4);
-//			p2.setMontoMinimo(50.5);
-//			p2.setFechaCreacion(dt);
-//			p2.setFechaDeVencimiento(cierre);
-//			p2.setIdVendedor(2);
-//			p2.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
-//			p2.setPerteneceAPedidoGrupal(false);
-//			p2.setUsuarioCreador("jfflores90@gmai");
-//			
-//			
-//			p3.setProductosEnPedido(new HashSet<ProductoPedido>());
-//			p3.agregarProductoPedido(pp);
-//			p3.setMontoActual(43.4);
-//			p3.setMontoMinimo(50.5);
-//			p3.setFechaCreacion(dt);
-//			p3.setFechaDeVencimiento(cierre);
-//			p3.setIdVendedor(2);
-//			p3.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
-//			p3.setPerteneceAPedidoGrupal(false);
-//			p3.setUsuarioCreador("jfflores90@gmai");
-//			
-//			p2.setAlterable(true);
-//			p3.setAlterable(true);
-//			
-//			Cliente c = new Cliente();
-//			c.setToken("federico");
-//			c.setPassword(encrypter.encrypt("federico"));
-//			c.setEmail("jfflores90@gmail.com");
-//			c.setNombre("JORGE");
-//			c.setApellido("Flores");
-//			c.setTelefonoFijo("12314124");
-//			c.setTelefonoMovil("1234214124");
-//			c.setNickName("MatLock");
-//			Direccion d = new Direccion();
-//			d.setAlias("CASA");
-//			d.setCalle("aaaa");
-//			d.setAltura(12313);
-//			d.setAlias("dir1");
-//			d.setDepartamento("213123");
-//			d.setPredeterminada(true);
+			DateTime cierre = new DateTime().plusDays(-5);
+			Vendedor u2 = new Vendedor();
+			u2.setUsername("MatLock");
+			u2.setNombre("MatLock - Nombre");
+			u2.setPassword(encrypter.encrypt("federico"));
+			u2.setEmail("floresfederico_993@hotmail.com");
+			u2.setIsRoot(false);
+			u2.setImagenPerfil(img.getPath());
+			u2.setMontoMinimoPedido(213);
+			u2.setFechaCierrePedido(cierre);
+			
+			
+			
+			Vendedor u3 = new Vendedor();
+			u3.setUsername("Matt");
+			u3.setNombre("Matt - Nombre");
+			u3.setPassword(encrypter.encrypt("federico"));
+			u3.setEmail("floresfederwico_993@hotmail.com");
+			u3.setIsRoot(false);
+			u3.setImagenPerfil(img.getPath());
+			u3.setMontoMinimoPedido(213);
+			u3.setFechaCierrePedido(cierre);
+			this.guardarUsuario(u2);
+			this.guardarUsuario(u3);
+			
+			
+			Notificacion n = new Notificacion("CHASQUI", "jfflores90@gmail.com", "PRUEBA NOTIFICACION", "No Leído");
+			
+			
+			notificacionService.guardar(n,"NULL");
+			
+			//PRUEBA EMAIL
+			Pedido p = new Pedido();
+			Pedido p2 = new Pedido();
+			Pedido p3 = new Pedido();
+			DateTime dt = new DateTime();
+			dt.plusDays(3);
+			p.setAlterable(true);
+			ProductoPedido pp = new ProductoPedido();
+			pp.setCantidad(4);
+			pp.setIdVariante(1);
+			pp.setNombreProducto("hola");
+			pp.setNombreVariante("a");
+			pp.setPrecio(44.4);
+			p.setProductosEnPedido(new HashSet<ProductoPedido>());
+			p.agregarProductoPedido(pp);
+			p.setMontoActual(40.4);
+			p.setMontoMinimo(50.5);
+			p.setFechaCreacion(dt);
+			p.setFechaDeVencimiento(cierre);
+			p.setIdVendedor(2);
+			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+			p.setPerteneceAPedidoGrupal(false);
+			p.setUsuarioCreador("jfflores90@gmai");
+
+
+			p2.setProductosEnPedido(new HashSet<ProductoPedido>());
+			p2.agregarProductoPedido(pp);
+			p2.setMontoActual(42.4);
+			p2.setMontoMinimo(50.5);
+			p2.setFechaCreacion(dt);
+			p2.setFechaDeVencimiento(cierre);
+			p2.setIdVendedor(2);
+			p2.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+			p2.setPerteneceAPedidoGrupal(false);
+			p2.setUsuarioCreador("jfflores90@gmai");
+			
+			
+			p3.setProductosEnPedido(new HashSet<ProductoPedido>());
+			p3.agregarProductoPedido(pp);
+			p3.setMontoActual(43.4);
+			p3.setMontoMinimo(50.5);
+			p3.setFechaCreacion(dt);
+			p3.setFechaDeVencimiento(cierre);
+			p3.setIdVendedor(2);
+			p3.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+			p3.setPerteneceAPedidoGrupal(false);
+			p3.setUsuarioCreador("jfflores90@gmai");
+			
+			p2.setAlterable(true);
+			p3.setAlterable(true);
+			
+			Cliente c = new Cliente();
+			c.setToken("federico");
+			c.setPassword(encrypter.encrypt("federico"));
+			c.setEmail("jfflores90@gmail.com");
+			c.setNombre("JORGE");
+			c.setApellido("Flores");
+			c.setTelefonoFijo("12314124");
+			c.setTelefonoMovil("1234214124");
+			c.setNickName("MatLock");
+			Direccion d = new Direccion();
+			d.setAlias("CASA");
+			d.setCalle("aaaa");
+			d.setAltura(12313);
+			d.setAlias("dir1");
+			d.setDepartamento("213123");
+			d.setPredeterminada(true);
+			p.setDireccionEntrega(d);
+			p2.setDireccionEntrega(d);
+			p3.setDireccionEntrega(d);
 //			p.setDireccionEntrega(d);
-//			p2.setDireccionEntrega(d);
-//			p3.setDireccionEntrega(d);
-////			p.setDireccionEntrega(d);
-//			pedidoService.guardar(p);
-//			Direccion dd = new Direccion();
-//			dd.setCalle("bbbb");
-//			dd.setAlias("dir2");
-//			dd.setCodigoPostal("asdsa");
-//			dd.setLocalidad("ffff");
-//			dd.setPredeterminada(false);
-//			dd.setAltura(111);
-//			dd.setAlias("TRABAJO");
-//			List<Direccion> dds = new ArrayList<Direccion>();
-//			List<Pedido>pss = new ArrayList<Pedido>();
-//			dds.add(dd);
-//			dds.add(d);
-//			c.setPedidos(pss);
-//			c.setDireccionesAlternativas(dds);
-//			c.getPedidos().add(p);
-//			c.getPedidos().add(p2);
-//			c.getPedidos().add(p3);
-//			this.guardarUsuario(c);
+			pedidoService.guardar(p);
+			Direccion dd = new Direccion();
+			dd.setCalle("bbbb");
+			dd.setAlias("dir2");
+			dd.setCodigoPostal("asdsa");
+			dd.setLocalidad("ffff");
+			dd.setPredeterminada(false);
+			dd.setAltura(111);
+			dd.setAlias("TRABAJO");
+			List<Direccion> dds = new ArrayList<Direccion>();
+			List<Pedido>pss = new ArrayList<Pedido>();
+			dds.add(dd);
+			dds.add(d);
+			c.setPedidos(pss);
+			c.setDireccionesAlternativas(dds);
+			c.getPedidos().add(p);
+			c.getPedidos().add(p2);
+			c.getPedidos().add(p3);
+			this.guardarUsuario(c);
 			
 		}
 	}
