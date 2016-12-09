@@ -152,5 +152,27 @@ public class Vendedor extends Usuario{
 		return false;
 	}
 
+	
+	private Variante obtenerVarianteConId(Integer id){
+		Variante v = null;
+		for(Producto p : this.getProductos()){
+			for(Variante va : p.getVariantes()){
+				if(v.getId().equals(id)){
+					v = va;
+				}
+			}
+		}
+		return v;
+	}
+	
+	public void descontarStockYReserva(Pedido p) {
+		for(ProductoPedido pp : p.getProductosEnPedido()){
+			Variante v = this.obtenerVarianteConId(pp.getIdVariante());
+			v.setStock(v.getStock() - pp.getCantidad());
+			v.setCantidadReservada(v.getCantidadReservada() - pp.getCantidad());
+		}
+		
+	}
+
 
 }

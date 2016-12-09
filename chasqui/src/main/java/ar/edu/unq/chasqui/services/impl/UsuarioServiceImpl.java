@@ -408,7 +408,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void agregarPedidoA(AgregarQuitarProductoAPedidoRequest request, String email) {
+	public synchronized void agregarPedidoA(AgregarQuitarProductoAPedidoRequest request, String email) {
 		validarRequest(request);
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
@@ -452,7 +452,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email) {
+	public synchronized void eliminarProductoDePedido(AgregarQuitarProductoAPedidoRequest request, String email) {
 		validarRequest(request);
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		Variante v = productoService.obtenerVariantePor(request.getIdVariante());
@@ -474,7 +474,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void eliminarPedidoPara(String email, Integer idPedido) {
+	public synchronized void eliminarPedidoPara(String email, Integer idPedido) {
 		validarRequest(idPedido);
 		Cliente c = usuarioDAO.obtenerClienteConPedido(email);
 		validarEliminacionDePedidoPara(c,idPedido);
@@ -516,12 +516,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void confirmarPedido(String email, ConfirmarPedidoRequest request) throws PedidoInexistenteException {
+	public synchronized void confirmarPedido(String email, ConfirmarPedidoRequest request) throws PedidoInexistenteException {
 		validarRequest(request);
 		Cliente c = (Cliente) usuarioDAO.obtenerClienteConPedidoEHistorial(email);
 		validarConfirmacionDePedidoPara(c,request);
+		Pedido p = c.encontrarPedidoConId(request.getIdPedido());
+		Vendedor v = (Vendedor) usuarioDAO.obtenerVendedorPorID(c.encontrarPedidoConId(request.getIdPedido()).getIdVendedor());
+		v.descontarStockYReserva(p);
 		c.confirmarPedido(request);
 		usuarioDAO.guardarUsuario(c);
+		usuarioDAO.guardarUsuario(v);
 		
 	}
 
