@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,6 +29,7 @@ import ar.edu.unq.chasqui.service.rest.request.ByCategoriaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByMedallaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByProductorRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByQueryRequest;
+import ar.edu.unq.chasqui.service.rest.request.SinFiltroRequest;
 import ar.edu.unq.chasqui.service.rest.response.CaracteristicaResponse;
 import ar.edu.unq.chasqui.service.rest.response.ChasquiError;
 import ar.edu.unq.chasqui.service.rest.response.ImagenResponse;
@@ -87,6 +89,14 @@ public class ProductoListener {
 		}catch(Exception e){
 			return Response.status(500).entity(new ChasquiError(e.getMessage())).build();
 		}
+	}
+	
+	@POST
+	@Path("/sinFiltro")
+	@Produces("application/json")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response obtenerTodosLosProductosSinFiltroParticular(SinFiltroRequest request){
+		return toResponse(productoService.obtenerVariantesSinFiltro(request),request.getPagina(),request.getCantItems(),request.getPrecio(),productoService.totalVariantesSinFiltro(request));
 	}
 	
 	@GET

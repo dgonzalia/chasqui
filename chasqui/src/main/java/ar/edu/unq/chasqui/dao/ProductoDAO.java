@@ -32,5 +32,9 @@ public interface ProductoDAO {
 
 	public Long totalVariantesPorNombreODescripcion(String query,Integer idVendedor);
 
+	public Long totalVariantesSinFiltro(Integer idVendedor);
+
+	public List<Variante> obtenerVariantesSinFiltro(Integer pagina, Integer cantItems, Integer idVendedor);
+
 
 }

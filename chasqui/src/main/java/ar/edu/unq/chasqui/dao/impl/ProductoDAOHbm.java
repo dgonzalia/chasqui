@@ -88,7 +88,30 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				return  (List<Variante>)c.list();
 			}
 		});
-	}	
+	}
+	
+	
+
+	@Override
+	public List<Variante> obtenerVariantesSinFiltro(Integer pagina, final Integer cantItems, final Integer idVendedor) {
+		final Integer inicio = calcularInicio(pagina,cantItems);
+		return this.getHibernateTemplate().executeFind(new HibernateCallback<List<Variante>>() {
+
+			@Override
+			public List<Variante> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.fabricante", "f")
+				 .add(Restrictions.eq("f.idVendedor",idVendedor))
+				 .add(Restrictions.sqlRestriction("( STOCK - RESERVADOS) > 0"))
+				 .setFirstResult(inicio)
+				 .setMaxResults(cantItems)
+				 .addOrder(Order.asc("id"));
+				return  (List<Variante>)c.list();
+			}
+		});
+	}
+	
 
 	@Override
 	public List<Imagen> obtenerImagenesDe(final Integer idProducto) {
@@ -245,6 +268,22 @@ public class ProductoDAOHbm extends HibernateDaoSupport implements ProductoDAO{
 				 .add(or)
 				 .setProjection(Projections.rowCount());
 				return  (Long) c.uniqueResult();
+			}
+		});
+	}
+
+	@Override
+	public Long totalVariantesSinFiltro(final Integer idVendedor) {
+		return this.getHibernateTemplate().execute(new HibernateCallback<Long>() {
+
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria c = session.createCriteria(Variante.class);
+				c.createAlias("producto", "p")
+				 .createAlias("p.fabricante", "f")
+				 .add(Restrictions.eq("f.idVendedor", idVendedor))
+				 .setProjection(Projections.rowCount());				
+				return  (Long)c.uniqueResult();
 			}
 		});
 	}
