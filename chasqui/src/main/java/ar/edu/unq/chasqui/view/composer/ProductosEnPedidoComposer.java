@@ -8,6 +8,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Grid;
 import org.zkoss.zul.Label;
 
 import ar.edu.unq.chasqui.dtos.PedidoDTO;
@@ -30,6 +31,8 @@ public class ProductosEnPedidoComposer extends GenericForwardComposer<Component>
 	private Label postallbl;
 	private Label departamentolbl;
 	private Label localidadlbl;
+	private Label informacion;
+	private Grid gridDireccion;
 
 	public void doAfterCompose(Component c) throws Exception{
 		super.doAfterCompose(c);
@@ -50,6 +53,10 @@ public class ProductosEnPedidoComposer extends GenericForwardComposer<Component>
 		localidadlbl.setValue(d.getLocalidad());
 		departamentolbl.setValue( (d.getDepartamento() != null ? d.getDepartamento() : "---"));
 		
+		if( Constantes.ESTADO_PEDIDO_CONFIRMADO.equals(p.getEstado()) || Constantes.ESTADO_PEDIDO_ENTREGADO.equals(p.getEstado())){
+			gridDireccion.setVisible(true);
+			informacion.setVisible(false);
+		}
 		
 		this.binder.loadAll();
 		

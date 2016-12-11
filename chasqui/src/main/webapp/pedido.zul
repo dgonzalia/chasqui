@@ -7,7 +7,9 @@
 <window title="Detalle Del Pedido" border="normal" id="pedidoWindow" closable="true" 
 apply="ar.edu.unq.chasqui.view.composer.ProductosEnPedidoComposer" width="50%">
 
-
+<label id="informacion" value="Información: Este pedido aún no se encuentra confirmado, solo se muestra un pedido potencial. Cuando el usuario confirme
+la compra, se visualizarán los datos de entrega."  style="font-weight:bold; color:red"/>
+<separator spacing="10px"/>
 <listbox model="@{pedidoWindow$composer.pedidos}" mold="paging" pageSize="10" >
 	<listhead>
 		<listheader label="Usuario" hflex="1" align="center"/>
@@ -33,7 +35,7 @@ apply="ar.edu.unq.chasqui.view.composer.ProductosEnPedidoComposer" width="50%">
 </listbox>
 
 <separator spacing="30px"/>
-<grid width="100%">
+<grid width="100%" id="gridDireccion" visible="false">
 	<auxhead>
 		<auxheader label="Detalles de la dirección de entrega"  align="center" colspan="2"/>
 	</auxhead>

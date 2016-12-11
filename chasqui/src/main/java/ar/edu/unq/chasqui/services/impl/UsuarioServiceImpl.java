@@ -1,7 +1,5 @@
 package ar.edu.unq.chasqui.services.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -24,7 +22,6 @@ import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Imagen;
 import ar.edu.unq.chasqui.model.Notificacion;
 import ar.edu.unq.chasqui.model.Pedido;
-import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.model.Usuario;
 import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.model.Vendedor;
@@ -39,7 +36,6 @@ import ar.edu.unq.chasqui.services.interfaces.NotificacionService;
 import ar.edu.unq.chasqui.services.interfaces.PedidoService;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
-import ar.edu.unq.chasqui.view.composer.Constantes;
 
 @Auditada
 public class UsuarioServiceImpl implements UsuarioService{
@@ -144,7 +140,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 //			p.setFechaCreacion(dt);
 //			p.setFechaDeVencimiento(cierre);
 //			p.setIdVendedor(2);
-//			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
+//			p.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
 //			p.setPerteneceAPedidoGrupal(false);
 //			p.setUsuarioCreador("jfflores90@gmai");
 //
