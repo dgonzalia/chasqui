@@ -14,7 +14,7 @@ apply="ar.edu.unq.chasqui.view.composer.ProductosEnPedidoComposer" width="50%">
 		<listheader label="Nombre del Producto" hflex="1" align="center"/>
 		<listheader label="Variante" hflex="1" align="center"/>
 		<listheader label="Cantidad" hflex="1" align="center"/>
-		<listheader label="Precio" hflex="1" align="center"/>
+		<listheader label="Precio por unidad" hflex="1" align="center"/>
 	</listhead>
 	<listitem self="@{each=pedido}" >
 		<listcell label="@{pedido.getUsuario}"/>
@@ -31,6 +31,59 @@ apply="ar.edu.unq.chasqui.view.composer.ProductosEnPedidoComposer" width="50%">
 		<listfooter label="@{pedidoWindow$composer.total}" align="right" hflex="1"/>		
 	</listfoot>
 </listbox>
+
+<separator spacing="30px"/>
+<grid width="100%">
+	<auxhead>
+		<auxheader label="Detalles de la dirección de entrega"  align="center" colspan="2"/>
+	</auxhead>
+	<columns>
+		<column width="20%" zclass="none"/>
+		<column width="80%" zclass="none"/>
+	</columns>
+	<rows>
+		<row>
+			<cell>
+				<label value="Calle:"/>
+			</cell>
+			<cell>
+				<label id="callelbl"/>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<label value="Altura:"/>
+			</cell>
+			<cell>
+				<label id="alturalbl"/>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<label value="Codigo Postal:"/>
+			</cell>
+			<cell>
+				<label id="postallbl"/>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<label value="Departamento:"/>
+			</cell>
+			<cell>
+				<label id="departamentolbl"/>
+			</cell>
+		</row>
+		<row>
+			<cell>
+				<label value="Localidad:"/>
+			</cell>
+			<cell>
+				<label id="localidadlbl"/>
+			</cell>
+		</row>
+	</rows>
+</grid>
 
 </window>
 </zk>

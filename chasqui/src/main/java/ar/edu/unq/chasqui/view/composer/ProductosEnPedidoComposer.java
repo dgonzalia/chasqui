@@ -8,18 +8,29 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zkplus.databind.AnnotateDataBinder;
+import org.zkoss.zul.Label;
 
 import ar.edu.unq.chasqui.dtos.PedidoDTO;
+import ar.edu.unq.chasqui.model.Direccion;
 import ar.edu.unq.chasqui.model.Pedido;
 import ar.edu.unq.chasqui.model.ProductoPedido;
 
+@SuppressWarnings("deprecation")
 public class ProductosEnPedidoComposer extends GenericForwardComposer<Component>{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4655478743445258020L;
 	private AnnotateDataBinder binder;
 	private List<PedidoDTO>pedidos;
 	private Double total = 0.0;
-	
-	@SuppressWarnings("deprecation")
+	private Label callelbl;
+	private Label alturalbl;
+	private Label postallbl;
+	private Label departamentolbl;
+	private Label localidadlbl;
+
 	public void doAfterCompose(Component c) throws Exception{
 		super.doAfterCompose(c);
 		binder = new AnnotateDataBinder(c);
@@ -30,6 +41,16 @@ public class ProductosEnPedidoComposer extends GenericForwardComposer<Component>
 		for(PedidoDTO t : pedidos){
 			total =+  (t.getPrecio() * t.getCantidad());
 		}
+		
+		
+		Direccion d = p.getDireccionEntrega();
+		callelbl.setValue(d.getCalle());
+		alturalbl.setValue(String.valueOf(d.getAltura()));
+		postallbl.setValue(String.valueOf(d.getCodigoPostal()));
+		localidadlbl.setValue(d.getLocalidad());
+		departamentolbl.setValue( (d.getDepartamento() != null ? d.getDepartamento() : "---"));
+		
+		
 		this.binder.loadAll();
 		
 		
