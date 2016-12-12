@@ -526,7 +526,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 		c.confirmarPedido(request);
 		usuarioDAO.guardarUsuario(c);
 		usuarioDAO.guardarUsuario(v);
-		
+//		Notificacion n = new Notificacion(v.getNombre(), email, "El pedido con id "+p.getId()+" se generó correctamente.", Constantes.ESTADO_NOTIFICACION_NO_LEIDA);
+//		notificacionService.guardar(n, "NULL");
 	}
 
 	private void validarConfirmacionDePedidoPara(Cliente c,ConfirmarPedidoRequest request) throws PedidoInexistenteException {

@@ -82,7 +82,7 @@ public class PedidoListener {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/vigentes")
+	@Path("/individual/vigentes")
 	public Response obtenerPedidosVigentes(){
 		String mail =  obtenerEmailDeContextoDeSeguridad();
 		try{
@@ -146,7 +146,7 @@ public class PedidoListener {
 	@POST
 	@Produces("application/json")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/confirmar")
+	@Path("/individual/confirmar")
 	public Response confirmarPedido(ConfirmarPedidoRequest request){
 		try{
 			String email = obtenerEmailDeContextoDeSeguridad();

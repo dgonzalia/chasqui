@@ -129,7 +129,7 @@ public class PedidoResponse implements Serializable {
 		idVendedor = p.getIdVendedor();
 		estado = p.getEstado();
 		nombreVendedor=p.getNombreVendedor();
-		DateFormat f = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
 		fechaCreacion = f.format(p.getFechaCreacion().toDate());
 		fechaVencimiento = f.format(p.getFechaDeVencimiento().toDate());
 		montoMinimo = p.getMontoMinimo();

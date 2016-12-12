@@ -157,7 +157,7 @@ public class Vendedor extends Usuario{
 		Variante v = null;
 		for(Producto p : this.getProductos()){
 			for(Variante va : p.getVariantes()){
-				if(v.getId().equals(id)){
+				if(va.getId().equals(id)){
 					v = va;
 				}
 			}
