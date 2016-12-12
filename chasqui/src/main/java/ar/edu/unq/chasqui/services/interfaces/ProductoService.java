@@ -12,6 +12,7 @@ import ar.edu.unq.chasqui.service.rest.request.ByCategoriaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByMedallaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByProductorRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByQueryRequest;
+import ar.edu.unq.chasqui.service.rest.request.SinFiltroRequest;
 
 public interface ProductoService {
 	
@@ -42,6 +43,10 @@ public interface ProductoService {
 	public Long totalVariantesPorMedalla(ByMedallaRequest request);
 	@Transactional
 	public Long totalVariantesPorNombreODescripcion(ByQueryRequest request);
+	@Transactional
+	public List<Variante> obtenerVariantesSinFiltro(SinFiltroRequest request);
+	@Transactional
+	public Long totalVariantesSinFiltro(SinFiltroRequest request);
 	
 	
 }

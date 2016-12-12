@@ -19,6 +19,7 @@ import ar.edu.unq.chasqui.service.rest.request.ByMedallaRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByProductorRequest;
 import ar.edu.unq.chasqui.service.rest.request.ByQueryRequest;
 import ar.edu.unq.chasqui.service.rest.request.ProductoRequest;
+import ar.edu.unq.chasqui.service.rest.request.SinFiltroRequest;
 import ar.edu.unq.chasqui.services.interfaces.ProductoService;
 
 
@@ -45,6 +46,12 @@ public class ProductoServiceImpl implements ProductoService {
 	public List<Variante> obtenerVariantesPorMedalla(ByMedallaRequest request) {
 		validarMedallaRequest(request);
 		return productoDAO.obtenerVariantesPorMedalla(request.getIdMedalla(), request.getPagina(), request.getCantItems(),request.getIdVendedor());
+	}
+	
+	@Override
+	public List<Variante> obtenerVariantesSinFiltro(SinFiltroRequest request) {
+		validarRequest(request);
+		return productoDAO.obtenerVariantesSinFiltro(request.getPagina(),request.getCantItems(),request.getIdVendedor());
 	}
 
 	@Override
@@ -153,5 +160,10 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public Long totalVariantesPorNombreODescripcion(ByQueryRequest request) {
 		return productoDAO.totalVariantesPorNombreODescripcion(request.getQuery(),request.getIdVendedor());
+	}
+
+	@Override
+	public Long totalVariantesSinFiltro(SinFiltroRequest request) {
+		return productoDAO.totalVariantesSinFiltro(request.getIdVendedor());
 	}
 }

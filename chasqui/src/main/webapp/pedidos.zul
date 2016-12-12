@@ -15,6 +15,7 @@ style="overflow:auto">
 		<label value="Fecha Hasta:"/>
 		<datebox id="hasta"/>	
 		<space spacing="10px"/>
+		<label value="Estado:"/>
 		<combobox id="estadosListbox" readonly="true" model="@{pedidosWindow$composer.estados}" selectedItem="@{pedidosWindow$composer.estadoSeleccionado}"/>
 		<button label="Buscar" id="buscar"/>
 		<button label="Limpiar Campos" id="limpiarCamposbtn"/>

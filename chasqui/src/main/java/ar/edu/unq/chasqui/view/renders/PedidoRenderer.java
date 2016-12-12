@@ -61,8 +61,8 @@ public class PedidoRenderer implements ListitemRenderer<Pedido>{
 		Listcell c7 = new Listcell(direccion);
 		Listcell c8 = new Listcell();
 		
-		Toolbarbutton b = new Toolbarbutton("Ver Producto");
-		b.setTooltiptext("Ver Producto");
+		Toolbarbutton b = new Toolbarbutton("Ver Detalle");
+		b.setTooltiptext("Ver Detalle");
 		b.setImage("/imagenes/eye.png");
 		HashMap<String,Object> params = new HashMap<String,Object>();
 		params.put("pedido", p);
