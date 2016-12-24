@@ -19,7 +19,7 @@
             <key>
                 <column name="ID_HISTORIAL" />
             </key>
-            <list-index column="ORDEN"/>
+            <list-index column="ORDEN_HISTORIAL"/>
             <one-to-many class="ar.edu.unq.chasqui.model.Pedido" />
         </list>
     </class>

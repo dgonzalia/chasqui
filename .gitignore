@@ -8,3 +8,4 @@ chasqui/logs
 chasqui/bin
 /.metadata
 /RemoteSystemsTempFiles
+chasqui/src/main/java/chasqui.properties
