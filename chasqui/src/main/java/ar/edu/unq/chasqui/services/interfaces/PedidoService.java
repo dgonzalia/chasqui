@@ -18,5 +18,6 @@ public interface PedidoService {
 	public void guardar(Pedido p);
 	public int totalPedidosParaVendedor(Integer id);
 	public List<Pedido> obtenerPedidosDeVendedor(Integer id, Date desde, Date hasta, String estadoSeleccionado);
+	public List<Pedido> obtenerPedidosVencidos();
 	
 }

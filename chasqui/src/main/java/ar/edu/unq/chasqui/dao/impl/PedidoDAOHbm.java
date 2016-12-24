@@ -17,7 +17,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import ar.edu.unq.chasqui.dao.PedidoDAO;
 import ar.edu.unq.chasqui.model.Pedido;
-import ar.edu.unq.chasqui.model.Variante;
 import ar.edu.unq.chasqui.view.composer.Constantes;
 
 public class PedidoDAOHbm extends HibernateDaoSupport implements PedidoDAO {
@@ -103,6 +102,24 @@ public class PedidoDAOHbm extends HibernateDaoSupport implements PedidoDAO {
 				}
 				
 				return (List<Pedido>)c.list();
+			}
+		});
+	}
+
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Pedido> obtenerPedidosVencidos() {
+		return this.getHibernateTemplate().execute(new HibernateCallback<List<Pedido>>() {
+
+			@Override
+			public List<Pedido> doInHibernate(Session session) throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(Pedido.class);
+				criteria.add(Restrictions.eq("alterable",true))
+						.add(Restrictions.eq("estado", Constantes.ESTADO_PEDIDO_ABIERTO))
+						.add(Restrictions.eq("perteneceAPedidoGrupal", false))
+						.add(Restrictions.lt("fechaDeVencimiento", new DateTime()));
+				return (List<Pedido>) criteria.list();
 			}
 		});
 	}

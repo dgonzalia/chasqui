@@ -89,7 +89,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			user.setImagenPerfil(img.getPath());
 			this.guardarUsuario(user);	
 			
-//			DateTime cierre = new DateTime().plusDays(-5);
+//			DateTime cierre = new DateTime().plusDays(12);
 //			Vendedor u2 = new Vendedor();
 //			u2.setUsername("MatLock");
 //			u2.setNombre("MatLock - Nombre");
@@ -99,6 +99,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 //			u2.setImagenPerfil(img.getPath());
 //			u2.setMontoMinimoPedido(213);
 //			u2.setFechaCierrePedido(cierre);
+//			this.guardarUsuario(u2);	
 //			
 //			
 //			
@@ -122,6 +123,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 //			
 //			//PRUEBA EMAIL
 //			Pedido p = new Pedido();
+//			p.setId(1);
 //			Pedido p2 = new Pedido();
 //			Pedido p3 = new Pedido();
 //			DateTime dt = new DateTime();
@@ -135,14 +137,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 //			pp.setPrecio(44.4);
 //			p.setProductosEnPedido(new HashSet<ProductoPedido>());
 //			p.agregarProductoPedido(pp);
-//			p.setMontoActual(40.4);
+//			p.setMontoActual(70.4);
 //			p.setMontoMinimo(50.5);
 //			p.setFechaCreacion(dt);
 //			p.setFechaDeVencimiento(cierre);
 //			p.setIdVendedor(2);
-//			p.setEstado(Constantes.ESTADO_PEDIDO_CONFIRMADO);
+//			p.setEstado(Constantes.ESTADO_PEDIDO_ABIERTO);
 //			p.setPerteneceAPedidoGrupal(false);
-//			p.setUsuarioCreador("jfflores90@gmai");
+//			p.setUsuarioCreador("jfflores90@gmail.com");
 //
 //
 //			p2.setProductosEnPedido(new HashSet<ProductoPedido>());
@@ -518,9 +520,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Cliente c = (Cliente) usuarioDAO.obtenerClienteConPedidoEHistorial(email);
 		validarConfirmacionDePedidoPara(c,request);
 		Pedido p = c.encontrarPedidoConId(request.getIdPedido());
-		Vendedor v = (Vendedor) usuarioDAO.obtenerVendedorPorID(c.encontrarPedidoConId(request.getIdPedido()).getIdVendedor());
+		Vendedor v = (Vendedor) usuarioDAO.obtenerVendedorPorID(p.getIdVendedor());
 		v.descontarStockYReserva(p);
 		c.confirmarPedido(request);
+		mailService.enviarEmailConfirmacionPedido(v.getEmail(),email,p);
 		usuarioDAO.guardarUsuario(c);
 		usuarioDAO.guardarUsuario(v);
 		

@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ar.edu.unq.chasqui.exceptions.UsuarioExistenteException;
 import ar.edu.unq.chasqui.model.Cliente;
+import ar.edu.unq.chasqui.model.Direccion;
+import ar.edu.unq.chasqui.model.Pedido;
+import ar.edu.unq.chasqui.model.ProductoPedido;
 import ar.edu.unq.chasqui.security.Encrypter;
 import ar.edu.unq.chasqui.security.PasswordGenerator;
 import ar.edu.unq.chasqui.services.interfaces.UsuarioService;
@@ -36,7 +40,7 @@ public class MailService {
 	@Autowired
 	private PasswordGenerator passwordGenerator;
 	
-	
+	public static final Logger logger = Logger.getLogger(MailService.class);
 	
 	private Template obtenerTemplate(String nombreTemplate) throws IOException{
 		Configuration c = new Configuration();
@@ -154,8 +158,131 @@ public class MailService {
 		helper.setText(writer.toString(),true);
 		helper.addInline("logochasqui", resource);
 		mailSender.send(m);		
+	}
+	
+	
+	
+	public void enviarEmailConfirmacionPedido(final String emailVendedor,final String emailCliente, final Pedido p){
+		
+		
+		new Thread(){
+			
+			public void run(){
+				
+				String tablaContenidoPedido = armarTablaContenidoDePedido(p);
+				String tablaDireccionEntrega = armarTablaDireccionDeEntrega(p.getDireccionEntrega());
+				String cuerpoCliente = armarCuerpoCliente();
+				String cuerpoVendedor = armarCuerpoVendedor(emailCliente);
+				
+				try{
+					Template template = obtenerTemplate("emailConfirmacionPedido.ftl");
+					MimeMessage m = mailSender.createMimeMessage();
+					m.setSubject(MimeUtility.encodeText("Confirmación de Compra","UTF-8","B"));
+					MimeMessageHelper helper = new MimeMessageHelper(m,true,"UTF-8");
+					StringWriter writer = new StringWriter();
+					ClassPathResource resource = new ClassPathResource("templates/imagenes/chasqui.png");
+					helper.setFrom("administrator-chasqui-noreply@chasqui.org");
+					helper.setTo(emailCliente);
+					
+					Map<String,Object> params = new HashMap<String,Object>();
+					params.put("cuerpo", cuerpoCliente);
+					params.put("tablaContenidoPedido",tablaContenidoPedido);
+					params.put("tablaDireccionDeEntrega", tablaDireccionEntrega);
+					params.put("agradecimiento","Muchas gracias por utilizar el sistema Chasqui");
+					template.process(params, writer);
+					
+					writer.flush();
+					writer.close();
+					helper.setText(writer.toString(),true);
+					helper.addInline("logochasqui", resource);
+					mailSender.send(m);					
+					
+					Map<String,Object> paramsVendedor = new HashMap<String,Object>();
+					paramsVendedor.put("cuerpo", cuerpoVendedor);
+					paramsVendedor.put("tablaContenidoPedido",tablaContenidoPedido);
+					paramsVendedor.put("tablaDireccionDeEntrega", tablaDireccionEntrega);
+					paramsVendedor.put("agradecimiento","Muchas gracias por utilizar el sistema Chasqui");
+
+					Template templateVendedor = obtenerTemplate("emailConfirmacionPedido.ftl");
+					StringWriter writerVendedor = new StringWriter();
+					MimeMessage mVendedor = mailSender.createMimeMessage();
+					mVendedor.setSubject(MimeUtility.encodeText("Confirmación de Compra","UTF-8","B"));
+					MimeMessageHelper helperVendedor = new MimeMessageHelper(mVendedor,true,"UTF-8");
+					helperVendedor.setFrom("administrator-chasqui-noreply@chasqui.org");
+					helperVendedor.setTo(emailVendedor);
+					templateVendedor.process(paramsVendedor, writerVendedor);
+					writerVendedor.flush();
+					writerVendedor.close();
+					helperVendedor.setText(writerVendedor.toString(),true);
+					helperVendedor.addInline("logochasqui", resource);
+					mailSender.send(mVendedor);
+				}catch(Exception e){
+					logger.error(e);;
+				}
+				
+			}
+			
+			
+		}.start();
 		
 	}
+	
+
+
+
+	
+	private String armarCuerpoCliente(){
+		return "Datos de confirmación de compra";
+	}
+
+	
+	private String armarCuerpoVendedor(String usuario){
+		return "El usuario: "+ usuario +" ha confirmado su compra (Los detalles del mismo se encuentran debajo y también pueden visualizarse en el panel de administración)";
+	}
+	
+	
+	
+	
+	private String armarTablaDireccionDeEntrega(Direccion d){
+		String departamento =  d.getDepartamento() != null ? d.getDepartamento() : "---";
+		String tabla = "<table border="+ "0" +">"
+				+ "<tr><td>Calle:</td><td>" + d.getCalle() + "</td></tr>"
+				+ "<tr><td>Altura:</td>" + d.getAltura() + "</td></tr>"
+				+ "<tr><td>Departamento:</td>" + departamento + "</td></tr>"
+				+ "<tr><td>Cod. posta:</td>" + d.getCodigoPostal() + "</td></tr>"
+				+ "<tr><td>Localidad:</td>" + d.getLocalidad() + "</td></tr>";
+		
+		return tabla;
+		
+	}
+	
+
+	private String armarTablaContenidoDePedido(Pedido p) {
+		String tabla = armarHeader();
+		String footer = armarFooter(p.getMontoActual());
+		for(ProductoPedido pp : p.getProductosEnPedido()){
+			tabla += armarFilaDetalleProducto(pp);
+		}		
+		tabla += footer;
+		return tabla;
+	}
+
+	
+	
+	private String armarFilaDetalleProducto(ProductoPedido pp){
+		return  "<tr><td>"+ pp.getNombreProducto() + pp.getNombreVariante() + "</td><td>" +pp.getPrecio()+ "</td><td> "+ pp.getCantidad() +"</td></tr>";
+	}	
+
+	private String armarHeader() {
+		return "<table border="+ "1" +"><tr><th>Producto</th><th>Precio por Unidad</th><th>Cantidad</th></tr>";
+	}
+	
+	private String armarFooter(Double total){
+		return "<tr><td colspan="+"2"+">Total:</td><td>"+total+"</td></tr></table>";
+	}
+	
+	
+	
 	
 	
 	

@@ -44,13 +44,10 @@ public class AvisoPedidoQuartz {
 	
 	
 	public void execute(){
-		//AGREGAR VALIDACION DE SERVIDOR
-		if(obtenerHostname().equals("hola")){
+		if(obtenerHostname().equals(nombreServidor)){
 			List<Vendedor>vendedores = vendedorService.obtenerVendedores();
 			for(Vendedor v : vendedores){
-				if(v.getUsername().equals("MatLock")){
-					enviarNotificacionesDePedidos(v);					
-				}
+				enviarNotificacionesDePedidos(v);
 			}					
 		}
 		
@@ -62,7 +59,7 @@ public class AvisoPedidoQuartz {
 			List<Pedido>pedidos = pedidoService.obtenerPedidosProximosAVencer(cantidadDeDiasParaEnviarNotificacion, v.getId(), v.getFechaCierrePedido());
 			for(Pedido p : pedidos){
 				DateTime dt = new DateTime();
-				DateTime fechaCierre = v.getFechaCierrePedido();//.plusDays(-1);
+				DateTime fechaCierre = v.getFechaCierrePedido();
 				Cliente c = (Cliente) usuarioService.obtenerUsuarioPorEmail(p.getUsuarioCreador());
 				if(dt.getDayOfYear() == fechaCierre.getDayOfYear()){
 					mailService.enviarEmailNotificacionPedido(p.getUsuarioCreador(), cuerpoEmail, c.getNombre(), c.getApellido());

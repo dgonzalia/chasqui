@@ -45,6 +45,11 @@ public class PedidoServiceImpl implements PedidoService {
 		
 	}
 
+	@Override
+	public List<Pedido> obtenerPedidosVencidos() {
+		return pedidoDAO.obtenerPedidosVencidos();
+	}
+
 	
 
 }

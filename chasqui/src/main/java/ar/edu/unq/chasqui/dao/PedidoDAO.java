@@ -19,4 +19,6 @@ public interface PedidoDAO {
 
 	public List<Pedido> obtenerPedidos(Integer id, Date desde, Date hasta, String estadoSeleccionado);
 
+	public List<Pedido> obtenerPedidosVencidos();
+
 }

@@ -4,7 +4,25 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	
+	<!-- ELIMINACION DE PEDIDOS ABIERTOS -->
+	<bean id="eliminacionPedidoQuartz" class="ar.edu.unq.chasqui.quartz.EliminacionPedidoQuartz"/>
+
+	<bean id="eliminacionPedidoJob" 
+ 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="eliminacionPedidoQuartz" />
+		<property name="targetMethod" value="execute" />		
+	</bean>
 	
+	<bean id="cronTriggerEliminacion"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="eliminacionPedidoJob" />
+		<property name="cronExpression" value="${eliminacionPedido.cron.expression}" />
+	</bean>
+
+ 	<!--  FIN ELIMINACION DE PEDIDOS ABIERTOS -->
+ 	
+ 	
+	<!--  AVISO PEDIDOS -->	
 	<bean id="avisoPedidoQuartz" class="ar.edu.unq.chasqui.quartz.AvisoPedidoQuartz"/>
 	
 	<bean id="avisoPedidoJob" 
@@ -19,15 +37,19 @@
 		<property name="cronExpression" value="${notificacion.cron.expression}" />
 	</bean>
 	
+	<!-- FIN AVISO PEDIDOS -->
+	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="jobDetails">
 	   		<list>
 	      		<ref bean="avisoPedidoJob" />
+	      		<ref bean="eliminacionPedidoJob"/>
 	   		</list>
 		</property>
 		<property name="triggers">
 	    	<list>
 				<ref bean="cronTriggerAviso"/>
+				<ref bean="cronTriggerEliminacion"/>
 	    	</list>
 		</property>
    </bean>
