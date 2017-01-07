@@ -20,7 +20,7 @@
 	   
 	   <bean id="fileSaver" name="fileSaver" class="ar.edu.unq.chasqui.services.impl.FileSaver"/>
 	   
-	   <bean id="usuarioService" name="usuarioService" class="ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl" init-method="onStartUp"/>
+	   <bean id="usuarioService" name="usuarioService" class="ar.edu.unq.chasqui.services.impl.UsuarioServiceImpl"/>
 	   
 	   <bean id="zonaService" name="zonaService" class="ar.edu.unq.chasqui.services.impl.ZonaServiceImpl"/>
 	   
