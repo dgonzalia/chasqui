@@ -1,6 +1,20 @@
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+
 # chasqui-backend
 
-##Requerimientos: 
+##Requerimientos:
 
 * Tomcat
 * JDK 1.7
@@ -31,7 +45,7 @@
 
 > sudo apt-get install mysql-server-5.5 mysql-client-5.5
 
-Por consola, conectarse a mysql para crear base de datos CHASQUI: 
+Por consola, conectarse a mysql para crear base de datos CHASQUI:
 
 >
 >mysql -u root - p
@@ -55,13 +69,13 @@ Por consola, conectarse a mysql para crear base de datos CHASQUI:
 
 ## Configurar la BD para que no se blanquee con cada arranque del servidor
 
-* Con el backend levantado, hacer un dump de la base de datos: 
+* Con el backend levantado, hacer un dump de la base de datos:
 
 >mysqldump --user root CHASQUI -p > dumpdechasqui
 
 * Bajar el servidor
 
-* Editar el archivo datasources.xml reemplazando: 
+* Editar el archivo datasources.xml reemplazando:
 
 ```
 <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
@@ -71,17 +85,17 @@ Por consola, conectarse a mysql para crear base de datos CHASQUI:
 
 
 ```
-<prop key="hibernate.hbm2ddl.auto">validate</prop> 
+<prop key="hibernate.hbm2ddl.auto">validate</prop>
 ```
 
-* Restituir el dump de la base de datos: 
+* Restituir el dump de la base de datos:
 
-> mysql -u root -p CHASQUI < dumpchasquidb 
+> mysql -u root -p CHASQUI < dumpchasquidb
 
 ## Para levantar el backend (y backoffice) por fuera del eclipse
 
-El siguiente es un script para deploy de backend en apache tomcat. Lo ideal es editar uno para cada colaborador del 
-proyecto e ignorar el mismo en el versionado de git. 
+El siguiente es un script para deploy de backend en apache tomcat. Lo ideal es editar uno para cada colaborador del
+proyecto e ignorar el mismo en el versionado de git.
 Observar que $TOMCAT_PATH y $BACKEND_ROOT_PATH estén correctos según tu file system.
 
 ```
@@ -153,17 +167,3 @@ Guardar como deploy.sh y darle permisos de ejecución. Correr cada vez que  se q
 [**Opcion 4**] (https://developer.atlassian.com/docs/getting-started/set-up-the-atlassian-plugin-sdk-and-build-a-project/set-up-the-eclipse-ide-for-windows)
 
 [Git for  windows] (https://git-for-windows.github.io/)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
